@@ -20,7 +20,7 @@ exports.up = function (knex, Promise) {
             table.boolean('thinking');
             table.boolean('feeling');
             table.boolean('judging');
-            table.boolean('perceving');
+            table.boolean('perceiving');
             table.text('profile_pic');
             table.string('ig_account');
             table.text('ideal_first_date');

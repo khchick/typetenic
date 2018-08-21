@@ -4,8 +4,7 @@ class UserService {
         this.knex = knex;
     }
 
-    // Profile details services
-    getUserDetail(userID) {
+    updateMBTI(userID) {
         let query = this.knex
             .select('users.img', 'users.email', 'users.name')
             .from('users')

@@ -8,8 +8,8 @@ class UserRouter {
     router() {
         let router = express.Router();
 
-        router.get('/rest/:restID', (req, res) => { // List all dishes of current restaurant
-            this.dishService.listDish(req.params.restID)
+        router.post('/create', (req, res) => { 
+            this.userService.createUser(req.body.email, req.body,password, )
                 .then((dishes) => res.json(dishes))
                 .catch((err) => res.status(500).json(err));
         })
