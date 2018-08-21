@@ -19,26 +19,16 @@ const https = require('https')
 const isLoggedIn = require('./utils/guard').isLoggedIn;
 
 // Dependency Injection for Routers and Services
-// const ViewRouter = require('./ViewRouter');
 
-// const { DishRouter,
-//         FavRouter,
-//         MealRouter,
-//         RestRouter,
-//         UserRouter,
-//         SocketIORouter } = require('./routers');
+const { ConnectionRouter,
+        UserRouter,
+        SocketIORouter } = require('./routers');
 
-// const { DishService,
-//         FavService,
-//         MealService,
-//         RestService,
-//         UserService } = require('./services');
+const { ConnectionService,
+        UserService } = require('./services');
 
-// let dishService = new DishService(knex);
-// let favService = new FavService(knex,redisClient); // REDIS ONLY REQUIRED FOR USER RELATED SERVICES?
-// let mealService = new MealService(knex);
-// let restService = new RestService(knex,redisClient); // REDIS ONLY REQUIRED FOR USER RELATED SERVICES?
-// let userService = new UserService(knex,redisClient); // REDIS ONLY REQUIRED FOR USER RELATED SERVICES?
+let connectionService = new ConnectionService(knex);
+let userService = new UserService(knex); 
 
 const {app,server,io} = require('./utils/init-app')(knex, redisClient);
 
@@ -50,13 +40,9 @@ app.use((req, res, next) => {
     }
 });
 
-// new SocketIORouter(io,userService).router();
-// app.use('/',new ViewRouter().router());
-// app.use('/api/dish', (new DishRouter(dishService)).router());
-// app.use('/api/fav', (new FavRouter(favService)).router());
-// app.use('/api/meal', (new MealRouter(mealService)).router());
-// app.use('/api/rest', (new RestRouter(restService)).router());
-// app.use('/api/user', (new UserRouter(userService)).router());
+new SocketIORouter(io,userService).router();
+app.use('/api/connection', (new ConnectionRouter(connectionService)).router());
+app.use('/api/user', (new UserRouter(userService)).router());
   
 const httpsOptions = {
     key: fs.readFileSync('./localhost.key'),
