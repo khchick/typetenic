@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 
 
-module.exports = (knex, redisClient)=>{
+module.exports = (knex)=>{
     let app = express();
     let server = require('http').Server(app);
     let io = require('socket.io')(server);
@@ -12,7 +12,7 @@ module.exports = (knex, redisClient)=>{
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
 
-    require('./init-sessions')(app,io,redisClient);
+    // require('./init-sessions')(app,io,redisClient);
     require('./init-passport')(app,knex);
 
     return{

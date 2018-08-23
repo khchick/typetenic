@@ -8,15 +8,9 @@ class ConnectionRouter {
     router() {
         let router = express.Router();
 
-        router.get('/rest/:restID', (req, res) => { // List all dishes of current restaurant
-            this.dishService.listDish(req.params.restID)
-                .then((dishes) => res.json(dishes))
-                .catch((err) => res.status(500).json(err));
-        })
-
-        router.get('/detail/:dishID', (req, res) => { // Get dish details of current dish
-            this.dishService.getDishDetail(req.params.dishID)
-                .then((dishDetail) => res.json(dishDetail))
+        router.get('/suggested', (req, res) => { 
+            this.connectionService.getSuggestedUsers(req.user.id)
+                .then(users => res.json(users))
                 .catch((err) => res.status(500).json(err));
         })
 

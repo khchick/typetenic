@@ -4,126 +4,58 @@ class UserService {
         this.knex = knex;
     }
 
-    updateMBTI(userID) {
+    getMBTI(userID) {
         let query = this.knex
-            .select('users.img', 'users.email', 'users.name')
-            .from('users')
-            .where('users.id', userID)
-
-        return query.then(rows => {
-            return rows.map(row => ({
-                img: row.img,
-                email: row.email,
-                name: row.name
-            }))
-        })
-    }
-
-    updateUserDetail(userID, name, imgURL) {
-        let query = this.knex
-            .select()
+            .select('mbti')
             .from('users')
             .where('users.id', userID);
 
         return query.then(rows => {
-            if (rows.length !== 1) {
-                return new Error('Invalid user');
-            } else {
-                return this.knex('users')
-                    .where('id', userID)
-                    .update({
-                        name: name,
-                        img: imgURL
-                    })
-            }
-        })
-    }
-
-    // Tag services
-    listAllTags() {
-        let query = this.knex
-            .select('tag.id', 'tag.name')
-            .from('tag')
-            .orderBy('tag.name')
-
-        return query.then(rows => {
             return rows.map(row => ({
-                id: row.id,
-                name: row.name
+                mbti: row.mbti
             }))
         })
     }
 
-    getFavTags(userID) {
+    updateMBTI(userID, atr1, atr2, atr3, atr4) {
+        let mbti = atr1 + atr2 + atr3 + atr4;
+        return this.knex('users').where('id', userID).update({ 'mbti': mbti })
+    }
+
+    getKeyAtr(userID) {
         let query = this.knex
-            .select('users_fav_tag.tag_id','tag.name')
-            .from('users_fav_tag')
-            .innerJoin('tag','users_fav_tag.tag_id','tag.id')
-            .where('users_fav_tag.users_id',userID)
-
-            return query.then(rows => {
-                return rows.map(row => ({
-                    id: row.tag_id,
-                    name: row.name
-                }))
-            })
-    }
-
-    clearFavTags(userID) {
-        return this.knex("users_fav_tag").where("users_id",userID).delete()
-    }
-
-    insertFavTag(userID,tagID) {
-        return this.knex("users_fav_tag")
-            .insert({
-                users_id:userID,
-                tag_id:tagID
-            })
-    }
-
-    // User's review services
-    listOwnReview(userID) {
-        let query = this.knex
-            .select('restaurant.name', 'users_review.id', 'users_review.comment', 'users_review.rating')
-            .from('users_review')
-            .innerJoin('restaurant','users_review.rest_id','restaurant.id')
-            .where('users_review.users_id', userID)
-            .orderBy('users_review.created_at')
+            .select('key_atr')
+            .from('users')
+            .where('id', userID)
 
         return query.then(rows => {
             return rows.map(row => ({
-                rest_name: row.name,
-                id: row.id,
-                comment: row.comment,
-                rating: row.rating
-            }))
+                key_atr: row.key_atr
+            })
+            )
         })
     }
 
-    updateReview(reviewID,comment,rating) {
+    getKeyAtrDesc(userID) {
         let query = this.knex
-            .select()
-            .from('users_review')
-            .where('users_review.id', reviewID);
+            .select('key_atr_desc')
+            .from('users')
+            .where('id', userID)
 
         return query.then(rows => {
-            if (rows.length !== 1) {
-                return new Error('Invalid user');
-            } else {
-                return this.knex('users_review')
-                    .where('users_review.id', reviewID)
-                    .update({
-                        comment: comment,
-                        rating: rating
-                    })
-            }
+            return rows.map(row => ({
+                key_atr_desc: row.key_atr_desc
+            })
+            )
         })
     }
 
-    deleteReview(reviewID) {
-        return this.knex("users_review")
-        .where("users_review.id",reviewID)
-        .delete()
+    updateKeyAtr(userID, atr) {
+        return this.knex('users').update('key_atr', atr).where('id', userID);
+    }
+
+    updateKeyAtrDesc(userID, desc) {
+        return this.knex('users').update('key_atr_desc', desc).where('id', userID);
     }
 
 }

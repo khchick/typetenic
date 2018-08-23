@@ -1,0 +1,22 @@
+{
+  "name": "dating_app",
+  "version": "1.0.0",
+  "description": "backend for RN dating app",
+  "main": "app.js",
+  "author": "King Hei Chick",
+  "license": "MIT",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "connect-redis": "^3.3.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "knex": "^0.15.2",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "pg": "^7.4.3",
+    "require-dir": "^1.0.0",
+    "socket.io": "^2.1.1",
+    "socket.io.session": "^1.0.13"
+  }
+}
