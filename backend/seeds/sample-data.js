@@ -5,11 +5,11 @@ const usersData = require('../sample_data/users_data');
 // const messageData = require('../sample_data/message_data');
 
 exports.seed = function(knex) {
-  return knex('message').del()
-  .then(()=> knex('conversation').del())
-  .then(()=> knex('connection').del())
+  return knex('users').del()
   .then(()=> knex('photo').del())
-  .then(()=> knex('users').del())
+  .then(()=> knex('connection').del())
+  .then(()=> knex('conversation').del())
+  .then(()=> knex('message').del())
   .then(()=> knex('users').insert(usersData))
   // .then(()=> knex('photo').insert(photoData))
   // .then(()=> knex('connection').insert(connectionData))

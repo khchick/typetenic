@@ -35,8 +35,9 @@ exports.up = function (knex, Promise) {
             table.foreign('req_sender_id').references('users.id');
             table.integer('req_receiver_id').unsigned();
             table.foreign('req_receiver_id').references('users.id');
-            table.enu('status', ['Pending', 'Rejected', 'Approved']);
-            table.enu('flip_status', ['Pending', 'Approved']);
+            table.enu('status', ['Requested', 'Rejected', 'Connected']);
+            table.enu('flip_status', ['Requested', 'Rejected', 'Flipped']);
+            table.integer('flip_req_sender');
             table.boolean('system_matched');
             table.timestamps(false, true);
         }),

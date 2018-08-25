@@ -4,349 +4,527 @@ class ConnectionService {
         this.knex = knex;
     }
 
-    getSuggestedUsers(userID) {
+    listSentRequest(userID) {
+        let query = this.knex
+            .select('users.id', 'users.display_name', 'connection.req_receiver_id')
+            .from('connection')
+            .innerJoin('users', 'users.id', 'connection.req_receiver_id')
+            .where('connection.req_sender_id', userID)
+            .orderBy('connection.created_at')
+
+        return query.then(rows => {
+            return rows.map(row => ({
+                id: row.id,
+                display_name: row.display_name,
+            }))
+        })
+    }
+
+    createSentRequest(userID, targetID) {
         let query = this.knex
             .select('mbti')
             .from('users')
-            .where('users.id', userID)
+            .where('id', userID)
 
         return query.then(rows => {
-            let query;
             switch (rows[0].mbti) {
                 case 'ISTJ':
-                    query = this.knex.select('id', 'email', 'dob', 'gender', 'location', 'key_atr', 'key_atr_desc', 'mbti')
+                    let newQuery = this.knex
+                        .select('mbti')
                         .from('users')
-                        .where(function () {
-                            this.where('mbti', 'ESTJ')
-                                .orWhere('mbti', 'ISTJ')
-                                .orWhere('mbti', 'INTJ')
-                                .orWhere('mbti', 'ISTP')
-                                .orWhere('mbti', 'ESTP')
-                        })
-                        .andWhere('id', '!=', userID)
-                        .orderBy('created_at');
-                    break;
+                        .where('id', targetID)
 
-                case 'ISTP':
-                    query = this.knex.select('id', 'email', 'dob', 'gender', 'location', 'key_atr', 'key_atr_desc', 'mbti')
-                        .from('users')
-                        .where(function () {
-                            this.where('mbti', 'ESTJ')
-                                .orWhere('mbti', 'ISTJ')
-                                .orWhere('mbti', 'ENTJ')
-                                .orWhere('mbti', 'ESTP')
-                        })
-                        .andWhere('id', '!=', userID)
-                        .orderBy('created_at');
-                    break;
+                    return newQuery.then(rows => {
+                        if (rows[0].mbti === 'ESTJ' ||
+                            rows[0].mbti === 'ISTJ' ||
+                            rows[0].mbti === 'INTJ' ||
+                            rows[0].mbti === 'ISTP' ||
+                            rows[0].mbti === 'ESTP') {
+                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                        } else {
+                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                        }
+                    });
 
-                case 'ESTP':
-                    query = this.knex.select('id', 'email', 'dob', 'gender', 'location', 'key_atr', 'key_atr_desc', 'mbti')
-                        .from('users')
-                        .where(function () {
-                            this.where('mbti', 'ISTJ')
-                                .orWhere('mbti', 'ESTP')
-                                .orWhere('mbti', 'ISTP')
-                                .orWhere('mbti', 'ESFP')
-                        })
-                        .andWhere('id', '!=', userID)
-                        .orderBy('created_at');
-                    break;
+                // case 'ISTP':
+                //     let newQuery = this.knex
+                //         .select('mbti')
+                //         .from('users')
+                //         .where('id', targetID)
 
-                case 'ESTJ':
-                    query = this.knex.select('id', 'email', 'dob', 'gender', 'location', 'key_atr', 'key_atr_desc', 'mbti')
-                        .from('users')
-                        .where(function () {
-                            this.where('mbti', 'ISTJ')
-                                .orWhere('mbti', 'ESFJ')
-                                .orWhere('mbti', 'ISFJ')
-                                .orWhere('mbti', 'ENTJ')
-                                .orWhere('mbti', 'INTJ')
-                                .orWhere('mbti', 'ISTP')
-                        })
-                        .andWhere('id', '!=', userID)
-                        .orderBy('created_at');
-                    break;
+                //     return newQuery.then(rows => {
+                //         if (rows[0].mbti === 'ESTJ' ||
+                //             rows[0].mbti === 'ISTJ' ||
+                //             rows[0].mbti === 'ENTJ' ||
+                //             rows[0].mbti === 'ESTP') {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                //         } else {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                //         }
+                //     });
 
-                case 'ISFJ':
-                    query = this.knex.select('id', 'email', 'dob', 'gender', 'location', 'key_atr', 'key_atr_desc', 'mbti')
-                        .from('users')
-                        .where(function () {
-                            this.where('mbti', 'ISFJ')
-                                .orWhere('mbti', 'ENFJ')
-                                .orWhere('mbti', 'ESTJ')
-                        })
-                        .andWhere('id', '!=', userID)
-                        .orderBy('created_at');
-                    break;
+                // case 'ESTP':
+                //     newQuery = this.knex
+                //         .select('mbti')
+                //         .from('users')
+                //         .where('id', targetID)
 
-                case 'ISFP':
-                    query = this.knex.select('id', 'email', 'dob', 'gender', 'location', 'key_atr', 'key_atr_desc', 'mbti')
-                        .from('users')
-                        .where(function () {
-                            this.where('mbti', 'ESFP')
-                                .orWhere('mbti', 'ISFP')
-                        })
-                        .andWhere('id', '!=', userID)
-                        .orderBy('created_at');
-                    break;
+                //     return newQuery.then(rows => {
+                //         if (rows[0].mbti === 'ISTJ' ||
+                //             rows[0].mbti === 'ESTP' ||
+                //             rows[0].mbti === 'ISTP' ||
+                //             rows[0].mbti === 'ESFP') {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                //         } else {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                //         }
+                //     })
 
+                // case 'ESTJ':
+                //     newQuery = this.knex
+                //         .select('mbti')
+                //         .from('users')
+                //         .where('id', targetID)
 
-                case 'ESFP':
-                    query = this.knex.select('id', 'email', 'dob', 'gender', 'location', 'key_atr', 'key_atr_desc', 'mbti')
-                        .from('users')
-                        .where(function () {
-                            this.where('mbti', 'ESTP')
-                                .orWhere('mbti', 'ISFP')
-                        })
-                        .andWhere('id', '!=', userID)
-                        .orderBy('created_at');
-                    break;
+                //     return newQuery.then(rows => {
+                //         if (rows[0].mbti === 'ISTJ' ||
+                //             rows[0].mbti === 'ESFJ' ||
+                //             rows[0].mbti === 'ISFJ' ||
+                //             rows[0].mbti === 'ENTJ' ||
+                //             rows[0].mbti === 'INTJ' ||
+                //             rows[0].mbti === 'ISTP') {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                //         } else {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                //         }
+                //     })
 
-                case 'ESFJ':
-                    query = this.knex.select('id', 'email', 'dob', 'gender', 'location', 'key_atr', 'key_atr_desc', 'mbti')
-                        .from('users')
-                        .where(function () {
-                            this.where('mbti', 'ESTP')
-                                .orWhere('mbti', 'ISFP')
-                        })
-                        .andWhere('id', '!=', userID)
-                        .orderBy('created_at');
-                    break;
+                // case 'ISFJ':
+                //     newQuery = this.knex
+                //         .select('mbti')
+                //         .from('users')
+                //         .where('id', targetID)
 
+                //     return newQuery.then(rows => {
+                //         if (rows[0].mbti === 'ISFJ' ||
+                //             rows[0].mbti === 'ENFJ' ||
+                //             rows[0].mbti === 'ESTJ') {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                //         } else {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                //         }
+                //     })
 
-                case 'INFJ':
-                    query = this.knex.select('id', 'email', 'dob', 'gender', 'location', 'key_atr', 'key_atr_desc', 'mbti')
-                        .from('users')
-                        .where(function () {
-                            this.where('mbti', 'ENTP')
-                                .orWhere('mbti', 'ENFP')
-                                .orWhere('mbti', 'INFJ')
-                                .orWhere('mbti', 'INFP')
-                                .orWhere('mbti', 'ENFJ')
-                        })
-                        .andWhere('id', '!=', userID)
-                        .orderBy('created_at');
-                    break;
+                // case 'ISFP':
+                //     newQuery = this.knex
+                //         .select('mbti')
+                //         .from('users')
+                //         .where('id', targetID)
 
-                case 'INFP':
-                    query = this.knex.select('id', 'email', 'dob', 'gender', 'location', 'key_atr', 'key_atr_desc', 'mbti')
-                        .from('users')
-                        .where(function () {
-                            this.where('mbti', 'ENFP')
-                                .orWhere('mbti', 'INFP')
-                                .orWhere('mbti', 'ENFJ')
-                                .orWhere('mbti', 'INFJ')
-                        })
-                        .andWhere('id', '!=', userID)
-                        .orderBy('created_at');
-                    break;
+                //     return newQuery.then(rows => {
+                //         if (rows[0].mbti === 'ESFP' ||
+                //             rows[0].mbti === 'ISFP') {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                //         } else {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                //         }
+                //     })
 
-                case 'ENFP':
-                    query = this.knex.select('id', 'email', 'dob', 'gender', 'location', 'key_atr', 'key_atr_desc', 'mbti')
-                        .from('users')
-                        .where(function () {
-                            this.where('mbti', 'INFJ')
-                                .orWhere('mbti', 'INFP')
-                                .orWhere('mbti', 'ENFJ')
-                                .orWhere('mbti', 'ENFP')
-                                .orWhere('mbti', 'ESFJ')
-                        })
-                        .andWhere('id', '!=', userID)
-                        .orderBy('created_at');
-                    break;
+                // case 'ESFP':
+                //     newQuery = this.knex
+                //         .select('mbti')
+                //         .from('users')
+                //         .where('id', targetID)
 
-                case 'ENFJ':
-                    query = this.knex.select('id', 'email', 'dob', 'gender', 'location', 'key_atr', 'key_atr_desc', 'mbti')
-                        .from('users')
-                        .where(function () {
-                            this.where('mbti', 'ISFJ')
-                                .orWhere('mbti', 'ENFJ')
-                                .orWhere('mbti', 'ENTJ')
-                                .orWhere('mbti', 'INFJ')
-                                .orWhere('mbti', 'ENFP')
-                                .orWhere('mbti', 'INFP')
-                        })
-                        .andWhere('id', '!=', userID)
-                        .orderBy('created_at');
-                    break;
+                //     return newQuery.then(rows => {
+                //         if (rows[0].mbti === 'ESTP' ||
+                //             rows[0].mbti === 'ISFP') {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                //         } else {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                //         }
+                //     })
 
-                case 'INTJ':
-                    query = this.knex.select('id', 'email', 'dob', 'gender', 'location', 'key_atr', 'key_atr_desc', 'mbti')
-                        .from('users')
-                        .where(function () {
-                            this.where('mbti', 'ESTJ')
-                                .orWhere('mbti', 'INTJ')
-                                .orWhere('mbti', 'ISTP')
-                                .orWhere('mbti', 'ENTJ')
-                        })
-                        .andWhere('id', '!=', userID)
-                        .orderBy('created_at');
-                    break;
+                // case 'ESFJ':
+                //     newQuery = this.knex
+                //         .select('mbti')
+                //         .from('users')
+                //         .where('id', targetID)
 
-                case 'INTP':
-                    query = this.knex.select('id', 'email', 'dob', 'gender', 'location', 'key_atr', 'key_atr_desc', 'mbti')
-                        .from('users')
-                        .where(function () {
-                            this.where('mbti', 'ENTP')
-                                .orWhere('mbti', 'INTP')
-                                .orWhere('mbti', 'INTJ')
-                        })
-                        .andWhere('id', '!=', userID)
-                        .orderBy('created_at');
-                    break;
+                //     return newQuery.then(rows => {
+                //         if (rows[0].mbti === 'ESTJ' ||
+                //             rows[0].mbti === 'ENFP') {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                //         } else {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                //         }
+                //     })
 
-                case 'ENTP':
-                    query = this.knex.select('id', 'email', 'dob', 'gender', 'location', 'key_atr', 'key_atr_desc', 'mbti')
-                        .from('users')
-                        .where(function () {
-                            this.where('mbti', 'ENTP')
-                                .orWhere('mbti', 'INTP')
-                                .orWhere('mbti', 'INFJ')
-                        })
-                        .andWhere('id', '!=', userID)
-                        .orderBy('created_at');
-                    break;
+                // case 'INFJ':
+                //     newQuery = this.knex
+                //         .select('mbti')
+                //         .from('users')
+                //         .where('id', targetID)
 
-                case 'ENTJ':
-                    query = this.knex.select('id', 'email', 'dob', 'gender', 'location', 'key_atr', 'key_atr_desc', 'mbti')
-                        .from('users')
-                        .where(function () {
-                            this.where('mbti', 'ESTJ')
-                                .orWhere('mbti', 'ISTP')
-                                .orWhere('mbti', 'ENTJ')
-                                .orWhere('mbti', 'ENFJ')
-                                .orWhere('mbti', 'INTJ')
-                        })
-                        .andWhere('id', '!=', userID)
-                        .orderBy('created_at');
-                    break;
+                //     return newQuery.then(rows => {
+                //         if (rows[0].mbti === 'ENTP' ||
+                //             rows[0].mbti === 'ENFP' ||
+                //             rows[0].mbti === 'INFJ' ||
+                //             rows[0].mbti === 'INFP' ||
+                //             rows[0].mbti === 'ENFJ') {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                //         } else {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                //         }
+                //     })
+
+                // case 'INFP':
+                //     newQuery = this.knex
+                //         .select('mbti')
+                //         .from('users')
+                //         .where('id', targetID)
+
+                //     return newQuery.then(rows => {
+                //         if (rows[0].mbti === 'ENFP' ||
+                //             rows[0].mbti === 'INFP' ||
+                //             rows[0].mbti === 'ENFJ' ||
+                //             rows[0].mbti === 'INFJ') {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                //         } else {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                //         }
+                //     })
+
+                // case 'ENFP':
+                //     newQuery = this.knex
+                //         .select('mbti')
+                //         .from('users')
+                //         .where('id', targetID)
+
+                //     return newQuery.then(rows => {
+                //         if (rows[0].mbti === 'INFJ' ||
+                //             rows[0].mbti === 'INFP' ||
+                //             rows[0].mbti === 'ENFJ' ||
+                //             rows[0].mbti === 'ENFP' ||
+                //             rows[0].mbti === 'ESFJ') {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                //         } else {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                //         }
+                //     })
+
+                // case 'ENFJ':
+                //     newQuery = this.knex
+                //         .select('mbti')
+                //         .from('users')
+                //         .where('id', targetID)
+
+                //     return newQuery.then(rows => {
+                //         if (rows[0].mbti === 'ISFJ' ||
+                //             rows[0].mbti === 'ENFJ' ||
+                //             rows[0].mbti === 'ENTJ' ||
+                //             rows[0].mbti === 'INFJ' ||
+                //             rows[0].mbti === 'ENFP' ||
+                //             rows[0].mbti === 'INFP') {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                //         } else {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                //         }
+                //     })
+
+                // case 'INTJ':
+                //     newQuery = this.knex
+                //         .select('mbti')
+                //         .from('users')
+                //         .where('id', targetID)
+
+                //     return newQuery.then(rows => {
+                //         if (rows[0].mbti === 'ESTJ' ||
+                //             rows[0].mbti === 'INTJ' ||
+                //             rows[0].mbti === 'ISTP' ||
+                //             rows[0].mbti === 'ENTJ') {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                //         } else {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                //         }
+                //     })
+
+                // case 'INTP':
+                //     newQuery = this.knex
+                //         .select('mbti')
+                //         .from('users')
+                //         .where('id', targetID)
+
+                //     return newQuery.then(rows => {
+                //         if (rows[0].mbti === 'ENTP' ||
+                //             rows[0].mbti === 'INTP' ||
+                //             rows[0].mbti === 'INTJ') {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                //         } else {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                //         }
+                //     })
+
+                // case 'ENTP':
+                //     newQuery = this.knex
+                //         .select('mbti')
+                //         .from('users')
+                //         .where('id', targetID)
+
+                //     return newQuery.then(rows => {
+                //         if (rows[0].mbti === 'ENTP' ||
+                //             rows[0].mbti === 'INTP' ||
+                //             rows[0].mbti === 'INFJ') {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                //         } else {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                //         }
+                //     })
+
+                // case 'ENTJ':
+                //     newQuery = this.knex
+                //         .select('mbti')
+                //         .from('users')
+                //         .where('id', targetID)
+
+                //     return newQuery.then(rows => {
+                //         if (rows[0].mbti === 'ESTJ' ||
+                //             rows[0].mbti === 'ISTP' ||
+                //             rows[0].mbti === 'ENTJ' ||
+                //             rows[0].mbti === 'ENFJ' ||
+                //             rows[0].mbti === 'INTJ') {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                //         } else {
+                //             return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                //         }
+                //     })
             }
-
-            return query.then(rows => {
-                return rows.map(row => (
-                    {
-                        id: row.id,
-                        email: row.email,
-                        dob: row.dob,
-                        gender: row.gender,
-                        location: row.location,
-                        key_atr: row.key_atr,
-                        key_atr_desc: row.key_atr_desc,
-                        mbti: row.mbti
-                    }
-                ))
-            })
         })
     }
 
-    updateUserDetail(userID, name, imgURL) {
+    listConnectedSuggestions(userID) {
         let query = this.knex
-            .select()
+            .select('users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
             .from('users')
-            .where('users.id', userID);
-
-        return query.then(rows => {
-            if (rows.length !== 1) {
-                return new Error('Invalid user');
-            } else {
-                return this.knex('users')
-                    .where('id', userID)
-                    .update({
-                        name: name,
-                        img: imgURL
+            .innerJoin('connection', function () {
+                this
+                    .on(function() {
+                        this.on('connection.req_receiver_id', 'users.id')
+                            .andOn('connection.req_sender_id', userID)
                     })
-            }
-        })
-    }
-
-    // Tag services
-    listAllTags() {
-        let query = this.knex
-            .select('tag.id', 'tag.name')
-            .from('tag')
-            .orderBy('tag.name')
+                    .orOn(function() {
+                        this.on('connection.req_sender_id', 'users.id')
+                            .andOn('connection.req_receiver_id', userID)
+                    })
+            })
+            .andWhere('status', 'Connected')
+            .andWhere('system_matched', true)
+            .orderBy('connection.created_at')
 
         return query.then(rows => {
             return rows.map(row => ({
                 id: row.id,
-                name: row.name
+                display_name: row.display_name,
+                dob: row.dob,
+                gender: row.gender,
+                location: row.location,
+                key_atr: row.key_atr,
+                key_atr_desc: row.key_atr_desc,
+                mbti: row.mbti
             }))
         })
     }
 
-    getFavTags(userID) {
+    listConnectedUsers(userID) {
         let query = this.knex
-            .select('users_fav_tag.tag_id', 'tag.name')
-            .from('users_fav_tag')
-            .innerJoin('tag', 'users_fav_tag.tag_id', 'tag.id')
-            .where('users_fav_tag.users_id', userID)
+            .select('users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+            .from('users')
+            .innerJoin('connection', function () {
+                this
+                    .on(function() {
+                        this.on('connection.req_receiver_id', 'users.id')
+                            .andOn('connection.req_sender_id', userID)
+                    })
+                    .orOn(function() {
+                        this.on('connection.req_sender_id', 'users.id')
+                            .andOn('connection.req_receiver_id', userID)
+                    })
+            })
+            .andWhere('status', 'Connected')
+            .andWhere('system_matched', false)
+            .orderBy('connection.created_at')
 
         return query.then(rows => {
             return rows.map(row => ({
-                id: row.tag_id,
-                name: row.name
+                id: row.id,
+                display_name: row.display_name,
+                dob: row.dob,
+                gender: row.gender,
+                location: row.location,
+                key_atr: row.key_atr,
+                key_atr_desc: row.key_atr_desc,
+                mbti: row.mbti
             }))
         })
     }
 
-    clearFavTags(userID) {
-        return this.knex("users_fav_tag").where("users_id", userID).delete()
+    deleteConnectedSuggestion(userID, targetID) {
+        return this.knex.delete()
+            .from('connection')
+            .where('req_sender_id', userID)
+            .andWhere('req_receiver_id', targetID)
+            .andWhere('system_matched', true)
     }
 
-    insertFavTag(userID, tagID) {
-        return this.knex("users_fav_tag")
-            .insert({
-                users_id: userID,
-                tag_id: tagID
+    deleteConnectedUser(userID, targetID) {
+        return this.knex.delete()
+            .from('connection')
+            .where('req_sender_id', userID)
+            .andWhere('req_receiver_id', targetID)
+            .andWhere('system_matched', false)
+    }
+
+    listReceivedRequests(userID) {
+        let query = this.knex
+            .select('users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+            .from('users')
+            .innerJoin('connection', 'users.id', 'connection.req_sender_id')
+            .where('connection.req_receiver_id', userID)
+            .andWhere('status', 'Requested')
+            .andWhere('system_matched', false)
+            .orderBy('connection.created_at')
+
+        return query.then(rows => {
+            return rows.map(row => ({
+                id: row.id,
+                display_name: row.display_name,
+                dob: row.dob,
+                gender: row.gender,
+                location: row.location,
+                key_atr: row.key_atr,
+                key_atr_desc: row.key_atr_desc,
+                mbti: row.mbti
+            }))
+        })
+    }
+
+    approveRequest(userID, targetID) {
+        let query = this.knex
+            .select('id')
+            .from('connection')
+            .where(function () {
+                this.where('connection.req_sender_id', userID)
+                    .andWhere('system_matched', false)
+                    .andWhere('status', 'Connected')
+            })
+            .orWhere(function () {
+                this.where('connection.req_receiver_id', userID)
+                    .andWhere('system_matched', false)
+                    .andWhere('status', 'Connected')
+            })
+            .orWhere(function () {
+                this.where('connection.req_sender_id', targetID)
+                    .andWhere('system_matched', false)
+                    .andWhere('status', 'Connected')
+            })
+            .orWhere(function () {
+                this.where('connection.req_receiver_id', targetID)
+                    .andWhere('system_matched', false)
+                    .andWhere('status', 'Connected')
+            })
+
+        return query.then(rows => {
+            if (rows.length >= 10) {
+                console.log(new Error('Either your deck or your target\'s deck is full. Connection cannot be made at the moment.'));
+            } else {
+                return this.knex.update('status', 'Connected')
+                    .from('connection')
+                    .where('req_sender_id', targetID)
+                    .andWhere('req_receiver_id', userID)
+                    .andWhere('system_matched', false)
+            }
+        })
+    }
+
+
+    rejectRequest(userID, targetID) {
+        return this.knex.update('status', 'Rejected')
+            .from('connection')
+            .where('req_sender_id', targetID)
+            .andWhere('req_receiver_id', userID)
+            .andWhere('system_matched', false)
+    }
+
+    getFlipStatus(userID, targetID) {
+        let query = this.knex
+            .select('connection.flip_status', 'connection.flip_req_sender')
+            .from('connection')
+            .where(function () {
+                this.where('connection.req_sender_id', userID)
+                    .andWhere('connection.req_receiver_id', targetID)
+                    .andWhere('status', 'Connected')
+            })
+            .orWhere(function () {
+                this.where('connection.req_sender_id', targetID)
+                    .andWhere('connection.req_receiver_id', userID)
+                    .andWhere('status', 'Connected')
+            })
+
+        return query.then(rows => {
+            return rows.map(row => ({
+                flip_status: row.flip_status,
+                flip_req_sender: row.flip_req_sender
+            }))
+        })
+    }
+
+    sendFlipRequest(userID, targetID) {
+        return this.knex.update({
+            'flip_status': 'Requested',
+            'flip_req_sender': userID
+        })
+            .from('connection')
+            .where(function () {
+                this.where('req_sender_id', userID)
+                    .andWhere('req_receiver_id', targetID)
+                    .andWhere('status', 'Connected')
+            })
+            .orWhere(function () {
+                this.where('req_sender_id', targetID)
+                    .andWhere('req_receiver_id', userID)
+                    .andWhere('status', 'Connected')
             })
     }
 
-    // User's review services
-    listOwnReview(userID) {
-        let query = this.knex
-            .select('restaurant.name', 'users_review.id', 'users_review.comment', 'users_review.rating')
-            .from('users_review')
-            .innerJoin('restaurant', 'users_review.rest_id', 'restaurant.id')
-            .where('users_review.users_id', userID)
-            .orderBy('users_review.created_at')
-
-        return query.then(rows => {
-            return rows.map(row => ({
-                rest_name: row.name,
-                id: row.id,
-                comment: row.comment,
-                rating: row.rating
-            }))
-        })
+    approveFlipRequest(userID, targetID) {
+        return this.knex.update('flip_status', 'Flipped')
+            .from('connection')
+            .where(function () {
+                this.where('req_sender_id', userID)
+                    .andWhere('req_receiver_id', targetID)
+            })
+            .orWhere(function () {
+                this.where('req_sender_id', targetID)
+                    .andWhere('req_receiver_id', userID)
+            })
+            .andWhere('flip_req_sender', targetID)
+            .andWhere('status', 'Connected')
     }
 
-    updateReview(reviewID, comment, rating) {
-        let query = this.knex
-            .select()
-            .from('users_review')
-            .where('users_review.id', reviewID);
-
-        return query.then(rows => {
-            if (rows.length !== 1) {
-                return new Error('Invalid user');
-            } else {
-                return this.knex('users_review')
-                    .where('users_review.id', reviewID)
-                    .update({
-                        comment: comment,
-                        rating: rating
-                    })
-            }
-        })
+    rejectFlipRequest(userID, targetID) {
+        return this.knex.update('flip_status', 'Rejected')
+            .from('connection')
+            .where(function () {
+                this.where('req_sender_id', userID)
+                    .andWhere('req_receiver_id', targetID)
+            })
+            .orWhere(function () {
+                this.where('req_sender_id', targetID)
+                    .andWhere('req_receiver_id', userID)
+            })
+            .andWhere('flip_req_sender', targetID)
+            .andWhere('status', 'Connected')
     }
-
-    deleteReview(reviewID) {
-        return this.knex("users_review")
-            .where("users_review.id", reviewID)
-            .delete()
-    }
-
 }
 
 module.exports = ConnectionService;
