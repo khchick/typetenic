@@ -4,7 +4,7 @@ class ConnectionService {
         this.knex = knex;
     }
 
-    listSentRequest(userID) {
+    listSentRequests(userID) {
         let query = this.knex
             .select('users.id', 'users.display_name', 'connection.req_receiver_id')
             .from('connection')
