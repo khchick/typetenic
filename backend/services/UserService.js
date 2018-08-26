@@ -745,23 +745,23 @@ class UserService {
 
     getOwnProfile(userID) {
         let query = this.knex
-        .select(
-            'id',
-            'email',
-            'password',
-            'display_name',
-            'dob',
-            'gender',
-            'orientation',
-            'location',
-            'mbti',
-            'key_atr',
-            'key_atr_desc',
-            'profile_pic',
-            'ig_account',
-            'ideal_first_date',
-            'token'
-        )
+            .select(
+                'id',
+                'email',
+                'password',
+                'display_name',
+                'dob',
+                'gender',
+                'orientation',
+                'location',
+                'mbti',
+                'key_atr',
+                'key_atr_desc',
+                'profile_pic',
+                'ig_account',
+                'ideal_first_date',
+                'token'
+            )
             .from('users')
             .where('users.id', userID);
 
@@ -786,11 +786,349 @@ class UserService {
         })
     }
 
-    drawCard(userID) {
-        let pool = this.getNonSuggestedUsers(userID);
-        return pool[Math.floor(Math.random() * pool.length)];
+    updateProfile(userID,
+        password,
+        display_name,
+        dob,
+        gender,
+        orientation,
+        location,
+        mbti,
+        key_atr,
+        key_atr_desc,
+        profile_pic,
+        ig_account,
+        ideal_first_date
+    ) {
+        return this.knex('users')
+            .where('id', userID)
+            .update({
+                password: password,
+                display_name: display_name,
+                dob: dob,
+                gender: gender,
+                orientation: orientation,
+                location: location,
+                mbti: mbti,
+                key_atr: key_atr,
+                key_atr_desc: key_atr_desc,
+                profile_pic: profile_pic,
+                ig_account: ig_account,
+                ideal_first_date: ideal_first_date
+            })
     }
-    
+
+    drawCard(userID) {
+        let query = this.knex
+            .select('mbti')
+            .from('users')
+            .where('users.id', userID)
+
+        return query.then(rows => {
+            let query;
+            switch (rows[0].mbti) {
+                case 'ISTJ':
+                    query = this.knex.select('connection.status', 'users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+                        .from('users')
+                        .leftOuterJoin('connection', function () {
+                            this
+                                .on('connection.req_receiver_id', 'users.id')
+                                .orOn('connection.req_sender_id', 'users.id')
+                        })
+                        .where(function () {
+                            this.where('users.mbti', '!=', 'ESTJ')
+                                .andWhere('users.mbti', '!=', 'ISTJ')
+                                .andWhere('users.mbti', '!=', 'INTJ')
+                                .andWhere('users.mbti', '!=', 'ISTP')
+                                .andWhere('users.mbti', '!=', 'ESTP')
+                        })
+                        .andWhere('users.id', '!=', userID)
+                        .orderBy('users.created_at');
+                    break;
+
+                case 'ISTP':
+                    query = this.knex.select('connection.status', 'users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+                        .from('users')
+                        .leftOuterJoin('connection', function () {
+                            this
+                                .on('connection.req_receiver_id', 'users.id')
+                                .orOn('connection.req_sender_id', 'users.id')
+                        })
+                        .where(function () {
+                            this.where('users.mbti', '!=', 'ESTJ')
+                                .andWhere('users.mbti', '!=', 'ISTJ')
+                                .andWhere('users.mbti', '!=', 'ENTJ')
+                                .andWhere('users.mbti', '!=', 'ESTP')
+                        })
+                        .andWhere('users.id', '!=', userID)
+                        .orderBy('users.created_at');
+                    break;
+
+                case 'ESTP':
+                    query = this.knex.select('connection.status', 'users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+                        .from('users')
+                        .leftOuterJoin('connection', function () {
+                            this
+                                .on('connection.req_receiver_id', 'users.id')
+                                .orOn('connection.req_sender_id', 'users.id')
+                        })
+                        .where(function () {
+                            this.where('users.mbti', '!=', 'ISTJ')
+                                .andWhere('users.mbti', '!=', 'ESTP')
+                                .andWhere('users.mbti', '!=', 'ISTP')
+                                .andWhere('users.mbti', '!=', 'ESFP')
+                        })
+                        .andWhere('users.id', '!=', userID)
+                        .orderBy('users.created_at');
+                    break;
+
+                case 'ESTJ':
+                    query = this.knex.select('connection.status', 'users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+                        .from('users')
+                        .leftOuterJoin('connection', function () {
+                            this
+                                .on('connection.req_receiver_id', 'users.id')
+                                .orOn('connection.req_sender_id', 'users.id')
+                        })
+                        .where(function () {
+                            this.where('users.mbti', '!=', 'ISTJ')
+                                .andWhere('users.mbti', '!=', 'ESFJ')
+                                .andWhere('users.mbti', '!=', 'ISFJ')
+                                .andWhere('users.mbti', '!=', 'ENTJ')
+                                .andWhere('users.mbti', '!=', 'INTJ')
+                                .andWhere('users.mbti', '!=', 'ISTP')
+                        })
+                        .andWhere('users.id', '!=', userID)
+                        .orderBy('users.created_at');
+                    break;
+
+                case 'ISFJ':
+                    query = this.knex.select('connection.status', 'users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+                        .from('users')
+                        .leftOuterJoin('connection', function () {
+                            this
+                                .on('connection.req_receiver_id', 'users.id')
+                                .orOn('connection.req_sender_id', 'users.id')
+                        })
+                        .where(function () {
+                            this.where('users.mbti', '!=', 'ISFJ')
+                                .andWhere('users.mbti', '!=', 'ENFJ')
+                                .andWhere('users.mbti', '!=', 'ESTJ')
+                        })
+                        .andWhere('users.id', '!=', userID)
+                        .orderBy('users.created_at');
+                    break;
+
+                case 'ISFP':
+                    query = this.knex.select('connection.status', 'users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+                        .from('users')
+                        .leftOuterJoin('connection', function () {
+                            this
+                                .on('connection.req_receiver_id', 'users.id')
+                                .orOn('connection.req_sender_id', 'users.id')
+                        })
+                        .where(function () {
+                            this.where('users.mbti', '!=', 'ESFP')
+                                .andWhere('users.mbti', '!=', 'ISFP')
+                        })
+                        .andWhere('users.id', '!=', userID)
+                        .orderBy('users.created_at');
+                    break;
+
+
+                case 'ESFP':
+                    query = this.knex.select('connection.status', 'users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+                        .from('users')
+                        .leftOuterJoin('connection', function () {
+                            this
+                                .on('connection.req_receiver_id', 'users.id')
+                                .orOn('connection.req_sender_id', 'users.id')
+                        })
+                        .where(function () {
+                            this.where('users.mbti', '!=', 'ESTP')
+                                .andWhere('users.mbti', '!=', 'ISFP')
+                        })
+                        .andWhere('users.id', '!=', userID)
+                        .orderBy('users.created_at');
+                    break;
+
+                case 'ESFJ':
+                    query = this.knex.select('connection.status', 'users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+                        .from('users')
+                        .leftOuterJoin('connection', function () {
+                            this
+                                .on('connection.req_receiver_id', 'users.id')
+                                .orOn('connection.req_sender_id', 'users.id')
+                        })
+                        .where(function () {
+                            this.where('users.mbti', '!=', 'ESTP')
+                                .andWhere('users.mbti', '!=', 'ISFP')
+                        })
+                        .andWhere('users.id', '!=', userID)
+                        .orderBy('users.created_at');
+                    break;
+
+
+                case 'INFJ':
+                    query = this.knex.select('connection.status', 'users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+                        .from('users')
+                        .leftOuterJoin('connection', function () {
+                            this
+                                .on('connection.req_receiver_id', 'users.id')
+                                .orOn('connection.req_sender_id', 'users.id')
+                        })
+                        .where(function () {
+                            this.where('users.mbti', '!=', 'ENTP')
+                                .andWhere('users.mbti', '!=', 'ENFP')
+                                .andWhere('users.mbti', '!=', 'INFJ')
+                                .andWhere('users.mbti', '!=', 'INFP')
+                                .andWhere('users.mbti', '!=', 'ENFJ')
+                        })
+                        .andWhere('users.id', '!=', userID)
+                        .orderBy('users.created_at');
+                    break;
+
+                case 'INFP':
+                    query = this.knex.select('connection.status', 'users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+                        .from('users')
+                        .leftOuterJoin('connection', function () {
+                            this
+                                .on('connection.req_receiver_id', 'users.id')
+                                .orOn('connection.req_sender_id', 'users.id')
+                        })
+                        .where(function () {
+                            this.where('users.mbti', '!=', 'ENFP')
+                                .andWhere('users.mbti', '!=', 'INFP')
+                                .andWhere('users.mbti', '!=', 'ENFJ')
+                                .andWhere('users.mbti', '!=', 'INFJ')
+                        })
+                        .andWhere('users.id', '!=', userID)
+                        .orderBy('users.created_at');
+                    break;
+
+                case 'ENFP':
+                    query = this.knex.select('connection.status', 'users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+                        .from('users')
+                        .leftOuterJoin('connection', function () {
+                            this
+                                .on('connection.req_receiver_id', 'users.id')
+                                .orOn('connection.req_sender_id', 'users.id')
+                        })
+                        .where(function () {
+                            this.where('users.mbti', '!=', 'INFJ')
+                                .andWhere('users.mbti', '!=', 'INFP')
+                                .andWhere('users.mbti', '!=', 'ENFJ')
+                                .andWhere('users.mbti', '!=', 'ENFP')
+                                .andWhere('users.mbti', '!=', 'ESFJ')
+                        })
+                        .andWhere('users.id', '!=', userID)
+                        .orderBy('users.created_at');
+                    break;
+
+                case 'ENFJ':
+                    query = this.knex.select('connection.status', 'users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+                        .from('users')
+                        .leftOuterJoin('connection', function () {
+                            this
+                                .on('connection.req_receiver_id', 'users.id')
+                                .orOn('connection.req_sender_id', 'users.id')
+                        })
+                        .where(function () {
+                            this.where('users.mbti', '!=', 'ISFJ')
+                                .andWhere('users.mbti', '!=', 'ENFJ')
+                                .andWhere('users.mbti', '!=', 'ENTJ')
+                                .andWhere('users.mbti', '!=', 'INFJ')
+                                .andWhere('users.mbti', '!=', 'ENFP')
+                                .andWhere('users.mbti', '!=', 'INFP')
+                        })
+                        .andWhere('users.id', '!=', userID)
+                        .orderBy('users.created_at');
+                    break;
+
+                case 'INTJ':
+                    query = this.knex.select('connection.status', 'users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+                        .from('users')
+                        .leftOuterJoin('connection', function () {
+                            this
+                                .on('connection.req_receiver_id', 'users.id')
+                                .orOn('connection.req_sender_id', 'users.id')
+                        })
+                        .where(function () {
+                            this.where('users.mbti', '!=', 'ESTJ')
+                                .andWhere('users.mbti', '!=', 'INTJ')
+                                .andWhere('users.mbti', '!=', 'ISTP')
+                                .andWhere('users.mbti', '!=', 'ENTJ')
+                        })
+                        .andWhere('users.id', '!=', userID)
+                        .orderBy('users.created_at');
+                    break;
+
+                case 'INTP':
+                    query = this.knex.select('connection.status', 'users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+                        .from('users')
+                        .leftOuterJoin('connection', function () {
+                            this
+                                .on('connection.req_receiver_id', 'users.id')
+                                .orOn('connection.req_sender_id', 'users.id')
+                        })
+                        .where(function () {
+                            this.where('users.mbti', '!=', 'ENTP')
+                                .andWhere('users.mbti', '!=', 'INTP')
+                                .andWhere('users.mbti', '!=', 'INTJ')
+                        })
+                        .andWhere('users.id', '!=', userID)
+                        .orderBy('users.created_at');
+                    break;
+
+                case 'ENTP':
+                    query = this.knex.select('connection.status', 'users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+                        .from('users')
+                        .leftOuterJoin('connection', function () {
+                            this
+                                .on('connection.req_receiver_id', 'users.id')
+                                .orOn('connection.req_sender_id', 'users.id')
+                        })
+                        .where(function () {
+                            this.where('users.mbti', '!=', 'ENTP')
+                                .andWhere('users.mbti', '!=', 'INTP')
+                                .andWhere('users.mbti', '!=', 'INFJ')
+                        })
+                        .andWhere('users.id', '!=', userID)
+                        .orderBy('users.created_at');
+                    break;
+
+                case 'ENTJ':
+                    query = this.knex.select('connection.status', 'users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+                        .from('users')
+                        .leftOuterJoin('connection', function () {
+                            this
+                                .on('connection.req_receiver_id', 'users.id')
+                                .orOn('connection.req_sender_id', 'users.id')
+                        })
+                        .where(function () {
+                            this.where('users.mbti', '!=', 'ESTJ')
+                                .andWhere('users.mbti', '!=', 'ISTP')
+                                .andWhere('users.mbti', '!=', 'ENTJ')
+                                .andWhere('users.mbti', '!=', 'ENFJ')
+                                .andWhere('users.mbti', '!=', 'INTJ')
+                        })
+                        .andWhere('users.id', '!=', userID)
+                        .orderBy('users.created_at');
+                    break;
+            }
+
+            return query.then(rows => {
+                let pool = [];
+                for (let i = 0; i < rows.length; i++) {
+                    if (rows[i].status === null) {
+                        pool.push(rows[i]);
+                    }
+                }
+                return pool[Math.floor(Math.random() * pool.length)];
+            })
+        })
+    }
+
 }
 
 module.exports = UserService;

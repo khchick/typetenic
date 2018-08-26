@@ -8,6 +8,8 @@ class UserRouter {
     router() {
         let router = express.Router();
 
+        // HOW TO CREATE USER? ===> PASSPORT / JWT SIGN UP?
+
         // MBTI @ SIGN UP 
         
         //     POST?
@@ -73,6 +75,14 @@ class UserRouter {
                 .catch((err) => res.status(500).json(err));
         })
 
+        // DRAW CARD
+
+        router.get('/luckydraw', (req, res) => { // randomly get a user from all those not matching own type and without connection status
+            this.userService.drawCard(req.user.id)
+                .then((users) => res.json(users))
+                .catch((err) => res.status(500).json(err));
+        })
+
         // OTHER USERS' PROFILE
 
         router.get('/profile/public/:targetID', (req, res) => { // public profile at card front
@@ -95,13 +105,22 @@ class UserRouter {
                 .catch((err) => res.status(500).json(err));
         })
 
-        // NEED put method to update own profile
-
-        // DRAW CARD
-
-        router.get('/luckydraw', (req, res) => { // randomly get a user from all those not matching own type and without connection status
-            this.userService.drawCard(req.user.id)
-                .then((users) => res.json(users))
+        router.put('/myprofile', (req, res) => { // update profile details
+            this.userService.updateProfile(req.user.id, 
+                req.body.password,
+                req.body.display_name,
+                req.body.dob,
+                req.body.gender,
+                req.body.orientation,
+                req.body.location,
+                req.body.mbti,
+                req.body.key_atr,
+                req.body.key_atr_desc,
+                req.body.profile_pic,
+                req.body.ig_account,
+                req.body.ideal_first_date)
+                .then(() => this.userService.getOwnProfile(req.user.id))
+                .then((data) => res.json(data))
                 .catch((err) => res.status(500).json(err));
         })
 
