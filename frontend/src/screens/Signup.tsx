@@ -1,10 +1,10 @@
 import * as React from 'react';
+import LinearGradient from 'react-native-linear-gradient';
+import {transparentNav, globalStyle} from './styles/common';
 import {
     StyleSheet, 
     Text, 
     TextInput,
-    DatePickerIOS,
-    Picker,
     TouchableOpacity,
     StatusBar,
     View,
@@ -12,70 +12,33 @@ import {
     Alert
 } from 'react-native';
 
-
 interface SignupProps {
     navigator: Navigator
 }
 
 interface SignupStates {
-  name: string,
   email: string,
   password: string,
-  chosenDate: Date,
-  gender: string,
-  orientation: string,
-  location: string,
 }
 
 export default class Signup extends React.Component<SignupProps, SignupStates> {
   constructor(props: SignupProps) {
     super(props);
     this.state = {
-      name: '', 
       email: '',
       password: '',
-      chosenDate: new Date(),
-      gender: '',
-      orientation: '',
-      location: '',
     };
-
-    // this.setDate = this.setDate.bind(this);
-  }
-
-  setDate(newDate: Date) {
-    this.setState({chosenDate: newDate})
-  }
-
-  // sign up flow WIP 
-  onSignupPress() {
-    // console.log(this.state)
-    Alert.alert(
-      'Sign Up Successful', // Alert Title
-      'Start typetenic', // Alert Msg
-      // [
-      //   {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-      //   {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-      //   {text: 'OK', onPress: () => console.log('OK Pressed')},
-      // ],
-      // { cancelable: false }
-    )
   }
 
   render() {
     return (
+      <LinearGradient colors={['#9EF8E4', '#30519B']} style={[{flex: 1}]}>
       <KeyboardAvoidingView behavior='padding' style={styles.container}>
+
           <Text style={styles.welcome}>
-           Sign Up
+           Create Account
           </Text>
 
-          <TextInput placeholder='Display Name'
-            onChangeText={ (val) => this.setState({name: val}) } 
-            placeholderTextColor='#fff'
-            returnKeyType='next'
-            keyboardType='email-address'
-            style={styles.input}
-          />
           <TextInput placeholder='Email' 
             onChangeText={ (val) => this.setState({email: val}) } 
             placeholderTextColor='#fff'
@@ -90,42 +53,27 @@ export default class Signup extends React.Component<SignupProps, SignupStates> {
             returnKeyType='next'
             style={styles.input}
           />
-
-            {/* <Text>Date of Birth</Text>
-            <DatePickerIOS
-              mode='date'
-              date={this.state.chosenDate}
-              onDateChange={(newDate) => this.setDate(newDate)}
-              // style={[{ height: 100 }]}
-            />
-            <Text style={styles.btnText}>{this.state.chosenDate}}</Text> */}
-
-            {/* <Text>Gender</Text>
-            <Picker
-              // style={{ height: 50, width: 100 }}
-              onValueChange={(itemValue, itemIndex) => this.setState({gender: itemValue})}>
-              <Picker.Item label="Male" value="male" />
-              <Picker.Item label="Female" value="female" />
-            </Picker> */}
-
-
+            
             <TouchableOpacity style={styles.btnContainer} 
-              onPress={() => this.onSignupPress()
-              }>
-              <Text style={styles.btnText}>Sign Up</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.btnContainer}
-              onPress={() => this.props.navigator.showModal({
-                screen: 'LoginScreen',
+              onPress={() => this.props.navigator.push({
+                screen: 'SignupContScreen',
                 navigatorStyle: {
-                  navBarHidden: true, 
+                  navBarTransparent: true, 
                   tabBarHidden: true },
             })}>
-              <Text style={styles.btnText}>Login</Text>
+              <Text style={styles.btnText}>Continue</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              onPress={() => this.props.navigator.showModal({
+                screen: 'LoginScreen',
+                navigatorStyle: transparentNav,
+            })}>
+              <Text style={styles.btnText}>Got an account? Login here</Text>
             </TouchableOpacity>    
 
       </KeyboardAvoidingView>
+      </LinearGradient>
     );
   }
 }
@@ -137,7 +85,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ff927c',
     padding: 10
   },
   welcome: {
@@ -156,8 +103,7 @@ const styles = StyleSheet.create({
     width: '85%'
   },
   btnContainer: {
-    // backgroundColor: 'rgba(255,255,255,0.3)',
-    borderWidth: 0.5,
+    backgroundColor: '#ffa18e',
     borderColor: '#fff',
     paddingHorizontal: 15,
     paddingVertical: 15,

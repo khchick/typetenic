@@ -1,4 +1,5 @@
 import * as React from 'react';
+import LinearGradient from 'react-native-linear-gradient';
 import {
     Platform, 
     StyleSheet, 
@@ -6,12 +7,16 @@ import {
     View,
     TouchableOpacity
 } from 'react-native';
+import {connect} from 'react-redux';
+import {logoutUser} from '../actions/authAction';
 
 interface UserProps {
-    navigator: Navigator
+    navigator: Navigator,
+    onLogoutPress: () => void
+
 }
 
-export default class User extends React.Component<UserProps> {
+class PureUser extends React.Component<UserProps> {
 
   static navigatorButtons = {
     rightButtons: [     
@@ -24,36 +29,45 @@ export default class User extends React.Component<UserProps> {
 
   render() {
     return (
+      <LinearGradient colors={['#9EF8E4', '#30519B']} style={[{flex: 1}]}>
       <View style={styles.container}>
-        <TouchableOpacity onPress={() => this.props.navigator.push({
-            screen: 'Settings',
-            title: 'Settings'
-        })}>
-            <Text style={styles.welcome}>Click to see Setting</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.navigator.push({
+              screen: 'Settings',
+              title: 'Settings'
+          })}>
+              <Text style={styles.welcome}>Click to see Setting</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => {} }>
-            <Text style={styles.welcome}               
-              onPress={() => this.props.navigator.resetTo({
-                screen: 'LoginScreen',
-                animated: false,
-                navigatorStyle: {
-                  navBarHidden: true, 
-                  tabBarHidden: true },
-              })}
-            >Logout</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => 
+              this.props.onLogoutPress()
+            }>
+              <Text style={styles.welcome}>Logout</Text>
+          </TouchableOpacity>
+
       </View>
+      </LinearGradient>
     );
   }
 }
+
+const MapStateToProps = (state: any) => {
+  return {
+    isLoggedIn: state.authReducer
+  }
+}
+
+const mapDispatchToProps = (dispatch: any) => ({
+  onLogoutPress: () => dispatch(logoutUser())
+})
+
+const User = connect(MapStateToProps, mapDispatchToProps)(PureUser);
+export default User;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,

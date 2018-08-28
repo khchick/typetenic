@@ -1,4 +1,5 @@
 import * as React from 'react';
+import LinearGradient from 'react-native-linear-gradient';
 import {
     StyleSheet, 
     Text, 
@@ -21,9 +22,13 @@ export default class Request extends React.Component<RequestProps> {
 
   render() {
     return (
+      <LinearGradient colors={['#9EF8E4', '#30519B']} style={[{flex: 1}]}>
       <View style={styles.container}>
         <Text style={styles.welcome}>Request List</Text>
+        
+        
       </View>
+      </LinearGradient>
     );
   }
 }
@@ -33,7 +38,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,

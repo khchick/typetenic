@@ -1,4 +1,5 @@
 import * as React from 'react';
+import LinearGradient from 'react-native-linear-gradient';
 import {
     StyleSheet, 
     Text, 
@@ -14,6 +15,7 @@ type Props = {};
 export default class Deck extends React.Component<Props> {
   render() {
     return (
+      <LinearGradient colors={['#9EF8E4', '#30519B']} style={[{flex: 1}]}>
       <View style={styles.container}>
 
         <ScrollView 
@@ -53,6 +55,7 @@ export default class Deck extends React.Component<Props> {
         </ScrollView>
 
       </View>
+      </LinearGradient>
     );
   }
 }
@@ -62,7 +65,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
   card: {
     justifyContent: 'center',
