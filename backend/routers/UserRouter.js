@@ -9,8 +9,7 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         cb(null,
-            // Date.now() + '-' + 
-            file.originalname)
+            `${file.originalname}-${Date.now()}`)
     }
 })
 const upload = multer({ storage: storage })
@@ -23,56 +22,50 @@ class UserRouter {
     router() {
         let router = express.Router();
 
-        // MBTI @ SIGN UP 
-        
-        //     POST?
-        //     vvv 
-        router.put('/mbti', (req, res) => { // set MBTI at sign-up 
-            this.userService.updateMBTI(req.user.id, req.body.atr1, req.body.atr2, req.body.atr3, req.body.atr4)
-                .then(() => this.userService.getMBTI(req.user.id))
-                .then(user => res.json(user))
-                .catch(err => res.status(500).json(err));
-        })
+        // ALL REPLACED BY CompletePublicProfile()
 
-        router.get('/mbti', (req, res) => { // get MBTI for key attribute selection
-            this.userService.getMBTI(req.user.id)
-                .then((user) => res.json(user))
-                .catch((err) => res.status(500).json(err));
-        })
+            // router.put('/mbti', (req, res) => { // set MBTI at sign-up 
+            //     this.userService.updateMBTI(req.user.id, req.body.atr1, req.body.atr2, req.body.atr3, req.body.atr4)
+            //         .then(() => this.userService.getMBTI(req.user.id))
+            //         .then(user => res.json(user))
+            //         .catch(err => res.status(500).json(err));
+            // })
 
-        // KEY ATTRIBUTE @ SIGN UP
+            // router.get('/mbti', (req, res) => { // get MBTI for key attribute selection
+            //     this.userService.getMBTI(req.user.id)
+            //         .then((user) => res.json(user))
+            //         .catch((err) => res.status(500).json(err));
+            // })
 
-        //     POST?
-        //     vvv 
-        router.put('/keyatr', (req, res) => { // set key attribute
-            this.userService.updateKeyAtr(req.user.id, req.body.atr)
-                .then(() => this.userService.getKeyAtr(req.user.id))
-                .then(atr => res.json(atr))
-                .catch(err => res.status(500).json(err));
-        })
+            // // KEY ATTRIBUTE @ SIGN UP
 
-        //     POST?
-        //     vvv 
-        router.put('/keyatrdesc', (req, res) => { // set key attribute description
-            this.userService.updateKeyAtrDesc(req.user.id, req.body.desc)
-                .then(() => this.userService.getKeyAtrDesc(req.user.id))
-                .then(desc => res.json(desc))
-                .catch(err => res.status(500).json(err));
-        })
+            // router.put('/keyatr', (req, res) => { // set key attribute
+            //     this.userService.updateKeyAtr(req.user.id, req.body.atr)
+            //         .then(() => this.userService.getKeyAtr(req.user.id))
+            //         .then(atr => res.json(atr))
+            //         .catch(err => res.status(500).json(err));
+            // })
 
-        // KEY ATTRIBUTE FOR DISPLAY
+            // router.put('/keyatrdesc', (req, res) => { // set key attribute description
+            //     this.userService.updateKeyAtrDesc(req.user.id, req.body.desc)
+            //         .then(() => this.userService.getKeyAtrDesc(req.user.id))
+            //         .then(desc => res.json(desc))
+            //         .catch(err => res.status(500).json(err));
+            // })
 
-        router.get('/keyatr', (req, res) => { // get key attribute
-            this.userService.getKeyAtr(req.user.id)
-                .then(atr => res.json(atr))
-                .catch(err => res.status(500).json(err));
-        })
+            // // KEY ATTRIBUTE FOR DISPLAY
 
-        router.get('/keyatrdesc', (req, res) => { // get key attribute description
-            this.userService.getKeyAtrDesc(req.user.id)
-                .then(desc => res.json(desc))
-                .catch(err => res.status(500).json(err));
-        })
+            // router.get('/keyatr', (req, res) => { // get key attribute
+            //     this.userService.getKeyAtr(req.user.id)
+            //         .then(atr => res.json(atr))
+            //         .catch(err => res.status(500).json(err));
+            // })
+
+            // router.get('/keyatrdesc', (req, res) => { // get key attribute description
+            //     this.userService.getKeyAtrDesc(req.user.id)
+            //         .then(desc => res.json(desc))
+            //         .catch(err => res.status(500).json(err));
+            // })
 
         // USER LISTING
 
@@ -146,6 +139,8 @@ class UserRouter {
                 req.body.key_atr,
                 req.body.key_atr_desc,
                 req.body.profile_pic,
+                req.body.min_age,
+                req.body.max_age,
                 req.body.ig_account,
                 req.body.ideal_first_date)
                 .then(() => this.userService.getOwnProfile(req.user.id))

@@ -88,7 +88,7 @@ class UserService {
 
     getSuggestedUsers(userID) {
         let query = this.knex
-            .select('mbti')
+            .select('mbti', 'orientation', 'min_age', 'max_age')
             .from('users')
             .where('users.id', userID)
 
@@ -385,22 +385,50 @@ class UserService {
                     break;
             }
 
-            return query.then(rows => {
-                let suggestedUsers = [];
-                for (let i = 0; i < rows.length; i++) {
-                    if (rows[i].status === null) {
-                        suggestedUsers.push(rows[i]);
-                    }
-                }
-                return suggestedUsers;
-            })
+            let minAge = rows[0].min_age;
+            let maxAge = rows[0].max_age;
+            let orientation = rows[0].orientation;
 
+            if (orientation === 'M') {
+                return query.then(rows => {
+                    let suggestedUsers = [];
+                    for (let i = 0; i < rows.length; i++) {
+                        let age = Math.floor((new Date().getTime() - rows[i].dob.getTime())/ 31556926000);
+                        if (rows[i].status === null && rows[i].gender === 'M' && age >= minAge && age <= maxAge) {
+                            suggestedUsers.push(rows[i]);
+                        }
+                    }
+                    return suggestedUsers;
+                })
+            } else if (rows[0].orientation === 'F') {
+                return query.then(rows => {
+                    let suggestedUsers = [];
+                    for (let i = 0; i < rows.length; i++) {
+                        let age = Math.floor((new Date().getTime() - rows[i].dob.getTime())/ 31556926000);
+                        if (rows[i].status === null && rows[i].gender === 'F' && age >= minAge && age <= maxAge) {
+                            suggestedUsers.push(rows[i]);
+                        }
+                    }
+                    return suggestedUsers;
+                })
+            } else {
+                return query.then(rows => {
+                    let suggestedUsers = [];
+                    for (let i = 0; i < rows.length; i++) {
+                        let age = Math.floor((new Date().getTime() - rows[i].dob.getTime())/ 31556926000);
+                        if (rows[i].status === null && age >= minAge && age <= maxAge) {
+                            suggestedUsers.push(rows[i]);
+                        }
+                    }
+                    return suggestedUsers;
+                })
+            }
         })
     }
 
     getNonSuggestedUsers(userID) {
         let query = this.knex
-            .select('mbti')
+            .select('mbti', 'orientation', 'min_age', 'max_age')
             .from('users')
             .where('users.id', userID)
 
@@ -697,15 +725,44 @@ class UserService {
                     break;
             }
 
-            return query.then(rows => {
-                let nonSuggestedUsers = [];
-                for (let i = 0; i < rows.length; i++) {
-                    if (rows[i].status === null) {
-                        nonSuggestedUsers.push(rows[i]);
+            let minAge = rows[0].min_age;
+            let maxAge = rows[0].max_age;
+            let orientation = rows[0].orientation;
+
+            if (orientation === 'M') {
+                return query.then(rows => {
+                    let nonSuggestedUsers = [];
+                    for (let i = 0; i < rows.length; i++) {
+                        let age = Math.floor((new Date().getTime() - rows[i].dob.getTime())/ 31556926000);
+                        if (rows[i].status === null && rows[i].gender === 'M' && age >= minAge && age <= maxAge) {
+                            nonSuggestedUsers.push(rows[i]);
+                        }
                     }
-                }
-                return nonSuggestedUsers;
-            })
+                    return nonSuggestedUsers;
+                })
+            } else if (orientation === 'F') {
+                return query.then(rows => {
+                    let nonSuggestedUsers = [];
+                    for (let i = 0; i < rows.length; i++) {
+                        let age = Math.floor((new Date().getTime() - rows[i].dob.getTime())/ 31556926000);
+                        if (rows[i].status === null && rows[i].gender === 'F' && age >= minAge && age <= maxAge) {
+                            nonSuggestedUsers.push(rows[i]);
+                        }
+                    }
+                    return nonSuggestedUsers;
+                })
+            } else {
+                return query.then(rows => {
+                    let nonSuggestedUsers = [];
+                    for (let i = 0; i < rows.length; i++) {
+                        let age = Math.floor((new Date().getTime() - rows[i].dob.getTime())/ 31556926000);
+                        if (rows[i].status === null && age >= minAge && age <= maxAge) {
+                            nonSuggestedUsers.push(rows[i]);
+                        }
+                    }
+                    return nonSuggestedUsers;
+                })
+            }
         })
     }
 
@@ -785,6 +842,8 @@ class UserService {
                 'key_atr',
                 'key_atr_desc',
                 'profile_pic',
+                'min_age',
+                'max_age',
                 'ig_account',
                 'ideal_first_date',
                 'token'
@@ -806,6 +865,8 @@ class UserService {
                 key_atr: row.key_atr,
                 key_atr_desc: row.key_atr_desc,
                 profile_pic: row.profile_pic,
+                min_age: row.min_age,
+                max_age: row.max_age,
                 ig_account: row.ig_account,
                 ideal_first_date: row.ideal_first_date,
                 token: row.token
@@ -824,6 +885,8 @@ class UserService {
         key_atr,
         key_atr_desc,
         profile_pic,
+        min_age,
+        max_age,
         ig_account,
         ideal_first_date
     ) {
@@ -840,6 +903,8 @@ class UserService {
                 key_atr: key_atr,
                 key_atr_desc: key_atr_desc,
                 profile_pic: profile_pic,
+                min_age: min_age,
+                max_age: max_age,
                 ig_account: ig_account,
                 ideal_first_date: ideal_first_date
             })
@@ -847,7 +912,7 @@ class UserService {
 
     drawCard(userID) {
         let query = this.knex
-            .select('mbti')
+            .select('mbti', 'orientation', 'min_age', 'max_age')
             .from('users')
             .where('users.id', userID)
 
@@ -1144,15 +1209,44 @@ class UserService {
                     break;
             }
 
-            return query.then(rows => {
-                let pool = [];
-                for (let i = 0; i < rows.length; i++) {
-                    if (rows[i].status === null) {
-                        pool.push(rows[i]);
+            let minAge = rows[0].min_age;
+            let maxAge = rows[0].max_age;
+            let orientation = rows[0].orientation;
+
+            if (orientation === 'M') {
+                return query.then(rows => {
+                    let pool = [];
+                    for (let i = 0; i < rows.length; i++) {
+                        let age = Math.floor((new Date().getTime() - rows[i].dob.getTime())/ 31556926000);
+                        if (rows[i].status === null && rows[i].gender === 'M' && age >= minAge && age <= maxAge) {
+                            pool.push(rows[i]);
+                        }
                     }
-                }
-                return pool[Math.floor(Math.random() * pool.length)];
-            })
+                    return pool[Math.floor(Math.random() * pool.length)];
+                })
+            } else if (orientation === 'F') {
+                return query.then(rows => {
+                    let pool = [];
+                    for (let i = 0; i < rows.length; i++) {
+                        let age = Math.floor((new Date().getTime() - rows[i].dob.getTime())/ 31556926000);
+                        if (rows[i].status === null && rows[i].gender === 'F' && age >= minAge && age <= maxAge) {
+                            pool.push(rows[i]);
+                        }
+                    }
+                    return pool[Math.floor(Math.random() * pool.length)];
+                })
+            } else {
+                return query.then(rows => {
+                    let pool = [];
+                    for (let i = 0; i < rows.length; i++) {
+                        let age = Math.floor((new Date().getTime() - rows[i].dob.getTime())/ 31556926000);
+                        if (rows[i].status === null && age >= minAge && age <= maxAge) {
+                            pool.push(rows[i]);
+                        }
+                    }
+                    return pool[Math.floor(Math.random() * pool.length)];
+                })
+            }
         })
     }
 

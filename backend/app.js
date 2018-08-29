@@ -64,7 +64,7 @@ app.post("/api/signup", async (req, res) => {
 
 app.post("/api/login", async function (req, res) {
     try {
-        let users = await knex('users').where({ email: req.body.email })
+        let users = await knex('users').where({ email: req.body.email });
         if (users.length == 0) {
             return done(null, false, { message: 'Incorrect credentials' });
         }

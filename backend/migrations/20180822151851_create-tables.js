@@ -9,7 +9,7 @@ exports.up = function (knex, Promise) {
             table.string('display_name');
             table.date('dob');
             table.enu('gender', ['M', 'F']);
-            table.enu('orientation', ['Male', 'Female', 'Both'])
+            table.enu('orientation', ['M', 'F', 'Both'])
             table.string('location');
             table.string('mbti');
             table.enu('key_atr', ['E', 'I', 'S', 'N', 'T', 'F', 'J', 'P']);
