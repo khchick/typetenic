@@ -743,6 +743,33 @@ class UserService {
         })
     }
 
+    completePublicProfile(userID,
+        display_name,
+        dob,
+        gender,
+        orientation,
+        location,
+        mbti,
+        key_atr,
+        key_atr_desc,
+        profile_pic
+    ) {
+        return this.knex('users')
+            .update({
+                'display_name': display_name,
+                'dob': dob,
+                'gender': gender,
+                'orientation': orientation,
+                'location': location,
+                'mbti': mbti,
+                'key_atr': key_atr,
+                'key_atr_desc': key_atr_desc,
+                'profile_pic': `/images/users/${profile_pic}`,
+                'token': 10
+            })
+            .where('id', userID)
+    }
+
     getOwnProfile(userID) {
         let query = this.knex
             .select(

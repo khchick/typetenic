@@ -1,5 +1,20 @@
 const express = require('express');
 
+// For handling profile image upload
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/images/users')
+        // cb(null, "/mnt/c/Personal-project/assets/") //for windows picture
+    },
+    filename: function (req, file, cb) {
+        cb(null,
+            // Date.now() + '-' + 
+            file.originalname)
+    }
+})
+const upload = multer({ storage: storage })
+
 class UserRouter {
     constructor(userService) {
         this.userService = userService;
@@ -7,8 +22,6 @@ class UserRouter {
 
     router() {
         let router = express.Router();
-
-        // HOW TO CREATE USER? ===> PASSPORT / JWT SIGN UP?
 
         // MBTI @ SIGN UP 
         
@@ -98,6 +111,22 @@ class UserRouter {
         })
 
         // OWN PROFILE
+
+        router.post('/myprofile', upload.single('profile_pic'), (req, res) => { // complete own profile details
+            this.userService.completePublicProfile(req.user.id, 
+                req.body.display_name,
+                req.body.dob,
+                req.body.gender,
+                req.body.orientation,
+                req.body.location,
+                req.body.mbti,
+                req.body.key_atr,
+                req.body.key_atr_desc,
+                req.file.originalname) // path of  profile pic
+                .then(() => this.userService.getOwnProfile(req.user.id))
+                .then((data) => res.json(data))
+                .catch((err) => res.status(500).json(err));
+        })
 
         router.get('/myprofile', (req, res) => { // getting own profile details
             this.userService.getOwnProfile(req.user.id)
