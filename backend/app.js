@@ -15,8 +15,8 @@ const bcrypt = require('./utils/bcrypt');
 const app = express();
 const auth = authClass();
 
-let server = require("http").Server(app);
-let io = require("socket.io")(server);
+// let server = require("http").Server(app);
+// let io = require("socket.io")(server);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -136,4 +136,5 @@ app.post("/api/login/facebook", function (req, res) {
     }
 });
 
-server.listen(3000, () => console.log('listening on *:3000'));
+app.listen(8080);
+// server.listen(3000, () => console.log('listening on *:3000'));
