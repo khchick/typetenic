@@ -4238,6 +4238,12 @@ react-native-picker-select@^4.2.0:
   dependencies:
     lodash.isequal "^4.5.0"
 
+react-native-range-slider@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-range-slider/-/react-native-range-slider-0.1.0.tgz#c464560756807365684a10f773db2f2710870855"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-typescript-transformer@^1.2.10:
   version "1.2.10"
   resolved "https://registry.yarnpkg.com/react-native-typescript-transformer/-/react-native-typescript-transformer-1.2.10.tgz#6f76c1449028cdeafa184b533301ecd547367ed1"
