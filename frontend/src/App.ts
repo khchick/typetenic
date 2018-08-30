@@ -1,5 +1,5 @@
-import { Navigation } from 'react-native-navigation';
 import * as React from 'react';
+import { Navigation } from 'react-native-navigation';
 import {transparentNav} from './screens/styles/common';
 
 import Landing from './screens/Landing';
@@ -19,8 +19,8 @@ import Profile from './screens/Profile';
 import {store} from './store/store';
 import {Provider} from 'react-redux';
 // import {connect} from 'react-redux';
-// import {checkAuth} from './actions/authAction';
-// import {AsyncStorage} from 'react-native'
+import {checkToken} from './actions/authAction';
+import {AsyncStorage} from 'react-native'
 
 Navigation.registerComponent('LandingScreen', () => Landing, store, Provider); 
 Navigation.registerComponent('LoginScreen', () => Login, store, Provider); 
@@ -40,7 +40,7 @@ Navigation.registerComponent('ProfileScreen', () => Profile, store, Provider);
 
 Navigation.startSingleScreenApp({
     screen: {
-        screen: 'LoginScreen',
+        screen: 'LandingScreen',
         navigatorStyle: {
             navBarHidden: true, 
         }
@@ -56,31 +56,22 @@ interface AppProps {
 class App extends React.Component<AppProps> {
     constructor(props: AppProps) {
         super(props);
+        
+        // check login status when re-opening the app
+    //     store.dispatch(checkToken()).then(loggedIn => {
+	// 		if (loggedIn) {
+	// 			App.loginApp();
+	// 		} else {
+	// 			App.initialApp();
+	// 		}
+    // 	});
+    
     }
-
-     // check login status when opening the app
-    // componentWillMount() {
-    //     console.log('getting token')
-    //     this.getToken();
-    // }
-
-    // async getToken() {
-    //     try {
-    //       let accessToken = await AsyncStorage.getItem('token');
-    //       if(!accessToken) {
-    //         AuthApp.initialApp()
-    //       } else {
-    //         AuthApp.loginApp()
-    //       }
-    //     } catch(err) {
-    //         console.log(err);
-    //     }
-    //   }
 
     static initialApp() {
         Navigation.startSingleScreenApp({
             screen: {
-                screen: 'LoginScreen',
+                screen: 'SignupContScreen',
                 navigatorStyle: {
                     navBarHidden: true, 
                 }

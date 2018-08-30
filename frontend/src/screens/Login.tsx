@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Navigation } from 'react-native-navigation';
 import LinearGradient from 'react-native-linear-gradient';
+import {transparentNav, globalStyle} from './styles/common';
 import {
     StyleSheet, 
     Text, 
@@ -14,7 +15,6 @@ import {
 import {connect} from 'react-redux';
 import {loginUser} from '../actions/authAction';
 
-import axios from 'axios';
 
 interface LoginProps {
     navigator: Navigator,
@@ -44,7 +44,7 @@ class PureLogin extends React.Component<LoginProps, LoginStates> {
     return (
      
       <LinearGradient colors={['#9EF8E4', '#30519B']} style={[{flex: 1}]}>
-      <KeyboardAvoidingView behavior='padding' style={styles.container}>
+      <KeyboardAvoidingView behavior='padding' style={globalStyle.container}>
       
           <Text style={styles.welcome}>
             Welcome{`\n`}
@@ -75,11 +75,16 @@ class PureLogin extends React.Component<LoginProps, LoginStates> {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.btnContainer}
-              onPress={() => this.props.navigator.showModal({
+              onPress={() => this.props.navigator.push({
                 screen: 'SignupScreen',
-                navigatorStyle: {
-                  navBarHidden: true, 
-                  tabBarHidden: true },
+                navigatorStyle: transparentNav,
+                // backButtonTitle: 'Cancel',
+                navigatorButtons: {
+                  leftButtons: [{
+                    title: 'Cancel',
+                    id: 'cancel',
+                  }]                  
+                },
             })}>
               <Text style={styles.btnText}>Sign Up</Text>
             </TouchableOpacity>           
@@ -107,13 +112,6 @@ export default Login;
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10
-  },
   welcome: {
     color: '#fff',
     fontSize: 32,

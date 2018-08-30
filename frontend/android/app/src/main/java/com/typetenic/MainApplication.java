@@ -3,6 +3,12 @@ package com.typetenic;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.imagepicker.ImagePickerPackage;
+import com.BV.LinearGradient.LinearGradientPackage;
+import com.beefe.picker.PickerViewPackage;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.reactnativenavigation.NavigationReactPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -22,7 +28,17 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
+<<<<<<< HEAD
+          new MainReactPackage(),
+            new ImagePickerPackage(),
+            new LinearGradientPackage(),
+            new PickerViewPackage(),
+            new ReactNativeConfigPackage(),
+            new VectorIconsPackage(),
+            new NavigationReactPackage()
+=======
           new MainReactPackage()
+>>>>>>> 9f76c585a843b56438ff1efe8841df9d919aa0f1
       );
     }
 

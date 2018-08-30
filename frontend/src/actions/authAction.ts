@@ -118,7 +118,7 @@ export function logoutUser() {
     }
 }
 
-export function checkAuth() {
+export function checkToken() {
     return(dispatch: Dispatch) => {
         AsyncStorage.getItem('token')
         .then((accessToken) => {
@@ -127,7 +127,27 @@ export function checkAuth() {
             } else {
                 dispatch(loginSuccess());
                 App.loginApp();
+                return accessToken;
             }
+        })
+        .catch(err => {
+            console.log(err);
         })
     }        
 }
+
+// export function checkAuth() {
+//     return(dispatch: Dispatch) => {
+//         AsyncStorage.getItem('token')
+//         .then((accessToken) => {
+//             if(accessToken) {               
+//                 dispatch(loginSuccess());
+//                 App.loginApp();
+//             }
+//             return accessToken;
+//         })
+//         .catch(err => {
+//             console.log(err);
+//         })
+//     }        
+// }

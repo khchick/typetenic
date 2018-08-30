@@ -1,4 +1,5 @@
-// ADD NEXT BUTTON ON TOP RIGHT
+// Change chosen color
+// push to next question
 
 import * as React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
@@ -17,13 +18,21 @@ interface MbtiTestProps {
     navigator: Navigator
 }
 
-export default class MbtiTest extends React.Component<MbtiTestProps> {
+interface MbtiTestStates {
+  choice1: string | null
+}
+
+export default class MbtiTest extends React.Component<MbtiTestProps, MbtiTestStates> {
   constructor(props: any) {
     super(props);
+    this.state = {
+      choice1: null,
+    }
   }
 
   render() {
     let imageUri = 'https://i.pinimg.com/564x/d8/4b/77/d84b77fd22fe250776ea3af0af227fcd.jpg';
+    let chosenChoice = this.state.choice1 ? "rgb(255,235,59)" : null;
 
     return (
         <LinearGradient colors={['#9EF8E4', '#30519B']} style={[{flex: 1}]}>
@@ -31,13 +40,19 @@ export default class MbtiTest extends React.Component<MbtiTestProps> {
 
             <View style={globalStyle.cardContainer}>
                 <Text style={styles.title}>Question</Text>
-                <Text style={styles.question}>How do you spend your weekends when you are single? </Text>
+                <Text style={styles.question}>How do you spend your weekends when you are single?</Text>
 
-                <Text style={styles.answer}>A Join different parties/ coffee meet with friends</Text>
+              <TouchableOpacity 
+                onPress={() => this.setState({choice1: 'A'}) }>
+                <Text style={styles.answer}>A  Join different parties/ coffee meet with friends</Text>
                 <Image style={styles.img} source={ {uri: imageUri} } />
+              </TouchableOpacity>
 
-                <Text style={styles.answer}>B Read a book, play video games at home</Text>
+              <TouchableOpacity 
+                onPress={() => this.setState({choice1: 'B'}) }>
+                <Text style={styles.answer}>B  Read a book, play video games at home</Text>
                 <Image style={styles.img} source={ {uri: imageUri} } />
+              </TouchableOpacity>
             </View>
 
         </View>
@@ -51,18 +66,20 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     color: '#30519B',
-    marginBottom: 10,
   },
   question: {
     fontSize: 16,
     color: '#30519B',
+    marginBottom: 10,
   },
   answer: {
     fontSize: 16,
     color: '#30519B',
+    marginTop: 15,
+    marginBottom: 5,
   },
   img: {
-    height: 200,
-    width: 200,
+    height: 170,
+    width: 170,
   },
 });
