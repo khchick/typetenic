@@ -28,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
+<<<<<<< HEAD
           new MainReactPackage(),
             new ImagePickerPackage(),
             new LinearGradientPackage(),
@@ -35,6 +36,9 @@ public class MainApplication extends Application implements ReactApplication {
             new ReactNativeConfigPackage(),
             new VectorIconsPackage(),
             new NavigationReactPackage()
+=======
+          new MainReactPackage()
+>>>>>>> 9f76c585a843b56438ff1efe8841df9d919aa0f1
       );
     }
 

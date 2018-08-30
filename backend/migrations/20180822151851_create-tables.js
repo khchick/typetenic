@@ -9,12 +9,15 @@ exports.up = function (knex, Promise) {
             table.string('display_name');
             table.date('dob');
             table.enu('gender', ['M', 'F']);
-            table.enu('orientation', ['Male', 'Female', 'Both'])
+            table.enu('orientation', ['M', 'F', 'Both'])
             table.string('location');
             table.string('mbti');
             table.enu('key_atr', ['E', 'I', 'S', 'N', 'T', 'F', 'J', 'P']);
             table.text('key_atr_desc');
             table.text('profile_pic');
+            table.integer('min_age');
+            table.integer('max_age');
+            table.integer('fbID');
             table.string('ig_account');
             table.text('ideal_first_date');
             table.integer('token');
@@ -44,10 +47,10 @@ exports.up = function (knex, Promise) {
 
         knex.schema.createTable('conversation', function (table) {
             table.increments('id').primary();
-            table.integer('msg_sender_id').unsigned();
-            table.foreign('msg_sender_id').references('users.id');
-            table.integer('msg_receiver_id').unsigned();
-            table.foreign('msg_receiver_id').references('users.id');
+            table.integer('user1').unsigned();
+            table.foreign('user1').references('users.id');
+            table.integer('user2').unsigned();
+            table.foreign('user2').references('users.id');
             table.timestamps(false, true);
         }),
 
@@ -55,6 +58,10 @@ exports.up = function (knex, Promise) {
             table.increments('id').primary();
             table.integer('conversation_id').unsigned();
             table.foreign('conversation_id').references('conversation.id');
+            table.integer('msg_sender_id').unsigned();
+            table.foreign('msg_sender_id').references('users.id');
+            table.integer('msg_receiver_id').unsigned();
+            table.foreign('msg_receiver_id').references('users.id');
             table.text('content');
             table.timestamps(false, true);
         })
