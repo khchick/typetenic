@@ -24,10 +24,35 @@ interface SignupStates {
 export default class Signup extends React.Component<SignupProps, SignupStates> {
   constructor(props: SignupProps) {
     super(props);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     this.state = {
       email: '',
       password: '',
     };
+  }
+
+  onNavigatorEvent(event: any) { // this is the onPress handler for the two buttons together
+    if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
+      if (event.id == 'cancel') { // this is the same id field from the static navigatorButtons definition
+        Alert.alert(
+          'Confirm to cancel signup?',
+          'All input data will be lost.',
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+            },
+            {
+              text: 'Confirm',
+              onPress: () => this.props.navigator.popToRoot({
+                animated: true, // does the popToRoot have transition animation or does it happen immediately (optional)
+                animationType: 'fade', // 'fade' (for both) / 'slide-horizontal' (for android) does the popToRoot have different transition animation (optional)
+              })              
+            },
+          ]
+        );
+      }
+    }
   }
 
   render() {
@@ -57,18 +82,17 @@ export default class Signup extends React.Component<SignupProps, SignupStates> {
             <TouchableOpacity style={styles.btnContainer} 
               onPress={() => this.props.navigator.push({
                 screen: 'SignupContScreen',
-                navigatorStyle: {
-                  navBarTransparent: true, 
-                  tabBarHidden: true },
+                title: 'Profile',
+                navigatorStyle: transparentNav,
             })}>
               <Text style={styles.btnText}>Continue</Text>
             </TouchableOpacity>
 
             <TouchableOpacity 
-              onPress={() => this.props.navigator.showModal({
-                screen: 'LoginScreen',
-                navigatorStyle: transparentNav,
-            })}>
+              onPress={() => this.props.navigator.pop({
+                animated: true, // does the pop have transition animation or does it happen immediately (optional)
+                animationType: 'slide-horizontal', // 'fade' (for both) / 'slide-horizontal' (for android) does the pop have different transition animation (optional)
+              })}>
               <Text style={styles.btnText}>Got an account? Login here</Text>
             </TouchableOpacity>    
 

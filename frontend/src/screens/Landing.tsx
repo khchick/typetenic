@@ -1,5 +1,6 @@
 import * as React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
+import {transparentNav, globalStyle} from './styles/common';
 import {
     StyleSheet, 
     Text, 
@@ -24,7 +25,7 @@ export default class Landing extends React.Component<LandingProps> {
   render() {
     return (
         <LinearGradient colors={['#9EF8E4', '#30519B']} style={[{flex: 1}]}>
-        <View style={styles.container}>
+        <View style={globalStyle.container}>
 
             <View style={styles.card}>
                 <Text>Tutorial</Text>
@@ -38,11 +39,9 @@ export default class Landing extends React.Component<LandingProps> {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.btnContainer}
-             onPress={() => this.props.navigator.showModal({
+             onPress={() => this.props.navigator.push({
                 screen: 'LoginScreen',
-                navigatorStyle: {
-                  navBarHidden: true, 
-                  tabBarHidden: true },
+                navigatorStyle: transparentNav,
             })}>
               <Text style={styles.btnText}>LOGIN WITH EMAIL</Text>
             </TouchableOpacity>
@@ -60,13 +59,6 @@ export default class Landing extends React.Component<LandingProps> {
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10
-  },
   btnContainer: {
     backgroundColor: '#ffa18e',
     borderColor: '#fff',
