@@ -17,6 +17,7 @@ const auth = authClass();
 
 let server = require("http").Server(app);
 let io = require("socket.io")(server);
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(auth.initialize());
@@ -135,4 +136,4 @@ app.post("/api/login/facebook", function (req, res) {
     }
 });
 
-app.listen(8080);
+server.listen(3000, () => console.log('listening on *:3000'));
