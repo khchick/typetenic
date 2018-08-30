@@ -5,7 +5,6 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.imagepicker.ImagePickerPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
-import com.beefe.picker.PickerViewPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativenavigation.NavigationReactPackage;
@@ -32,7 +31,6 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new ImagePickerPackage(),
             new LinearGradientPackage(),
-            new PickerViewPackage(),
             new ReactNativeConfigPackage(),
             new VectorIconsPackage(),
             new NavigationReactPackage()
