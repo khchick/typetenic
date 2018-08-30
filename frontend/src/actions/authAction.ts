@@ -118,36 +118,13 @@ export function logoutUser() {
     }
 }
 
-export function checkToken() {
-    return(dispatch: Dispatch) => {
-        AsyncStorage.getItem('token')
-        .then((accessToken) => {
-            if(!accessToken) {
-                App.initialApp();
-            } else {
-                dispatch(loginSuccess());
-                App.loginApp();
-                return accessToken;
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        })
-    }        
+export async function checkToken() {
+    const accessToken = await AsyncStorage.getItem('token');
+    if (accessToken) {
+        return (dispatch: Dispatch) => {
+            dispatch(loginSuccess())
+            return accessToken;
+        }
+    } 
+    
 }
-
-// export function checkAuth() {
-//     return(dispatch: Dispatch) => {
-//         AsyncStorage.getItem('token')
-//         .then((accessToken) => {
-//             if(accessToken) {               
-//                 dispatch(loginSuccess());
-//                 App.loginApp();
-//             }
-//             return accessToken;
-//         })
-//         .catch(err => {
-//             console.log(err);
-//         })
-//     }        
-// }

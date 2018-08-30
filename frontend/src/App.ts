@@ -20,7 +20,7 @@ import {store} from './store/store';
 import {Provider} from 'react-redux';
 // import {connect} from 'react-redux';
 import {checkToken} from './actions/authAction';
-import {AsyncStorage} from 'react-native'
+
 
 Navigation.registerComponent('LandingScreen', () => Landing, store, Provider); 
 Navigation.registerComponent('LoginScreen', () => Login, store, Provider); 
@@ -47,31 +47,23 @@ Navigation.startSingleScreenApp({
     }
 })
 
-interface AppProps {
-    navigator: Navigator,
-    initialApp: () => void,
-    loginApp: () => void,
-}
-
-class App extends React.Component<AppProps> {
-    constructor(props: AppProps) {
-        super(props);
-        
+class App {
+    constructor() {        
         // check login status when re-opening the app
-    //     store.dispatch(checkToken()).then(loggedIn => {
-	// 		if (loggedIn) {
-	// 			App.loginApp();
-	// 		} else {
-	// 			App.initialApp();
-	// 		}
-    // 	});
-    
+        checkToken()
+        .then(token => {
+			if (token) {
+                App.loginApp();
+			} else {
+				App.initialApp();
+			}
+    	});    
     }
 
     static initialApp() {
         Navigation.startSingleScreenApp({
             screen: {
-                screen: 'SignupContScreen',
+                screen: 'LandingScreen',
                 navigatorStyle: {
                     navBarHidden: true, 
                 }
@@ -128,7 +120,9 @@ class App extends React.Component<AppProps> {
 
 }
 
+
 export default App;
+new App();
 
 // const MapStateToProps = (state: any) => {
 //     return {
