@@ -18,6 +18,7 @@ const auth = authClass();
 // let server = require("http").Server(app);
 // let io = require("socket.io")(server);
 
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(auth.initialize());

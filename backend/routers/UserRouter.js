@@ -8,7 +8,9 @@ const storage = multer.diskStorage({
         // cb(null, "/mnt/c/Personal-project/assets/") //for windows picture
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname)
+        cb(null, `${req.user.id}_${req.body.mbti}_${file.originalname}`
+            // file.originalname
+        )
     }
 })
 const upload = multer({ storage: storage })
