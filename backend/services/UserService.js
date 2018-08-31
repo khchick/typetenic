@@ -821,7 +821,7 @@ class UserService {
                 'mbti': mbti,
                 'key_atr': key_atr,
                 'key_atr_desc': key_atr_desc,
-                'profile_pic': `/images/users/${profile_pic}`,
+                'profile_pic': `/images/users/${userID}_${mbti}_${profile_pic}`,
                 'token': 10
             })
             .where('id', userID)
