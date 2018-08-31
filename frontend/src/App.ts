@@ -20,28 +20,7 @@ import ResetProfile from "./screens/ResetProfile";
 import { store } from "./store/store";
 import { Provider } from "react-redux";
 // import {connect} from 'react-redux';
-<<<<<<< HEAD
 import { checkToken } from "./actions/authAction";
-import { AsyncStorage } from "react-native";
-=======
-import {checkToken} from './actions/authAction';
-
-
-Navigation.registerComponent('LandingScreen', () => Landing, store, Provider); 
-Navigation.registerComponent('LoginScreen', () => Login, store, Provider); 
-Navigation.registerComponent('SignupScreen', () => Signup, store, Provider);
-Navigation.registerComponent('SignupContScreen', () => SignupCont, store, Provider);
-Navigation.registerComponent('MbtiTestScreen', () => MbtiTest, store, Provider);
-Navigation.registerComponent('MbtiResultScreen', () => MbtiResult, store, Provider);
-Navigation.registerComponent('MbtiProfileScreen', () => MbtiProfile, store, Provider);
-Navigation.registerComponent('HomeTabScreen', () => Deck, store, Provider);
-Navigation.registerComponent('ChatTabScreen', () => Chat, store, Provider);
-Navigation.registerComponent('ReqestTabScreen', () => Request, store, Provider);
-Navigation.registerComponent('UserTabScreen', () => User, store, Provider);
-Navigation.registerComponent('Settings', () => Settings, store, Provider); 
-Navigation.registerComponent('ProfileScreen', () => Profile, store, Provider);
-
->>>>>>> 952e9fa54b7cca63b2a934d3a640ac158c73f5de
 
 Navigation.registerComponent("LandingScreen", () => Landing, store, Provider);
 Navigation.registerComponent("LoginScreen", () => Login, store, Provider);
@@ -80,63 +59,29 @@ Navigation.registerComponent(
 
 Navigation.startSingleScreenApp({
   screen: {
-    screen: "LoginScreen",
+    screen: "LandingScreen",
     navigatorStyle: {
       navBarHidden: true
     }
   }
 });
 
-<<<<<<< HEAD
-interface AppProps {
-  navigator: Navigator;
-  initialApp: () => void;
-  loginApp: () => void;
-}
-
-class App extends React.Component<AppProps> {
-  constructor(props: AppProps) {
-    super(props);
-
-    // check login status when re-opening the app
-    //     store.dispatch(checkToken()).then(loggedIn => {
-    // 		if (loggedIn) {
-    // 			App.loginApp();
-    // 		} else {
-    // 			App.initialApp();
-    // 		}
-    // 	});
-  }
-=======
 class App {
-    constructor() {        
-        // check login status when re-opening the app
-        checkToken()
-        .then(token => {
-			if (token) {
-                App.loginApp();
-			} else {
-				App.initialApp();
-			}
-    	});    
-    }
-
-    static initialApp() {
-        Navigation.startSingleScreenApp({
-            screen: {
-                screen: 'LandingScreen',
-                navigatorStyle: {
-                    navBarHidden: true, 
-                }
-            }
-        })
-    }
->>>>>>> 952e9fa54b7cca63b2a934d3a640ac158c73f5de
+  constructor() {
+    // check login status when re-opening the app
+    checkToken().then(token => {
+      if (token) {
+        App.loginApp();
+      } else {
+        App.initialApp();
+      }
+    });
+  }
 
   static initialApp() {
     Navigation.startSingleScreenApp({
       screen: {
-        screen: "SignupContScreen",
+        screen: "LandingScreen",
         navigatorStyle: {
           navBarHidden: true
         }
@@ -192,7 +137,6 @@ class App {
     });
   }
 }
-
 
 export default App;
 new App();
