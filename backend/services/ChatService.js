@@ -80,18 +80,27 @@ class ChatService {
 
     listMessages(conversationID) {
         let query = this.knex
-            .select('id', 'msg_sender_id', 'msg_receiver_id', 'content', 'created_at')
+            .select('users.display_name', 'users.profile_pic', 'message.id', 'message.msg_sender_id', 'message.msg_receiver_id', 'message.content', 'message.created_at')
             .from('message')
+            .innerJoin('users', 'message.msg_sender_id', 'users.id')
             .where('conversation_id', conversationID)
             .orderBy('created_at')
 
         return query.then(rows => {
             return rows.map(row => ({
-                id: row.id,
-                msg_sender_id: row.msg_sender_id,
-                msg_receiver_id: row.msg_receiver_id,
-                content: row.content,
-                created_at: row.created_at
+                _id: row.id,
+                text: row.content,
+                createdAt: row.created_at,
+                user: {
+                    _id: row.msg_sender_id,
+                    name: row.display_name,
+                    avatar: `http://localhost:8080/${row.profile_pic}`
+                }
+                // id: row.id,
+                // msg_sender_id: row.msg_sender_id,
+                // msg_receiver_id: row.msg_receiver_id,
+                // content: row.content,
+                // created_at: row.created_at
             }))
         })
     }
