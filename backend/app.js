@@ -15,8 +15,10 @@ const bcrypt = require('./utils/bcrypt');
 const app = express();
 const auth = authClass();
 
-// let server = require("http").Server(app);
-// let io = require("socket.io")(server);
+const server = require("http").Server(app);
+const io = require("socket.io")(server);
+// const socket = require('socket.io-client')('http://localhost')
+// const SocketManager = require('./utils/SocketManager');
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -26,8 +28,7 @@ app.use(auth.initialize());
 // Dependency Injection for Routers and Services
 const { ChatRouter,
     ConnectionRouter,
-    UserRouter,
-    SocketIORouter } = require("./routers");
+    UserRouter } = require("./routers");
 
 const { ChatService,
     ConnectionService,
@@ -137,5 +138,19 @@ app.post("/api/login/facebook", function (req, res) {
     }
 });
 
-app.listen(8080);
-// server.listen(3000, () => console.log('listening on *:3000'));
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/views/io_test.html');
+  });
+
+// io.on('connection', SocketManager);
+io.on('connection', (socket) => {
+    console.log(socket.id);
+    io.emit('list messages');
+
+    socket.on('message sent', (messages) => {
+        console.log("Message received");
+        io.emit('broadcast message', messages);
+    })
+});
+
+server.listen(3000, () => console.log('listening on *:3000'));

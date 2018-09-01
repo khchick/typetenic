@@ -8,7 +8,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import { connect } from "react-redux";
-import { logoutUser } from "../actions/authAction";
+import { logoutUser } from "../redux/actions/authAction";
 
 interface UserProps {
   navigator: Navigator;

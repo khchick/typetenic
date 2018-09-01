@@ -6,7 +6,17 @@ import Landing from "./screens/Landing";
 import Login from "./screens/Login";
 import Signup from "./screens/Signup";
 import SignupCont from "./screens/SignupCont";
-import MbtiTest from "./screens/MbtiTest";
+// with redux
+import MbtiTest1 from "./screens/MbtiTest1";
+import MbtiTest2 from './screens/MbtiTest2';
+import MbtiTest3 from './screens/MbtiTest3';
+import MbtiTest4 from './screens/MbtiTest4';
+// previous
+import MbtiTestQ1 from "./screens/MbtiTestQ1";
+import MbtiTestQ2 from './screens/MbtiTestQ2';
+import MbtiTestQ3 from './screens/MbtiTestQ3';
+import MbtiTestQ4 from './screens/MbtiTestQ4';
+
 import MbtiResult from "./screens/MbtiResult";
 import MbtiProfile from "./screens/MbtiProfile";
 import Deck from "./screens/Deck"; // home root
@@ -17,54 +27,35 @@ import Settings from "./screens/Settings";
 import Profile from "./screens/Profile";
 import ResetProfile from "./screens/ResetProfile";
 
-import { store } from "./store/store";
+import { store } from "./redux/store";
 import { Provider } from "react-redux";
-// import {connect} from 'react-redux';
-import { checkToken } from "./actions/authAction";
+import { checkToken } from "./redux/actions/authAction";
+
 
 Navigation.registerComponent("LandingScreen", () => Landing, store, Provider);
 Navigation.registerComponent("LoginScreen", () => Login, store, Provider);
 Navigation.registerComponent("SignupScreen", () => Signup, store, Provider);
-Navigation.registerComponent(
-  "SignupContScreen",
-  () => SignupCont,
-  store,
-  Provider
-);
-Navigation.registerComponent("MbtiTestScreen", () => MbtiTest, store, Provider);
-Navigation.registerComponent(
-  "MbtiResultScreen",
-  () => MbtiResult,
-  store,
-  Provider
-);
-Navigation.registerComponent(
-  "MbtiProfileScreen",
-  () => MbtiProfile,
-  store,
-  Provider
-);
+Navigation.registerComponent("SignupContScreen", () => SignupCont,store,Provider);
+Navigation.registerComponent("MbtiTest1Screen", () => MbtiTest1, store, Provider);
+Navigation.registerComponent('MbtiTest2Screen', () => MbtiTest2, store, Provider);
+Navigation.registerComponent('MbtiTest3Screen', () => MbtiTest3, store, Provider);
+Navigation.registerComponent('MbtiTest4Screen', () => MbtiTest4, store, Provider);
+Navigation.registerComponent("MbtiResultScreen", () => MbtiResult, store, Provider);
+Navigation.registerComponent("MbtiProfileScreen", () => MbtiProfile, store, Provider);
 Navigation.registerComponent("HomeTabScreen", () => Deck, store, Provider);
 Navigation.registerComponent("ChatTabScreen", () => Chat, store, Provider);
 Navigation.registerComponent("ReqestTabScreen", () => Request, store, Provider);
 Navigation.registerComponent("UserTabScreen", () => User, store, Provider);
 Navigation.registerComponent("Settings", () => Settings, store, Provider);
 Navigation.registerComponent("ProfileScreen", () => Profile, store, Provider);
-Navigation.registerComponent(
-  "ResetProfile",
-  () => ResetProfile,
-  store,
-  Provider
-);
+Navigation.registerComponent("ResetProfile", () => ResetProfile, store, Provider);
 
-Navigation.startSingleScreenApp({
-  screen: {
-    screen: "LandingScreen",
-    navigatorStyle: {
-      navBarHidden: true
-    }
-  }
-});
+Navigation.registerComponent("MbtiTestQ1Screen", () => MbtiTestQ1, store, Provider);
+Navigation.registerComponent('MbtiTestQ2Screen', () => MbtiTestQ2, store, Provider);
+Navigation.registerComponent('MbtiTestQ3Screen', () => MbtiTestQ3, store, Provider);
+Navigation.registerComponent('MbtiTestQ4Screen', () => MbtiTestQ4, store, Provider);
+
+
 
 class App {
   constructor() {
@@ -140,16 +131,3 @@ class App {
 
 export default App;
 new App();
-
-// const MapStateToProps = (state: any) => {
-//     return {
-//       isLoggedIn: state.authReducer
-//     }
-//   }
-
-//   const mapDispatchToProps = (dispatch: any) => ({
-//     checkAuth: () => dispatch(checkAuth())
-//   })
-
-//   const App = connect( mapDispatchToProps)(PureApp);
-//   export default App;

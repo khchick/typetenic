@@ -10,6 +10,7 @@ import {
     View,
     Image
 } from 'react-native';
+import FBLoginButton from './components/FBLoginButton';
 
 const {height, width} = Dimensions.get('window');
 
@@ -37,6 +38,9 @@ export default class Landing extends React.Component<LandingProps> {
             >
               <Text style={styles.btnText}>LOGIN WITH FACEBOOK</Text>
             </TouchableOpacity>
+            
+            {/* <FBLoginButton /> */}
+
 
             <TouchableOpacity style={styles.btnContainer}
              onPress={() => this.props.navigator.push({
@@ -53,7 +57,7 @@ export default class Landing extends React.Component<LandingProps> {
   
         </View>
         </LinearGradient>
-    );
+    )  
   }
 }
 
@@ -87,4 +91,4 @@ const styles = StyleSheet.create({
     height: height * 0.6,
     margin: 20,
   },
-});
+})

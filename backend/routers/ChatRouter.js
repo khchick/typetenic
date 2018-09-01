@@ -30,7 +30,7 @@ class ChatRouter {
 
         router.get('/messages/:conversationID', (req, res) => {
             this.chatService.listMessages(req.params.conversationID)
-                .then(messages => res.json(messages))
+                .then(messages => {res.json(messages)})
                 .catch(err => res.status(500).json(err));
         })
 
@@ -38,6 +38,12 @@ class ChatRouter {
             this.chatService.createMessage(req.user.id, req.params.targetID, req.params.conversationID, req.body.content)
                 .then(() => this.chatService.listMessages(req.params.conversationID))
                 .then(messages => res.json(messages))
+                .catch(err => res.status(500).json(err));
+        })
+
+        router.get('/messages/:conversationID/:targetID', (req, res) => {
+            this.chatService.getIncomingMessage(req.params.conversationID, req.params.targetID)
+                .then(message => {res.json(message)})
                 .catch(err => res.status(500).json(err));
         })
 

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Navigation } from 'react-native-navigation';
 import LinearGradient from 'react-native-linear-gradient';
 import {transparentNav, globalStyle} from './styles/common';
 import {
@@ -13,7 +12,7 @@ import {
     ActivityIndicator
 } from 'react-native';
 import {connect} from 'react-redux';
-import {loginUser} from '../actions/authAction';
+import {loginUser} from '../redux/actions/authAction';
 
 
 interface LoginProps {

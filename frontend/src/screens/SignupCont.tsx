@@ -16,7 +16,8 @@ import RNPickerSelect from 'react-native-picker-select';
 import DatePicker from 'react-native-datepicker'
 import ImagePicker from 'react-native-image-picker';
 
-// const defaultPic = '../assets/profile-pic.png';
+import {connect} from 'react-redux';
+import {editProfile} from '../redux/actions/profileAction';
 
 var imageOptions = {
   title: 'Select profile picture',
@@ -25,7 +26,14 @@ var imageOptions = {
 };
 
 interface SignupProps {
-    navigator: Navigator
+    navigator: Navigator,
+    onEditProfile: (  
+      profilePic: any,
+      name: string,
+      date: string,
+      gender: string,
+      orientation: string,
+      location: string,) => any
 }
 
 interface SignupStates {
@@ -40,7 +48,7 @@ interface SignupStates {
   items3: { label: string, value: string }[],
 }
 
-export default class SignupCont extends React.Component<SignupProps, SignupStates> {
+class PureSignupCont extends React.Component<SignupProps, SignupStates> {
   constructor(props: SignupProps) {
     super(props);
 
@@ -92,11 +100,11 @@ export default class SignupCont extends React.Component<SignupProps, SignupState
     };
   }
 
-// wrap 2 functions 
+// wrap multiple functions 
   onSignupPress() {
-    console.log(this.state.profilePic.uri, this.state.name, this.state.date, this.state.gender, this.state.orientation, this.state.location);
+    this.props.onEditProfile(this.state.profilePic.uri, this.state.name, this.state.date, this.state.gender, this.state.orientation, this.state.location)    
     this.props.navigator.push({
-      screen: 'MbtiTestScreen',
+      screen: 'MbtiTest1Screen',
       navigatorStyle: transparentNav,
     })
   }
@@ -112,7 +120,14 @@ export default class SignupCont extends React.Component<SignupProps, SignupState
       else if (res.error) {
         console.log('ImagePicker Error: ', res.error);
       } else {
-        this.setState({profilePic: { uri: res.uri }});
+        const data = new FormData();
+        data.append('name', 'avatar'); // key/value pairs 
+        data.append('fileData', {
+          uri : res.uri,
+          type: res.type,
+          name: res.fileName
+        });
+        this.setState({profilePic: { uri: res.uri }}); // umm
       }
     })
   }
@@ -217,6 +232,30 @@ export default class SignupCont extends React.Component<SignupProps, SignupState
   }
 }
 
+const mapStateToProps = (state: any) => {
+  return {
+    profilePic: state.profile.profilePic,
+    name: state.profile.name,
+    date: state.profile.date,
+    gender: state.profile.gender,
+    orientation: state.profile.orientation,
+    location: state.profile.location,
+  }
+}
+
+const mapDispatchToProps = (dispatch: any) => ({
+  onEditProfile: (
+    profilePic: string,
+    name: string,
+    date: string,
+    gender: string,
+    orientation: string,
+    location: string,) => dispatch(editProfile(profilePic, name, date, gender, orientation, location, '', '', ''))
+})
+
+const SignupCont = connect(mapStateToProps, mapDispatchToProps)(PureSignupCont);
+export default SignupCont;
+// export default PureSignupCont;
 
 const styles = StyleSheet.create({
   profileInput: {
@@ -266,8 +305,9 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
   propic: {
-    height: 140,
-    width: 140,
+    height: 130,
+    width: 130,
+    borderRadius: 60,
   },
 });
 

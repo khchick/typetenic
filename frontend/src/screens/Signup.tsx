@@ -12,8 +12,13 @@ import {
     Alert
 } from 'react-native';
 
+import {connect} from 'react-redux';
+import {signupUser} from '../redux/actions/profileAction';
+
 interface SignupProps {
-    navigator: Navigator
+    navigator: Navigator;
+    onSignUp: (email: string, password: string) => any;
+
 }
 
 interface SignupStates {
@@ -21,7 +26,7 @@ interface SignupStates {
   password: string,
 }
 
-export default class Signup extends React.Component<SignupProps, SignupStates> {
+class PureSignup extends React.Component<SignupProps, SignupStates> {
   constructor(props: SignupProps) {
     super(props);
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
@@ -55,6 +60,17 @@ export default class Signup extends React.Component<SignupProps, SignupStates> {
     }
   }
 
+  onSignupPress() {
+    console.log(this.state)
+    this.props.onSignUp(this.state.email, this.state.password);  
+    
+    this.props.navigator.push({
+      screen: 'SignupContScreen',
+      title: 'Profile',
+      navigatorStyle: transparentNav,
+    })
+  }
+
   render() {
     return (
       <LinearGradient colors={['#9EF8E4', '#30519B']} style={[{flex: 1}]}>
@@ -73,26 +89,26 @@ export default class Signup extends React.Component<SignupProps, SignupStates> {
             style={styles.input}
           />
           <TextInput placeholder='Password' secureTextEntry
-            onChangeText={ (val) => this.setState({password: val}) }  
+            onChangeText={ (val) => this.setState({password: val})
+           }  
             placeholderTextColor='#fff'
             returnKeyType='next'
             style={styles.input}
           />
             
             <TouchableOpacity style={styles.btnContainer} 
-              onPress={() => this.props.navigator.push({
-                screen: 'SignupContScreen',
-                title: 'Profile',
-                navigatorStyle: transparentNav,
-            })}>
+              onPress={() => this.onSignupPress()
+               }>
               <Text style={styles.btnText}>Continue</Text>
             </TouchableOpacity>
 
             <TouchableOpacity 
+            
               onPress={() => this.props.navigator.pop({
-                animated: true, // does the pop have transition animation or does it happen immediately (optional)
-                animationType: 'slide-horizontal', // 'fade' (for both) / 'slide-horizontal' (for android) does the pop have different transition animation (optional)
-              })}>
+                  animated: true, // does the pop have transition animation or does it happen immediately (optional)
+                  animationType: 'slide-horizontal', // 'fade' (for both) / 'slide-horizontal' (for android) does the pop have different transition animation (optional)
+                })
+              }>
               <Text style={styles.btnText}>Got an account? Login here</Text>
             </TouchableOpacity>    
 
@@ -101,6 +117,22 @@ export default class Signup extends React.Component<SignupProps, SignupStates> {
     );
   }
 }
+
+const mapStateToProps = (state: any) => {
+  return {
+    email: state.profile.email,
+    password: state.profile.password,
+  }
+}
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    onSignUp: (email: string, password: string) => dispatch(signupUser(email, password)),
+  }
+}
+
+const Signup = connect(mapStateToProps, mapDispatchToProps)(PureSignup);
+export default Signup;
 
 
 const styles = StyleSheet.create({

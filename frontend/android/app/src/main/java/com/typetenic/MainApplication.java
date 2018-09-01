@@ -3,6 +3,7 @@ package com.typetenic;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
@@ -29,6 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
 <<<<<<< HEAD
           new MainReactPackage(),
+            new FBSDKPackage(),
             new ImagePickerPackage(),
             new LinearGradientPackage(),
             new ReactNativeConfigPackage(),

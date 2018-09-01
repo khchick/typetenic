@@ -12,19 +12,27 @@ import {
     TextInput
 } from 'react-native';
 import App from '../App';
+import {connect} from 'react-redux';
+import {editKeyAtr} from '../redux/actions/profileAction';
+
 
 interface MbtiProfileProps {
     navigator: Navigator
 }
 
-export default class MbtiProfile extends React.Component<MbtiProfileProps> {
+interface MbtiProfileStates {
+  keyDesc: string
+}
+
+export default class MbtiProfile extends React.Component<MbtiProfileProps, MbtiProfileStates> {
   constructor(props: any) {
     super(props);
+    this.state = {
+      keyDesc: ''
+    }    
   }
 
   render() {
-    let imageUri = 'https://i.pinimg.com/564x/d8/4b/77/d84b77fd22fe250776ea3af0af227fcd.jpg';
-
     return (
         <LinearGradient colors={['#9EF8E4', '#30519B']} style={[{flex: 1}]}>
         <View style={globalStyle.container}>
@@ -53,6 +61,7 @@ export default class MbtiProfile extends React.Component<MbtiProfileProps> {
                     What is your ideal first date?
                 </Text>
                 <TextInput style={styles.input}
+                    onChangeText={ (val) => this.setState({keyDesc: val}) } 
                     multiline = {true}
                     maxLength = {200}
                 />
