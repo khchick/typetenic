@@ -7,6 +7,10 @@ import Login from "./screens/Login";
 import Signup from "./screens/Signup";
 import SignupCont from "./screens/SignupCont";
 import MbtiTest from "./screens/MbtiTest";
+import MbtiTestQ1 from "./screens/MbtiTestQ1";
+import MbtiTestQ2 from "./screens/MbtiTestQ2";
+import MbtiTestQ3 from "./screens/MbtiTestQ3";
+import MbtiTestQ4 from "./screens/MbtiTestQ4";
 import MbtiResult from "./screens/MbtiResult";
 import MbtiProfile from "./screens/MbtiProfile";
 import Deck from "./screens/Deck"; // home root
@@ -31,7 +35,33 @@ Navigation.registerComponent(
   store,
   Provider
 );
+
 Navigation.registerComponent("MbtiTestScreen", () => MbtiTest, store, Provider);
+
+Navigation.registerComponent(
+  "MbtiTestQ1Screen",
+  () => MbtiTestQ1,
+  store,
+  Provider
+);
+Navigation.registerComponent(
+  "MbtiTestQ2Screen",
+  () => MbtiTestQ2,
+  store,
+  Provider
+);
+Navigation.registerComponent(
+  "MbtiTestQ3Screen",
+  () => MbtiTestQ3,
+  store,
+  Provider
+);
+Navigation.registerComponent(
+  "MbtiTestQ4Screen",
+  () => MbtiTestQ4,
+  store,
+  Provider
+);
 Navigation.registerComponent(
   "MbtiResultScreen",
   () => MbtiResult,
