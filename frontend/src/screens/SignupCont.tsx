@@ -257,7 +257,7 @@ const mapDispatchToProps = (dispatch: any) => ({
     date: string,
     gender: string,
     orientation: string,
-    location: string,) => dispatch(editProfile(profilePic, name, date, gender, orientation, location, '', '', ''))
+    location: string,) => dispatch(editProfile(profilePic, name, date, gender, orientation, location))
 })
 
 const SignupCont = connect(mapStateToProps, mapDispatchToProps)(PureSignupCont);

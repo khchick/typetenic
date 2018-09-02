@@ -12,10 +12,11 @@ import {
 } from 'react-native';
 import FBLoginButton from './components/FBLoginButton';
 
+
 const {height, width} = Dimensions.get('window');
 
 interface LandingProps {
-    navigator: Navigator
+    navigator: Navigator,
 }
 
 export default class Landing extends React.Component<LandingProps> {
@@ -31,16 +32,8 @@ export default class Landing extends React.Component<LandingProps> {
             <View style={styles.card}>
                 <Text>Tutorial</Text>
             </View>
-
-            <TouchableOpacity style={styles.btnContainer}
-              // onPress={() => 
-                // this.props.loginFacebook()}
-            >
-              <Text style={styles.btnText}>LOGIN WITH FACEBOOK</Text>
-            </TouchableOpacity>
             
-            {/* <FBLoginButton /> */}
-
+            <FBLoginButton />
 
             <TouchableOpacity style={styles.btnContainer}
              onPress={() => this.props.navigator.push({
