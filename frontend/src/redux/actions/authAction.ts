@@ -39,14 +39,14 @@ export function loginSuccess() {
     }
 }
 
-function loginFailure(message: string) {
+export function loginFailure(message: string) {
     return {
         type: LOGIN_FAILURE,
         message: message
     }
 }
 
-function logout() {
+export function logout() {
     return {
         type: LOGOUT
     }
@@ -93,13 +93,15 @@ export function loginFacebook(accessToken: string) {
                 access_token: accessToken
             })
             .then(res => {
+                console.log(res) // testing: not logged because failed 401
                 if (res.data == null) {
                     dispatch(loginFailure('Unexpected error'))
                 } else if (!res.data.token) {
                     dispatch(loginFailure(res.data.message || ''))
                 } else {
                     AsyncStorage.setItem('token', res.data.token)
-                    dispatch(loginSuccess())
+                    dispatch(loginSuccess());
+                    App.loginApp();
                 }
             })
             .catch(err => {

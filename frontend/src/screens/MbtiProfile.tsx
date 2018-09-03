@@ -13,23 +13,48 @@ import {
 } from 'react-native';
 import App from '../App';
 import {connect} from 'react-redux';
-import {editKeyAtr} from '../redux/actions/profileAction';
+import {editKeyAtr, submitProfile} from '../redux/actions/profileAction';
 
 
 interface MbtiProfileProps {
-    navigator: Navigator
+    navigator: Navigator;
+    profilePic: string,
+    name: string,
+    date: string,
+    gender: string,
+    orientation: string,
+    location: string,
+    mbti: string,
+    keyAtr: string, 
+    keyDesc: string
+    onSubmit: ( profilePic: string,
+      name: string,
+      date: string,
+      gender: string,
+      orientation: string,
+      location: string,
+      mbti: string,
+      keyAtr: string, 
+      keyDesc: string) => any;
 }
 
 interface MbtiProfileStates {
-  keyDesc: string
+  keyAtr: string;
+  keyDesc: string;
 }
 
-export default class MbtiProfile extends React.Component<MbtiProfileProps, MbtiProfileStates> {
+class PureMbtiProfile extends React.Component<MbtiProfileProps, MbtiProfileStates> {
   constructor(props: any) {
     super(props);
     this.state = {
+      keyAtr: '',
       keyDesc: ''
     }    
+  }
+  
+  onSubmitPress() {
+    console.log(this.state)
+    this.props.onSubmit(this.props.profilePic, this.props.name, this.props.date, this.props.gender, this.props.orientation, this.props.location, this.props.mbti , this.state.keyAtr, this.state.keyDesc);  
   }
 
   render() {
@@ -68,7 +93,7 @@ export default class MbtiProfile extends React.Component<MbtiProfileProps, MbtiP
 
             {/* signup route here ??  */}
                 <TouchableOpacity style={styles.btnContainer}
-                  onPress={() => App.loginApp()}> 
+                  onPress={() => this.onSubmitPress() }> 
                   <Text style={styles.btnText}>DONE</Text>
                 </TouchableOpacity>
             </View>
@@ -78,6 +103,45 @@ export default class MbtiProfile extends React.Component<MbtiProfileProps, MbtiP
     );
   }
 }
+
+const mapStateToProps = (state: any) => {
+  return {
+    profilePic: state.profile.profilePic,
+    display_name: state.profile.name,
+    dob: state.profile.date,
+    gender: state.profile.gender,
+    orientation: state.profile.orientation,
+    location: state.profile.location,
+    mbti: state.profile.mbti,
+    key_atr: state.profile.key_atr,
+    key_atr_desc: state.profile.key_atr_desc
+  }
+}
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    onSubmit: ( 
+      profilePic: string,
+      name: string,
+      date: string,
+      gender: string,
+      orientation: string,
+      location: string,
+      mbti: string,
+      keyAtr: string, 
+      keyDesc: string) => {
+      dispatch(editKeyAtr(keyAtr, keyDesc))
+      // .then(() => 
+        dispatch(submitProfile(profilePic, name, date, gender, orientation, location, mbti, keyAtr, keyDesc))
+      // )
+    }
+  }
+}
+
+const MbtiProfile = connect(mapStateToProps, mapDispatchToProps)(PureMbtiProfile);
+export default MbtiProfile;
+
+
 
 const {height, width} = Dimensions.get('window');
 

@@ -68,6 +68,7 @@ class PureSignup extends React.Component<SignupProps, SignupStates> {
       screen: 'SignupContScreen',
       title: 'Profile',
       navigatorStyle: transparentNav,
+      backButtonHidden: true,
     })
   }
 
