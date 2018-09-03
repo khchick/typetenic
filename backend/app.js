@@ -89,18 +89,21 @@ app.post("/api/login", async function (req, res) {
     }
 });
 
-app.post("/api/login/facebook", function (req, res) {
+app.post("/api/login/facebook", function (req, response) {
+    console.log('am i even here?') // testing: yes
     if (req.body.access_token) {
         var accessToken = req.body.access_token;
-        axios.get(`https://graph.facebook.com/me?access_token=${accessToken}`)
+        axios.get(`https://graph.facebook.com/me?fields=id,name,picture,email&access_token=${accessToken}`)
             .then(async function (res) {
+                console.log(res) // testing: yes
                 if (!res.data.error) {
-                    let query = this.knex
+                    let query = knex
                         .select('id')
                         .from('users')
                         .where('fbID', res.data.id)
                     return query.then(async function (rows) {
-                        if (rows[0] === 0) {
+                        console.log(rows) // testing
+                        if (rows.length === 0) {
                             var user = await knex('users')
                                 .insert({
                                     display_name: res.data.name,
@@ -112,16 +115,17 @@ app.post("/api/login/facebook", function (req, res) {
                                 id: user.id
                             }
                             var token = jwt.encode(payload, config.jwtSecret);
-                            res.json({
+                            response.json({
                                 token: token
                             });
                         } else {
+                            console.log(rows) // testing
                             var payload = {
-                                id: rows[0].id
+                                id: rows[0].id 
                                 // id: user.id
                             }
                             var token = jwt.encode(payload, config.jwtSecret);
-                            res.json({
+                            response.json({
                                 token: token
                             });
                         }

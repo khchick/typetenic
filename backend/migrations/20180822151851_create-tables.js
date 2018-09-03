@@ -17,7 +17,7 @@ exports.up = function (knex, Promise) {
             table.text('profile_pic');
             table.integer('min_age');
             table.integer('max_age');
-            table.integer('fbID');
+            table.string('fbID');
             table.string('ig_account');
             table.text('ideal_first_date');
             table.integer('token');
