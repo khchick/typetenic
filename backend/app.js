@@ -1,6 +1,7 @@
 // General Initialization
 require("dotenv").config();
 const NODE_ENV = process.env.NODE_ENV || "development"
+const PORT = process.env.PORT || "8443"
 const knexFile = require("./knexfile")[NODE_ENV]
 const knex = require("knex")(knexFile)
 const express = require("express");
@@ -153,4 +154,4 @@ io.on('connection', (socket) => {
     })
 });
 
-server.listen(3000, () => console.log('listening on *:3000'));
+server.listen(PORT, () => console.log(`listening on *:${PORT}`));
