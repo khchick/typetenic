@@ -105,12 +105,12 @@ export default MbtiTest2;
 
 const styles = StyleSheet.create({
   header: {
-    color: "rgb(57,123,226)",
+    color: "#30519B",
     fontSize: 20,
     fontWeight: "800"
   },
   question: {
-    color: "rgb(57,123,226)",
+    color: "#30519B",
     fontSize: 18,
     fontWeight: "700",
     textAlign: "left",
