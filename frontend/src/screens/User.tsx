@@ -3,6 +3,7 @@ import LinearGradient from "react-native-linear-gradient";
 import {
   Platform,
   StyleSheet,
+  Dimensions,
   Text,
   View,
   TouchableOpacity
@@ -14,6 +15,8 @@ interface UserProps {
   navigator: Navigator;
   onLogoutPress: () => void;
 }
+
+const { height, width } = Dimensions.get("window");
 
 class PureUser extends React.Component<UserProps> {
   static navigatorButtons = {
@@ -29,6 +32,10 @@ class PureUser extends React.Component<UserProps> {
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
         <View style={styles.container}>
+          <View style={styles.card}>
+            <Text>MY IMAGE</Text>
+          </View>
+
           <TouchableOpacity
             onPress={() =>
               this.props.navigator.push({
@@ -37,7 +44,7 @@ class PureUser extends React.Component<UserProps> {
               })
             }
           >
-            <Text style={styles.welcome}>Setting</Text>
+            <Text style={styles.btnText}>Setting</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -48,11 +55,11 @@ class PureUser extends React.Component<UserProps> {
               })
             }
           >
-            <Text style={styles.welcome}>Edit Profile</Text>
+            <Text style={styles.btnText}>Edit Profile</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => this.props.onLogoutPress()}>
-            <Text style={styles.welcome}>Logout</Text>
+            <Text style={styles.btnText}>Logout</Text>
           </TouchableOpacity>
         </View>
       </LinearGradient>
@@ -84,7 +91,27 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontSize: 20,
-    textAlign: "center",
+    // textAlign: "center",
     margin: 10
+  },
+  btnText: {
+    color: "#fff",
+    fontWeight: "700",
+    textAlign: "center"
+  },
+  card: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+
+    padding: 20,
+    borderRadius: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 6,
+    width: width * 0.8, // percent or minus
+    height: height * 0.6,
+    margin: 20
   }
 });
