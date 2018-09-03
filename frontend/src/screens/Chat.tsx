@@ -2,14 +2,14 @@ import * as React from 'react';
 // import { checkToken } from '../../src/actions/authAction';
 import Config from 'react-native-config';
 // window.navigator.userAgent = 'react-native';
-import { AsyncStorage } from 'react-native';
+// import { AsyncStorage } from 'react-native';
 import io from 'socket.io-client/dist/socket.io';
 import axios from 'axios';
 import { GiftedChat } from "react-native-gifted-chat";
 
 const socketUrl = Config.API_SERVER;
-const token = AsyncStorage.getItem('token');
-// 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Mjd9.55tl9fToUKG32_Yh1fB0Cqwjy4kPETaK4dSb3N_3v7k';
+const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Mjd9.55tl9fToUKG32_Yh1fB0Cqwjy4kPETaK4dSb3N_3v7k';
+// AsyncStorage.getItem('token');
 const userID = 27;
 
 interface IChatProps {
@@ -41,7 +41,6 @@ export default class Chat extends React.Component<IChatProps> {
   }
 
   componentDidMount() {
-    console.log(Payload);
     this.socket.on('list messages', () => {
       console.log('list messages activated');
       console.log(this.props.conID);
