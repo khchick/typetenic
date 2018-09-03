@@ -77,8 +77,8 @@ export default class Deck extends React.Component<{}, DeckStates> {
                   <View style={styles.NameButtonContainer}>
                     <Text style={styles.NameButtontext}>{display_name}</Text>
                   </View>
-                  {/* <Text style={styles.inputHeader}>{mbti}</Text>
-                  <Text style={styles.inputHeader}>{key_atr}</Text> */}
+                  <Text style={styles.inputHeader}>{mbti}</Text>
+                  <Text style={styles.inputHeader}>{key_atr}</Text>
                   <Text style={styles.inputHeader}>{dob}</Text>
                   {/* <Text style={styles.inputHeader}>{gender}</Text> */}
                   <Text style={styles.inputHeader}>{location}</Text>
@@ -145,8 +145,8 @@ const styles = StyleSheet.create({
   inputHeader: {
     backgroundColor: "#E5F5FA",
     color: "#30519B",
-    marginBottom: 7,
-    paddingVertical: 10,
+    marginBottom: 10,
+    paddingVertical: 8,
     paddingHorizontal: 10,
     borderRadius: 25,
     width: 250,
