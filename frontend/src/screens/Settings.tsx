@@ -51,7 +51,7 @@ export default class Settings extends React.Component<
             selectedMaximum={50}
             style={{
               flex: 1,
-              height: 70,
+              height: 80,
               padding: 30,
               backgroundColor: "rgb(232,238,241)"
             }}
@@ -70,7 +70,8 @@ export default class Settings extends React.Component<
             labelStyle={{
               color: "rgb(83,165,196)",
               fontWeight: "500",
-              fontSize: 20
+              fontSize: 20,
+              padding: 10
             }}
             size="large"
             isOn={this.state.isOnMenSwitch}
@@ -86,7 +87,8 @@ export default class Settings extends React.Component<
             labelStyle={{
               color: "rgb(83,165,196)",
               fontWeight: "500",
-              fontSize: 20
+              fontSize: 20,
+              padding: 10
             }}
             size="large"
             isOn={this.state.isOnWomenSwitch}
@@ -105,8 +107,9 @@ export default class Settings extends React.Component<
               label="Matches"
               labelStyle={{
                 color: "rgb(83,165,196)",
-                fontWeight: "500",
-                fontSize: 20
+                fontWeight: "bold",
+                fontSize: 20,
+                padding: 10
               }}
               size="large"
               isOn={this.state.isOnMatchesSwitch}
@@ -122,8 +125,9 @@ export default class Settings extends React.Component<
               label="Request"
               labelStyle={{
                 color: "rgb(83,165,196)",
-                fontWeight: "500",
-                fontSize: 20
+                fontWeight: "bold",
+                fontSize: 20,
+                padding: 10
               }}
               size="large"
               isOn={this.state.isOnRequestSwitch}
@@ -138,8 +142,9 @@ export default class Settings extends React.Component<
               label="Messages"
               labelStyle={{
                 color: "rgb(83,165,196)",
-                fontWeight: "500",
-                fontSize: 20
+                fontWeight: "bold",
+                fontSize: 20,
+                padding: 10
               }}
               size="large"
               isOn={this.state.isOnMessagesSwitch}
@@ -159,30 +164,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "rgb(232,238,241)",
-    padding: 10
+    padding: 15
   },
 
   header: {
     color: "rgb(83,165,196)",
-    fontSize: 24,
     fontWeight: "bold",
-    padding: 10
+    fontSize: 20,
+    padding: 15
   },
 
   agerow: {
     backgroundColor: "rgb(232,238,241)",
-    padding: 10
+    padding: 15
   },
 
   showmerow: {
-    flex: 1,
     backgroundColor: "rgb(232,238,241)",
-    padding: 10
+    padding: 15
   },
 
   messagerow: {
-    flex: 1,
     backgroundColor: "rgb(232,238,241)",
-    padding: 10
+    padding: 15
   }
 });
