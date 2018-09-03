@@ -20,8 +20,8 @@ import ImagePicker from "react-native-image-picker";
 
 var imageOptions = {
   title: "Select profile picture",
-  maxWidth: 160,
-  maxHeight: 160
+  maxWidth: 200,
+  maxHeight: 200
 };
 
 interface SignupProps {
@@ -106,10 +106,10 @@ export default class SignupCont extends React.Component<
       this.state.orientation,
       this.state.location
     );
-    this.props.navigator.push({
-      screen: "MbtiTestScreen",
-      navigatorStyle: transparentNav
-    });
+    // this.props.navigator.push({
+    //   screen: "ResetProfile",
+    //   navigatorStyle: transparentNav
+    // });
   }
 
   // ImagePicker returns an object which includes response.uri: "file://User/../something.jpg"
@@ -282,8 +282,8 @@ const styles = StyleSheet.create({
     borderColor: "transparent"
   },
   propic: {
-    height: 100,
-    width: 100
+    height: 150,
+    width: 150
   }
 });
 
