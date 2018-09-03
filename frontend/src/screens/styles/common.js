@@ -18,7 +18,9 @@ export const globalStyle = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 10
+        padding: 10,
+        fontFamily: 'helvetica',
+        letterSpacing: 1.5,
       },
     // building MBTI profile
     cardContainer: {

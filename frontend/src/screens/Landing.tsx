@@ -26,7 +26,7 @@ export default class Landing extends React.Component<LandingProps> {
 
   render() {
     return (
-        <LinearGradient colors={['#9EF8E4', '#30519B']} style={[{flex: 1}]}>
+        <LinearGradient colors={['#9EF8E4', '#004988']} style={[{flex: 1}]}>
         <View style={globalStyle.container}>
 
             <View style={styles.card}>
@@ -43,7 +43,7 @@ export default class Landing extends React.Component<LandingProps> {
               <Text style={styles.btnText}>LOGIN WITH EMAIL</Text>
             </TouchableOpacity>
 
-          <Text style={styles.btnText}>
+          <Text style={styles.extraText}>
             We do not post anything on facebook. 
             By signing in, you agree with our Terms of Service and Privacy Policy
           </Text>
@@ -58,16 +58,27 @@ export default class Landing extends React.Component<LandingProps> {
 const styles = StyleSheet.create({
   btnContainer: {
     backgroundColor: '#ffa18e',
-    borderColor: '#fff',
     paddingHorizontal: 15,
     paddingVertical: 15,
-    marginVertical: 15,
-    width: '60%',
+    marginVertical: 20,
+    width: '50%',
+    height: 45,
+    shadowColor: '#000',
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 6,
   },
   btnText: {
     color: '#fff',
+    textAlign: 'center',
+    fontSize: 14,
+    letterSpacing: 1.5,
+  },
+  extraText: {
+    color: '#fff',
     fontWeight: '700',
     textAlign: 'center',
+    fontSize: 10,
   },
   card: {
     justifyContent: 'center',

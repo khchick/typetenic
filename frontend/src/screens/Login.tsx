@@ -42,12 +42,12 @@ class PureLogin extends React.Component<LoginProps, LoginStates> {
 
     return (
      
-      <LinearGradient colors={['#9EF8E4', '#30519B']} style={[{flex: 1}]}>
+      <LinearGradient colors={['#9EF8E4', '#004988']} style={[{flex: 1}]}>
       <KeyboardAvoidingView behavior='padding' style={globalStyle.container}>
       
           <Text style={styles.welcome}>
-            Welcome{`\n`}
-            to Typetenic
+            WELCOME{`\n`}ON BOARD
+
           </Text>
 
             <TextInput placeholder='Email' 
