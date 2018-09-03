@@ -68,6 +68,7 @@ export default class Deck extends React.Component<{}, DeckStates> {
                 mbti,
                 conID
               }) => (
+<<<<<<< HEAD
                   <View style={styles.card} key={id}>
                     <Image
                       style={styles.avatar}
@@ -95,6 +96,27 @@ export default class Deck extends React.Component<{}, DeckStates> {
                     </TouchableOpacity>
                   </View>
                 )
+=======
+                <View style={styles.card}>
+                  <Image
+                    style={styles.avatar}
+                    source={{
+                      uri:
+                        "https://i.pinimg.com/236x/83/0f/71/830f71015b4a7383998416fe7f07c7eb--the-joker-jokers.jpg"
+                    }}
+                  />
+                  <View style={styles.NameButtonContainer}>
+                    <Text style={styles.NameButtontext}>{display_name}</Text>
+                  </View>
+                  <Text style={styles.inputHeader}>{mbti}</Text>
+                  <Text style={styles.inputHeader}>{key_atr}</Text>
+                  <Text style={styles.inputHeader}>{dob}</Text>
+                  {/* <Text style={styles.inputHeader}>{gender}</Text> */}
+                  <Text style={styles.inputHeader}>{location}</Text>
+                  <Text style={styles.inputHeader}>{key_atr_desc}</Text>
+                </View>
+              )
+>>>>>>> 54067fea7de68a1facdd874050fac8843bb0f625
             )}
           </ScrollView>
         </View>
@@ -155,8 +177,8 @@ const styles = StyleSheet.create({
   inputHeader: {
     backgroundColor: "#E5F5FA",
     color: "#30519B",
-    marginBottom: 7,
-    paddingVertical: 10,
+    marginBottom: 10,
+    paddingVertical: 8,
     paddingHorizontal: 10,
     borderRadius: 25,
     width: 250,
