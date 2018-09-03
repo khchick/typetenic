@@ -68,6 +68,13 @@ export default class Deck extends React.Component<{}, DeckStates> {
               }) => (
                 <View style={styles.card}>
                   <Image
+                    style={styles.logo}
+                    source={{
+                      uri:
+                        "/Users/mac/Desktop/typetenic/frontend/src/assets/logos/logo.jpg"
+                    }}
+                  />
+                  <Image
                     style={styles.avatar}
                     source={{
                       uri:
@@ -78,10 +85,10 @@ export default class Deck extends React.Component<{}, DeckStates> {
                     <Text style={styles.NameButtontext}>{display_name}</Text>
                   </View>
                   <Text style={styles.inputHeader}>{mbti}</Text>
-                  <Text style={styles.inputHeader}>{key_atr}</Text>
-                  <Text style={styles.inputHeader}>{dob}</Text>
+                  {/* <Text style={styles.inputHeader}>{key_atr}</Text> */}
+                  {/* <Text style={styles.inputHeader}>{dob}</Text> */}
                   {/* <Text style={styles.inputHeader}>{gender}</Text> */}
-                  <Text style={styles.inputHeader}>{location}</Text>
+                  {/* <Text style={styles.inputHeader}>{location}</Text> */}
                   <Text style={styles.inputHeader}>{key_atr_desc}</Text>
                 </View>
               )
@@ -103,8 +110,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
-    padding: 30,
-
+    padding: 15,
     borderRadius: 15,
     shadowColor: "#000",
     shadowOffset: { width: 2, height: 2 },
@@ -112,7 +118,14 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     width: width * 0.8, // percent or minus
     height: height * 0.7,
-    margin: 20
+    margin: 10
+  },
+  logo: {
+    width: 50,
+    height: 50,
+    alignSelf: "flex-start",
+    paddingTop: 20,
+    paddingBottom: 20
   },
   avatar: {
     width: width * 0.5,
@@ -121,14 +134,14 @@ const styles = StyleSheet.create({
   NameButtonContainer: {
     backgroundColor: "#B6AFA9",
     paddingHorizontal: 5,
-    paddingVertical: 5,
-    marginVertical: 5,
-    width: "50%",
+    paddingVertical: 8,
+    marginVertical: 8,
+    width: "85%",
     marginTop: 5,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 8,
+    paddingBottom: 8,
     marginLeft: 5,
-    marginRight: 5,
+    marginRight: 8,
     borderRadius: 5
   },
   NameButtontext: {
@@ -149,7 +162,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 10,
     borderRadius: 25,
-    width: 250,
+    width: 150,
     textAlign: "center"
   }
 });
