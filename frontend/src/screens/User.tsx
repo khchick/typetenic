@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     margin: 10
   },
   btnContainer: {
-    backgroundColor: "rgb(255,129,0)",
+    backgroundColor: "#FB9C6C",
     paddingHorizontal: 15,
     paddingVertical: 15,
     // marginHorizontal: 0,
@@ -126,7 +126,8 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: "#fff",
-    fontWeight: "900",
+    fontSize: 16,
+    fontWeight: "800",
     textAlign: "center"
   },
   card: {
@@ -140,12 +141,12 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 6,
-    width: width * 0.6, // percent or minus
-    height: height * 0.4,
+    width: width * 0.7, // percent or minus
+    height: height * 0.5,
     margin: 20
   },
   avatar: {
-    width: width * 0.5,
-    height: height * 0.3
+    width: width * 0.6,
+    height: height * 0.4
   }
 });
