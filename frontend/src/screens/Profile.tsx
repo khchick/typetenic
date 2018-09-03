@@ -18,7 +18,7 @@ export default class Profile extends React.Component<ProfileProps> {
           <Text style={styles.welcome}>Profile</Text>
           <TouchableOpacity onPress={() => 
             this.props.navigator.showLightBox({
-              screen: "ReqestTabScreen", // unique ID registered with Navigation.registerScreen
+              screen: "RequestTabScreen", // unique ID registered with Navigation.registerScreen
               passProps: {}, // simple serializable object that will pass as props to the lightbox (optional)
               style: {
                 backgroundBlur: "dark", // 'dark' / 'light' / 'xlight' / 'none' - the type of blur on the background

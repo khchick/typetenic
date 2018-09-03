@@ -44,7 +44,7 @@ Navigation.registerComponent("MbtiResultScreen", () => MbtiResult, store, Provid
 Navigation.registerComponent("MbtiProfileScreen", () => MbtiProfile, store, Provider);
 Navigation.registerComponent("HomeTabScreen", () => Deck, store, Provider);
 Navigation.registerComponent("ChatTabScreen", () => Chat, store, Provider);
-Navigation.registerComponent("ReqestTabScreen", () => Request, store, Provider);
+Navigation.registerComponent("RequestTabScreen", () => Request, store, Provider);
 Navigation.registerComponent("UserTabScreen", () => User, store, Provider);
 Navigation.registerComponent("Settings", () => Settings, store, Provider);
 Navigation.registerComponent("ProfileScreen", () => Profile, store, Provider);
@@ -85,14 +85,14 @@ class App {
       tabs: [
         {
           label: "Request",
-          screen: "ReqestTabScreen",
+          screen: "RequestTabScreen",
           icon: require("./assets/deck.png"),
           title: "Request",
           navigatorStyle: { transparentNav }
         },
         {
           label: "Lucky Draw",
-          screen: "ReqestTabScreen",
+          screen: "RequestTabScreen",
           icon: require("./assets/deck.png"),
           title: "Lucky Draw",
           navigatorStyle: { transparentNav }
