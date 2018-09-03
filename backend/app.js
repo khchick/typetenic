@@ -12,6 +12,7 @@ const authClass = require("./utils/auth")
 const config = require("./utils/config")
 const https = require("https")
 const bcrypt = require('./utils/bcrypt');
+const fs = require('fs');
 
 const app = express();
 const auth = authClass();
@@ -152,5 +153,14 @@ io.on('connection', (socket) => {
         io.emit('broadcast message', messages);
     })
 });
+
+// const httpsOptions = {
+//     key: fs.readFileSync('./localhost.key'),
+//     cert: fs.readFileSync('./localhost.crt')
+// }
+
+// https.createServer(httpsOptions, app).listen(PORT, () => {
+//     console.log('Application started at port ' + PORT)
+// })
 
 server.listen(PORT, () => console.log(`listening on *:${PORT}`));

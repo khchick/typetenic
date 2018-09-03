@@ -94,7 +94,7 @@ class ChatService {
                 user: {
                     _id: row.msg_sender_id,
                     name: row.display_name,
-                    avatar: `http://localhost:3000/${row.profile_pic}`
+                    avatar: `http://localhost:8080/${row.profile_pic}`
                 }
             }))
         })
@@ -127,7 +127,7 @@ class ChatService {
                 user: {
                     _id: row.msg_sender_id,
                     name: row.display_name,
-                    avatar: `http://localhost:3000/${row.profile_pic}`
+                    avatar: `http://localhost:8080/${row.profile_pic}`
                 }
             }));
         })
