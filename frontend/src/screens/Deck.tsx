@@ -6,11 +6,13 @@ import {
   View,
   ScrollView,
   Image,
-  Dimensions
+  Dimensions,
+  TouchableOpacity
 } from "react-native";
 import axios from "axios";
 import Config from "react-native-config";
 import { AsyncStorage } from "react-native";
+import {transparentNav} from './styles/common';
 
 const { height, width } = Dimensions.get("window");
 
@@ -37,7 +39,6 @@ export default class Deck extends React.Component<{}, DeckStates> {
         }
       })
       .then(res => {
-        console.log(res);
         this.setState({
           connectedSuggestions: res.data
         });
@@ -64,27 +65,36 @@ export default class Deck extends React.Component<{}, DeckStates> {
                 location,
                 key_atr,
                 key_atr_desc,
-                mbti
+                mbti,
+                conID
               }) => (
-                <View style={styles.card}>
-                  <Image
-                    style={styles.avatar}
-                    source={{
-                      uri:
-                        "https://i.pinimg.com/236x/83/0f/71/830f71015b4a7383998416fe7f07c7eb--the-joker-jokers.jpg"
-                    }}
-                  />
-                  <View style={styles.NameButtonContainer}>
-                    <Text style={styles.NameButtontext}>{display_name}</Text>
-                  </View>
-                  {/* <Text style={styles.inputHeader}>{mbti}</Text>
+                  <View style={styles.card} key={id}>
+                    <Image
+                      style={styles.avatar}
+                      source={{
+                        uri:
+                          "https://i.pinimg.com/236x/83/0f/71/830f71015b4a7383998416fe7f07c7eb--the-joker-jokers.jpg"
+                      }}
+                    />
+                    <View style={styles.NameButtonContainer}>
+                      <Text style={styles.NameButtontext}>{display_name}</Text>
+                    </View>
+                    {/* <Text style={styles.inputHeader}>{mbti}</Text>
                   <Text style={styles.inputHeader}>{key_atr}</Text> */}
-                  <Text style={styles.inputHeader}>{dob}</Text>
-                  {/* <Text style={styles.inputHeader}>{gender}</Text> */}
-                  <Text style={styles.inputHeader}>{location}</Text>
-                  <Text style={styles.inputHeader}>{key_atr_desc}</Text>
-                </View>
-              )
+                    <Text style={styles.inputHeader}>{dob}</Text>
+                    {/* <Text style={styles.inputHeader}>{gender}</Text> */}
+                    <Text style={styles.inputHeader}>{location}</Text>
+                    <Text style={styles.inputHeader}>{key_atr_desc}</Text>
+                    <TouchableOpacity style={styles.btnContainer}
+                        onPress={() => this.props.navigator.push({
+                        screen: 'ChatTabScreen',
+                        passProps: {targetID: id, conID: conID },
+                        navigatorStyle: transparentNav,
+                      })}>
+                      <Text style={styles.btnText}>Chat</Text>
+                    </TouchableOpacity>
+                  </View>
+                )
             )}
           </ScrollView>
         </View>
