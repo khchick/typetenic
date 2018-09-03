@@ -15,33 +15,30 @@ import { AsyncStorage } from 'react-native';
 const {height, width} = Dimensions.get('window');
 
 interface DeckStates {
-  email: string;
-  password: string;
+  connectedSuggestions: any
+  connectedUsers: any
 }
 
 export default class Deck extends React.Component<{}, DeckStates> {
   constructor(props:any ) {
     super(props);
     this.state = {
-      email: 'Testing email',
-      password: 'some password',
+      connectedSuggestions: [],
+      connectedUsers: []
     };
   }
 
   async componentWillMount() {
-    
     let token = await AsyncStorage.getItem('token')
-    console.log(token)
-    axios.get(`${Config.API_SERVER}/api/user/myprofile`, {
+    axios.get(`${Config.API_SERVER}/api/connection/deck/suggested`, {
       headers: {
         Authorization: 'Bearer ' + token
       }
     })
       .then((res)=> {
-        console.log(res)
+        console.log(res);
         this.setState({
-          email: res.data[0].email,
-          password: res.data[0].password          
+          connectedSuggestions: res.data
         })
       })
       .catch(err => console.log(err))
@@ -59,35 +56,32 @@ export default class Deck extends React.Component<{}, DeckStates> {
           snapToAlignment={'center'}
           decelerationRate={0} // stop scrolling momentum
           >
-            {/* dummy cards */}
+            {this.state.connectedSuggestions.map(({ id, display_name, dob, gender, location, key_atr, key_atr_desc, mbti }) =>
             <View style={styles.card}>
-                <Image style={styles.avatar} source={ {uri: 'https://i.scdn.co/image/3d7ad07f25e3d56c09eefc01a330e346bcd4f793'} } />
+                <Image style={styles.avatar} source={{ uri: 'https://via.placeholder.com/200x200' }} />
                 <Text style={styles.text}>
-                  {this.state.email} 
-                  {this.state.password}
+                    {display_name}
+                </Text>
+                <Text style={styles.text}>
+                    {dob}
+                </Text>
+                <Text style={styles.text}>
+                    {gender}
+                </Text>
+                <Text style={styles.text}>
+                    {location}
+                </Text>
+                <Text style={styles.text}>
+                    {key_atr}
+                </Text>
+                <Text style={styles.text}>
+                    {key_atr_desc}
+                </Text>
+                <Text style={styles.text}>
+                    {mbti}
                 </Text>
             </View>
-
-            <View style={styles.card}>
-                <Image style={styles.avatar} source={ {uri: 'https://i.scdn.co/image/3d7ad07f25e3d56c09eefc01a330e346bcd4f793'} } />
-                <Text style={styles.text}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-                </Text>
-            </View>
-
-            <View style={styles.card}>
-                <Image style={styles.avatar} source={ {uri: 'https://i.scdn.co/image/3d7ad07f25e3d56c09eefc01a330e346bcd4f793'} } />
-                <Text style={styles.text}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-                </Text>
-            </View>
-
-            <View style={styles.card}>
-                <Image style={styles.avatar} source={ {uri: 'https://i.scdn.co/image/3d7ad07f25e3d56c09eefc01a330e346bcd4f793'} } />
-                <Text style={styles.text}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-                </Text>
-            </View>
+        )}
         </ScrollView>
 
       </View>
