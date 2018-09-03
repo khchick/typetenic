@@ -63,7 +63,7 @@ class PureMbtiTest3 extends React.Component<MbtiTestProps> {
 
             <TouchableOpacity onPress={() => this.onChoiceA()}>
               <Text style={styleA}>
-                A Try to convince her/ him with logical arguments
+                A Try to convince with logical arguments
               </Text>
               <View style={styles.pickCard}>
                 <Image style={styles.img} source={require(imageA)} />
@@ -71,9 +71,7 @@ class PureMbtiTest3 extends React.Component<MbtiTestProps> {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => this.onChoiceB()}>
-              <Text style={styleB}>
-                B Give her/ him a hug no matter who is the wrong one
-              </Text>
+              <Text style={styleB}>B Hug first, no matter who is wrong</Text>
               <View style={styles.pickCard}>
                 <Image style={styles.img} source={require(imageB)} />
               </View>

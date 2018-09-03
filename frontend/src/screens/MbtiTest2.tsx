@@ -62,8 +62,7 @@ class PureMbtiTest2 extends React.Component<MbtiTestProps> {
 
             <TouchableOpacity onPress={() => this.onChoiceA()}>
               <Text style={styleA}>
-                A Collect as many information about the activity as you can
-                before you go for it
+                A Collect as many information as you can.
               </Text>
               <View style={styles.pickCard}>
                 <Image style={styles.img} source={require(imageA)} />
@@ -71,9 +70,7 @@ class PureMbtiTest2 extends React.Component<MbtiTestProps> {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => this.onChoiceB()}>
-              <Text style={styleB}>
-                B Just go and see what will happen. That’s why life is fun!
-              </Text>
+              <Text style={styleB}>B Just go and see what will happen.</Text>
               <View style={styles.pickCard}>
                 <Image style={styles.img} source={require(imageB)} />
               </View>
