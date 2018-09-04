@@ -128,6 +128,7 @@ export function logoutUser() {
         AsyncStorage.removeItem('token')           
         .then(() => {
             dispatch(logout());
+            dispatch(loginSuccess(''));
             App.initialApp();
         })
     }
