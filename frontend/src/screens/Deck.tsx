@@ -12,33 +12,43 @@ import {
 import axios from "axios";
 import Config from "react-native-config";
 import { AsyncStorage } from "react-native";
-import {transparentNav} from './styles/common';
+import { transparentNav } from './styles/common';
+import {connect} from 'react-redux';
 
 const { height, width } = Dimensions.get("window");
 
-interface DeckStates {
+interface IDeckProps {
+  token: string
+}
+
+interface IDeckStates {
   connectedSuggestions: any;
   connectedUsers: any;
 }
 
-export default class Deck extends React.Component<{}, DeckStates> {
-  constructor(props: any) {
+class Deck extends React.Component<IDeckProps, IDeckStates> {
+  constructor(props: IDeckProps) {
     super(props);
     this.state = {
       connectedSuggestions: [],
-      connectedUsers: []
+      connectedUsers: [],
+
     };
   }
 
   async componentWillMount() {
-    let token = await AsyncStorage.getItem("token");
+    console.log(this.props.token);
     axios
       .get(`${Config.API_SERVER}/api/connection/deck/suggested`, {
         headers: {
-          Authorization: "Bearer " + token
+          Authorization: "Bearer " + this.props.token
         }
       })
       .then(res => {
+        res.data.forEach(card => {
+          console.log(card.conID);
+        })
+        
         this.setState({
           connectedSuggestions: res.data
         });
@@ -49,6 +59,7 @@ export default class Deck extends React.Component<{}, DeckStates> {
   render() {
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
+        <Text>{this.props.token}</Text>
         <View style={styles.container}>
           <ScrollView
             horizontal={true}
@@ -86,11 +97,24 @@ export default class Deck extends React.Component<{}, DeckStates> {
                     <Text style={styles.inputHeader}>{location}</Text>
                     <Text style={styles.inputHeader}>{key_atr_desc}</Text>
                     <TouchableOpacity style={styles.btnContainer}
-                        onPress={() => this.props.navigator.push({
-                        screen: 'ChatTabScreen',
-                        passProps: {targetID: id, conID: conID },
-                        navigatorStyle: transparentNav,
-                      })}>
+                      onPress={() => {
+                        [
+                          axios
+                            .post(`${Config.API_SERVER}/api/chat/conversation/${id}`, {
+                              headers: {
+                                Authorization: "Bearer " + this.props.token
+                              }
+                            }).then(res => {
+                              console.log(res);
+                              conID = res;
+                            })
+                        ]
+                        this.props.navigator.push({
+                          screen: 'ChatTabScreen',
+                          passProps: { targetID: id, conID: conID },
+                          navigatorStyle: transparentNav,
+                        });
+                      }}>
                       <Text style={styles.btnText}>Chat</Text>
                     </TouchableOpacity>
                   </View>
@@ -100,8 +124,16 @@ export default class Deck extends React.Component<{}, DeckStates> {
         </View>
       </LinearGradient>
     );
+  } 
+}
+
+const MapStateToProps = (state: any) => {
+  return {
+    token: state.auth.token
   }
 }
+
+export default connect(MapStateToProps)(Deck);
 
 const styles = StyleSheet.create({
   container: {

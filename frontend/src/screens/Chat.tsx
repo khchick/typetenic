@@ -23,13 +23,6 @@ export default class Chat extends React.Component<IChatProps> {
   constructor(props: any) {
     super(props);
 
-    this.socket = io('localhost:8080', { jsonp: false });
-
-    this.socket.on('broadcast message', (msg: any) => {
-      console.log('broadcast message activated');
-      this.onReceive(msg);
-    })
-
     this.state = {
       // socket: null,
       messages: [],
@@ -37,13 +30,19 @@ export default class Chat extends React.Component<IChatProps> {
   }
 
   componentWillMount() {
-    this.initSocket();
+    // this.initSocket();
+    this.socket = io('localhost:8080', { jsonp: false });
+    // this.socket.emit('chat room info', {convID:})
+    this.socket.on('broadcast message', (msg: any) => {
+      console.log('broadcast message activated');
+      this.onReceive(msg);
+    })
   }
 
   componentDidMount() {
     this.socket.on('list messages', () => {
       console.log('list messages activated');
-      console.log(this.props.conID);
+      // console.log(this.props.conID);
       let self = this;
       axios.get(`${Config.API_SERVER}/api/chat/messages/${this.props.conID}`, {
         headers: {
@@ -62,6 +61,10 @@ export default class Chat extends React.Component<IChatProps> {
     })
   }
 
+  componentWillUnmount() {
+    this.socket.disconnect();
+  }
+
   onSend(messages = []) {
     this.socket.emit('message sent', messages);
     axios.post(`${Config.API_SERVER}/api/chat/messages/${this.props.conID}/${this.props.targetID}`, {
@@ -72,9 +75,9 @@ export default class Chat extends React.Component<IChatProps> {
         }
       })
       .then(() => {
-        this.setState(previousState => ({
-          messages: GiftedChat.append(previousState.messages, messages),
-        }))
+        // this.setState(previousState => ({
+        //   messages: GiftedChat.append(previousState.messages, messages),
+        // }))
       });
   }
 
@@ -99,13 +102,13 @@ export default class Chat extends React.Component<IChatProps> {
     )
   }
 
-  initSocket = () => {
-    const socket = io(socketUrl)
-    socket.on('connect', () => {
-      console.log("Connected");
-    })
-    this.setState({ socket })
-  }
+  // initSocket = () => {
+  //   const socket = io(socketUrl)
+  //   socket.on('connect', () => {
+  //     console.log("Connected");
+  //   })
+  //   this.setState({ socket })
+  // }
 
 }
 

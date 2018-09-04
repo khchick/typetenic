@@ -2,11 +2,13 @@ import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT, AuthActions} from '../actions/aut
 
 
 export interface AuthState {
-    isLoggedIn: boolean
+    isLoggedIn: boolean;
+    token: string;
 }
 
 const initialState = {
-    isLoggedIn: false
+    isLoggedIn: false,
+    token: ''
 }
 
 export function authReducer(state: AuthState = initialState, action: AuthActions) {
@@ -14,7 +16,8 @@ export function authReducer(state: AuthState = initialState, action: AuthActions
         case LOGIN_SUCCESS:
             return {
                 ...state, // don't mutate state
-                isLoggedIn: true
+                isLoggedIn: true,
+                token: action.token
             }
         // case LOGIN_FAILURE: 
         //     return {

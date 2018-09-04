@@ -148,16 +148,18 @@ io.on('connection', (socket) => {
     console.log(socket.id);
     io.emit('list messages');
 
+    // socket.join(room);
+
     socket.on('message sent', (messages) => {
         console.log("Message received");
         io.emit('broadcast message', messages);
     })
 });
 
-// const httpsOptions = {
-//     key: fs.readFileSync('./localhost.key'),
-//     cert: fs.readFileSync('./localhost.crt')
-// }
+const httpsOptions = {
+    key: fs.readFileSync('./localhost.key'),
+    cert: fs.readFileSync('./localhost.crt')
+}
 
 // https.createServer(httpsOptions, app).listen(PORT, () => {
 //     console.log('Application started at port ' + PORT)

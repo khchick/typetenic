@@ -60,8 +60,28 @@ class ChatService {
                         'user1': userID,
                         'user2': targetID
                     })
+                    .then(() => {
+                        let query = this.knex
+                            .select('id')
+                            .from('conversation')
+                            .where(function () {
+                                this.where('user1', userID)
+                                    .andWhere('user2', targetID)
+                            })
+                            .orWhere(function () {
+                                this.where('user1', targetID)
+                                    .andWhere('user2', userID)
+                            })
+
+                        return query.then(rows => {
+                            rows.map(row => ({
+                                'id': row.id
+                            }));
+                            return rows[0].id;
+                        })
+                    })
             } else {
-                return;
+                return rows[0].id;
             }
         })
     }

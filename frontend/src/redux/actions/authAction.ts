@@ -20,6 +20,7 @@ export type LOGOUT = typeof LOGOUT;
 
 export interface LoginSuccessAction {
     type: LOGIN_SUCCESS
+    token: string
 }
 
 export interface LoginFailureAction {
@@ -33,9 +34,10 @@ export interface LogOutAction {
 export type AuthActions = LoginSuccessAction | LoginFailureAction | LogOutAction;
 
 
-export function loginSuccess() {
+export function loginSuccess(token: string) {
     return {
-        type: LOGIN_SUCCESS
+        type: LOGIN_SUCCESS,
+        token: token
     }
 }
 
@@ -74,7 +76,7 @@ export function loginUser(email: string, password: string) {
                     dispatch(loginFailure(res.data.message || ''));
                 } else {
                     AsyncStorage.setItem('token', res.data.token) // save token in AsyncStorage
-                    dispatch(loginSuccess());
+                    dispatch(loginSuccess(res.data.token));
                     App.loginApp();
                 }
             })
