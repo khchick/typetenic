@@ -163,4 +163,4 @@ https.createServer(httpsOptions, app).listen(PORT, () => {
     console.log('Application started at port ' + PORT)
 })
 
-// server.listen(PORT, () => console.log(`listening on *:${PORT}`));
+server.listen('3000', () => console.log(`listening on *: 3000`));
