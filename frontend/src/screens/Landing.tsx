@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 15,
     marginVertical: 20,
-    width: '50%',
+    width: '60%',
     height: 45,
     shadowColor: '#000',
     shadowOffset: { width: 2, height: 2 },
