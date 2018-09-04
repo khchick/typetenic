@@ -19,7 +19,7 @@ const auth = authClass();
 
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
-// const socket = require('socket.io-client')('http://localhost')
+// const socket = require('socket.io-client')(process.env.HOST);
 // const SocketManager = require('./utils/SocketManager');
 
 app.use(express.static('public'));
@@ -119,7 +119,7 @@ app.post("/api/login/facebook", function (req, response) {
                             });
                         } else {
                             var payload = {
-                                id: rows[0].id 
+                                id: rows[0].id
                             }
                             var token = jwt.encode(payload, config.jwtSecret);
                             response.json({
@@ -141,30 +141,26 @@ app.post("/api/login/facebook", function (req, response) {
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/views/io_test.html');
-  });
+});
 
-// io.on('connection', SocketManager);
 io.on('connection', (socket) => {
-    console.log(socket.id);
-    io.emit('list messages');
+    socket.on('online', (conID) => {
+        socket.join(conID);
+        socket.conID = conID;
+    });
 
-    socket.on('start conversation', (conID) => {
-        socket.join(`Room ${conID}`);
-    })
-
-    socket.on('message sent', (messages) => {
-        console.log("Message received");
-        io.to(`Room ${conID}`).emit('broadcast message', messages);
+    socket.on('message', (messages) => {
+        io.to(socket.conID).emit('broadcast message', messages);
     })
 });
 
-const httpsOptions = {
-    key: fs.readFileSync('./localhost.key'),
-    cert: fs.readFileSync('./localhost.crt')
-}
+// const httpsOptions = {
+//     key: fs.readFileSync('./localhost.key'),
+//     cert: fs.readFileSync('./localhost.crt')
+// }
 
-https.createServer(httpsOptions, app).listen(PORT, () => {
-    console.log('Application started at port ' + PORT)
-})
+// https.createServer(httpsOptions, app).listen(PORT, () => {
+//     console.log('Application started at port ' + PORT)
+// })
 
-// server.listen(PORT, () => console.log(`listening on *:${PORT}`));
+server.listen(PORT, () => console.log(`listening on *:${PORT}`));

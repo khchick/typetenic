@@ -18,7 +18,8 @@ import {connect} from 'react-redux';
 const { height, width } = Dimensions.get("window");
 
 interface IDeckProps {
-  token: string
+  navigator: Navigator;
+  token: string;
 }
 
 interface IDeckStates {
@@ -32,7 +33,6 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
     this.state = {
       connectedSuggestions: [],
       connectedUsers: [],
-
     };
   }
 
@@ -104,17 +104,15 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                     <Text style={styles.inputHeader}>{key_atr_desc}</Text>
                     <TouchableOpacity style={styles.btnContainer}
                       onPress={() => {
-                        // [
-                        //   axios
-                        //     .post(`${Config.API_SERVER}/api/chat/conversation/${id}`, {
-                        //       headers: {
-                        //         Authorization: "Bearer " + this.props.token
-                        //       }
-                        //     }).then(res => {
-                        //       console.log(res);
-                        //       conID = res;
-                        //     })
-                        // ]
+                        [
+                          axios.post(`${Config.API_SERVER}/api/chat/conversation/${id}`, {
+                            headers: {
+                              'Authorization': `Bearer ${this.props.token}`
+                            }
+                          })
+                          .then(res => console.log(res))
+                          .catch(err => console.log(err))
+                        ]
                         this.props.navigator.push({
                           screen: 'ChatTabScreen',
                           passProps: { targetID: id, conID: conID, token: this.props.token },

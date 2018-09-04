@@ -1,64 +1,57 @@
 import * as React from 'react';
-// import { checkToken } from '../../src/actions/authAction';
 import Config from 'react-native-config';
-// window.navigator.userAgent = 'react-native';
-// import { AsyncStorage } from 'react-native';
 import io from 'socket.io-client/dist/socket.io';
 import axios from 'axios';
 import { GiftedChat } from "react-native-gifted-chat";
 
-const socketUrl = Config.API_SERVER;
-// const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Mjd9.55tl9fToUKG32_Yh1fB0Cqwjy4kPETaK4dSb3N_3v7k';
-// AsyncStorage.getItem('token');
 const userID = 27;
 
 interface IChatProps {
-  navigator: Navigator,
-  targetID: number
-  conID: number
-  token: string
+  navigator: Navigator;
+  targetID: number;
+  token: string;
+  conID: number;
 }
 
-export default class Chat extends React.Component<IChatProps> {
+interface IChatStates {
+  messages: []
+}
+
+export default class Chat extends React.Component<IChatProps, IChatStates> {
 
   constructor(props: any) {
     super(props);
 
     this.state = {
-      // socket: null,
       messages: [],
     };
   }
 
   componentWillMount() {
-    console.log(this.props.conID);
     this.socket = io(Config.API_SERVER, { jsonp: false });
-    // this.socket.emit('start conversation', {conID: this.props.conID});
-    this.socket.on('broadcast message', (msg: any) => {
-      console.log('broadcast message activated');
-      this.onReceive(msg);
-    })
   }
 
   componentDidMount() {
-    this.socket.on('list messages', () => {
-      console.log('list messages activated');
-      // console.log(this.props.conID);
-      let self = this;
-      axios.get(`${Config.API_SERVER}/api/chat/messages/${this.props.conID}`, {
-        headers: {
-          'Authorization': `Bearer ${this.props.token}`,
-        }
-      })
-        .then(function (res) {
-          console.log(res.data);
-          self.setState({
-            messages: res.data
-          });
-        })
-        .catch(function (error) {
-          console.log(error);
+    // List messages
+    let self = this;
+    axios.get(`${Config.API_SERVER}/api/chat/messages/${this.props.conID}`, {
+      headers: {
+        'Authorization': `Bearer ${this.props.token}`
+      }
+    })
+      .then(function (res) {
+        self.setState({
+          messages: res.data
         });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    
+    // Join conversation (room)
+    this.socket.emit('online', this.props.conID);
+    this.socket.on('broadcast message', (msg: any) => {
+      this.onReceive(msg);
     })
   }
 
@@ -67,7 +60,7 @@ export default class Chat extends React.Component<IChatProps> {
   }
 
   onSend(messages = []) {
-    this.socket.emit('message sent', messages);
+    this.socket.emit('message', messages);
     axios.post(`${Config.API_SERVER}/api/chat/messages/${this.props.conID}/${this.props.targetID}`, {
       "content": messages[0].text
     }, {
@@ -112,47 +105,3 @@ export default class Chat extends React.Component<IChatProps> {
   // }
 
 }
-
-// import * as React from 'react';
-// import LinearGradient from 'react-native-linear-gradient';
-// import {
-//     StyleSheet, 
-//     Text, 
-//     View,
-//     TouchableOpacity
-// } from 'react-native';
-
-// interface ChatProps {
-//     navigator: Navigator
-// }
-// export default class Chat extends React.Component<ChatProps> {
-//   render() {
-//     return (
-//       <LinearGradient colors={['#9EF8E4', '#30519B']} style={[{flex: 1}]}>
-//       <View style={styles.container}>
-//         <Text style={styles.welcome}>Chat Message</Text>
-
-//         <TouchableOpacity onPress={() => this.props.navigator.push({
-//             screen: 'ProfileScreen',
-//             title: 'Profile of someone'
-//         })}>
-//             <Text style={styles.welcome}>Click to show profile</Text>
-//         </TouchableOpacity>
-//       </View>
-//       </LinearGradient>
-//     );
-//   }
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   welcome: {
-//     fontSize: 20,
-//     textAlign: 'center',
-//     margin: 10,
-//   },
-// });
