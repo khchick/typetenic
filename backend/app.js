@@ -149,12 +149,12 @@ io.on('connection', (socket) => {
     io.emit('list messages');
 
     socket.on('start conversation', (conID) => {
-        socket.join(conID);
+        socket.join(`Room ${conID}`);
     })
 
     socket.on('message sent', (messages) => {
         console.log("Message received");
-        io.emit('broadcast message', messages);
+        io.to(`Room ${conID}`).emit('broadcast message', messages);
     })
 });
 

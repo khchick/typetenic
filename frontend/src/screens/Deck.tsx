@@ -104,17 +104,17 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                     <Text style={styles.inputHeader}>{key_atr_desc}</Text>
                     <TouchableOpacity style={styles.btnContainer}
                       onPress={() => {
-                        [
-                          axios
-                            .post(`${Config.API_SERVER}/api/chat/conversation/${id}`, {
-                              headers: {
-                                Authorization: "Bearer " + this.props.token
-                              }
-                            }).then(res => {
-                              console.log(res);
-                              conID = res;
-                            })
-                        ]
+                        // [
+                        //   axios
+                        //     .post(`${Config.API_SERVER}/api/chat/conversation/${id}`, {
+                        //       headers: {
+                        //         Authorization: "Bearer " + this.props.token
+                        //       }
+                        //     }).then(res => {
+                        //       console.log(res);
+                        //       conID = res;
+                        //     })
+                        // ]
                         this.props.navigator.push({
                           screen: 'ChatTabScreen',
                           passProps: { targetID: id, conID: conID, token: this.props.token },
