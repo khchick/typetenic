@@ -1,6 +1,6 @@
 // to use in screens:
-// import TopBar from './components/TopBar'
-// pass names e.g: <TopBar leftButtonName={'RECEIVED'} rightButtonName={'SENT'} />
+// import RightTopButton from './components/RightTopButton'
+// pass names e.g: <RightTopButton leftButtonName={'RIGHT'} onPress={() => {console.log('RIGHT')}} />
 
 import * as React from 'react';
 import {
@@ -17,34 +17,24 @@ import {
 const {height, width} = Dimensions.get('window');
 
 
-interface TopBarProps {
-    leftButtonName: string;
+interface RightTopButtonProps {
     rightButtonName: string;
+    onPress: () => any
 }
 
-export default class TopBar extends React.Component<TopBarProps>{
+export default class RightTopButton extends React.Component<RightTopButtonProps>{
   render() {
     return (
     
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.topButton}>
-            <Text style={styles.topBtnText}>{this.props.leftButtonName}</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.topButton}>
+          <TouchableOpacity style={styles.topButton} onPress={ this.props.onPress }>
             <Text style={styles.topBtnText}>{this.props.rightButtonName}</Text>
           </TouchableOpacity>
-        </View>
         )
     }   
 }
 
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    flexDirection: 'row', 
-    height: 45,   
-  },
   topButton: {    
     paddingHorizontal: 10,
     paddingVertical: 10,
