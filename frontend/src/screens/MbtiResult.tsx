@@ -1,6 +1,7 @@
 import * as React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {transparentNav, globalStyle} from './styles/common';
+// import getAvatarImg from './styles/avatar';
 import {
     StyleSheet, 
     Text, 
@@ -18,7 +19,13 @@ interface MbtiResultProps {
     test1: string;
     test2: string;
     test3: string;
-    test4: string
+    test4: string;
+    onContinue: (
+      mbti: string, 
+      energy: string,
+      information: string,
+      decision: string,
+      lifestyle: string) => any;
 }
 
 interface MbtiState {
@@ -39,62 +46,63 @@ class PureMbtiResult extends React.Component<MbtiResultProps, MbtiState> {
       information: '',
       decision: '',
       lifestyle: '',
-      mbti: ''
+      mbti: '',
     }
   }
-  
-  // MBTI logic **** WORKING ******
-  // if put in contructor --> Warning: Can't call setState on a component that is not yet mounted
-  // but these are not working:   componentWillMount / componentDidMount
 
+  onContinuePress() {
+    this.props.onContinue(this.state.mbti, this.state.energy, this.state.information, this.state.decision, this.state.lifestyle);
+      this.props.navigator.push({
+        screen: 'MbtiProfileScreen',
+        navigatorStyle: transparentNav,
+    })
+  }
+  
+  // MBTI logic ** setState is asynchronous **
   componentDidMount() {this.decideMbti()}
 
   decideMbti() {
-    this.setState({energy: 'E'}), () => {
-      console.log('setting state !!!! ' + this.state.energy)
-    }
-
-
     if (this.props.test1 == A) {
-      console.log('setting energy')
-      this.setState({energy: 'E'}), () => {
-        console.log('inside ' + this.state.energy)
-      }
-
+      this.setState({energy: 'E'})
     } else if(this.props.test1 == B) {
       this.setState({energy: 'I'})
     }
 
     if (this.props.test2 == A) {
-      console.log('setting info')
       this.setState({information: 'S'})
     } else if(this.props.test2 == B) {
       this.setState({information: 'N'})
     }
 
     if (this.props.test3 == A) {
-      console.log('setting decision')
       this.setState({decision: 'T'})
     } else if(this.props.test3 == B) {
       this.setState({decision: 'F'})
     }
 
     if (this.props.test4 == A) {
-      console.log('setting life')
       this.setState({lifestyle: 'J'})
     } else if(this.props.test4 == B) {
       this.setState({lifestyle: 'P'})
     }
-    this.setState({mbti : this.state.energy + this.state.information + this.state.decision + this.state.lifestyle})
-    
-    console.log(this.props.test1, this.props.test2, this.props.test3, this.props.test4 )
-    console.log(this.state)
+  }
+  // calling setState() in componentDidUpdate() must be wrapped in a condition
+  // otherwise will cause an infinite loop
+  componentDidUpdate(prevState: any, prevProps: any) {
+    console.log(prevState); 
+    console.log(prevProps); 
 
+    if (this.state.energy !== prevProps.energy) {
+      this.setState({mbti : this.state.energy + this.state.information + this.state.decision + this.state.lifestyle})
+    } else {
+      console.log('nothing updated')
+    }
+    console.log(this.state); // completed
   }
 
   render() {
-    let imageUri = 'https://i.pinimg.com/564x/d8/4b/77/d84b77fd22fe250776ea3af0af227fcd.jpg'; 
-  
+    let avatarImg = 'https://i.pinimg.com/564x/d8/4b/77/d84b77fd22fe250776ea3af0af227fcd.jpg'; 
+    
     return (
         <LinearGradient colors={['#9EF8E4', '#30519B']} style={[{flex: 1}]}>
         <View style={globalStyle.container}>
@@ -105,20 +113,22 @@ class PureMbtiResult extends React.Component<MbtiResultProps, MbtiState> {
                   You are - {this.state.mbti}
                 </Text>
 
-                <Image style={styles.img} source={ {uri: imageUri} } />
+                <Image style={styles.img} source={ {uri: avatarImg} } />
 
                 <TouchableOpacity style={styles.btnContainer}
                   onPress={() => this.props.navigator.showLightBox({
-                      screen: 'Info', // NOPE ******
+                      screen: 'MbtiInfoLightBox',
+                      style: {
+                        backgoroundBlur: 'light',
+                        backgroundColor: 'white',
+                        tapBackgroundToDismiss: true,
+                      }
                   })}>
                   <Text style={styles.btnText}>READ MORE</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.btnContainer}
-                  onPress={() => this.props.navigator.push({
-                      screen: 'MbtiProfileScreen',
-                      navigatorStyle: transparentNav,
-                  })}>
+                  onPress={() => this.onContinuePress()}>
                   <Text style={styles.btnText}>BUILD YOUR PROFILE</Text>
                 </TouchableOpacity>
             </View>
@@ -135,13 +145,17 @@ const mapStateToProps = (state: any) => {
     test2: state.test.test2,
     test3: state.test.test3,
     test4: state.test.test4,
-    mbti: state.profile.mbti
   }
 }
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    onSubmit: (mbti: string) => dispatch(createMbti(mbti)),
+    onContinue: (
+      mbti: string, 
+      energy: string,
+      information: string,
+      decision: string,
+      lifestyle: string) => dispatch(createMbti(mbti, energy, information, decision, lifestyle)),
   }
 }
 
