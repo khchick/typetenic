@@ -20,6 +20,26 @@ class ChatService {
         })
     }
 
+    getConversationID(userID, targetID) {
+        let query = this.knex
+            .select('id')
+            .from('conversation')
+            .where(function () {
+                this.where('user1', userID)
+                    .andWhere('user2', targetID)
+            })
+            .orWhere(function () {
+                this.where('user1', targetID)
+                    .andWhere('user2', userID)
+            })
+
+        return query.then(rows => {
+            return rows.map(row => ({
+                id: row.id
+            }))
+        })
+    }
+
     beginConversation(userID, targetID) {
         let query = this.knex
             .select('id', 'user1', 'user2')

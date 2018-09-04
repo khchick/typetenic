@@ -309,11 +309,11 @@ class ConnectionService {
             .from('users')
             .innerJoin('connection', function () {
                 this
-                    .on(function() {
+                    .on(function () {
                         this.on('connection.req_receiver_id', 'users.id')
                             .andOn('connection.req_sender_id', userID)
                     })
-                    .orOn(function() {
+                    .orOn(function () {
                         this.on('connection.req_sender_id', 'users.id')
                             .andOn('connection.req_receiver_id', userID)
                     })
@@ -332,8 +332,34 @@ class ConnectionService {
                 key_atr: row.key_atr,
                 key_atr_desc: row.key_atr_desc,
                 mbti: row.mbti
-            }))
+            })
+            )
         })
+            .then(rows => {
+                return Promise.all(
+                    rows.map(row => {
+                        let query = this.knex
+                            .select('id')
+                            .from('conversation')
+                            .where(function () {
+                                this.where('user1', userID)
+                                    .andWhere('user2', row.id)
+                            })
+                            .orWhere(function () {
+                                this.where('user1', row.id)
+                                    .andWhere('user2', userID)
+                            })
+
+                        return query.then(conIDRows => {
+                            conIDRows.forEach(conIDRow => {
+                                row.conID = conIDRow.id
+                            })
+                            return row;
+
+                        })
+                    })
+                )
+            })
     }
 
     listConnectedUsers(userID) {
@@ -342,11 +368,11 @@ class ConnectionService {
             .from('users')
             .innerJoin('connection', function () {
                 this
-                    .on(function() {
+                    .on(function () {
                         this.on('connection.req_receiver_id', 'users.id')
                             .andOn('connection.req_sender_id', userID)
                     })
-                    .orOn(function() {
+                    .orOn(function () {
                         this.on('connection.req_sender_id', 'users.id')
                             .andOn('connection.req_receiver_id', userID)
                     })
@@ -367,6 +393,31 @@ class ConnectionService {
                 mbti: row.mbti
             }))
         })
+            .then(rows => {
+                return Promise.all(
+                    rows.map(row => {
+                        let query = this.knex
+                            .select('id')
+                            .from('conversation')
+                            .where(function () {
+                                this.where('user1', userID)
+                                    .andWhere('user2', row.id)
+                            })
+                            .orWhere(function () {
+                                this.where('user1', row.id)
+                                    .andWhere('user2', userID)
+                            })
+
+                        return query.then(conIDRows => {
+                            conIDRows.forEach(conIDRow => {
+                                row.conID = conIDRow.id
+                            })
+                            return row;
+
+                        })
+                    })
+                )
+            })
     }
 
     deleteConnectedSuggestion(userID, targetID) {

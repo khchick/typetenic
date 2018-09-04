@@ -13,6 +13,10 @@ export interface ProfileState {
     mbti: string,
     key_atr: string,
     key_atr_desc: string,
+    energy: string,
+    information: string,
+    decision: string,
+    lifestyle: string
 }
 
 const initialState = {
@@ -27,6 +31,10 @@ const initialState = {
     mbti: '',
     key_atr: '',
     key_atr_desc: '',
+    energy: '',
+    information: '',
+    decision: '',
+    lifestyle: ''
 }
 
 export function profileReducer(state: ProfileState = initialState, action: ProfileActions) {
@@ -53,6 +61,10 @@ export function profileReducer(state: ProfileState = initialState, action: Profi
             return {
                 ...state,
                 mbti: action.mbti,
+                energy: action.energy,
+                information: action.information,
+                decision: action.decision,
+                lifestyle: action.lifestyle
               }
 
         case EDIT_KEY_ATR: 

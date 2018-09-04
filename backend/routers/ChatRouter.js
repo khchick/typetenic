@@ -14,6 +14,12 @@ class ChatRouter {
                 .catch(err => res.status(500).json(err));
         })
 
+        router.get('/conversation/:targetID', (req, res) => {
+            this.chatService.getConversationID(req.user.id, req.params.targetID)
+                .then(id => res.json(id))
+                .catch(err => res.status(500).json(err));
+        })
+
         router.post('/conversation/:targetID', (req, res) => {
             this.chatService.beginConversation(req.user.id, req.params.targetID)
                 .then(() => this.chatService.listConversation(req.user.id))

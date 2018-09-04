@@ -18,6 +18,7 @@ import MbtiTestQ3 from './screens/MbtiTestQ3';
 import MbtiTestQ4 from './screens/MbtiTestQ4';
 
 import MbtiResult from "./screens/MbtiResult";
+import MbtiInfoLightBox from "./screens/MbtiInfoLightBox";
 import MbtiProfile from "./screens/MbtiProfile";
 import Deck from "./screens/Deck"; // home root
 import Chat from "./screens/Chat";
@@ -41,10 +42,11 @@ Navigation.registerComponent('MbtiTest2Screen', () => MbtiTest2, store, Provider
 Navigation.registerComponent('MbtiTest3Screen', () => MbtiTest3, store, Provider);
 Navigation.registerComponent('MbtiTest4Screen', () => MbtiTest4, store, Provider);
 Navigation.registerComponent("MbtiResultScreen", () => MbtiResult, store, Provider);
+Navigation.registerComponent("MbtiInfoLightBox", () => MbtiInfoLightBox, store, Provider);
 Navigation.registerComponent("MbtiProfileScreen", () => MbtiProfile, store, Provider);
 Navigation.registerComponent("HomeTabScreen", () => Deck, store, Provider);
 Navigation.registerComponent("ChatTabScreen", () => Chat, store, Provider);
-Navigation.registerComponent("ReqestTabScreen", () => Request, store, Provider);
+Navigation.registerComponent("RequestTabScreen", () => Request, store, Provider);
 Navigation.registerComponent("UserTabScreen", () => User, store, Provider);
 Navigation.registerComponent("Settings", () => Settings, store, Provider);
 Navigation.registerComponent("ProfileScreen", () => Profile, store, Provider);
@@ -68,6 +70,17 @@ class App {
       }
     });
   }
+  
+  static fbAppendProfile() {
+    Navigation.startSingleScreenApp({
+      screen: {
+        screen: "SignupContScreen",
+        navigatorStyle: {
+          navBarHidden: true
+        }
+      }
+    });
+  }
 
   static initialApp() {
     Navigation.startSingleScreenApp({
@@ -85,14 +98,14 @@ class App {
       tabs: [
         {
           label: "Request",
-          screen: "ReqestTabScreen",
+          screen: "RequestTabScreen",
           icon: require("./assets/deck.png"),
           title: "Request",
           navigatorStyle: { transparentNav }
         },
         {
           label: "Lucky Draw",
-          screen: "ReqestTabScreen",
+          screen: "RequestTabScreen",
           icon: require("./assets/deck.png"),
           title: "Lucky Draw",
           navigatorStyle: { transparentNav }
