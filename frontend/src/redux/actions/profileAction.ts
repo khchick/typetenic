@@ -70,12 +70,20 @@ function editProfileSuccess(
 export interface CreateMbtiAction {
     type: CREATE_MBTI,
     mbti: string,
+    energy: string,
+    information: string,
+    decision: string,
+    lifestyle: string 
 }
 
-function createMbtiSuccess(mbti: string) {
+function createMbtiSuccess(mbti: string, energy: string, information: string, decision: string, lifestyle: string ) {
     return {
         type: CREATE_MBTI,
         mbti,
+        energy,
+        information,
+        decision,
+        lifestyle
     }
 }
 
@@ -94,7 +102,6 @@ function editKeyAtrSuccess(key_atr: string, key_atr_desc: string) {
     }
 }
 
-// not necessary
 export interface SubmitProfileAction {
     type: EDIT_PROFILE,
     profilePic: string,
@@ -133,13 +140,15 @@ function submitProfileSuccess(
     }
 }
 
+
 export type ProfileActions = SignupAction | EditProfileAction | CreateMbtiAction | EditKeyAtrAction | SubmitProfileAction; 
+
 
 // dispatch the action creators
 
 export function signupUser(email: string, password: string) {   
     return (dispatch: Dispatch) => {
-        console.log('sigining up')
+        console.log(`${Config.API_SERVER}/api/signup`)
         return axios
             .post<{ token: string }>(
             `${Config.API_SERVER}/api/signup`, 
@@ -182,9 +191,9 @@ export function editProfile(
     }
 }
 
-export function createMbti(mbti: string) {   
+export function createMbti(mbti: string, energy: string, information: string, decision: string, lifestyle: string) {   
     return (dispatch: Dispatch) => {
-        dispatch(createMbtiSuccess(mbti));              
+        dispatch(createMbtiSuccess(mbti, energy, information, decision, lifestyle));              
     }
 }
 
@@ -212,16 +221,14 @@ export function submitProfile(
     key_atr: string,
     key_atr_desc: string,
     ) {
-    return (dispatch: Dispatch) => {
-    // let token =  AsyncStorage.getItem('token')
+    return (dispatch: Dispatch) => {    
     AsyncStorage.getItem('token')
     .then((token) => {        
-        console.log(token)
+        console.log('token is: ' + token)
         return axios
             .post<{ token: string }>(
-            `${Config.API_SERVER}/api/myprofile`, 
-                {
-                    profilePic: profilePic,
+            `${Config.API_SERVER}/api/user/myprofile`, 
+                {                   
                     display_name: name,
                     dob: date,
                     gender: gender,
@@ -230,6 +237,7 @@ export function submitProfile(
                     mbti: mbti,
                     key_atr: key_atr,
                     key_atr_desc: key_atr_desc,
+                    profilePic: profilePic,
                 },{
                     headers: {
                     Authorization: 'Bearer ' + token
@@ -238,9 +246,11 @@ export function submitProfile(
             )
         }) 
         .then(res => {
+            console.log(res)
             if (res.data == null) {
                 dispatch(loginFailure('Unexpected error'));
-            } else {        
+            } else {
+                dispatch(submitProfileSuccess(name, date, gender, orientation, location, mbti, key_atr, key_atr_desc, profilePic))       
                 dispatch(loginSuccess());
                 App.loginApp();
             }

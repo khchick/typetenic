@@ -3,6 +3,7 @@ import { Dispatch } from 'redux';
 import { AsyncStorage } from 'react-native';
 import Config from 'react-native-config';
 import App from '../../App';
+import Navigation from '../../screens/components/Navigation';
 
 // action types
 
@@ -95,15 +96,25 @@ export function loginFacebook(accessToken: string) {
                 access_token: accessToken
             })
             .then(res => {
-                console.log(res) // testing: not logged because failed 401
                 if (res.data == null) {
                     dispatch(loginFailure('Unexpected error'))
                 } else if (!res.data.token) {
                     dispatch(loginFailure(res.data.message || ''))
                 } else {
-                    AsyncStorage.setItem('token', res.data.token)
-                    dispatch(loginSuccess());
-                    App.loginApp();
+                    AsyncStorage.getItem('token')
+                    .then((token) => {
+                        if (token) {
+                            return (dispatch: Dispatch) => {
+                                dispatch(loginSuccess())
+                                App.loginApp();            
+                            }
+                        }
+                        else {
+                            AsyncStorage.setItem('token', res.data.token)
+                            dispatch(loginSuccess())
+                            App.fbAppendProfile();  
+                        } 
+                    })                                
                 }
             })
             .catch(err => {
@@ -129,6 +140,6 @@ export async function checkToken() {
             dispatch(loginSuccess())
             return accessToken;
         }
-    } 
-    
+    }     
 }
+
