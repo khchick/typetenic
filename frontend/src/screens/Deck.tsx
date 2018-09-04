@@ -12,12 +12,8 @@ import {
 import axios from "axios";
 import Config from "react-native-config";
 import { AsyncStorage } from "react-native";
-<<<<<<< HEAD
 import { transparentNav } from './styles/common';
 import {connect} from 'react-redux';
-=======
-import { transparentNav } from "./styles/common";
->>>>>>> e2ee42ea3fd307600bc4f8a075509603b70cc93a
 
 const { height, width } = Dimensions.get("window");
 
@@ -63,7 +59,6 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
   render() {
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
-        <Text>{this.props.token}</Text>
         <View style={styles.container}>
           <ScrollView
             horizontal={true}
@@ -122,31 +117,12 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                         ]
                         this.props.navigator.push({
                           screen: 'ChatTabScreen',
-                          passProps: { targetID: id, conID: conID },
+                          passProps: { targetID: id, conID: conID, token: this.props.token },
                           navigatorStyle: transparentNav,
                         });
                       }}>
                       <Text style={styles.btnText}>Chat</Text>
                     </TouchableOpacity>
-                  </View>
-                  {/* <Text style={styles.inputHeader}>{mbti}</Text>
-                  <Text style={styles.inputHeader}>{key_atr}</Text> */}
-                  <Text style={styles.inputHeader}>{dob}</Text>
-                  {/* <Text style={styles.inputHeader}>{gender}</Text> */}
-                  <Text style={styles.inputHeader}>{location}</Text>
-                  <Text style={styles.inputHeader}>{key_atr_desc}</Text>
-                  <TouchableOpacity
-                    style={styles.btnContainer}
-                    onPress={() =>
-                      this.props.navigator.push({
-                        screen: "ChatTabScreen",
-                        passProps: { targetID: id, conID: conID },
-                        navigatorStyle: transparentNav
-                      })
-                    }
-                  >
-                    <Text style={styles.btnText}>Chat</Text>
-                  </TouchableOpacity>
                 </View>
               )
             )}
