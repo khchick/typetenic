@@ -14,7 +14,7 @@ import { logoutUser } from "../redux/actions/authAction";
 
 interface UserProps {
   navigator: Navigator;
-  // onLogoutPress: () => void;
+  onLogoutPress: () => void;
 }
 
 const { height, width } = Dimensions.get("window");
@@ -69,11 +69,7 @@ class PureUser extends React.Component<UserProps> {
           <TouchableOpacity
             style={styles.btnContainer}
             onPress={() =>
-              this.props.navigator.push({
-                screen: "LoginScreen",
-                title: "Login"
-              })
-            }
+              this.props.onLogoutPress()}
           >
             <Text style={styles.btnText}>Logout</Text>
           </TouchableOpacity>
