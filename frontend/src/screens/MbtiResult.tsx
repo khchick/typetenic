@@ -118,7 +118,7 @@ class PureMbtiResult extends React.Component<MbtiResultProps, MbtiState> {
 
   render() {
     let avatarImg =
-      "https://i.pinimg.com/564x/d8/4b/77/d84b77fd22fe250776ea3af0af227fcd.jpg";
+      "https://i.pinimg.com/236x/83/0f/71/830f71015b4a7383998416fe7f07c7eb--the-joker-jokers.jpg";
 
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>

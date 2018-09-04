@@ -70,6 +70,13 @@ export default class Deck extends React.Component<{}, DeckStates> {
               }) => (
                 <View style={styles.card} key={id}>
                   <Image
+                    style={styles.logo}
+                    source={{
+                      uri:
+                        "/Users/mac/Desktop/typetenic/frontend/src/assets/logos/logo.jpg"
+                    }}
+                  />
+                  <Image
                     style={styles.avatar}
                     source={{
                       uri:
