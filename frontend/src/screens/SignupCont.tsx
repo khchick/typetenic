@@ -29,6 +29,7 @@ interface SignupProps {
     navigator: Navigator,
     onEditProfile: (  
       profilePic: any,
+      imageData: any,
       name: string,
       date: string,
       gender: string,
@@ -37,6 +38,7 @@ interface SignupProps {
 }
 
 interface SignupStates {
+  imageData: any,
   profilePic: any;
   name: string;
   date: string;
@@ -53,6 +55,7 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
     super(props);
 
     this.state = {
+      imageData: null, // for upload
       profilePic: require("../assets/profile-pic.png"), // default
       name: "",
       date: "21-09-2018",
@@ -103,7 +106,7 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
 
 // wrap multiple functions 
   onSignupPress() {
-    this.props.onEditProfile(this.state.profilePic.uri, this.state.name, this.state.date, this.state.gender, this.state.orientation, this.state.location)    
+    this.props.onEditProfile(this.state.profilePic.uri, this.state.imageData, this.state.name, this.state.date, this.state.gender, this.state.orientation, this.state.location)    
     this.props.navigator.push({
       screen: 'MbtiTest1Screen',
       navigatorStyle: transparentNav,
@@ -113,7 +116,7 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
   // ImagePicker returns an object which includes response.uri: "file://User/../something.jpg"
   handleImagePicker() {
     ImagePicker.showImagePicker(imageOptions, res => {
-      console.log("Response = ", res);
+      console.log(res);
 
       if (res.didCancel) {
         console.log("User cancelled image picker");
@@ -127,7 +130,9 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
           type: res.type,
           name: res.fileName
         });
-        this.setState({profilePic: { uri: res.uri }}); // umm
+        this.setState({profilePic: { uri: res.uri }}); // for immediate display
+        this.setState({imageData: data}); // for file upload
+        
       }
     });
   }
@@ -138,7 +143,6 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
         <View style={globalStyle.container}>
           <View style={globalStyle.cardContainer}>
             {/* upload photo */}
-            {/* <Image style={styles.propic} source={ require('../assets/profile-pic.png') } /> */}
             <Image style={styles.propic} source={this.state.profilePic} />
             <Text
               style={styles.inputHeader}
@@ -242,6 +246,7 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
 const mapStateToProps = (state: any) => {
   return {
     profilePic: state.profile.profilePic,
+    imageData: state.profile.imageData,
     name: state.profile.name,
     date: state.profile.date,
     gender: state.profile.gender,
@@ -253,11 +258,12 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => ({
   onEditProfile: (
     profilePic: string,
+    imageData: any,
     name: string,
     date: string,
     gender: string,
     orientation: string,
-    location: string,) => dispatch(editProfile(profilePic, name, date, gender, orientation, location))
+    location: string,) => dispatch(editProfile(profilePic, imageData, name, date, gender, orientation, location))
 })
 
 const SignupCont = connect(mapStateToProps, mapDispatchToProps)(PureSignupCont);

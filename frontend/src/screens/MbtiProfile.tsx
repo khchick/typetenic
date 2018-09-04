@@ -19,6 +19,7 @@ import {editKeyAtr, submitProfile} from '../redux/actions/profileAction';
 interface MbtiProfileProps {
     navigator: Navigator;
     profilePic: string,
+    imageData: any,
     name: string,
     date: string,
     gender: string,
@@ -43,7 +44,8 @@ interface MbtiProfileProps {
       mbti: string,
       keyAtr: string, 
       keyDesc: string,
-      profilePic: string,) => any;
+      imageData: any
+    ) => any;
 }
 
 interface MbtiProfileStates {
@@ -71,7 +73,7 @@ class PureMbtiProfile extends React.Component<MbtiProfileProps, MbtiProfileState
   onSubmitPress() {
     console.log(this.state)
     this.props.onSubmitKey(this.state.keyAtr, this.state.keyDesc);  
-    this.props.onSubmitProfile(this.props.name, this.props.date, this.props.gender, this.props.orientation, this.props.location, this.props.mbti , this.state.keyAtr, this.state.keyDesc, this.props.profilePic);  
+    this.props.onSubmitProfile(this.props.name, this.props.date, this.props.gender, this.props.orientation, this.props.location, this.props.mbti , this.state.keyAtr, this.state.keyDesc, this.props.imageData);  
   }
 
   onSelectEnergy() {
@@ -174,6 +176,7 @@ class PureMbtiProfile extends React.Component<MbtiProfileProps, MbtiProfileState
 const mapStateToProps = (state: any) => {
   return {
     profilePic: state.profile.profilePic,
+    imageData: state.profile.imageData,
     display_name: state.profile.name,
     dob: state.profile.date,
     gender: state.profile.gender,
@@ -205,8 +208,8 @@ const mapDispatchToProps = (dispatch: any) => {
       mbti: string,
       keyAtr: string, 
       keyDesc: string,
-      profilePic: string) => {
-      dispatch(submitProfile(name, date, gender, orientation, location, mbti, keyAtr, keyDesc, profilePic))
+      imageData: any) => {
+      dispatch(submitProfile(name, date, gender, orientation, location, mbti, keyAtr, keyDesc, imageData))
     }
   }
 }

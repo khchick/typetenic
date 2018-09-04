@@ -41,6 +41,7 @@ function signupSuccess(email: string, password: string) {
 export interface EditProfileAction {
     type: EDIT_PROFILE,
     profilePic: string,
+    imageData: any,
     name: string,
     date: string,
     gender: string,
@@ -50,6 +51,7 @@ export interface EditProfileAction {
 
 function editProfileSuccess(
     profilePic: string,
+    imageData: any,
     name: string,
     date: string,
     gender: string,
@@ -59,6 +61,7 @@ function editProfileSuccess(
     return {
         type: EDIT_PROFILE,
         profilePic,
+        imageData,
         name,
         date,
         gender,
@@ -104,7 +107,7 @@ function editKeyAtrSuccess(key_atr: string, key_atr_desc: string) {
 
 export interface SubmitProfileAction {
     type: EDIT_PROFILE,
-    profilePic: string,
+    imageData: any,
     name: string,
     date: string,
     gender: string,
@@ -116,7 +119,7 @@ export interface SubmitProfileAction {
 }
 
 function submitProfileSuccess(
-    profilePic: string,
+    imageData: any,
     name: string,
     date: string,
     gender: string,
@@ -129,6 +132,7 @@ function submitProfileSuccess(
     return {
         type: EDIT_PROFILE,
         profilePic,
+        imageData,
         name,
         date,
         gender,
@@ -161,7 +165,7 @@ export function signupUser(email: string, password: string) {
                 if (res.data.token) {
                     AsyncStorage.setItem('token', res.data.token) // save token in AsyncStorage
                     dispatch(signupSuccess(email, password)); // save user data in store
-                    dispatch(loginSuccess()); // change isLoggedIn to true
+                    dispatch(loginSuccess(res.data.token)); // change isLoggedIn to true
                 }
             })
             .catch(err => {
@@ -173,6 +177,7 @@ export function signupUser(email: string, password: string) {
 
 export function editProfile(
     profilePic: string,
+    imageData: any,
     name: string,
     date: string,
     gender: string,
@@ -182,6 +187,7 @@ export function editProfile(
     return (dispatch: Dispatch) => {
         dispatch(editProfileSuccess(
             profilePic,
+            imageData,
             name,
             date,
             gender,
@@ -211,7 +217,7 @@ export function editKeyAtr(
 
 // on finishing signup 
 export function submitProfile(
-    profilePic: string,
+    imageData: any,
     name: string,
     date: string,
     gender: string,
@@ -225,34 +231,66 @@ export function submitProfile(
     AsyncStorage.getItem('token')
     .then((token) => {        
         console.log('token is: ' + token)
-        return axios
-            .post<{ token: string }>(
-            `${Config.API_SERVER}/api/user/myprofile`, 
-                {                   
-                    display_name: name,
-                    dob: date,
-                    gender: gender,
-                    orientation: orientation,
-                    location: location,
-                    mbti: mbti,
-                    key_atr: key_atr,
-                    key_atr_desc: key_atr_desc,
-                    profilePic: profilePic,
-                },{
-                    headers: {
-                    Authorization: 'Bearer ' + token
-                    }
-                }
-            )
+        // return axios
+        //     .post<{ token: string }>(
+        //     `${Config.API_SERVER}/api/user/myprofile`, 
+        //         {                   
+        //             display_name: name,
+        //             dob: date,
+        //             gender: gender,
+        //             orientation: orientation,
+        //             location: location,
+        //             mbti: mbti,
+        //             key_atr: key_atr,
+        //             key_atr_desc: key_atr_desc,
+        //             // profilePic: profilePic,
+        //             imageData: imageData
+        //         },{
+        //             headers: {
+        //             Authorization: 'Bearer ' + token,
+        //             'Content-Type': 'application/x-www-form-urlencoded', // for upload
+        //             }
+        //         }
+        //     )
+        let data =  {                   
+                display_name: name,
+                dob: date,
+                gender: gender,
+                orientation: orientation,
+                location: location,
+                mbti: mbti,
+                key_atr: key_atr,
+                key_atr_desc: key_atr_desc,
+                //imageData: imageData
+            }
+        var postData = {
+            method: 'POST',
+            headers: {
+                Authorization: 'Bearer ' + token,
+                // 'Accept': 'application/json',
+                // 'Content-Type': 'application/x-www-form-urlencoded', // both -> Error: unsupported BodyInit type
+                // 'Content-Type': 'multipart/form-data',
+            },
+            body: data,
+        }
+    
+        return fetch(`${Config.API_SERVER}/api/user/myprofile`, postData)
+            .then((response) => response.json())
+            .then((responseJson) => {
+    
+                console.log('responseJson',responseJson);
+                return responseJson;
+    
+            })
         }) 
         .then(res => {
             console.log(res)
             if (res.data == null) {
                 dispatch(loginFailure('Unexpected error'));
             } else {
-                dispatch(submitProfileSuccess(name, date, gender, orientation, location, mbti, key_atr, key_atr_desc, profilePic))       
-                dispatch(loginSuccess());
-                App.loginApp();
+                dispatch(submitProfileSuccess(name, date, gender, orientation, location, mbti, key_atr, key_atr_desc, imageData))       
+                dispatch(loginSuccess(res.data.token));
+                App.loginApp(res.data.token);
             }
         })
         .catch(err => {

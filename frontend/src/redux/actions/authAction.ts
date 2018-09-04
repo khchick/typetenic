@@ -78,7 +78,7 @@ export function loginUser(email: string, password: string) {
                 } else {
                     AsyncStorage.setItem('token', res.data.token) // save token in AsyncStorage
                     dispatch(loginSuccess(res.data.token));
-                    App.loginApp();
+                    App.loginApp(res.data.token);
                 }
             })
             .catch(err => {
@@ -105,13 +105,13 @@ export function loginFacebook(accessToken: string) {
                     .then((token) => {
                         if (token) {
                             return (dispatch: Dispatch) => {
-                                dispatch(loginSuccess())
-                                App.loginApp();            
+                                dispatch(loginSuccess(token))
+                                App.loginApp(token);            
                             }
                         }
                         else {
                             AsyncStorage.setItem('token', res.data.token)
-                            dispatch(loginSuccess())
+                            dispatch(loginSuccess(res.data.token))
                             App.fbAppendProfile();  
                         } 
                     })                                
@@ -134,11 +134,11 @@ export function logoutUser() {
 }
 
 export async function checkToken() {
-    const accessToken = await AsyncStorage.getItem('token');
-    if (accessToken) {
-        return (dispatch: Dispatch) => {
-            dispatch(loginSuccess())
-            return accessToken;
+    const token = await AsyncStorage.getItem('token');
+    if (token) {
+        return (dispatch: any) => {
+            dispatch(loginSuccess(token))
+            return token;
         }
     }     
 }

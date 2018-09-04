@@ -5,6 +5,7 @@ export interface ProfileState {
     email: string,
     password: string,
     profilePic: string,
+    imageData: any,
     name: string,
     date: string,
     gender: string,
@@ -23,6 +24,7 @@ const initialState = {
     email: '',
     password: '',
     profilePic: '',
+    imageData: null,
     name: '',
     date: '',
     gender: '',
@@ -50,6 +52,7 @@ export function profileReducer(state: ProfileState = initialState, action: Profi
             return {
                 ...state,
                 profilePic: action.profilePic,
+                imageData: action.imageData,
                 name: action.name,
                 date: action.date,
                 gender: action.gender,

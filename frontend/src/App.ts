@@ -1,4 +1,5 @@
 import * as React from "react";
+import {AsyncStorage} from 'react-native'
 import { Navigation } from "react-native-navigation";
 import { transparentNav } from "./screens/styles/common";
 
@@ -30,7 +31,7 @@ import ResetProfile from "./screens/ResetProfile";
 
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
-import { checkToken } from "./redux/actions/authAction";
+import { loginSuccess } from "./redux/actions/authAction";
 
 
 Navigation.registerComponent("LandingScreen", () => Landing, store, Provider);
@@ -62,9 +63,10 @@ Navigation.registerComponent('MbtiTestQ4Screen', () => MbtiTestQ4, store, Provid
 class App {
   constructor() {
     // check login status when re-opening the app
-    checkToken().then(token => {
+    AsyncStorage.getItem('token').then((token: string|null) => {
       if (token) {
-        App.loginApp();
+        App.loginApp(token);
+        store.dispatch(loginSuccess(token))
       } else {
         App.initialApp();
       }
@@ -93,7 +95,7 @@ class App {
     });
   }
 
-  static loginApp() {
+  static loginApp(token: string) {
     Navigation.startTabBasedApp({
       tabs: [
         {
@@ -115,7 +117,10 @@ class App {
           screen: "HomeTabScreen",
           icon: require("./assets/home.png"),
           title: "My Deck",
-          navigatorStyle: { transparentNav }
+          navigatorStyle: { transparentNav },
+          passProps: {
+            token: token
+          }
         },
         {
           label: "Notifications",
