@@ -148,7 +148,7 @@ io.on('connection', (socket) => {
     console.log(socket.id);
     io.emit('list messages');
 
-    // socket.join(room);
+    socket.join(room);
 
     socket.on('message sent', (messages) => {
         console.log("Message received");

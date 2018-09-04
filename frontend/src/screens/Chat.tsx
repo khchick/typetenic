@@ -31,9 +31,9 @@ export default class Chat extends React.Component<IChatProps> {
   }
 
   componentWillMount() {
-    // this.initSocket();
-    this.socket = io('localhost:8080', { jsonp: false });
-    // this.socket.emit('chat room info', {convID:})
+    console.log(this.props.conID);
+    this.socket = io(API_SERVER, { jsonp: false });
+    this.socket.emit('start conversation', {conID: this.props.conID});
     this.socket.on('broadcast message', (msg: any) => {
       console.log('broadcast message activated');
       this.onReceive(msg);

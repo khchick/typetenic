@@ -1,3 +1,4 @@
 .DS_store
 backend/node_modules
 backend/public/images/users/
+backend/.env
