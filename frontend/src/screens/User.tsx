@@ -84,7 +84,7 @@ class PureUser extends React.Component<UserProps, UserState> {
               })
             }
           >
-            <Text style={styles.btnText}>Setting</Text>
+            <Text style={styles.btnText}>SETTING</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -96,14 +96,14 @@ class PureUser extends React.Component<UserProps, UserState> {
               })
             }
           >
-            <Text style={styles.btnText}>Edit Profile</Text>
+            <Text style={styles.btnText}>EDIT PROFILE</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.btnContainer}
             onPress={() => this.props.onLogoutPress()}
           >
-            <Text style={styles.btnText}>Logout</Text>
+            <Text style={styles.btnText}>LOGOUT</Text>
           </TouchableOpacity>
         </View>
       </LinearGradient>
@@ -148,14 +148,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingTop: 15,
     paddingBottom: 15,
-    marginLeft: 30,
-    marginRight: 30,
+    marginLeft: 20,
+    marginRight: 20,
     borderRadius: 10
   },
   btnText: {
     color: "#fff",
     fontSize: 16,
-    fontWeight: "800",
+    fontWeight: "600",
     textAlign: "center"
   },
   card: {
