@@ -1,6 +1,5 @@
 import * as React from "react";
 import LinearGradient from "react-native-linear-gradient";
-import { transparentNav, globalStyle } from "./styles/common";
 import {
   StyleSheet,
   Text,
@@ -17,106 +16,38 @@ import Config from "react-native-config";
 import { connect } from "react-redux";
 import LeftTopButton from "./components/LeftTopButton";
 import RightTopButton from "./components/RightTopButton";
+import RowItem from './components/RowItem';
 
 const { height, width } = Dimensions.get("window");
 
-// Each user's item
-interface SuggestedUsersProps {
-  item: any;
-  index: any;
-  token: string;
-  onPressItem: (item: any) => any;
-}
-class SuggestedUsers extends React.PureComponent<SuggestedUsersProps> {
-  onPress = () => {
-    this.props.onPressItem(this.props.item.id);
-  };
-
-  render() {
-    const item = this.props.item;
-
-    console.log(item);
-    return (
-      <View style={styles.rowContainer}>
-        <TouchableOpacity onPress={this.onPress}>
-          <Image
-            style={styles.thumb}
-            source={{
-              uri:
-                "https://i.pinimg.com/236x/83/0f/71/830f71015b4a7383998416fe7f07c7eb--the-joker-jokers.jpg"
-            }}
-          />
-        </TouchableOpacity>
-
-        <Text style={styles.name}>{item.display_name}</Text>
-
-        <View style={styles.textContainer}>
-          <TouchableOpacity
-            style={styles.likeBtn}
-            onPress={() => {
-              axios
-                .post(
-                  `${Config.API_SERVER}/api/connection/request/sent`,
-                  {
-                    targetID: item.id
-                  },
-                  {
-                    headers: {
-                      Authorization: "Bearer " + this.props.token
-                    }
-                  }
-                )
-                // .then(res => {
-
-                // })
-                .catch(err => console.log(err));
-            }}
-          >
-            <Text style={styles.btnText}>LIKE</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.passBtn} onPress={() => {}}>
-            <Text style={styles.btnText}>PASS</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  }
-}
-
 // List all users, fetch data
-interface RowContainerProps {
+interface SuggestionsProps {
   navigator: Navigator;
   token: string;
 }
 
-interface RowContainerStates {
-  listSentReq: any;
+interface SuggestionsStates {
+  sourceData: any;
 }
 
-class RowContainer extends React.Component<
-  RowContainerProps,
-  RowContainerStates
-> {
+class Suggestions extends React.Component<SuggestionsProps, SuggestionsStates> {
   constructor(props: any) {
     super(props);
     this.state = {
-      listSentReq: null
+      sourceData: null
     };
   }
 
   async componentWillMount() {
     axios
-      .get(`${Config.API_SERVER}/api/user/suggested`, {
-        // axios.get(`${Config.API_SERVER}}/api/connection/request/received`, {
+      .get(`${Config.API_SERVER}/api/user/nonsuggested`, {
         headers: {
           Authorization: "Bearer " + this.props.token
         }
       })
       .then(res => {
-        console.log(res.data);
         this.setState({
-          listSentReq: res.data
+          sourceData: res.data
         });
       })
       .catch(err => console.log(err));
@@ -126,8 +57,8 @@ class RowContainer extends React.Component<
     item.id.toString(); // The value of key must be a string
   };
 
-  renderItem = ({ item, index }) => (
-    <SuggestedUsers item={item} index={index} onPressItem={this.onPressItem} />
+  renderRows = ({ item, index }) => (
+    <RowItem item={item} index={index} onPressItem={this.onPressItem} />
   );
 
   onPressItem = (item: any) => {
@@ -146,22 +77,44 @@ class RowContainer extends React.Component<
           <LeftTopButton
             leftButtonName={"DISCOVER"}
             onPress={() => {
-              console.log("see");
+              axios
+                .get(`${Config.API_SERVER}/api/user/suggested`, {
+                  headers: {
+                    Authorization: "Bearer " + this.props.token
+                  }
+                })
+                .then(res => {
+                  this.setState({
+                    sourceData: res.data
+                  });
+                })
+                .catch(err => console.log(err));
             }}
           />
           <RightTopButton
             rightButtonName={"CARDS of THE DAY"}
             onPress={() => {
-              console.log("checked");
+              axios
+                .get(`${Config.API_SERVER}/api/user/nonsuggested`, {
+                  headers: {
+                    Authorization: "Bearer " + this.props.token
+                  }
+                })
+                .then(res => {
+                  this.setState({
+                    sourceData: res.data
+                  });
+                })
+                .catch(err => console.log(err));
             }}
           />
         </View>
 
         <ScrollView style={styles.listContainer}>
           <FlatList
-            data={this.state.listSentReq}
+            data={this.state.sourceData}
             keyExtractor={this.keyExtractor}
-            renderItem={this.renderItem}
+            renderItem={this.renderRows}
           />
         </ScrollView>
       </LinearGradient>
@@ -175,7 +128,7 @@ const MapStateToProps = (state: any) => {
   };
 };
 
-export default connect(MapStateToProps)(RowContainer);
+export default connect(MapStateToProps)(Suggestions);
 
 const styles = StyleSheet.create({
   buttonContainer: {

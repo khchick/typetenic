@@ -4,7 +4,7 @@ import io from 'socket.io-client/dist/socket.io';
 import axios from 'axios';
 import { GiftedChat } from "react-native-gifted-chat";
 
-const userID = 27;
+const userID = 25;
 
 interface IChatProps {
   navigator: Navigator;

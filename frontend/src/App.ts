@@ -28,7 +28,7 @@ import User from "./screens/User";
 import Settings from "./screens/Settings";
 import Profile from "./screens/Profile";
 import ResetProfile from "./screens/ResetProfile";
-import Suggested from "./screens/Suggested";
+import Suggested from "./screens/Suggestions";
 
 import { store } from "./redux/store";
 import { Provider } from "react-redux";

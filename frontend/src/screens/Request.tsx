@@ -1,6 +1,5 @@
 import * as React from "react";
 import LinearGradient from "react-native-linear-gradient";
-import { transparentNav, globalStyle } from "./styles/common";
 import {
   StyleSheet,
   Text,
@@ -17,49 +16,9 @@ import Config from "react-native-config";
 import { connect } from "react-redux";
 import LeftTopButton from "./components/LeftTopButton";
 import RightTopButton from "./components/RightTopButton";
+import RowItem from './components/RowItem';
 
 const { height, width } = Dimensions.get("window");
-
-// Each user item
-interface RequestItemProps {
-  item: any;
-  index: any;
-  onPressItem: (item: any) => any;
-}
-class RequestItem extends React.PureComponent<RequestItemProps> {
-  onPress = () => {
-    this.props.onPressItem(this.props.item.id);
-  };
-
-  render() {
-    const item = this.props.item;
-    return (
-      <View style={styles.rowContainer}>
-        <TouchableOpacity onPress={this.onPress}>
-          <Image
-            style={styles.thumb}
-            source={{
-              uri:
-                "https://i.pinimg.com/236x/83/0f/71/830f71015b4a7383998416fe7f07c7eb--the-joker-jokers.jpg"
-            }}
-          />
-        </TouchableOpacity>
-
-        <Text style={styles.name}>{item.display_name}</Text>
-
-        <View style={styles.textContainer}>
-          <TouchableOpacity style={styles.likeBtn} onPress={() => {}}>
-            <Text style={styles.btnText}>LIKE</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.passBtn} onPress={() => {}}>
-            <Text style={styles.btnText}>PASS</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  }
-}
 
 // List all users, fetch data
 interface RequestProps {
@@ -68,29 +27,27 @@ interface RequestProps {
 }
 
 interface RequestStates {
-  listSentReq: any;
+  sourceData: any;
 }
 
-class PureRequest extends React.Component<RequestProps, RequestStates> {
+class Request extends React.Component<RequestProps, RequestStates> {
   constructor(props: any) {
     super(props);
     this.state = {
-      listSentReq: null
+      sourceData: null
     };
   }
 
   async componentWillMount() {
-    console.log("request");
     axios
-      .get(`${Config.API_SERVER}/api/connection/request/sent`, {
-        // axios.get(`${Config.API_SERVER}}/api/connection/request/received`, {
+      .get(`${Config.API_SERVER}/api/connection/request/received`, {
         headers: {
           Authorization: "Bearer " + this.props.token
         }
       })
       .then(res => {
         this.setState({
-          listSentReq: res.data
+          sourceData: res.data
         });
       })
       .catch(err => console.log(err));
@@ -100,8 +57,8 @@ class PureRequest extends React.Component<RequestProps, RequestStates> {
     item.id.toString(); // The value of key must be a string
   };
 
-  renderItem = ({ item, index }) => (
-    <RequestItem item={item} index={index} onPressItem={this.onPressItem} />
+  renderRows = ({ item, index }) => (
+    <RowItem item={item} index={index} onPressItem={this.onPressItem} />
   );
 
   onPressItem = (item: any) => {
@@ -121,21 +78,45 @@ class PureRequest extends React.Component<RequestProps, RequestStates> {
             leftButtonName={"RECEIVED"}
             onPress={() => {
               console.log("received");
+              axios
+              .get(`${Config.API_SERVER}/api/connection/request/received`, {
+                headers: {
+                  Authorization: "Bearer " + this.props.token
+                }
+              })
+              .then(res => {
+                this.setState({
+                  sourceData: res.data
+                });
+              })
+              .catch(err => console.log(err));
             }}
           />
           <RightTopButton
             rightButtonName={"SENT"}
             onPress={() => {
               console.log("sent");
+              axios
+                .get(`${Config.API_SERVER}/api/connection/request/sent`, {
+                  headers: {
+                    Authorization: "Bearer " + this.props.token
+                  }
+                })
+                .then(res => {
+                  this.setState({
+                    sourceData: res.data
+                  });
+                })
+                .catch(err => console.log(err));
             }}
           />
         </View>
 
         <ScrollView style={styles.listContainer}>
           <FlatList
-            data={this.state.listSentReq}
+            data={this.state.sourceData}
             keyExtractor={this.keyExtractor}
-            renderItem={this.renderItem}
+            renderItem={this.renderRows}
           />
         </ScrollView>
       </LinearGradient>
@@ -149,8 +130,7 @@ const MapStateToProps = (state: any) => {
   };
 };
 
-const Request = connect(MapStateToProps)(PureRequest);
-export default Request;
+export default connect(MapStateToProps)(Request);
 
 const styles = StyleSheet.create({
   buttonContainer: {
