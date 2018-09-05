@@ -172,7 +172,6 @@ class App {
     Navigation.startTabBasedApp({
       tabs: [
         {
-<<<<<<< HEAD
           label: "Suggest",
           screen: "SuggestedScreen",
           icon: require("./assets/deck.png"),
@@ -184,19 +183,6 @@ class App {
           screen: "RequestTabScreen",
           icon: require("./assets/deck.png"),
           title: "Request",
-=======
-          label: "REQEUSTS",
-          screen: "RequestTabScreen",
-          icon: require("./assets/deck.png"),
-          title: "REQUESTS",
-          navigatorStyle: { transparentNav }
-        },
-        {
-          label: "DISCOVER",
-          screen: "RequestTabScreen",
-          icon: require("./assets/deck.png"),
-          title: "DISCOVER",
->>>>>>> a8e44256a8483815d716067ff3367afb4007115c
           navigatorStyle: { transparentNav }
         },
         {
@@ -215,13 +201,10 @@ class App {
            icon: require("./assets/chat.png"),
            title: "Chat",
            navigatorStyle: { transparentNav }
-        */ },
+        */
+
         {
-<<<<<<< HEAD
           label: "Profile",
-=======
-          label: "CONTROL ROOM",
->>>>>>> a8e44256a8483815d716067ff3367afb4007115c
           screen: "UserTabScreen",
           icon: require("./assets/user.png"),
           title: "PROFILE",
