@@ -62,6 +62,7 @@ app.post("/api/signup", async (req, res) => {
         };
         var token = jwt.encode(payload, config.jwtSecret);
         res.json({
+            id: payload.id,
             token: token
         });
     } else {
@@ -83,6 +84,7 @@ app.post("/api/login", async function (req, res) {
             };
             var token = jwt.encode(payload, config.jwtSecret);
             res.json({
+                id: payload.id,
                 token: token
             });
         } else {
@@ -125,6 +127,7 @@ app.post("/api/login/facebook", function (req, response) {
                             }
                             var token = jwt.encode(payload, config.jwtSecret);
                             response.json({
+                                id: payload.id,
                                 token: token
                             });
                         }
