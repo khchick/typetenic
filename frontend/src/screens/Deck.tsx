@@ -13,7 +13,7 @@ import axios from "axios";
 import Config from "react-native-config";
 import { AsyncStorage } from "react-native";
 import { transparentNav } from './styles/common';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 const { height, width } = Dimensions.get("window");
 
@@ -48,7 +48,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
         res.data.forEach(card => {
           console.log(card.conID);
         })
-        
+
         this.setState({
           connectedSuggestions: res.data
         });
@@ -78,62 +78,52 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                 mbti,
                 conID
               }) => (
-                  <View style={styles.card} key={id}>
-                   <Image
-                    style={styles.logo}
-                    source={{
-                      uri:
-                        "/Users/mac/Desktop/typetenic/frontend/src/assets/logos/logo.jpg"
-                    }}
-                  />
-                  <Image
-                    style={styles.avatar}
-                    source={{
-                      uri:
-                        "https://i.pinimg.com/236x/83/0f/71/830f71015b4a7383998416fe7f07c7eb--the-joker-jokers.jpg"
-                    }}
-                  />
-                    <View style={styles.NameButtonContainer}>
-                      <Text style={styles.NameButtontext}>{display_name}</Text>
+                  <View>
+                    <View style={styles.card}>
+                      <Image
+                        style={styles.avatar}
+                        source={require('../assets/16Types/adventurer.png')}
+                      />
+                      <View>
+                        <Text style={styles.NameButtontext}>{display_name}</Text>
+                      </View>
+                      <Text style={styles.inputHeader}>{dob}</Text>
+
+                      <Text style={styles.inputHeader}>{location}</Text>
+                      <Text style={styles.inputHeader}>{key_atr_desc}</Text>
                     </View>
-                    {/* <Text style={styles.inputHeader}>{mbti}</Text>
-                  <Text style={styles.inputHeader}>{key_atr}</Text> */}
-                    <Text style={styles.inputHeader}>{dob}</Text>
-                    {/* <Text style={styles.inputHeader}>{gender}</Text> */}
-                    <Text style={styles.inputHeader}>{location}</Text>
-                    <Text style={styles.inputHeader}>{key_atr_desc}</Text>
                     <TouchableOpacity style={styles.btnContainer}
                       onPress={() => {
-                        
-                          console.log(this.props.token),
-                          axios.post(`${Config.API_SERVER}/api/chat/conversation/${id}`, 
-                          {},
-                          {
-                            headers: {
-                              Authorization: `Bearer ${this.props.token}`
-                            }
-                          })
-                          .then(res => {
-                            conID = res.data;
-                            this.props.navigator.push({
-                              screen: 'ChatTabScreen',
-                              passProps: { targetID: id, conID: conID, token: this.props.token },
-                              navigatorStyle: transparentNav,
-                            });
-                          })
-                          .catch(err => console.log(err))
-                        
+
+                        console.log(this.props.token),
+                          axios.post(`${Config.API_SERVER}/api/chat/conversation/${id}`,
+                            {},
+                            {
+                              headers: {
+                                Authorization: `Bearer ${this.props.token}`
+                              }
+                            })
+                            .then(res => {
+                              conID = res.data;
+                              this.props.navigator.push({
+                                screen: 'ChatTabScreen',
+                                passProps: { targetID: id, conID: conID, token: this.props.token },
+                                navigatorStyle: transparentNav,
+                              });
+                            })
+                            .catch(err => console.log(err))
+
                       }}>
                       <Text style={styles.btnText}>Chat</Text>
                     </TouchableOpacity>
-                </View>
-              )
+                  </View>
+                )
             )}
           </ScrollView>
         </View>
       </LinearGradient>
     );
-  } 
+  }
 }
 
 const MapStateToProps = (state: any) => {
@@ -148,31 +138,42 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    textAlign: "center"
+  },
+  buttonContainer: {
+    flexDirection: 'row'
+  },
+  button: {
+    backgroundColor: '#3B5998',
+    padding: 5,
+    height: height * 0.05,
+    width: width * 0.5,
+    borderColor: 'white',
+    borderWidth: 1,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 15,
+    fontWeight: '700',
+    textAlign: 'center',
+    letterSpacing: 2
   },
   card: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
-    padding: 15,
+    padding: 5,
     borderRadius: 15,
     shadowColor: "#000",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 6,
     width: width * 0.8, // percent or minus
-    height: height * 0.7,
-    margin: 10
-  },
-  logo: {
-    width: 60,
-    height: 60,
-    alignSelf: "flex-start",
-    paddingTop: 20,
-    paddingBottom: 20
+    height: height * 0.65,
   },
   avatar: {
-    width: width * 0.5,
+    width: width * 0.4,
     height: height * 0.3
   },
   NameButtonContainer: {
@@ -189,21 +190,18 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   NameButtontext: {
-    fontSize: 25,
-    color: "white",
+    fontSize: 20,
+    color: "#3B5998",
     fontWeight: "700",
-    textAlign: "center"
-  },
-  text: {
-    fontSize: 13,
-    color: "#333333",
-    paddingTop: 10
+    textAlign: "center",
+    letterSpacing: 2.5,
+    marginTop: 5
   },
   inputHeader: {
     backgroundColor: "#E5F5FA",
-    color: "#30519B",
-    marginBottom: 10,
-    paddingVertical: 8,
+    color: "#3B5998",
+    marginVertical: 7,
+    paddingVertical: 10,
     paddingHorizontal: 10,
     borderRadius: 25,
     width: 150,
