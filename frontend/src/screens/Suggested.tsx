@@ -20,7 +20,7 @@ import RightTopButton from "./components/RightTopButton";
 
 const { height, width } = Dimensions.get("window");
 
-// Each user item
+// Each user's item
 interface SuggestedUsersProps {
   item: any;
   index: any;
