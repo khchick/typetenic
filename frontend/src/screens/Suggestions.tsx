@@ -87,6 +87,9 @@ class Suggestions extends React.Component<SuggestionsProps, SuggestionsStates> {
                   this.setState({
                     sourceData: res.data
                   });
+                  this.props.navigator.setTitle({
+                    title: 'DISCOVER' // new title 
+                  });
                 })
                 .catch(err => console.log(err));
             }}
@@ -103,6 +106,9 @@ class Suggestions extends React.Component<SuggestionsProps, SuggestionsStates> {
                 .then(res => {
                   this.setState({
                     sourceData: res.data
+                  });
+                  this.props.navigator.setTitle({
+                    title: 'CARDS OF THE DAY' // new title 
                   });
                 })
                 .catch(err => console.log(err));

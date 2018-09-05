@@ -88,6 +88,9 @@ class Request extends React.Component<RequestProps, RequestStates> {
                 this.setState({
                   sourceData: res.data
                 });
+                this.props.navigator.setTitle({
+                  title: 'RECEIVED REQUEST' // new title 
+                });
               })
               .catch(err => console.log(err));
             }}
@@ -105,6 +108,9 @@ class Request extends React.Component<RequestProps, RequestStates> {
                 .then(res => {
                   this.setState({
                     sourceData: res.data
+                  });
+                  this.props.navigator.setTitle({
+                    title: 'SENT REQUEST' // new title 
                   });
                 })
                 .catch(err => console.log(err));
