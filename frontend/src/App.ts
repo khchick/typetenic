@@ -194,6 +194,7 @@ class App {
           passProps: {
             token: token
           }
+        },
         /*
         {
            label: "Notifications",
@@ -201,9 +202,10 @@ class App {
            icon: require("./assets/chat.png"),
            title: "Chat",
            navigatorStyle: { transparentNav }
-        },*/
+        },
+        */
         {
-          label: "CONTROL ROOM,
+          label: "CONTROL ROOM",
           screen: "UserTabScreen",
           icon: require("./assets/user.png"),
           title: "CONTROL ROOM",
