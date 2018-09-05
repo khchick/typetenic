@@ -5,6 +5,7 @@ import Config from 'react-native-config';
 import App from '../../App';
 import {loginSuccess, loginFailure} from './authAction';
 
+
 // action types
 
 export const LOCAL_SIGNUP = 'LOCAL_SIGNUP';
@@ -131,7 +132,6 @@ function submitProfileSuccess(
     ) {
     return {
         type: EDIT_PROFILE,
-        profilePic,
         imageData,
         name,
         date,
@@ -217,7 +217,6 @@ export function editKeyAtr(
 
 // on finishing signup 
 export function submitProfile(
-    imageData: any,
     name: string,
     date: string,
     gender: string,
@@ -226,75 +225,46 @@ export function submitProfile(
     mbti: string,
     key_atr: string,
     key_atr_desc: string,
+    imageData: any,
     ) {
     return (dispatch: Dispatch) => {    
     AsyncStorage.getItem('token')
-    .then((token) => {        
-        console.log('token is: ' + token)
-        // return axios
-        //     .post<{ token: string }>(
-        //     `${Config.API_SERVER}/api/user/myprofile`, 
-        //         {                   
-        //             display_name: name,
-        //             dob: date,
-        //             gender: gender,
-        //             orientation: orientation,
-        //             location: location,
-        //             mbti: mbti,
-        //             key_atr: key_atr,
-        //             key_atr_desc: key_atr_desc,
-        //             // profilePic: profilePic,
-        //             imageData: imageData
-        //         },{
-        //             headers: {
-        //             Authorization: 'Bearer ' + token,
-        //             'Content-Type': 'application/x-www-form-urlencoded', // for upload
-        //             }
-        //         }
-        //     )
-        let data =  {                   
-                display_name: name,
-                dob: date,
-                gender: gender,
-                orientation: orientation,
-                location: location,
-                mbti: mbti,
-                key_atr: key_atr,
-                key_atr_desc: key_atr_desc,
-                //imageData: imageData
-            }
-        var postData = {
-            method: 'POST',
+    .then((token) => {      
+        let profileData = new FormData();
+        profileData.append('display_name', name); // key/value pairs 
+        profileData.append('dob', date); 
+        profileData.append('gender', gender); 
+        profileData.append('orientation', orientation); 
+        profileData.append('location', location); 
+        profileData.append('mbti', mbti); 
+        profileData.append('key_atr', key_atr); 
+        profileData.append('key_atr_desc', key_atr_desc); 
+        profileData.append('profile_pic', imageData);
+
+        return axios
+        .post<{ token: string }>(
+        `${Config.API_SERVER}/api/user/myprofile`, 
+            profileData
+            ,{
             headers: {
-                Authorization: 'Bearer ' + token,
-                // 'Accept': 'application/json',
-                // 'Content-Type': 'application/x-www-form-urlencoded', // both -> Error: unsupported BodyInit type
-                // 'Content-Type': 'multipart/form-data',
-            },
-            body: data,
-        }
-    
-        return fetch(`${Config.API_SERVER}/api/user/myprofile`, postData)
-            .then((response) => response.json())
-            .then((responseJson) => {
-    
-                console.log('responseJson',responseJson);
-                return responseJson;
-    
-            })
-        }) 
-        .then(res => {
-            console.log(res)
-            if (res.data == null) {
-                dispatch(loginFailure('Unexpected error'));
-            } else {
-                dispatch(submitProfileSuccess(name, date, gender, orientation, location, mbti, key_atr, key_atr_desc, imageData))       
-                dispatch(loginSuccess(res.data.token));
-                App.loginApp(res.data.token);
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'multipart/form-data'
             }
-        })
-        .catch(err => {
-                console.log(err);
-            })
+            }
+        )
+    }) 
+    .then(res => {
+        console.log(res)
+        if (res.data == null) {
+            dispatch(loginFailure('Unexpected error'));
+        } else {
+            dispatch(submitProfileSuccess(name, date, gender, orientation, location, mbti, key_atr, key_atr_desc, imageData))       
+            dispatch(loginSuccess(res.data.token));
+            App.loginApp(res.data.token);
         }
+    })
+    .catch(err => {
+            console.log(err);
+        })
+    }
 }

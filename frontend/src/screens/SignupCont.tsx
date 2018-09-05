@@ -19,6 +19,7 @@ import ImagePicker from "react-native-image-picker";
 import {connect} from 'react-redux';
 import {editProfile} from '../redux/actions/profileAction';
 
+
 var imageOptions = {
   title: "Select profile picture",
   maxWidth: 160,
@@ -58,7 +59,7 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
       imageData: null, // for upload
       profilePic: require("../assets/profile-pic.png"), // default
       name: "",
-      date: "21-09-2018",
+      date: "2018-09-21",
       gender: "",
       items: [
         {
@@ -74,15 +75,15 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
       items2: [
         {
           label: "Male",
-          value: "Male"
+          value: "M"
         },
         {
           label: "Female",
-          value: "Female"
+          value: "F"
         },
         {
           label: "Both",
-          value: "Both"
+          value: "both"
         }
       ],
       location: "",
@@ -123,15 +124,14 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
       } else if (res.error) {
         console.log("ImagePicker Error: ", res.error);
       } else {
-        const data = new FormData();
-        data.append('name', 'avatar'); // key/value pairs 
-        data.append('fileData', {
-          uri : res.uri,
-          type: res.type,
+        let imageObj = {
+          path : res.uri,
+          type: 'image/jpeg', // res.type,
           name: res.fileName
-        });
+        }
+        
         this.setState({profilePic: { uri: res.uri }}); // for immediate display
-        this.setState({imageData: data}); // for file upload
+        this.setState({imageData: imageObj}); // for file upload
         
       }
     });
@@ -167,9 +167,9 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
                 date={this.state.date}
                 mode="date"
                 placeholder="Select date"
-                format="DD-MM-YYYY"
-                minDate="01-01-1918"
-                maxDate="31-12-2020"
+                format="YYYY-MM-DD"
+                minDate="1918-01-01"
+                maxDate="2020-12-31"
                 confirmBtnText="Confirm"
                 cancelBtnText="Cancel"
                 showIcon={false}
@@ -268,7 +268,7 @@ const mapDispatchToProps = (dispatch: any) => ({
 
 const SignupCont = connect(mapStateToProps, mapDispatchToProps)(PureSignupCont);
 export default SignupCont;
-// export default PureSignupCont;
+
 
 const styles = StyleSheet.create({
   profileInput: {
