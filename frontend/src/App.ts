@@ -128,7 +128,7 @@ class App {
            icon: require("./assets/chat.png"),
            title: "Chat",
            navigatorStyle: { transparentNav }
-        */ },
+        }*/
         {
           label: "CONTROL ROOM",
           screen: "UserTabScreen",
