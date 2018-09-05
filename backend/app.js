@@ -164,8 +164,8 @@ io.on('connection', (socket) => {
 //     cert: fs.readFileSync('./localhost.crt')
 // }
 
-// https.createServer(httpsOptions, app).listen(PORT, () => {
-//     console.log('Application started at port ' + PORT)
-// })
+https.createServer(httpsOptions, app).listen(PORT, () => {
+    console.log('Application started at port ' + PORT)
+})
 
-server.listen(PORT, () => console.log(`listening on *: ${PORT}`));
+// server.listen(PORT, () => console.log(`listening on *: ${PORT}`));
