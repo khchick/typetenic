@@ -11,9 +11,8 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { logoutUser } from "../redux/actions/authAction";
-import axios from 'axios';
-import Config from 'react-native-config';
-
+import axios from "axios";
+import Config from "react-native-config";
 
 const { height, width } = Dimensions.get("window");
 
@@ -25,7 +24,7 @@ interface UserProps {
 
 interface UserState {
   ownProfile: any;
-  imageUrl: any
+  imageUrl: any;
 }
 
 class PureUser extends React.Component<UserProps, UserState> {
@@ -33,25 +32,26 @@ class PureUser extends React.Component<UserProps, UserState> {
     super(props);
     this.state = {
       ownProfile: null,
-      imageUrl: "https://data.whicdn.com/images/287294903/large.jpg", // Dua lipa
-    }
+      imageUrl: "https://data.whicdn.com/images/287294903/large.jpg" // Dua lipa
+    };
   }
 
-  async componentWillMount() {  
-    axios.get(`${Config.API_SERVER}/api/user/myprofile`, {
-      headers: {
-        Authorization: 'Bearer ' + this.props.token
-      }
-    })
-      .then((res)=> {
-         this.setState({
+  async componentWillMount() {
+    axios
+      .get(`${Config.API_SERVER}/api/user/myprofile`, {
+        headers: {
+          Authorization: "Bearer " + this.props.token
+        }
+      })
+      .then(res => {
+        this.setState({
           ownProfile: res.data,
           imageUrl: `${Config.API_SERVER}` + res.data[0].profile_pic
         });
-        console.log(res.data[0].profile_pic)     
-        console.log(this.state.imageUrl)   
+        console.log(res.data[0].profile_pic);
+        console.log(this.state.imageUrl);
       })
-      .catch(err => console.log(err))      
+      .catch(err => console.log(err));
   }
 
   render() {
@@ -74,11 +74,13 @@ class PureUser extends React.Component<UserProps, UserState> {
                 screen: "Settings",
                 title: "Settings",
                 navigatorButtons: {
-                  leftButtons: [{
-                    title: 'Done',
-                    id: 'done',
-                  }]                  
-                },
+                  leftButtons: [
+                    {
+                      title: "Done",
+                      id: "done"
+                    }
+                  ]
+                }
               })
             }
           >
@@ -99,8 +101,7 @@ class PureUser extends React.Component<UserProps, UserState> {
 
           <TouchableOpacity
             style={styles.btnContainer}
-            onPress={() =>
-              this.props.onLogoutPress()}
+            onPress={() => this.props.onLogoutPress()}
           >
             <Text style={styles.btnText}>Logout</Text>
           </TouchableOpacity>
@@ -120,9 +121,11 @@ const mapDispatchToProps = (dispatch: any) => ({
   onLogoutPress: () => dispatch(logoutUser())
 });
 
-const User = connect(MapStateToProps, mapDispatchToProps)(PureUser);
+const User = connect(
+  MapStateToProps,
+  mapDispatchToProps
+)(PureUser);
 export default User;
-
 
 const styles = StyleSheet.create({
   container: {
@@ -136,7 +139,7 @@ const styles = StyleSheet.create({
     margin: 10
   },
   btnContainer: {
-    backgroundColor: "#FB9C6C",
+    backgroundColor: "rgb(252,163,145)",
     paddingHorizontal: 15,
     paddingVertical: 15,
     // marginHorizontal: 0,
@@ -167,7 +170,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 6,
-    width: width * 0.7, 
+    width: width * 0.7,
     margin: 20
   },
   avatar: {
