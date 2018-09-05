@@ -75,10 +75,10 @@ export const getAvatar = (mbti: string) => {
             return require('../../assets/16Types/consul.png');
 
         // Explorers
-        case 'ISFP':
+        case 'ISTP':
             return require('../../assets/16Types/virtuoso.png');
 
-        case 'ESFP':
+        case 'ISFP':
             return require('../../assets/16Types/adventurer.png');
 
         case 'ESTP':
