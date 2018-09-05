@@ -159,10 +159,17 @@ io.on('connection', (socket) => {
     })
 });
 
+<<<<<<< HEAD
+/*const httpsOptions = {
+    key: fs.readFileSync('./localhost.key'),
+    cert: fs.readFileSync('./localhost.crt')
+}*/
+=======
 // const httpsOptions = {
 //     key: fs.readFileSync('./localhost.key'),
 //     cert: fs.readFileSync('./localhost.crt')
 // }
+>>>>>>> ba1fe0b1879a7014f17d8cdbbc648f77d5ea158a
 
 // https.createServer(httpsOptions, app).listen(PORT, () => {
 //     console.log('Application started at port ' + PORT)
