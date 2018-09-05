@@ -172,6 +172,7 @@ class App {
     Navigation.startTabBasedApp({
       tabs: [
         {
+<<<<<<< HEAD
           label: "Suggest",
           screen: "SuggestedScreen",
           icon: require("./assets/deck.png"),
@@ -183,30 +184,47 @@ class App {
           screen: "RequestTabScreen",
           icon: require("./assets/deck.png"),
           title: "Request",
+=======
+          label: "REQEUSTS",
+          screen: "RequestTabScreen",
+          icon: require("./assets/deck.png"),
+          title: "REQUESTS",
           navigatorStyle: { transparentNav }
         },
         {
-          label: "Home Deck",
+          label: "DISCOVER",
+          screen: "RequestTabScreen",
+          icon: require("./assets/deck.png"),
+          title: "DISCOVER",
+>>>>>>> a8e44256a8483815d716067ff3367afb4007115c
+          navigatorStyle: { transparentNav }
+        },
+        {
+          label: "THE DECKS",
           screen: "HomeTabScreen",
           icon: require("./assets/home.png"),
-          title: "My Deck",
+          title: "HOME",
           navigatorStyle: { transparentNav },
           passProps: {
             token: token
           }
         },
-        // {
-        //   label: "Notifications",
-        //   screen: "ChatTabScreen",
-        //   icon: require("./assets/chat.png"),
-        //   title: "Chat",
-        //   navigatorStyle: { transparentNav }
-        // },
+        /* {
+           label: "Notifications",
+           screen: "ChatTabScreen",
+           icon: require("./assets/chat.png"),
+           title: "Chat",
+           navigatorStyle: { transparentNav }
+        */ },
         {
+<<<<<<< HEAD
           label: "Profile",
+=======
+          label: "CONTROL ROOM",
+>>>>>>> a8e44256a8483815d716067ff3367afb4007115c
           screen: "UserTabScreen",
           icon: require("./assets/user.png"),
-          title: "Profile",
+          title: "PROFILE",
           navigatorStyle: { transparentNav }
         }
       ],
