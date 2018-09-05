@@ -84,7 +84,7 @@ class PureUser extends React.Component<UserProps, UserState> {
               })
             }
           >
-            <Text style={styles.btnText}>SETTING</Text>
+            <Text style={styles.btnText}>SETTINGS</Text>
           </TouchableOpacity>
 
           <TouchableOpacity

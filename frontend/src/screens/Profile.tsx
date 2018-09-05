@@ -15,7 +15,7 @@ export default class Profile extends React.Component<ProfileProps> {
     return (
       <LinearGradient colors={['#9EF8E4', '#30519B']} style={[{flex: 1}]}>
       <View style={styles.container}>
-          <Text style={styles.welcome}>Profile</Text>
+          <Text style={styles.welcome}>PROFILE</Text>
           <TouchableOpacity onPress={() => 
             this.props.navigator.showLightBox({
               screen: "RequestTabScreen", // unique ID registered with Navigation.registerScreen
@@ -32,7 +32,7 @@ export default class Profile extends React.Component<ProfileProps> {
               //   animated: true // does the toggle have transition animation or does it happen immediately (optional)
               // })
           }>
-            <Text style={styles.welcome}>Click to show lightbox</Text>
+            <Text style={styles.welcome}>CLICK to show LIGHTBOX</Text>
           </TouchableOpacity>
       </View>
       </LinearGradient>

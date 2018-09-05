@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffa18e",
     paddingHorizontal: 15,
     paddingVertical: 15,
-    marginVertical: 20,
+    marginVertical: 5,
     width: "60%",
     height: 45,
     shadowColor: "#000",
@@ -100,7 +100,8 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "600",
     textAlign: "center",
-    fontSize: 8
+    fontSize: 8,
+    marginTop: 10
   },
   card: {
     justifyContent: "center",
