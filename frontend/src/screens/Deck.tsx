@@ -14,6 +14,8 @@ import Config from "react-native-config";
 import { AsyncStorage } from "react-native";
 import { transparentNav } from './styles/common';
 import { connect } from 'react-redux';
+import LeftTopButton from "./components/LeftTopButton";
+import RightTopButton from "./components/RightTopButton";
 
 const { height, width } = Dimensions.get("window");
 
@@ -79,6 +81,20 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                 conID
               }) => (
                   <View>
+                    <View style={styles.buttonContainer}>
+                      <LeftTopButton
+                        leftButtonName={"TYPE"}
+                        onPress={() => {
+                          console.log("type deck");
+                        }}
+                      />
+                      <RightTopButton
+                        rightButtonName={"TEN"}
+                        onPress={() => {
+                          console.log("ten deck");
+                        }}
+                      />
+                    </View>
                     <View style={styles.card}>
                       <Image
                         style={styles.avatar}
@@ -142,22 +158,8 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   buttonContainer: {
-    flexDirection: 'row'
-  },
-  button: {
-    backgroundColor: '#3B5998',
-    padding: 5,
-    height: height * 0.05,
-    width: width * 0.5,
-    borderColor: 'white',
-    borderWidth: 1,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 15,
-    fontWeight: '700',
-    textAlign: 'center',
-    letterSpacing: 2
+    flexDirection: "row",
+    height: 45
   },
   card: {
     justifyContent: "center",
@@ -176,19 +178,6 @@ const styles = StyleSheet.create({
     width: width * 0.4,
     height: height * 0.3
   },
-  NameButtonContainer: {
-    backgroundColor: "#B6AFA9",
-    paddingHorizontal: 5,
-    paddingVertical: 8,
-    marginVertical: 8,
-    width: "85%",
-    marginTop: 5,
-    paddingTop: 8,
-    paddingBottom: 8,
-    marginLeft: 5,
-    marginRight: 8,
-    borderRadius: 5
-  },
   NameButtontext: {
     fontSize: 20,
     color: "#3B5998",
@@ -204,7 +193,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 10,
     borderRadius: 25,
-    width: 150,
+    width: 250,
     textAlign: "center"
   }
 });
