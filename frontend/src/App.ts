@@ -99,41 +99,41 @@ class App {
     Navigation.startTabBasedApp({
       tabs: [
         {
-          label: "Request",
+          label: "REQEUSTS",
           screen: "RequestTabScreen",
           icon: require("./assets/deck.png"),
-          title: "Request",
+          title: "REQUESTS",
           navigatorStyle: { transparentNav }
         },
         {
-          label: "Lucky Draw",
+          label: "DISCOVER",
           screen: "RequestTabScreen",
           icon: require("./assets/deck.png"),
-          title: "Lucky Draw",
+          title: "DISCOVER",
           navigatorStyle: { transparentNav }
         },
         {
-          label: "Home Deck",
+          label: "THE DECKS",
           screen: "HomeTabScreen",
           icon: require("./assets/home.png"),
-          title: "My Deck",
+          title: "HOME",
           navigatorStyle: { transparentNav },
           passProps: {
             token: token
           }
         },
-        // {
-        //   label: "Notifications",
-        //   screen: "ChatTabScreen",
-        //   icon: require("./assets/chat.png"),
-        //   title: "Chat",
-        //   navigatorStyle: { transparentNav }
-        // },
+        /* {
+           label: "Notifications",
+           screen: "ChatTabScreen",
+           icon: require("./assets/chat.png"),
+           title: "Chat",
+           navigatorStyle: { transparentNav }
+        */ },
         {
-          label: "Control Room",
+          label: "CONTROL ROOM",
           screen: "UserTabScreen",
           icon: require("./assets/user.png"),
-          title: "Profile",
+          title: "PROFILE",
           navigatorStyle: { transparentNav }
         }
       ],
