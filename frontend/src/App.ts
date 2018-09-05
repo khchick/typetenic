@@ -122,13 +122,13 @@ class App {
             token: token
           }
         },
-        {
-          label: "Notifications",
-          screen: "ChatTabScreen",
-          icon: require("./assets/chat.png"),
-          title: "Chat",
-          navigatorStyle: { transparentNav }
-        },
+        // {
+        //   label: "Notifications",
+        //   screen: "ChatTabScreen",
+        //   icon: require("./assets/chat.png"),
+        //   title: "Chat",
+        //   navigatorStyle: { transparentNav }
+        // },
         {
           label: "Control Room",
           screen: "UserTabScreen",

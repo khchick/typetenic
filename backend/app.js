@@ -5,6 +5,7 @@ const PORT = process.env.PORT || "8443"
 const knexFile = require("./knexfile")[NODE_ENV]
 const knex = require("knex")(knexFile)
 const express = require("express");
+const morgan = require('morgan');
 const bodyParser = require("body-parser");
 const jwt = require("jwt-simple")
 const axios = require("axios");
@@ -22,6 +23,7 @@ const io = require("socket.io")(server);
 // const socket = require('socket.io-client')(process.env.HOST);
 // const SocketManager = require('./utils/SocketManager');
 
+app.use(morgan('combined'))
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -154,13 +156,13 @@ io.on('connection', (socket) => {
     })
 });
 
-const httpsOptions = {
-    key: fs.readFileSync('./localhost.key'),
-    cert: fs.readFileSync('./localhost.crt')
-}
+// const httpsOptions = {
+//     key: fs.readFileSync('./localhost.key'),
+//     cert: fs.readFileSync('./localhost.crt')
+// }
 
-https.createServer(httpsOptions, app).listen(PORT, () => {
-    console.log('Application started at port ' + PORT)
-})
+// https.createServer(httpsOptions, app).listen(PORT, () => {
+//     console.log('Application started at port ' + PORT)
+// })
 
-// server.listen(PORT, () => console.log(`listening on *: ${PORT}`));
+server.listen(PORT, () => console.log(`listening on *: ${PORT}`));
