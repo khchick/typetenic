@@ -172,24 +172,24 @@ class App {
     Navigation.startTabBasedApp({
       tabs: [
         {
-          label: "Suggest",
+          label: "DISCOVER",
           screen: "SuggestedScreen",
           icon: require("./assets/deck.png"),
-          title: "Suggest",
+          title: "DISCOVER",
           navigatorStyle: { transparentNav }
         },
         {
-          label: "Request",
+          label: "REQUESTS",
           screen: "RequestTabScreen",
           icon: require("./assets/deck.png"),
-          title: "Request",
+          title: "REQUESTS",
           navigatorStyle: { transparentNav }
         },
         {
           label: "THE DECKS",
           screen: "HomeTabScreen",
           icon: require("./assets/home.png"),
-          title: "HOME",
+          title: "THE DECKS",
           navigatorStyle: { transparentNav },
           passProps: {
             token: token
@@ -201,17 +201,12 @@ class App {
            icon: require("./assets/chat.png"),
            title: "Chat",
            navigatorStyle: { transparentNav }
-<<<<<<< HEAD
         }*/
-=======
-        */
-
->>>>>>> a3c8ac5d0d3f9ac21f6fd99ff877521519a7d162
         {
-          label: "Profile",
+          label: "CONTROL ROOM,
           screen: "UserTabScreen",
           icon: require("./assets/user.png"),
-          title: "PROFILE",
+          title: "CONTROL ROOM",
           navigatorStyle: { transparentNav }
         }
       ],
