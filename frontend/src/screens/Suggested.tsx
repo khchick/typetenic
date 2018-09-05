@@ -20,19 +20,22 @@ import RightTopButton from "./components/RightTopButton";
 
 const { height, width } = Dimensions.get("window");
 
-// Each user item
-interface RequestItemProps {
+// Each user's item
+interface SuggestedUsersProps {
   item: any;
   index: any;
+  token: string;
   onPressItem: (item: any) => any;
 }
-class RequestItem extends React.PureComponent<RequestItemProps> {
+class SuggestedUsers extends React.PureComponent<SuggestedUsersProps> {
   onPress = () => {
     this.props.onPressItem(this.props.item.id);
   };
 
   render() {
     const item = this.props.item;
+
+    console.log(item);
     return (
       <View style={styles.rowContainer}>
         <TouchableOpacity onPress={this.onPress}>
@@ -48,7 +51,27 @@ class RequestItem extends React.PureComponent<RequestItemProps> {
         <Text style={styles.name}>{item.display_name}</Text>
 
         <View style={styles.textContainer}>
-          <TouchableOpacity style={styles.likeBtn} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.likeBtn}
+            onPress={() => {
+              axios
+                .post(
+                  `${Config.API_SERVER}/api/connection/request/sent`,
+                  {
+                    targetID: item.id
+                  },
+                  {
+                    headers: {
+                      Authorization: "Bearer " + this.props.token
+                    }
+                  }
+                )
+                // .then(res => {
+
+                // })
+                .catch(err => console.log(err));
+            }}
+          >
             <Text style={styles.btnText}>LIKE</Text>
           </TouchableOpacity>
 
@@ -62,16 +85,19 @@ class RequestItem extends React.PureComponent<RequestItemProps> {
 }
 
 // List all users, fetch data
-interface RequestProps {
+interface RowContainerProps {
   navigator: Navigator;
   token: string;
 }
 
-interface RequestStates {
+interface RowContainerStates {
   listSentReq: any;
 }
 
-class PureRequest extends React.Component<RequestProps, RequestStates> {
+class RowContainer extends React.Component<
+  RowContainerProps,
+  RowContainerStates
+> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -101,7 +127,7 @@ class PureRequest extends React.Component<RequestProps, RequestStates> {
   };
 
   renderItem = ({ item, index }) => (
-    <RequestItem item={item} index={index} onPressItem={this.onPressItem} />
+    <SuggestedUsers item={item} index={index} onPressItem={this.onPressItem} />
   );
 
   onPressItem = (item: any) => {
@@ -149,8 +175,7 @@ const MapStateToProps = (state: any) => {
   };
 };
 
-const Suggested = connect(MapStateToProps)(PureRequest);
-export default Suggested;
+export default connect(MapStateToProps)(RowContainer);
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -209,6 +234,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
     fontSize: 14,
+    fontWeight: "bold",
     letterSpacing: 1.5
   }
 });
