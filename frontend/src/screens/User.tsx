@@ -11,23 +11,48 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { logoutUser } from "../redux/actions/authAction";
+import axios from 'axios';
+import Config from 'react-native-config';
 
-interface UserProps {
-  navigator: Navigator;
-  onLogoutPress: () => void;
-}
 
 const { height, width } = Dimensions.get("window");
 
-class PureUser extends React.Component<UserProps> {
-  static navigatorButtons = {
-    rightButtons: [
-      {
-        icon: require("../assets/settings.png"), // for icon button, provide the local image asset name
-        id: "settings" // id for this button, given in onNavigatorEvent(event) to help understand which button was clicked
+interface UserProps {
+  navigator: Navigator;
+  token: string;
+  onLogoutPress: () => void;
+}
+
+interface UserState {
+  ownProfile: any;
+  imageUrl: any
+}
+
+class PureUser extends React.Component<UserProps, UserState> {
+  constructor(props: UserProps) {
+    super(props);
+    this.state = {
+      ownProfile: null,
+      imageUrl: "https://data.whicdn.com/images/287294903/large.jpg", // Dua lipa
+    }
+  }
+
+  async componentWillMount() {  
+    axios.get(`${Config.API_SERVER}/api/user/myprofile`, {
+      headers: {
+        Authorization: 'Bearer ' + this.props.token
       }
-    ]
-  };
+    })
+      .then((res)=> {
+         this.setState({
+          ownProfile: res.data,
+          imageUrl: `${Config.API_SERVER}` + res.data[0].profile_pic
+        });
+        console.log(res.data[0].profile_pic)     
+        console.log(this.state.imageUrl)   
+      })
+      .catch(err => console.log(err))      
+  }
 
   render() {
     return (
@@ -37,7 +62,7 @@ class PureUser extends React.Component<UserProps> {
             <Image
               style={styles.avatar}
               source={{
-                uri: "https://data.whicdn.com/images/287294903/large.jpg"
+                uri: this.state.imageUrl
               }}
             />
           </View>
@@ -47,7 +72,13 @@ class PureUser extends React.Component<UserProps> {
             onPress={() =>
               this.props.navigator.push({
                 screen: "Settings",
-                title: "Settings"
+                title: "Settings",
+                navigatorButtons: {
+                  leftButtons: [{
+                    title: 'Done',
+                    id: 'done',
+                  }]                  
+                },
               })
             }
           >
@@ -81,7 +112,7 @@ class PureUser extends React.Component<UserProps> {
 
 const MapStateToProps = (state: any) => {
   return {
-    isLoggedIn: state.authReducer
+    token: state.auth.token
   };
 };
 
@@ -89,11 +120,9 @@ const mapDispatchToProps = (dispatch: any) => ({
   onLogoutPress: () => dispatch(logoutUser())
 });
 
-const User = connect(
-  MapStateToProps,
-  mapDispatchToProps
-)(PureUser);
+const User = connect(MapStateToProps, mapDispatchToProps)(PureUser);
 export default User;
+
 
 const styles = StyleSheet.create({
   container: {
@@ -131,18 +160,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
 
-    padding: 15,
+    paddingHorizontal: 15,
+    paddingVertical: 20,
     borderRadius: 15,
     shadowColor: "#000",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 6,
-    width: width * 0.7, // percent or minus
-    height: height * 0.5,
+    width: width * 0.7, 
     margin: 20
   },
   avatar: {
     width: width * 0.6,
-    height: height * 0.4
+    height: height * 0.35
   }
 });

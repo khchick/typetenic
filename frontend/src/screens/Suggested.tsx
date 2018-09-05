@@ -80,15 +80,15 @@ class PureRequest extends React.Component<RequestProps, RequestStates> {
   }
 
   async componentWillMount() {
-    console.log("request");
     axios
-      .get(`${Config.API_SERVER}/api/connection/request/sent`, {
+      .get(`${Config.API_SERVER}/api/user/suggested`, {
         // axios.get(`${Config.API_SERVER}}/api/connection/request/received`, {
         headers: {
           Authorization: "Bearer " + this.props.token
         }
       })
       .then(res => {
+        console.log(res.data);
         this.setState({
           listSentReq: res.data
         });
@@ -118,15 +118,15 @@ class PureRequest extends React.Component<RequestProps, RequestStates> {
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
         <View style={styles.buttonContainer}>
           <LeftTopButton
-            leftButtonName={"RECEIVED"}
+            leftButtonName={"DISCOVER"}
             onPress={() => {
-              console.log("received");
+              console.log("see");
             }}
           />
           <RightTopButton
-            rightButtonName={"SENT"}
+            rightButtonName={"CARDS of THE DAY"}
             onPress={() => {
-              console.log("sent");
+              console.log("checked");
             }}
           />
         </View>
@@ -149,8 +149,8 @@ const MapStateToProps = (state: any) => {
   };
 };
 
-const Request = connect(MapStateToProps)(PureRequest);
-export default Request;
+const Suggested = connect(MapStateToProps)(PureRequest);
+export default Suggested;
 
 const styles = StyleSheet.create({
   buttonContainer: {
