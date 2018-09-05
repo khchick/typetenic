@@ -125,9 +125,7 @@ class PureMbtiResult extends React.Component<MbtiResultProps, MbtiState> {
         <View style={globalStyle.container}>
           <View style={globalStyle.cardContainer}>
             <Text style={styles.title}>
-              WELCOME ON BOARD
-              {`\n`}
-              You are - {this.state.mbti}
+              WELCOME{`\n`}ON BOARD{`\n`}You are - {this.state.mbti}
             </Text>
 
             <Image style={styles.img} source={{ uri: avatarImg }} />

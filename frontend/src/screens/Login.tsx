@@ -47,7 +47,6 @@ class PureLogin extends React.Component<LoginProps, LoginStates> {
       
           <Text style={styles.welcome}>
             WELCOME{`\n`}ON BOARD
-
           </Text>
 
             <TextInput placeholder='Email' 
@@ -70,7 +69,7 @@ class PureLogin extends React.Component<LoginProps, LoginStates> {
               onPress={() => 
                 this.props.onLoginPress(this.state.email, this.state.password)}
                 >
-              <Text style={styles.btnText}>Login</Text>
+              <Text style={styles.btnText}>LOGIN</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.btnContainer}
@@ -85,7 +84,7 @@ class PureLogin extends React.Component<LoginProps, LoginStates> {
                   }]                  
                 },
             })}>
-              <Text style={styles.btnText}>Sign Up</Text>
+              <Text style={styles.btnText}>SIGN UP</Text>
             </TouchableOpacity>           
       </KeyboardAvoidingView>
       </LinearGradient>
