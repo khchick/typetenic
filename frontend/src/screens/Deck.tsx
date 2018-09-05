@@ -62,6 +62,20 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
         <View style={styles.container}>
+          <View style={styles.buttonContainer}>
+            <LeftTopButton
+              leftButtonName={"TYPE"}
+              onPress={() => {
+                console.log("type deck");
+              }}
+            />
+            <RightTopButton
+              rightButtonName={"TEN"}
+              onPress={() => {
+                console.log("ten deck");
+              }}
+            />
+          </View>
           <ScrollView
             horizontal={true}
             snapToInterval={width - 40} // card width offset margin
@@ -81,20 +95,6 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                 conID
               }) => (
                   <View>
-                    <View style={styles.buttonContainer}>
-                      <LeftTopButton
-                        leftButtonName={"TYPE"}
-                        onPress={() => {
-                          console.log("type deck");
-                        }}
-                      />
-                      <RightTopButton
-                        rightButtonName={"TEN"}
-                        onPress={() => {
-                          console.log("ten deck");
-                        }}
-                      />
-                    </View>
                     <View style={styles.card}>
                       <Image
                         style={styles.avatar}
