@@ -177,8 +177,8 @@ const mapStateToProps = (state: any) => {
   return {
     profilePic: state.profile.profilePic,
     imageData: state.profile.imageData,
-    display_name: state.profile.name,
-    dob: state.profile.date,
+    name: state.profile.name,
+    date: state.profile.date,
     gender: state.profile.gender,
     orientation: state.profile.orientation,
     location: state.profile.location,
