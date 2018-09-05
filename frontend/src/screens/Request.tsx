@@ -209,6 +209,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
     fontSize: 14,
+    fontWeight: "bold",
     letterSpacing: 1.5
   }
 });
