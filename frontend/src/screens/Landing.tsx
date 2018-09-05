@@ -30,7 +30,7 @@ export default class Landing extends React.Component<LandingProps> {
           <View style={styles.card}>
             <Image
               style={styles.logo}
-              source={require("/Users/mac/Desktop/typetenic/frontend/src/assets/logos/logo3.jpg")}
+              source={require("../assets/logos/logo3.jpg")}
             />
 
             <Text style={styles.appText}>TYPETENIC</Text>
