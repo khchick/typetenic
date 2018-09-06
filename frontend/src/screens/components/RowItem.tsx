@@ -1,6 +1,4 @@
 import * as React from "react";
-import LinearGradient from "react-native-linear-gradient";
-import { transparentNav, globalStyle } from "../styles/common";
 import {
   StyleSheet,
   Text,
@@ -12,11 +10,7 @@ import {
   FlatList,
   Alert
 } from "react-native";
-import axios from "axios";
-import Config from "react-native-config";
-import { connect } from "react-redux";
-import LeftTopButton from "./LeftTopButton";
-import RightTopButton from "./RightTopButton";
+import AvatarImage, {getAvatar} from '../components/AvatarImage';
 
 const { height, width } = Dimensions.get("window");
 
@@ -33,17 +27,13 @@ export default class rowItem extends React.PureComponent<rowItemProps> {
 
   render() {
     const item = this.props.item;
+    let mbtiImg = getAvatar(this.props.item.mbti)
+
     return (
       <View style={styles.rowContainer}>
-        <TouchableOpacity onPress={this.onPress}>
-          <Image
-            style={styles.thumb}
-            source={{
-              uri:
-                "https://i.pinimg.com/236x/83/0f/71/830f71015b4a7383998416fe7f07c7eb--the-joker-jokers.jpg"
-            }}
-          />
-        </TouchableOpacity>
+        {/* <TouchableOpacity onPress={this.onPress}> */}
+          <AvatarImage style={styles.thumb} source={  mbtiImg } />        
+        {/* </TouchableOpacity>         */}
 
         <Text style={styles.name}>{item.display_name}</Text>
 

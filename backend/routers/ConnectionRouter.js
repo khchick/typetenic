@@ -25,7 +25,7 @@ class ConnectionRouter {
         // REQUEST MANAGEMENT
 
         router.post('/request/sent', (req, res) => { // make a connection request
-            this.connectionService.createSentRequest(req.user.id, req.body.targetID)
+            this.connectionService.createSentRequest(req.user.id, req.body.targetID, res.body.mbti)
                 .then(() => this.connectionService.listSentRequests(req.user.id))
                 .then(requests => res.json(requests))
                 .catch((err) => res.status(500).json(err));

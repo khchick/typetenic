@@ -6,7 +6,7 @@ class ConnectionService {
 
     listSentRequests(userID) {
         let query = this.knex
-            .select('users.id', 'users.display_name', 'connection.req_receiver_id')
+            .select('users.id', 'users.display_name', 'connection.req_receiver_id', 'users.mbti')
             .from('connection')
             .innerJoin('users', 'users.id', 'connection.req_receiver_id')
             .where('connection.req_sender_id', userID)
@@ -16,6 +16,7 @@ class ConnectionService {
             return rows.map(row => ({
                 id: row.id,
                 display_name: row.display_name,
+                mbti: row.mbti
             }))
         })
     }
