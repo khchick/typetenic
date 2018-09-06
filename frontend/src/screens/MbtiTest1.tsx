@@ -17,6 +17,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { one } from "../redux/actions/testAction";
+import { RootState } from "../redux/reducers/rootReducer";
 
 const { height, width } = Dimensions.get("window");
 
@@ -80,7 +81,7 @@ class PureMbtiTest1 extends React.Component<MbtiTestProps> {
   }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   return {
     test1: state.test.test1
   };

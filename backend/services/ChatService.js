@@ -41,6 +41,7 @@ class ChatService {
     }
 
     beginConversation(userID, targetID) {
+        // [CODE REVIEW] add transaction
         let query = this.knex
             .select('id', 'user1', 'user2')
             .from('conversation')
@@ -135,6 +136,7 @@ class ChatService {
                     _id: row.msg_sender_id,
                     name: row.display_name,
                     avatar: `http://localhost:8080/${row.profile_pic}`
+                    // [CODE REVIEW] give out relative path OR put the link into .env
                 }
             }))
         })

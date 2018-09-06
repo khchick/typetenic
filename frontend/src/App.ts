@@ -138,6 +138,7 @@ class App {
     // check login status when re-opening the app
     AsyncStorage.getItem("token").then((token: string | null) => {
       if (token) {
+        // [CODE REVIEW] check profile, if ok, store profile to redux. if not ok (401), pop to login page 
         App.loginApp(token);
         store.dispatch(loginSuccess(token));
       } else {
