@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import {loginUser} from '../redux/actions/authAction';
+import { RootState } from '../redux/reducers/rootReducer';
 
 
 interface LoginProps {
@@ -92,10 +93,8 @@ class PureLogin extends React.Component<LoginProps, LoginStates> {
   }
 }
 
-const MapStateToProps = (state: any) => {
-  return {
-    isLoggedIn: state.authReducer
-  }
+const MapStateToProps = (state: RootState) => {
+  return { }
 }
 
 const mapDispatchToProps = (dispatch: any) => ({
