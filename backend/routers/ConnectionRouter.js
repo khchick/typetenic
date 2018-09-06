@@ -11,7 +11,7 @@ class ConnectionRouter {
         // REQUEST LISTING
 
         router.get('/request/sent', (req, res) => { // list of all requests sent
-            this.connectionService.listSentRequests(req.user.id, req.body.targetID)
+            this.connectionService.listSentRequests(req.user.id, req.body.targetID, res.body.mbti)
                 .then(requests => res.json(requests))
                 .catch((err) => res.status(500).json(err));
         })
@@ -25,7 +25,7 @@ class ConnectionRouter {
         // REQUEST MANAGEMENT
 
         router.post('/request/sent', (req, res) => { // make a connection request
-            this.connectionService.createSentRequest(req.user.id, req.body.targetID, res.body.mbti)
+            this.connectionService.createSentRequest(req.user.id, req.body.targetID)
                 .then(() => this.connectionService.listSentRequests(req.user.id))
                 .then(requests => res.json(requests))
                 .catch((err) => res.status(500).json(err));
