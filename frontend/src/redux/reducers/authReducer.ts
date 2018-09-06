@@ -27,7 +27,8 @@ export function authReducer(state: AuthState = initialState, action: AuthActions
         case LOGOUT: 
             return {
                 ...state,
-                isLoggedIn: false
+                isLoggedIn: false,
+                token: action.token
             }
         
         default:

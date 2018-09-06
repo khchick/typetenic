@@ -30,6 +30,7 @@ export interface LoginFailureAction {
 
 export interface LogOutAction {
     type: LOGOUT
+    token: string
 }
 
 export type AuthActions = LoginSuccessAction | LoginFailureAction | LogOutAction;
@@ -49,9 +50,10 @@ export function loginFailure(message: string) {
     }
 }
 
-export function logout() {
+export function logout(token: string) {
     return {
-        type: LOGOUT
+        type: LOGOUT,
+        token: token
     }
 }
 
@@ -101,20 +103,23 @@ export function loginFacebook(accessToken: string) {
                 } else if (!res.data.token) {
                     dispatch(loginFailure(res.data.message || ''))
                 } else {
-                    AsyncStorage.getItem('token')
-                    .then((token) => {
-                        if (token) {
-                            return (dispatch: Dispatch) => {
-                                dispatch(loginSuccess(token))
-                                App.loginApp(token);            
-                            }
-                        }
-                        else {
-                            AsyncStorage.setItem('token', res.data.token)
+                    AsyncStorage.setItem('token', res.data.token)
                             dispatch(loginSuccess(res.data.token))
-                            App.fbAppendProfile();  
-                        } 
-                    })                                
+                            App.loginApp(res.data.token);
+                    // AsyncStorage.getItem('token')
+                    // .then((token) => {
+                    //     if (token) {
+                    //         return (dispatch: Dispatch) => {
+                    //             dispatch(loginSuccess(token))
+                    //             App.loginApp(token);            
+                    //         }
+                    //     }
+                    //     else {
+                    //         AsyncStorage.setItem('token', res.data.token)
+                    //         dispatch(loginSuccess(res.data.token))
+                    //         App.fbAppendProfile();  
+                    //     } 
+                    // })                                
                 }
             })
             .catch(err => {
@@ -127,8 +132,7 @@ export function logoutUser() {
     return (dispatch: Dispatch) => {
         AsyncStorage.removeItem('token')           
         .then(() => {
-            dispatch(logout());
-            dispatch(loginSuccess(''));
+            dispatch(logout(''));
             App.initialApp();
         })
     }
