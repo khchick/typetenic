@@ -183,7 +183,7 @@ class App {
           icon: require("./assets/deck.png"),
           title: "DISCOVER",
           navigatorStyle: {
-            navBarTextColor: 'white',
+            navBarTextColor: 'black',
             navBarBackgroundColor: '#9EF8E4',
             navBarTextFontSize: 20
           }
@@ -194,7 +194,7 @@ class App {
           icon: require("./assets/deck.png"),
           title: "REQUESTS",
           navigatorStyle: {
-            navBarTextColor: 'white',
+            navBarTextColor: 'black',
             navBarBackgroundColor: '#9EF8E4',
             navBarTextFontSize: 20
           }
@@ -205,7 +205,7 @@ class App {
           icon: require("./assets/home.png"),
           title: "THE DECKS",
           navigatorStyle: {
-            navBarTextColor: 'white',
+            navBarTextColor: 'black',
             navBarBackgroundColor: '#9EF8E4',
             navBarTextFontSize: 20
           },
@@ -228,7 +228,7 @@ class App {
           icon: require("./assets/user.png"),
           title: "CONTROL ROOM",
           navigatorStyle: {
-            navBarTextColor: 'white',
+            navBarTextColor: 'black',
             navBarBackgroundColor: '#9EF8E4',
             navBarTextFontSize: 20
           }
