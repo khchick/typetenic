@@ -11,7 +11,7 @@ class ConnectionRouter {
         // REQUEST LISTING
 
         router.get('/request/sent', (req, res) => { // list of all requests sent
-            this.connectionService.listSentRequests(req.user.id, req.body.targetID, res.body.mbti)
+            this.connectionService.listSentRequests(req.user.id)
                 .then(requests => res.json(requests))
                 .catch((err) => res.status(500).json(err));
         })
