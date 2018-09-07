@@ -302,9 +302,8 @@ export function getUserProfile(token: string| null) {
             })
             .then(res => {
                 // dispatch edit profile
-                console.log(res)
                 dispatch(editProfileSuccess(res.data[0].id, res.data[0].max_age, res.data[0].min_age, res.data[0].token, res.data[0].profile_pic, res.data[0].imageData, res.data[0].display_name, res.data[0].dob, res.data[0].gender, res.data[0].orientation, res.data[0].location))
-                            
+                return res.data[0]       
             })
             .catch(err => {
                 console.log(err);

@@ -39,7 +39,7 @@ interface SignupProps {
       token: number,  
       profilePic: any,
       imageData: {
-        path: string;
+        uri: string;
         type: string;
         name: string | null;
     },
@@ -137,7 +137,7 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
         console.log("ImagePicker Error: ", res.error);
       } else {
         let imageObj = {
-          path : res.uri,
+          uri : res.uri,
           type: 'image/jpeg', // res.type,
           name: res.fileName
         }

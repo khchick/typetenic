@@ -99,34 +99,21 @@ export function loginFacebook(accessToken: string) {
             {
                 access_token: accessToken
             })
-            .then(res => {
+            .then(async res => {
                 if (res.data == null) {
                     dispatch(loginFailure('Unexpected error'))
                 } else if (!res.data.token) {
                     dispatch(loginFailure(res.data.message || ''))
-                } else {
+                } else {                   
+                    dispatch(loginSuccess(res.data.token));
                     AsyncStorage.setItem('token', res.data.token)
-                    // .then((token) => {
-
-                    // })
-
-                        dispatch(loginSuccess(res.data.token));
-                        dispatch(getUserProfile(res.data.token)); // save profile to redux
+                    
+                    let profile = await dispatch(getUserProfile(res.data.token)) // save profile to redux  
+                    if(profile.mbti) {
                         App.loginApp(res.data.token);
-                    // AsyncStorage.getItem('token')
-                    // .then((token) => {
-                    //     if (token) {
-                    //         return (dispatch: Dispatch) => {
-                    //             dispatch(loginSuccess(token))
-                    //             App.loginApp(token);            
-                    //         }
-                    //     }
-                    //     else {
-                    //         AsyncStorage.setItem('token', res.data.token)
-                    //         dispatch(loginSuccess(res.data.token))
-                    //         App.fbAppendProfile();  
-                    //     } 
-                    // })                                
+                    } else {
+                        App.fbAppendProfile(); // if no profile, redirect to append
+                    }                                            
                 }
             })
             .catch(err => {

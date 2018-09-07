@@ -140,12 +140,10 @@ class App {
     AsyncStorage.getItem("token").then((token: string | null) => {
       if (token) {
         // [CODE REVIEW] check profile, if ok, store profile to redux. if not ok (401), pop to login page 
-
-        store.dispatch(getUserProfile(token)) // axios get + store profile to redux
+        store.dispatch(getUserProfile(token))
         // refresh token ?        
         store.dispatch(loginSuccess(token));
         App.loginApp(token); // redirect to home page
-
       } else {
         App.initialApp();  // if no prev token -> need to login
       }
