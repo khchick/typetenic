@@ -31,7 +31,6 @@ export default class Chat extends React.Component<IChatProps, IChatStates> {
   }
 
   componentDidMount() {
-    console.log(this.props.userID);
     // List messages
     let self = this;
     axios.get(`${Config.API_SERVER}/api/chat/messages/${this.props.conID}`, {
@@ -95,13 +94,5 @@ export default class Chat extends React.Component<IChatProps, IChatStates> {
       />
     )
   }
-
-  // initSocket = () => {
-  //   const socket = io(socketUrl)
-  //   socket.on('connect', () => {
-  //     console.log("Connected");
-  //   })
-  //   this.setState({ socket })
-  // }
 
 }

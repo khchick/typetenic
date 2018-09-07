@@ -41,102 +41,53 @@ class ChatService {
     }
 
     beginConversation(userID, targetID) {
-    //    With transaction
-
-        let query = this.knex
-            .select('id', 'user1', 'user2')
-            .from('conversation')
-            .where(function () {
-                this.where('user1', userID)
-                    .andWhere('user2', targetID)
-            })
-            .orWhere(function () {
-                this.where('user1', targetID)
-                    .andWhere('user2', userID)
-            })
-
-        return query.then((rows) => {
-            if (rows.length === 0) {
-                knex.transaction(function(trx) {
+        return this.knex.transaction(function (trx) { // transaction enabled
+            let query = trx
+                .select('id', 'user1', 'user2')
+                .from('conversation')
+                .where(function () {
+                    this.where('user1', userID)
+                        .andWhere('user2', targetID)
+                })
+                .orWhere(function () {
+                    this.where('user1', targetID)
+                        .andWhere('user2', userID)
                 })
 
-                return trx
-                    .insert({
-                        'user1': userID,
-                        'user2': targetID
-                    })
-                    .into('conversation')
-                    .then(() => {
-                        let query = this.knex
-                            .select('id')
-                            .from('conversation')
-                            .where(function () {
-                                this.where('user1', userID)
-                                    .andWhere('user2', targetID)
-                            })
-                            .orWhere(function () {
-                                this.where('user1', targetID)
-                                    .andWhere('user2', userID)
-                            })
-
-                        return query.then(rows => {
-                            rows.map(row => ({
-                                'id': row.id
-                            }));
-                            return rows[0].id;
+            return query.then((rows) => {
+                if (rows.length === 0) {
+                    return trx('conversation')
+                        .insert({
+                            'user1': userID,
+                            'user2': targetID
                         })
-                    })
-                    .then((insert) => {console.log(insert)})
-                    .catch((err) =>  console.log(err));
-            } else {
-                return rows[0].id;
-            }
+                        .then(() => {
+                            let query = trx
+                                .select('id')
+                                .from('conversation')
+                                .where(function () {
+                                    this.where('user1', userID)
+                                        .andWhere('user2', targetID)
+                                })
+                                .orWhere(function () {
+                                    this.where('user1', targetID)
+                                        .andWhere('user2', userID)
+                                })
+
+                            return query.then(rows => {
+                                rows.map(row => ({
+                                    'id': row.id
+                                }));
+                                return rows[0].id;
+                            })
+                        })
+                } else {
+                    return rows[0].id;
+                }
+            })
         })
+            .catch((err) => console.log(err));
 
-        // // [CODE REVIEW] add transaction
-        // let query = this.knex
-        //     .select('id', 'user1', 'user2')
-        //     .from('conversation')
-        //     .where(function () {
-        //         this.where('user1', userID)
-        //             .andWhere('user2', targetID)
-        //     })
-        //     .orWhere(function () {
-        //         this.where('user1', targetID)
-        //             .andWhere('user2', userID)
-        //     })
-
-        // return query.then((rows) => {
-        //     if (rows.length === 0) {
-        //         return this.knex('conversation')
-        //             .insert({
-        //                 'user1': userID,
-        //                 'user2': targetID
-        //             })
-        //             .then(() => {
-        //                 let query = this.knex
-        //                     .select('id')
-        //                     .from('conversation')
-        //                     .where(function () {
-        //                         this.where('user1', userID)
-        //                             .andWhere('user2', targetID)
-        //                     })
-        //                     .orWhere(function () {
-        //                         this.where('user1', targetID)
-        //                             .andWhere('user2', userID)
-        //                     })
-
-        //                 return query.then(rows => {
-        //                     rows.map(row => ({
-        //                         'id': row.id
-        //                     }));
-        //                     return rows[0].id;
-        //                 })
-        //             })
-        //     } else {
-        //         return rows[0].id;
-        //     }
-        // })
     }
 
     exitConversation(userID, targetID) {
