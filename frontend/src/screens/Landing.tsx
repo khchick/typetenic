@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     padding: 30,
-
     borderRadius: 15,
     shadowColor: "#C0C0C0",
     shadowOffset: { width: 2, height: 2 },
@@ -116,6 +115,6 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     width: width * 0.8, // percent or minus
     height: height * 0.6,
-    margin: 20
+    margin: 10
   }
 });

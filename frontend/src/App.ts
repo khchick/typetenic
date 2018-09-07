@@ -157,7 +157,11 @@ class App {
       screen: {
         screen: "SignupContScreen",
         navigatorStyle: {
-          navBarHidden: true,
+          navBarBackgroundColor: '#9EF8E4',
+        },
+        appStyle: {
+          //backButtonImage: require('./')
+          hideBackButtonTitle: true,
         }
       }
     });
@@ -168,7 +172,11 @@ class App {
       screen: {
         screen: "LandingScreen",
         navigatorStyle: {
-          navBarHidden: true,
+          navBarBackgroundColor: '#9EF8E4',
+        },
+        appStyle: {
+          //backButtonImage: require('./')
+          hideBackButtonTitle: true,
         }
       }
     });
