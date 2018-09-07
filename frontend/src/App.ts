@@ -140,7 +140,7 @@ class App {
     AsyncStorage.getItem("token").then((token: string | null) => {
       if (token) {
         // [CODE REVIEW] check profile, if ok, store profile to redux. if not ok (401), pop to login page 
-        
+
         store.dispatch(getUserProfile(token)) // axios get + store profile to redux
         // refresh token ?        
         store.dispatch(loginSuccess(token));
@@ -182,21 +182,33 @@ class App {
           screen: "SuggestedScreen",
           icon: require("./assets/deck.png"),
           title: "DISCOVER",
-          navigatorStyle: { navigatorStyle }
+          navigatorStyle: {
+            navBarTextColor: 'white',
+            navBarBackgroundColor: '#9EF8E4',
+            navBarTextFontSize: 20
+          }
         },
         {
           //label: "REQUESTS",
           screen: "RequestTabScreen",
           icon: require("./assets/deck.png"),
           title: "REQUESTS",
-          navigatorStyle: { navigatorStyle }
+          navigatorStyle: {
+            navBarTextColor: 'white',
+            navBarBackgroundColor: '#9EF8E4',
+            navBarTextFontSize: 20
+          }
         },
         {
           //label: "THE DECKS",
           screen: "HomeTabScreen",
           icon: require("./assets/home.png"),
           title: "THE DECKS",
-          navigatorStyle: { navigatorStyle },
+          navigatorStyle: {
+            navBarTextColor: 'white',
+            navBarBackgroundColor: '#9EF8E4',
+            navBarTextFontSize: 20
+          },
           passProps: {
             token: token
           }
@@ -215,7 +227,11 @@ class App {
           screen: "UserTabScreen",
           icon: require("./assets/user.png"),
           title: "CONTROL ROOM",
-          navigatorStyle: { navigatorStyle }
+          navigatorStyle: {
+            navBarTextColor: 'white',
+            navBarBackgroundColor: '#9EF8E4',
+            navBarTextFontSize: 20
+          }
         }
       ],
       tabsStyle: {
@@ -226,6 +242,7 @@ class App {
       },
       appStyle: {
         //backButtonImage: require('./')
+        hideBackButtonTitle: true,
       },
     });
   }

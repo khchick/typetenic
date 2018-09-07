@@ -4,15 +4,14 @@ import {Dimensions} from 'react-native';
 export const {height, width} = Dimensions.get('window');
 
 
-export const navigatorStyle = {
-    // navBarTranslucent: true, // neccessary for tranparent to work
-    // navBarTransparent: true,
-    // drawUnderNavBar: true, 
-    navBarHidden: false,
-    navBarTextColor: 'white',
-    navBarBackgroundColor: '#9EF8E4',
-
-};
+// export const navigatorStyle = {
+//     // navBarTranslucent: true, // neccessary for tranparent to work
+//     // navBarTransparent: true,
+//     // drawUnderNavBar: true, 
+//     navBarHidden: false,
+//     navBarTextColor: 'white',
+//     navBarBackgroundColor: '#9EF8E4',
+// };
 
 // for all screens
 export const globalStyle = StyleSheet.create({
