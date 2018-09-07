@@ -2,6 +2,10 @@ import { LOCAL_SIGNUP, EDIT_PROFILE, CREATE_MBTI, EDIT_KEY_ATR, ProfileActions} 
 
 
 export interface ProfileState {
+    id: number,
+    max_age: number,
+    min_age: number,
+    token: number,
     email: string,
     password: string,
     profilePic: string,
@@ -21,6 +25,10 @@ export interface ProfileState {
 }
 
 const initialState = {
+    id: 0,
+    max_age: 0,
+    min_age: 0,
+    token: 0,
     email: '',
     password: '',
     profilePic: '',
@@ -51,6 +59,10 @@ export function profileReducer(state: ProfileState = initialState, action: Profi
         case EDIT_PROFILE: 
             return {
                 ...state,
+                id: action.id,
+                max_age: action.max_age,
+                min_age: action.min_age,
+                token: action.token,
                 profilePic: action.profilePic,
                 imageData: action.imageData,
                 name: action.name,

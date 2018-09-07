@@ -28,9 +28,21 @@ var imageOptions = {
 
 interface SignupProps {
     navigator: Navigator,
-    onEditProfile: (  
+    id: number,
+    max_age: number,
+    min_age: number,
+    token: number,  
+    onEditProfile: (
+      id: number,
+      max_age: number,
+      min_age: number,
+      token: number,  
       profilePic: any,
-      imageData: any,
+      imageData: {
+        path: string;
+        type: string;
+        name: string | null;
+    },
       name: string,
       date: string,
       gender: string,
@@ -107,7 +119,7 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
 
 // wrap multiple functions 
   onSignupPress() {
-    this.props.onEditProfile(this.state.profilePic.uri, this.state.imageData, this.state.name, this.state.date, this.state.gender, this.state.orientation, this.state.location)    
+    this.props.onEditProfile(this.props.id, this.props.max_age, this.props.min_age, this.props.token, this.state.profilePic.uri, this.state.imageData, this.state.name, this.state.date, this.state.gender, this.state.orientation, this.state.location)    
     this.props.navigator.push({
       screen: 'MbtiTest1Screen',
       navigatorStyle: transparentNav,
@@ -245,6 +257,10 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
 
 const mapStateToProps = (state: any) => {
   return {
+    id: state.profile.id,
+    max_age: state.profile.max_age,
+    min_age: state.profile.min_age,
+    token: state.profile.token,
     profilePic: state.profile.profilePic,
     imageData: state.profile.imageData,
     name: state.profile.name,
@@ -257,13 +273,17 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => ({
   onEditProfile: (
+    id: number,
+    max_age: number,
+    min_age: number,
+    token: number,
     profilePic: string,
     imageData: any,
     name: string,
     date: string,
     gender: string,
     orientation: string,
-    location: string,) => dispatch(editProfile(profilePic, imageData, name, date, gender, orientation, location))
+    location: string,) => dispatch(editProfile(id, max_age, min_age, token, profilePic, imageData, name, date, gender, orientation, location))
 })
 
 const SignupCont = connect(mapStateToProps, mapDispatchToProps)(PureSignupCont);

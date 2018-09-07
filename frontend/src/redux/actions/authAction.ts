@@ -4,6 +4,7 @@ import { AsyncStorage } from 'react-native';
 import Config from 'react-native-config';
 import App from '../../App';
 import Navigation from '../../screens/components/Navigation';
+import {getUserProfile, editProfileSuccess} from './profileAction';
 
 // action types
 
@@ -78,8 +79,9 @@ export function loginUser(email: string, password: string) {
                 } else if (!res.data.token) {
                     dispatch(loginFailure(res.data.message || ''));
                 } else {
-                    AsyncStorage.setItem('token', res.data.token) // save token in AsyncStorage
+                    AsyncStorage.setItem('token', res.data.token) // save new token in AsyncStorage
                     dispatch(loginSuccess(res.data.token));
+                    dispatch(getUserProfile(res.data.token)); // save profile to redux
                     App.loginApp(res.data.token);
                 }
             })
@@ -104,8 +106,13 @@ export function loginFacebook(accessToken: string) {
                     dispatch(loginFailure(res.data.message || ''))
                 } else {
                     AsyncStorage.setItem('token', res.data.token)
-                            dispatch(loginSuccess(res.data.token))
-                            App.loginApp(res.data.token);
+                    // .then((token) => {
+
+                    // })
+
+                        dispatch(loginSuccess(res.data.token));
+                        dispatch(getUserProfile(res.data.token)); // save profile to redux
+                        App.loginApp(res.data.token);
                     // AsyncStorage.getItem('token')
                     // .then((token) => {
                     //     if (token) {
@@ -133,6 +140,7 @@ export function logoutUser() {
         AsyncStorage.removeItem('token')           
         .then(() => {
             dispatch(logout(''));
+            dispatch(editProfileSuccess(0, 0, 0, 0,'','','','','','',''));
             App.initialApp();
         })
     }

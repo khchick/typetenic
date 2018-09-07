@@ -41,6 +41,10 @@ function signupSuccess(email: string, password: string) {
 
 export interface EditProfileAction {
     type: EDIT_PROFILE,
+    id: number,
+    max_age: number,
+    min_age: number,
+    token: number,
     profilePic: string,
     imageData: any,
     name: string,
@@ -50,7 +54,11 @@ export interface EditProfileAction {
     location: string,
 }
 
-function editProfileSuccess(
+export function editProfileSuccess(
+    id: number,
+    max_age: number,
+    min_age: number,
+    token: number,
     profilePic: string,
     imageData: any,
     name: string,
@@ -61,6 +69,10 @@ function editProfileSuccess(
     ) {
     return {
         type: EDIT_PROFILE,
+        id,
+        max_age,
+        min_age,
+        token,
         profilePic,
         imageData,
         name,
@@ -107,7 +119,7 @@ function editKeyAtrSuccess(key_atr: string, key_atr_desc: string) {
 }
 
 export interface SubmitProfileAction {
-    type: EDIT_PROFILE,
+    type: SUBMIT_PROFILE,
     imageData: any,
     name: string,
     date: string,
@@ -176,6 +188,10 @@ export function signupUser(email: string, password: string) {
 
 
 export function editProfile(
+    id: number,
+    max_age: number,
+    min_age: number,
+    token: number,
     profilePic: string,
     imageData: any,
     name: string,
@@ -186,6 +202,10 @@ export function editProfile(
     ) {   
     return (dispatch: Dispatch) => {
         dispatch(editProfileSuccess(
+            id,
+            max_age,
+            min_age,
+            token,
             profilePic,
             imageData,
             name,
@@ -268,3 +288,27 @@ export function submitProfile(
         })
     }
 }
+
+
+// get profile
+export function getUserProfile(token: string| null) {   
+    return (dispatch: Dispatch) => {
+        console.log('running getUserProfile')
+        return axios
+            .get(`${Config.API_SERVER}/api/user/myprofile`, {
+                headers: {
+                Authorization: "Bearer " + token
+                }
+            })
+            .then(res => {
+                // dispatch edit profile
+                console.log(res)
+                dispatch(editProfileSuccess(res.data[0].id, res.data[0].max_age, res.data[0].min_age, res.data[0].token, res.data[0].profile_pic, res.data[0].imageData, res.data[0].display_name, res.data[0].dob, res.data[0].gender, res.data[0].orientation, res.data[0].location))
+                            
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+  }
+

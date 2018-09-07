@@ -33,6 +33,7 @@ import Suggested from "./screens/Suggestions";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import { loginSuccess } from "./redux/actions/authAction";
+import { getUserProfile } from "./redux/actions/profileAction";
 
 Navigation.registerComponent("LandingScreen", () => Landing, store, Provider);
 Navigation.registerComponent("LoginScreen", () => Login, store, Provider);
@@ -139,10 +140,14 @@ class App {
     AsyncStorage.getItem("token").then((token: string | null) => {
       if (token) {
         // [CODE REVIEW] check profile, if ok, store profile to redux. if not ok (401), pop to login page 
-        App.loginApp(token);
+        
+        store.dispatch(getUserProfile(token)) // axios get + store profile to redux
+        // refresh token ?        
         store.dispatch(loginSuccess(token));
+        App.loginApp(token); // redirect to home page
+
       } else {
-        App.initialApp();
+        App.initialApp();  // if no prev token -> need to login
       }
     });
   }
