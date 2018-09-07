@@ -78,7 +78,7 @@ class Suggestions extends React.Component<SuggestionsProps, SuggestionsStates> {
             leftButtonName={"DISCOVER"}
             onPress={() => {
               axios
-                .get(`${Config.API_SERVER}/api/user/suggested`, {
+                .get(`${Config.API_SERVER}/api/user/nonsuggested`, {
                   headers: {
                     Authorization: "Bearer " + this.props.token
                   }
@@ -98,7 +98,7 @@ class Suggestions extends React.Component<SuggestionsProps, SuggestionsStates> {
             rightButtonName={"CARDS of THE DAY"}
             onPress={() => {
               axios
-                .get(`${Config.API_SERVER}/api/user/nonsuggested`, {
+                .get(`${Config.API_SERVER}/api/user/suggested`, {
                   headers: {
                     Authorization: "Bearer " + this.props.token
                   }
