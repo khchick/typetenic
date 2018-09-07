@@ -10,6 +10,7 @@ class ConnectionService {
             .from('connection')
             .innerJoin('users', 'users.id', 'connection.req_receiver_id')
             .where('connection.req_sender_id', userID)
+            .andWhere('connection.system_matched', false)
             .orderBy('connection.created_at')
 
         return query.then(rows => {
