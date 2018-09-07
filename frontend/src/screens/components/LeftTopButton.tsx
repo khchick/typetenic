@@ -41,10 +41,13 @@ const styles = StyleSheet.create({
     width: width * 0.5,
     backgroundColor: '#3B5998',
     borderColor: 'white',
-    borderWidth: 1,
+    borderWidth: 1
   },
   topBtnText: {
     color: 'white',
     textAlign: 'center',
+    letterSpacing: 4,
+    fontSize: 16,
+    fontWeight: "600"
   },
 });

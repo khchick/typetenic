@@ -58,7 +58,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
         <View style={styles.container}>
-          <View style={styles.buttonContainer}>
+          <View style={styles.topButtonContainer}>
             <LeftTopButton
               leftButtonName={"TYPE"}
               onPress={() => {
@@ -119,14 +119,14 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                         source={require('../assets/16Types/adventurer.png')}
                       />
                       <View>
-                        <Text style={styles.NameButtontext}>{display_name}</Text>
+                        <Text style={styles.nameText}>{display_name}</Text>
                       </View>
-                      <Text style={styles.inputHeader}>{dob}</Text>
+                      <Text style={styles.inputText}>{dob}</Text>
 
-                      <Text style={styles.inputHeader}>{location}</Text>
-                      <Text style={styles.inputHeader}>{key_atr_desc}</Text>
+                      <Text style={styles.inputText}>{location}</Text>
+                      <Text style={styles.inputText}>{key_atr_desc}</Text>
                     </View>
-                    <TouchableOpacity style={styles.btnContainer}
+                    <TouchableOpacity style={styles.chatButtonContainer}
                       onPress={() => {
 
                         console.log(this.props.token),
@@ -142,13 +142,12 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                               this.props.navigator.push({
                                 screen: 'ChatTabScreen',
                                 passProps: { userID: this.props.userID, targetID: id, conID: conID, token: this.props.token },
-                                navigatorStyle: transparentNav,
                               });
                             })
                             .catch(err => console.log(err))
 
                       }}>
-                      <Text style={styles.btnText}>Chat</Text>
+                      <Text style={styles.chatButtonText}>CHAT</Text>
                     </TouchableOpacity>
                   </View>
                 )
@@ -176,7 +175,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     textAlign: "center"
   },
-  buttonContainer: {
+  topButtonContainer: {
     flexDirection: "row",
     height: 45
   },
@@ -198,7 +197,7 @@ const styles = StyleSheet.create({
     width: width * 0.4,
     height: height * 0.3
   },
-  NameButtontext: {
+  nameText: {
     fontSize: 20,
     color: "#3B5998",
     fontWeight: "700",
@@ -206,7 +205,7 @@ const styles = StyleSheet.create({
     letterSpacing: 2.5,
     marginTop: 5
   },
-  inputHeader: {
+  inputText: {
     backgroundColor: "#E5F5FA",
     color: "#3B5998",
     marginVertical: 7,
@@ -215,5 +214,24 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     width: 250,
     textAlign: "center"
+  },
+  chatButtonContainer: {
+    flexDirection: "row",
+    height: 33,
+    width: width * 0.2,
+    backgroundColor: '#F0957F',
+    borderColor: 'white',
+    borderWidth: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginTop: 10,
+    marginLeft: 110
+  },
+  chatButtonText: {
+    color: 'white',
+    textAlign: 'center',
+    letterSpacing: 3,
+    fontSize: 12,
+    fontWeight: '600'
   }
 });
