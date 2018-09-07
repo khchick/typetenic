@@ -40,7 +40,6 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
   }
 
   async componentWillMount() {
-    console.log(this.props.token);
     axios
       .get(`${Config.API_SERVER}/api/connection/deck/suggested`, {
         headers: {
@@ -48,10 +47,6 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
         }
       })
       .then(res => {
-        res.data.forEach(card => {
-          console.log(card.conID);
-        })
-
         this.setState({
           connectedSuggestions: res.data
         });
@@ -67,13 +62,35 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
             <LeftTopButton
               leftButtonName={"TYPE"}
               onPress={() => {
-                console.log("type deck");
+                axios
+                .get(`${Config.API_SERVER}/api/connection/deck/suggested`, {
+                  headers: {
+                    Authorization: "Bearer " + this.props.token
+                  }
+                })
+                .then(res => {
+                  this.setState({
+                    connectedSuggestions: res.data
+                  });
+                })
+                .catch(err => console.log(err));
               }}
             />
             <RightTopButton
               rightButtonName={"TEN"}
               onPress={() => {
-                console.log("ten deck");
+                axios
+                .get(`${Config.API_SERVER}/api/connection/deck/mypicks`, {
+                  headers: {
+                    Authorization: "Bearer " + this.props.token
+                  }
+                })
+                .then(res => {
+                  this.setState({
+                    connectedSuggestions: res.data
+                  });
+                })
+                .catch(err => console.log(err));
               }}
             />
           </View>
