@@ -168,6 +168,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     padding: 5,
+    marginTop: 15,
     borderRadius: 15,
     shadowColor: "#000",
     shadowOffset: { width: 2, height: 2 },

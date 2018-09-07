@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AsyncStorage } from "react-native";
 import { Navigation } from "react-native-navigation";
-import { transparentNav } from "./screens/styles/common";
+import { navigatorStyle } from "./screens/styles/common";
 
 import Landing from "./screens/Landing";
 import Login from "./screens/Login";
@@ -140,7 +140,7 @@ class App {
     AsyncStorage.getItem("token").then((token: string | null) => {
       if (token) {
         // [CODE REVIEW] check profile, if ok, store profile to redux. if not ok (401), pop to login page 
-        
+
         store.dispatch(getUserProfile(token)) // axios get + store profile to redux
         // refresh token ?        
         store.dispatch(loginSuccess(token));
@@ -157,7 +157,11 @@ class App {
       screen: {
         screen: "SignupContScreen",
         navigatorStyle: {
-          navBarHidden: true
+          navBarBackgroundColor: '#9EF8E4',
+        },
+        appStyle: {
+          //backButtonImage: require('./')
+          hideBackButtonTitle: true,
         }
       }
     });
@@ -168,7 +172,11 @@ class App {
       screen: {
         screen: "LandingScreen",
         navigatorStyle: {
-          navBarHidden: true
+          navBarBackgroundColor: '#9EF8E4',
+        },
+        appStyle: {
+          //backButtonImage: require('./')
+          hideBackButtonTitle: true,
         }
       }
     });
@@ -178,25 +186,37 @@ class App {
     Navigation.startTabBasedApp({
       tabs: [
         {
-          label: "DISCOVER",
+          //label: "DISCOVER",
           screen: "SuggestedScreen",
           icon: require("./assets/deck.png"),
           title: "DISCOVER",
-          navigatorStyle: { transparentNav }
+          navigatorStyle: {
+            navBarTextColor: 'black',
+            navBarBackgroundColor: '#9EF8E4',
+            navBarTextFontSize: 20
+          }
         },
         {
-          label: "REQUESTS",
+          //label: "REQUESTS",
           screen: "RequestTabScreen",
           icon: require("./assets/deck.png"),
           title: "REQUESTS",
-          navigatorStyle: { transparentNav }
+          navigatorStyle: {
+            navBarTextColor: 'black',
+            navBarBackgroundColor: '#9EF8E4',
+            navBarTextFontSize: 20
+          }
         },
         {
-          label: "THE DECKS",
+          //label: "THE DECKS",
           screen: "HomeTabScreen",
           icon: require("./assets/home.png"),
           title: "THE DECKS",
-          navigatorStyle: { transparentNav },
+          navigatorStyle: {
+            navBarTextColor: 'black',
+            navBarBackgroundColor: '#9EF8E4',
+            navBarTextFontSize: 20
+          },
           passProps: {
             token: token
           }
@@ -207,23 +227,31 @@ class App {
            screen: "ChatTabScreen",
            icon: require("./assets/chat.png"),
            title: "Chat",
-           navigatorStyle: { transparentNav }
+           navigatorStyle: { navigatorStyle }
         },
         */
         {
-          label: "CONTROL ROOM",
+          //label: "CONTROL ROOM",
           screen: "UserTabScreen",
           icon: require("./assets/user.png"),
           title: "CONTROL ROOM",
-          navigatorStyle: { transparentNav }
+          navigatorStyle: {
+            navBarTextColor: 'black',
+            navBarBackgroundColor: '#9EF8E4',
+            navBarTextFontSize: 20
+          }
         }
       ],
       tabsStyle: {
         initialTabIndex: 2, // optional, the default selected bottom tab. Default: 0. On Android, add this to appStyle
         // tabBarButtonColor: '#ffff00', // optional, change the color of the tab icons and text (also unselected). On Android, add this to appStyle
-        tabBarSelectedButtonColor: "#F0957F" // optional, change the color of the selected tab icon and text (only selected). On Android, add this to appStyle
-        // tabBarBackgroundColor: '#551A8B', // optional, change the background color of the tab bar
-      }
+        tabBarSelectedButtonColor: "#F0957F", // optional, change the color of the selected tab icon and text (only selected). On Android, add this to appStyle
+        tabBarBackgroundColor: "black", // optional, change the background color of the tab bar
+      },
+      appStyle: {
+        //backButtonImage: require('./')
+        hideBackButtonTitle: true,
+      },
     });
   }
 }
