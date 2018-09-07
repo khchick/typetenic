@@ -5,25 +5,22 @@ const PORT = process.env.PORT || "8443"
 const knexFile = require("./knexfile")[NODE_ENV]
 const knex = require("knex")(knexFile)
 const express = require("express");
-const morgan = require('morgan');
+// const morgan = require('morgan'); // For detailed log 
 const bodyParser = require("body-parser");
 const jwt = require("jwt-simple")
 const axios = require("axios");
 const authClass = require("./utils/auth")
 const config = require("./utils/config")
-const https = require("https")
 const bcrypt = require('./utils/bcrypt');
-const fs = require('fs');
 
 const app = express();
 const auth = authClass();
 
+// Connect to Socket IO
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
-// const socket = require('socket.io-client')(process.env.HOST);
-// const SocketManager = require('./utils/SocketManager');
 
-app.use(morgan('combined'))
+// app.use(morgan('combined')); // For detailed log 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -144,10 +141,11 @@ app.post("/api/login/facebook", function (req, response) {
     }
 });
 
-app.get('/', (req, res) => {
+app.get('/', (req, res) => { // For testing socket function
     res.sendFile(__dirname + '/views/io_test.html');
 });
 
+// Socket IO events handling
 io.on('connection', (socket) => {
     socket.on('online', (conID) => {
         socket.join(conID);
@@ -158,14 +156,5 @@ io.on('connection', (socket) => {
         io.to(socket.conID).emit('broadcast message', messages);
     })
 });
-
-// const httpsOptions = {
-//     key: fs.readFileSync('./localhost.key'),
-//     cert: fs.readFileSync('./localhost.crt')
-// }
-
-// https.createServer(httpsOptions, app).listen(PORT, () => {
-//     console.log('Application started at port ' + PORT)
-// })
 
 server.listen(PORT, () => console.log(`listening on *: ${PORT}`));
