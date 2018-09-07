@@ -25,7 +25,7 @@ export default class Landing extends React.Component<LandingProps> {
 
   render() {
     return (
-      <LinearGradient colors={["#9EF8E4", "#004988"]} style={[{ flex: 1 }]}>
+      <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
         <View style={globalStyle.container}>
           <View style={styles.card}>
             <Image

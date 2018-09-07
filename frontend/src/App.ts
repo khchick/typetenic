@@ -188,7 +188,7 @@ class App {
         {
           //label: "DISCOVER",
           screen: "SuggestedScreen",
-          icon: require("./assets/deck.png"),
+          icon: require("./assets/discover.png"),
           title: "DISCOVER",
           navigatorStyle: {
             navBarTextColor: 'black',
@@ -199,7 +199,7 @@ class App {
         {
           //label: "REQUESTS",
           screen: "RequestTabScreen",
-          icon: require("./assets/deck.png"),
+          icon: require("./assets/requests.png"),
           title: "REQUESTS",
           navigatorStyle: {
             navBarTextColor: 'black',
@@ -210,7 +210,7 @@ class App {
         {
           //label: "THE DECKS",
           screen: "HomeTabScreen",
-          icon: require("./assets/home.png"),
+          icon: require("./assets/decks.png"),
           title: "THE DECKS",
           navigatorStyle: {
             navBarTextColor: 'black',
@@ -233,7 +233,7 @@ class App {
         {
           //label: "CONTROL ROOM",
           screen: "UserTabScreen",
-          icon: require("./assets/user.png"),
+          icon: require("./assets/controlroom.png"),
           title: "CONTROL ROOM",
           navigatorStyle: {
             navBarTextColor: 'black',
