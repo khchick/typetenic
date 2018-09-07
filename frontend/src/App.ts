@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AsyncStorage } from "react-native";
 import { Navigation } from "react-native-navigation";
-import { transparentNav } from "./screens/styles/common";
+import { navigatorStyle } from "./screens/styles/common";
 
 import Landing from "./screens/Landing";
 import Login from "./screens/Login";
@@ -157,7 +157,7 @@ class App {
       screen: {
         screen: "SignupContScreen",
         navigatorStyle: {
-          navBarHidden: true
+          navBarHidden: true,
         }
       }
     });
@@ -168,7 +168,7 @@ class App {
       screen: {
         screen: "LandingScreen",
         navigatorStyle: {
-          navBarHidden: true
+          navBarHidden: true,
         }
       }
     });
@@ -178,25 +178,25 @@ class App {
     Navigation.startTabBasedApp({
       tabs: [
         {
-          label: "DISCOVER",
+          //label: "DISCOVER",
           screen: "SuggestedScreen",
           icon: require("./assets/deck.png"),
           title: "DISCOVER",
-          navigatorStyle: { transparentNav }
+          navigatorStyle: { navigatorStyle }
         },
         {
-          label: "REQUESTS",
+          //label: "REQUESTS",
           screen: "RequestTabScreen",
           icon: require("./assets/deck.png"),
           title: "REQUESTS",
-          navigatorStyle: { transparentNav }
+          navigatorStyle: { navigatorStyle }
         },
         {
-          label: "THE DECKS",
+          //label: "THE DECKS",
           screen: "HomeTabScreen",
           icon: require("./assets/home.png"),
           title: "THE DECKS",
-          navigatorStyle: { transparentNav },
+          navigatorStyle: { navigatorStyle },
           passProps: {
             token: token
           }
@@ -207,23 +207,26 @@ class App {
            screen: "ChatTabScreen",
            icon: require("./assets/chat.png"),
            title: "Chat",
-           navigatorStyle: { transparentNav }
+           navigatorStyle: { navigatorStyle }
         },
         */
         {
-          label: "CONTROL ROOM",
+          //label: "CONTROL ROOM",
           screen: "UserTabScreen",
           icon: require("./assets/user.png"),
           title: "CONTROL ROOM",
-          navigatorStyle: { transparentNav }
+          navigatorStyle: { navigatorStyle }
         }
       ],
       tabsStyle: {
         initialTabIndex: 2, // optional, the default selected bottom tab. Default: 0. On Android, add this to appStyle
         // tabBarButtonColor: '#ffff00', // optional, change the color of the tab icons and text (also unselected). On Android, add this to appStyle
-        tabBarSelectedButtonColor: "#F0957F" // optional, change the color of the selected tab icon and text (only selected). On Android, add this to appStyle
-        // tabBarBackgroundColor: '#551A8B', // optional, change the background color of the tab bar
-      }
+        tabBarSelectedButtonColor: "#F0957F", // optional, change the color of the selected tab icon and text (only selected). On Android, add this to appStyle
+        tabBarBackgroundColor: "black", // optional, change the background color of the tab bar
+      },
+      appStyle: {
+        //backButtonImage: require('./')
+      },
     });
   }
 }
