@@ -4,10 +4,9 @@ import io from 'socket.io-client/dist/socket.io';
 import axios from 'axios';
 import { GiftedChat } from "react-native-gifted-chat";
 
-const userID = 28;
-
 interface IChatProps {
   navigator: Navigator;
+  userID: number;
   targetID: number;
   token: string;
   conID: number;
@@ -32,6 +31,7 @@ export default class Chat extends React.Component<IChatProps, IChatStates> {
   }
 
   componentDidMount() {
+    console.log(this.props.userID);
     // List messages
     let self = this;
     axios.get(`${Config.API_SERVER}/api/chat/messages/${this.props.conID}`, {
@@ -90,7 +90,7 @@ export default class Chat extends React.Component<IChatProps, IChatStates> {
         messages={this.state.messages}
         onSend={messages => this.onSend(messages)}
         user={{
-          _id: userID,
+          _id: this.props.userID,
         }}
       />
     )

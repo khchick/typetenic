@@ -22,6 +22,7 @@ const { height, width } = Dimensions.get("window");
 interface IDeckProps {
   navigator: Navigator;
   token: string;
+  userID: number;
 }
 
 interface IDeckStates {
@@ -123,7 +124,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                               conID = res.data;
                               this.props.navigator.push({
                                 screen: 'ChatTabScreen',
-                                passProps: { targetID: id, conID: conID, token: this.props.token },
+                                passProps: { userID: this.props.userID, targetID: id, conID: conID, token: this.props.token },
                                 navigatorStyle: transparentNav,
                               });
                             })
@@ -144,7 +145,8 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
 
 const MapStateToProps = (state: any) => {
   return {
-    token: state.auth.token
+    token: state.auth.token,
+    userID: state.profile.id
   }
 }
 
