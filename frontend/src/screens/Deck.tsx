@@ -214,24 +214,23 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   chatButtonContainer: {
-    flexDirection: "row",
-    height: 30,
+    // flexDirection: "row",
     width: width * 0.2,
     backgroundColor: '#F0957F',
-    shadowColor: 'black',
+    marginTop: 15,
+    marginLeft: 110,
+    //paddingHorizontal: 5,
+    paddingVertical: 5,
+    shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
-    shadowRadius: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 15,
-    marginLeft: 110
+    shadowRadius: 2
   },
   chatButtonText: {
-    color: 'white',
-    textAlign: 'center',
-    letterSpacing: 4,
-    fontSize: 12,
-    fontWeight: "800",
+    color: "white",
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "bold",
+    letterSpacing: 1.5
   }
 });
