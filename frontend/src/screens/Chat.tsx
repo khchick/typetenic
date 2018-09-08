@@ -41,7 +41,7 @@ export default class Chat extends React.Component<IChatProps, IChatStates> {
         title: `View ${this.props.targetName}'s Profile`, 
         id: 'profile'
       },
-    ]})
+    ]});
   }
 
   componentWillMount() {
@@ -134,9 +134,9 @@ export default class Chat extends React.Component<IChatProps, IChatStates> {
         messages={this.state.messages}
         onSend={messages => this.onSend(messages)}
         user={{
-          _id: this.props.userID,
+          _id: this.props.userID
         }}
-        renderFooter={this.renderFooter}
+        renderAvatar={null}
       />
     )
   }
