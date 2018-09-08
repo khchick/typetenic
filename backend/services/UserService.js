@@ -977,7 +977,7 @@ class UserService {
                 mbti: mbti,
                 key_atr: key_atr,
                 key_atr_desc: key_atr_desc,
-                profile_pic: profile_pic,
+                profile_pic: `/images/users/${userID}_${mbti}_${profile_pic}`,
                 min_age: min_age,
                 max_age: max_age,
                 ig_account: ig_account,

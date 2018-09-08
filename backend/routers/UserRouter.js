@@ -128,7 +128,7 @@ class UserRouter {
                 .catch((err) => res.status(500).json(err));
         })
 
-        router.put('/myprofile', (req, res) => { // update profile details
+        router.put('/myprofile', upload.single('profile_pic'), (req, res) => { // update profile details
             this.userService.updateProfile(req.user.id, 
                 req.body.password,
                 req.body.display_name,
@@ -139,7 +139,7 @@ class UserRouter {
                 req.body.mbti,
                 req.body.key_atr,
                 req.body.key_atr_desc,
-                req.body.profile_pic,
+                req.file.originalname, // path of  profile pic
                 req.body.min_age,
                 req.body.max_age,
                 req.body.ig_account,
