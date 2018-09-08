@@ -27,6 +27,8 @@ import Request from "./screens/Request";
 import User from "./screens/User";
 import Settings from "./screens/Settings";
 import Profile from "./screens/Profile";
+import PublicProfile from "./screens/PublicProfile";
+import PrivateProfile from "./screens/PrivateProfile";
 import ResetProfile from "./screens/ResetProfile";
 import Suggested from "./screens/Suggestions";
 
@@ -102,6 +104,8 @@ Navigation.registerComponent(
   store,
   Provider
 );
+Navigation.registerComponent("PublicProfileTabScreen", () => PublicProfile, store, Provider);
+Navigation.registerComponent("PrivateProfileTabScreen", () => PrivateProfile, store, Provider);
 Navigation.registerComponent("ProfileScreen", () => Profile, store, Provider);
 Navigation.registerComponent(
   "ResetProfile",

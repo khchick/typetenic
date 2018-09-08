@@ -141,7 +141,13 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                               conID = res.data;
                               this.props.navigator.push({
                                 screen: 'ChatTabScreen',
-                                passProps: { userID: this.props.userID, targetID: id, conID: conID, token: this.props.token },
+                                passProps: { 
+                                  token: this.props.token,
+                                  userID: this.props.userID, 
+                                  targetID: id,
+                                  targetName: display_name,
+                                  conID: conID, 
+                                   },
                               });
                             })
                             .catch(err => console.log(err))
