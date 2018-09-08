@@ -72,59 +72,61 @@ class Request extends React.Component<RequestProps, RequestStates> {
 
   render() {
     return (
-      <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
-        <View style={styles.buttonContainer}>
-          <LeftTopButton
-            leftButtonName={"RECEIVED"}
-            onPress={() => {
-              console.log("received");
-              axios
-              .get(`${Config.API_SERVER}/api/connection/request/received`, {
-                headers: {
-                  Authorization: "Bearer " + this.props.token
-                }
-              })
-              .then(res => {
-                this.setState({
-                  sourceData: res.data
-                });
-                this.props.navigator.setTitle({
-                  title: 'RECEIVED REQUEST' // new title 
-                });
-              })
-              .catch(err => console.log(err));
-            }}
-          />
-          <RightTopButton
-            rightButtonName={"SENT"}
-            onPress={() => {
-              console.log("sent");
-              axios
-                .get(`${Config.API_SERVER}/api/connection/request/sent`, {
-                  headers: {
-                    Authorization: "Bearer " + this.props.token
-                  }
-                })
-                .then(res => {
-                  this.setState({
-                    sourceData: res.data
-                  });
-                  this.props.navigator.setTitle({
-                    title: 'SENT REQUEST' // new title 
-                  });
-                })
-                .catch(err => console.log(err));
-            }}
-          />
-        </View>
+      <LinearGradient colors={["#9EF8E4", "#30519B"]} style={{ flex: 1 }}>
+        <View style={styles.container}>
+          <View style={styles.buttonContainer}>
+            <LeftTopButton
+              leftButtonName={"RECEIVED"}
+              onPress={() => {
+                console.log("received");
+                axios
+                  .get(`${Config.API_SERVER}/api/connection/request/received`, {
+                    headers: {
+                      Authorization: "Bearer " + this.props.token
+                    }
+                  })
+                  .then(res => {
+                    this.setState({
+                      sourceData: res.data
+                    });
+                    this.props.navigator.setTitle({
+                      title: 'RECEIVED REQUESTS' // new title 
+                    });
+                  })
+                  .catch(err => console.log(err));
+              }}
+            />
+            <RightTopButton
+              rightButtonName={"SENT"}
+              onPress={() => {
+                console.log("sent");
+                axios
+                  .get(`${Config.API_SERVER}/api/connection/request/sent`, {
+                    headers: {
+                      Authorization: "Bearer " + this.props.token
+                    }
+                  })
+                  .then(res => {
+                    this.setState({
+                      sourceData: res.data
+                    });
+                    this.props.navigator.setTitle({
+                      title: 'SENT REQUESTS' // new title 
+                    });
+                  })
+                  .catch(err => console.log(err));
+              }}
+            />
+          </View>
 
-        <ScrollView style={styles.listContainer}>
-          <FlatList
-            data={this.state.sourceData}
-            keyExtractor={this.keyExtractor}
-            renderItem={this.renderRows}
-          />
-        </ScrollView>
+          <ScrollView style={styles.listContainer}>
+            <FlatList
+              data={this.state.sourceData}
+              keyExtractor={this.keyExtractor}
+              renderItem={this.renderRows}
+            />
+          </ScrollView>
+        </View>
       </LinearGradient>
     );
   }
@@ -139,63 +141,17 @@ const MapStateToProps = (state: any) => {
 export default connect(MapStateToProps)(Request);
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
   buttonContainer: {
     flexDirection: "row",
-    height: 45
+    marginBottom: 6
   },
-
   listContainer: {
-    paddingHorizontal: 8,
-    paddingBottom: 10
-  },
-  rowContainer: {
-    flexDirection: "row",
-    padding: 10,
-    backgroundColor: "white",
-    marginVertical: 5
-  },
-  thumb: {
-    width: 50,
-    height: 50,
-    marginRight: 10
-  },
-  textContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-end"
-  },
-  name: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#48BBEC"
-  },
-  likeBtn: {
-    backgroundColor: "#ffa18e",
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-    marginVertical: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.4,
-    shadowRadius: 6,
-    margin: 10
-  },
-  passBtn: {
-    backgroundColor: "#3B5998",
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-    marginVertical: 5,
-    shadowColor: "#000",
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.4,
-    shadowRadius: 6,
-    margin: 10
-  },
-  btnText: {
-    color: "#fff",
-    textAlign: "center",
-    fontSize: 14,
-    fontWeight: "bold",
-    letterSpacing: 1.5
+    marginHorizontal: 10,
+    marginVertical: 10
   }
 });

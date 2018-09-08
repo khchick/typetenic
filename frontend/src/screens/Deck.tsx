@@ -56,7 +56,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
 
   render() {
     return (
-      <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
+      <LinearGradient colors={["#9EF8E4", "#30519B"]} style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.topButtonContainer}>
             <LeftTopButton
@@ -154,7 +154,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
             )}
           </ScrollView>
         </View>
-      </LinearGradient>
+      </LinearGradient >
     );
   }
 }
@@ -172,12 +172,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center"
+    alignItems: "center"
   },
   topButtonContainer: {
     flexDirection: "row",
-    height: 38,
   },
   card: {
     justifyContent: "center",
@@ -220,10 +218,8 @@ const styles = StyleSheet.create({
     height: 30,
     width: width * 0.2,
     backgroundColor: '#F0957F',
-    //borderColor: 'white',
-    //borderWidth: 1,
     shadowColor: 'black',
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
     alignItems: 'center',

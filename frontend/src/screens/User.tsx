@@ -56,7 +56,7 @@ class PureUser extends React.Component<UserProps, UserState> {
 
   render() {
     return (
-      <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
+      <LinearGradient colors={["#9EF8E4", "#30519B"]} style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.card}>
             <Image
@@ -139,42 +139,39 @@ const styles = StyleSheet.create({
     margin: 10
   },
   btnContainer: {
-    backgroundColor: "rgb(252,163,145)",
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    // marginHorizontal: 0,
-    marginVertical: 15,
-    width: "40%",
+    backgroundColor: "#F0957F",
+    marginVertical: 10,
+    width: width * 0.5,
     marginTop: 10,
-    paddingTop: 15,
-    paddingBottom: 15,
-    marginLeft: 20,
-    marginRight: 20,
-    borderRadius: 10
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.6,
+    shadowRadius: 2,
   },
   btnText: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "600",
-    textAlign: "center"
+    textAlign: "center",
+    letterSpacing: 4
   },
   card: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
-
-    paddingHorizontal: 15,
-    paddingVertical: 20,
     borderRadius: 15,
     shadowColor: "#000",
-    shadowOffset: { width: 2, height: 2 },
+    shadowOffset: { width: 2, height: -3 },
     shadowOpacity: 0.4,
-    shadowRadius: 6,
-    width: width * 0.7,
-    margin: 20
+    shadowRadius: 2,
+    width: width * 0.5,
+    height: height* 0.4,
+    marginBottom: 30
   },
   avatar: {
-    width: width * 0.6,
-    height: height * 0.35
+    width: width * 0.5,
+    height: height * 0.4
   }
 });

@@ -37,7 +37,7 @@ export default class rowItem extends React.PureComponent<rowItemProps> {
 
         <Text style={styles.name}>{item.display_name}</Text>
 
-        <View style={styles.textContainer}>
+        <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.likeBtn} onPress={() => {
             
           }}>
@@ -54,60 +54,54 @@ export default class rowItem extends React.PureComponent<rowItemProps> {
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    flexDirection: "row",
-    height: 45
-  },
-
-  listContainer: {
-    paddingHorizontal: 8,
-    paddingBottom: 10
-  },
   rowContainer: {
     flexDirection: "row",
-    padding: 10,
+    paddingRight: 20,
+    paddingLeft: 10,
+    paddingVertical: 5,
     backgroundColor: "white",
-    marginVertical: 5
+    marginVertical: 4,
+    width: width,
+    alignItems: 'center'
   },
   thumb: {
-    width: 50,
+    width: 35,
     height: 50,
     marginRight: 10
   },
-  textContainer: {
+  buttonContainer: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   name: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
-    color: "#48BBEC"
+    color: "#48BBEC",
+    letterSpacing: 1
   },
   likeBtn: {
-    backgroundColor: "#ffa18e",
+    backgroundColor: "#F0957F",
     paddingHorizontal: 15,
     paddingVertical: 5,
-    marginVertical: 5,
-    shadowColor: "#000",
+    shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
-    shadowRadius: 6,
+    shadowRadius: 2,
     margin: 10
   },
   passBtn: {
-    backgroundColor: "#3B5998",
+    backgroundColor: "#30519B",
     paddingHorizontal: 15,
     paddingVertical: 5,
-    marginVertical: 5,
-    shadowColor: "#000",
+    shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
-    shadowRadius: 6,
+    shadowRadius: 2,
     margin: 10
   },
   btnText: {
-    color: "#fff",
+    color: "white",
     textAlign: "center",
     fontSize: 14,
     fontWeight: "bold",
