@@ -36,17 +36,16 @@ export default class LeftTopButton extends React.Component<LeftTopButtonProps>{
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    
-    //paddingVertical: 10,
-    width: width * 0.5,
+    width: width * 0.48,
     backgroundColor: '#3B5998',
     //borderColor: 'white',
-    borderWidth: 1,
+    //borderWidth: 1,
     shadowColor: 'black',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginRight: 3
   },
   buttonText: {
     color: 'white',
@@ -54,6 +53,5 @@ const styles = StyleSheet.create({
     letterSpacing: 4,
     fontSize: 16,
     fontWeight: "600",
-    
   }
 });

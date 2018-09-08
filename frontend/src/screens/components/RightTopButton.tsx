@@ -36,15 +36,16 @@ export default class RightTopButton extends React.Component<RightTopButtonProps>
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    width: width * 0.5,
+    width: width * 0.48,
     backgroundColor: '#3B5998',
     //borderColor: 'white',
-    borderWidth: 1,
+    //borderWidth: 1,
     shadowColor: 'black',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
+    shadowOpacity: 0.6,
     shadowRadius: 2,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginLeft: 3
   },
   buttonText: {
     color: 'white',

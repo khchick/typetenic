@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
   },
   topButtonContainer: {
     flexDirection: "row",
-    height: 38
+    height: 38,
   },
   card: {
     justifyContent: "center",
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     width: width * 0.2,
     backgroundColor: '#F0957F',
     //borderColor: 'white',
-    borderWidth: 1,
+    //borderWidth: 1,
     shadowColor: 'black',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.4,
