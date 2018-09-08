@@ -148,28 +148,32 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 32,
     fontWeight: '800',
-    marginBottom: 50,
+    marginBottom: 60,
   },
   input: {
     backgroundColor: 'rgba(255,255,255,0.3)',
     color: '#fff',
-    marginBottom: 10,
+    marginBottom: 30,
     paddingVertical: 15,
     paddingHorizontal: 10,
-    borderRadius: 25,
     width: '85%'
   },
   btnContainer: {
-    backgroundColor: '#ffa18e',
-    borderColor: '#fff',
+    backgroundColor: '#F0957F',
     paddingHorizontal: 15,
     paddingVertical: 15,
     marginVertical: 15,
     width: '40%',
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2
   },
   btnText: {
-    color: '#fff',
-    fontWeight: '700',
-    textAlign: 'center',
+    color: "white",
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "bold",
+    letterSpacing: 1.5
   },
 });

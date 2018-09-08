@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     height: 45,
     shadowColor: "#000",
     shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.4,
+    shadowOpacity: 0.2,
     shadowRadius: 6
   },
   logo: {
@@ -78,11 +78,11 @@ const styles = StyleSheet.create({
     height: 150
   },
   appText: {
-    color: "white",
+    color: "#30519B",
     textAlign: "center",
     fontSize: 33,
     textShadowColor: "black",
-    textShadowOffset: { width: 1, height: 1 },
+    textShadowOffset: { width: 1, height: -1 },
     textShadowRadius: 2,
     fontWeight: "700",
     letterSpacing: 3,
@@ -115,6 +115,6 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     width: width * 0.8, // percent or minus
     height: height * 0.6,
-    margin: 10
+    marginBottom: 10
   }
 });
