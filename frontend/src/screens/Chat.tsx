@@ -1,4 +1,12 @@
 import * as React from 'react';
+import {
+  View,
+  Button,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Alert
+} from "react-native";
 import Config from 'react-native-config';
 import io from 'socket.io-client/dist/socket.io';
 import axios from 'axios';
@@ -6,14 +14,16 @@ import { GiftedChat } from "react-native-gifted-chat";
 
 interface IChatProps {
   navigator: Navigator;
+  token: string;
   userID: number;
   targetID: number;
-  token: string;
+  targetName: string;
   conID: number;
 }
 
 interface IChatStates {
-  messages: []
+  messages: [];
+  flippedStatus: string;
 }
 
 export default class Chat extends React.Component<IChatProps, IChatStates> {
@@ -23,11 +33,34 @@ export default class Chat extends React.Component<IChatProps, IChatStates> {
 
     this.state = {
       messages: [],
+      flippedStatus: ''
     };
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    this.props.navigator.setButtons({rightButtons: [
+      {
+        title: `View ${this.props.targetName}'s Profile`, 
+        id: 'profile'
+      },
+    ]})
   }
 
   componentWillMount() {
     this.socket = io(Config.API_SERVER, { jsonp: false });
+    let self = this;
+    axios.get(`${Config.API_SERVER}/api/connection/flip/${this.props.targetID}`, {
+      headers: {
+        'Authorization': `Bearer ${this.props.token}`
+      }
+    })
+      .then(function (res) {
+        self.setState({
+          flippedStatus: res.data[0].flip_status
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    
   }
 
   componentDidMount() {
@@ -46,7 +79,7 @@ export default class Chat extends React.Component<IChatProps, IChatStates> {
       .catch(function (error) {
         console.log(error);
       });
-    
+
     // Join conversation (room)
     this.socket.emit('online', this.props.conID);
     this.socket.on('broadcast message', (msg: any) => {
@@ -67,11 +100,6 @@ export default class Chat extends React.Component<IChatProps, IChatStates> {
           'Authorization': `Bearer ${this.props.token}`,
         }
       })
-      .then(() => {
-        // this.setState(previousState => ({
-        //   messages: GiftedChat.append(previousState.messages, messages),
-        // }))
-      });
   }
 
   onReceive(incomingMessage: any) {
@@ -83,6 +111,23 @@ export default class Chat extends React.Component<IChatProps, IChatStates> {
     });
   }
 
+  onNavigatorEvent(event: any) {
+    if (event.id == 'profile') {
+      if ( this.state.flippedStatus === 'Requested' || this.state.flippedStatus === null ) {
+        this.props.navigator.push({
+          screen: 'PublicProfileTabScreen',
+          passProps: { targetID: this.props.targetID, token: this.props.token }
+        })
+      }
+      if ( this.state.flippedStatus === 'Flipped') {
+        this.props.navigator.push({
+          screen: 'PrivateProfileTabScreen',
+          passProps: { targetID: this.props.targetID, token: this.props.token }
+        })
+      }      
+    }
+  }
+
   render() {
     return (
       <GiftedChat
@@ -91,6 +136,7 @@ export default class Chat extends React.Component<IChatProps, IChatStates> {
         user={{
           _id: this.props.userID,
         }}
+        renderFooter={this.renderFooter}
       />
     )
   }
