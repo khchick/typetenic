@@ -63,34 +63,34 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
               leftButtonName={"TYPE"}
               onPress={() => {
                 axios
-                .get(`${Config.API_SERVER}/api/connection/deck/suggested`, {
-                  headers: {
-                    Authorization: "Bearer " + this.props.token
-                  }
-                })
-                .then(res => {
-                  this.setState({
-                    connectedSuggestions: res.data
-                  });
-                })
-                .catch(err => console.log(err));
+                  .get(`${Config.API_SERVER}/api/connection/deck/suggested`, {
+                    headers: {
+                      Authorization: "Bearer " + this.props.token
+                    }
+                  })
+                  .then(res => {
+                    this.setState({
+                      connectedSuggestions: res.data
+                    });
+                  })
+                  .catch(err => console.log(err));
               }}
             />
             <RightTopButton
               rightButtonName={"TEN"}
               onPress={() => {
                 axios
-                .get(`${Config.API_SERVER}/api/connection/deck/mypicks`, {
-                  headers: {
-                    Authorization: "Bearer " + this.props.token
-                  }
-                })
-                .then(res => {
-                  this.setState({
-                    connectedSuggestions: res.data
-                  });
-                })
-                .catch(err => console.log(err));
+                  .get(`${Config.API_SERVER}/api/connection/deck/mypicks`, {
+                    headers: {
+                      Authorization: "Bearer " + this.props.token
+                    }
+                  })
+                  .then(res => {
+                    this.setState({
+                      connectedSuggestions: res.data
+                    });
+                  })
+                  .catch(err => console.log(err));
               }}
             />
           </View>
@@ -177,19 +177,19 @@ const styles = StyleSheet.create({
   },
   topButtonContainer: {
     flexDirection: "row",
-    height: 45
+    height: 38
   },
   card: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
     padding: 5,
-    marginTop: 15,
+    marginTop: 20,
     borderRadius: 15,
-    shadowColor: "#000",
-    shadowOffset: { width: 2, height: 2 },
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: -3 },
     shadowOpacity: 0.4,
-    shadowRadius: 6,
+    shadowRadius: 2,
     width: width * 0.8, // percent or minus
     height: height * 0.65,
   },
@@ -217,21 +217,25 @@ const styles = StyleSheet.create({
   },
   chatButtonContainer: {
     flexDirection: "row",
-    height: 33,
+    height: 30,
     width: width * 0.2,
     backgroundColor: '#F0957F',
-    borderColor: 'white',
+    //borderColor: 'white',
     borderWidth: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginTop: 10,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 15,
     marginLeft: 110
   },
   chatButtonText: {
     color: 'white',
     textAlign: 'center',
-    letterSpacing: 3,
+    letterSpacing: 4,
     fontSize: 12,
-    fontWeight: '600'
+    fontWeight: "800",
   }
 });

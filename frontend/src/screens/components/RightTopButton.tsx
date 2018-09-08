@@ -4,50 +4,53 @@
 
 import * as React from 'react';
 import {
-    StyleSheet, 
-    Text, 
-    View,
-    ScrollView,
-    Image,
-    Dimensions,
-    TouchableOpacity,
-    FlatList,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+  FlatList,
 } from 'react-native';
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 
 interface RightTopButtonProps {
-    rightButtonName: string;
-    onPress: () => any
+  rightButtonName: string;
+  onPress: () => any
 }
 
 export default class RightTopButton extends React.Component<RightTopButtonProps>{
   render() {
     return (
-    
-          <TouchableOpacity style={styles.topButton} onPress={ this.props.onPress }>
-            <Text style={styles.topBtnText}>{this.props.rightButtonName}</Text>
-          </TouchableOpacity>
-        )
-    }   
+
+      <TouchableOpacity style={styles.buttonContainer} onPress={this.props.onPress}>
+        <Text style={styles.buttonText}>{this.props.rightButtonName}</Text>
+      </TouchableOpacity>
+    )
+  }
 }
 
 
 const styles = StyleSheet.create({
-  topButton: {    
-    paddingHorizontal: 10,
-    paddingVertical: 10,
+  buttonContainer: {
     width: width * 0.5,
     backgroundColor: '#3B5998',
-    borderColor: 'white',
-    borderWidth: 1
+    //borderColor: 'white',
+    borderWidth: 1,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    justifyContent: 'center'
   },
-  topBtnText: {
+  buttonText: {
     color: 'white',
     textAlign: 'center',
     letterSpacing: 4,
     fontSize: 16,
-    fontWeight: "600"
+    fontWeight: "600",
   }
 });
