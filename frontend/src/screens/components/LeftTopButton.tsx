@@ -26,8 +26,8 @@ export default class LeftTopButton extends React.Component<LeftTopButtonProps>{
   render() {
     return (
     
-          <TouchableOpacity style={styles.topButton} onPress={ this.props.onPress } >
-            <Text style={styles.topBtnText}>{this.props.leftButtonName}</Text>
+          <TouchableOpacity style={styles.buttonContainer} onPress={ this.props.onPress } >
+            <Text style={styles.buttonText}>{this.props.leftButtonName}</Text>
           </TouchableOpacity>
         )
     }   
@@ -35,19 +35,23 @@ export default class LeftTopButton extends React.Component<LeftTopButtonProps>{
 
 
 const styles = StyleSheet.create({
-  topButton: {    
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    width: width * 0.5,
+  buttonContainer: {
+    width: width * 0.46,
+    height: 38,
     backgroundColor: '#3B5998',
-    borderColor: 'white',
-    borderWidth: 1
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.6,
+    shadowRadius: 2,
+    justifyContent: 'center',
+    marginRight: 3,
+    marginLeft: 3
   },
-  topBtnText: {
+  buttonText: {
     color: 'white',
     textAlign: 'center',
-    letterSpacing: 4,
-    fontSize: 16,
-    fontWeight: "600"
-  },
+    letterSpacing: 6,
+    fontSize: 15,
+    fontWeight: "600",
+  }
 });

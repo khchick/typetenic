@@ -56,41 +56,41 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
 
   render() {
     return (
-      <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
+      <LinearGradient colors={["#9EF8E4", "#30519B"]} style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.topButtonContainer}>
             <LeftTopButton
               leftButtonName={"TYPE"}
               onPress={() => {
                 axios
-                .get(`${Config.API_SERVER}/api/connection/deck/suggested`, {
-                  headers: {
-                    Authorization: "Bearer " + this.props.token
-                  }
-                })
-                .then(res => {
-                  this.setState({
-                    connectedSuggestions: res.data
-                  });
-                })
-                .catch(err => console.log(err));
+                  .get(`${Config.API_SERVER}/api/connection/deck/suggested`, {
+                    headers: {
+                      Authorization: "Bearer " + this.props.token
+                    }
+                  })
+                  .then(res => {
+                    this.setState({
+                      connectedSuggestions: res.data
+                    });
+                  })
+                  .catch(err => console.log(err));
               }}
             />
             <RightTopButton
               rightButtonName={"TEN"}
               onPress={() => {
                 axios
-                .get(`${Config.API_SERVER}/api/connection/deck/mypicks`, {
-                  headers: {
-                    Authorization: "Bearer " + this.props.token
-                  }
-                })
-                .then(res => {
-                  this.setState({
-                    connectedSuggestions: res.data
-                  });
-                })
-                .catch(err => console.log(err));
+                  .get(`${Config.API_SERVER}/api/connection/deck/mypicks`, {
+                    headers: {
+                      Authorization: "Bearer " + this.props.token
+                    }
+                  })
+                  .then(res => {
+                    this.setState({
+                      connectedSuggestions: res.data
+                    });
+                  })
+                  .catch(err => console.log(err));
               }}
             />
           </View>
@@ -160,7 +160,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
             )}
           </ScrollView>
         </View>
-      </LinearGradient>
+      </LinearGradient >
     );
   }
 }
@@ -178,24 +178,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center"
+    alignItems: "center"
   },
   topButtonContainer: {
     flexDirection: "row",
-    height: 45
   },
   card: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
     padding: 5,
-    marginTop: 15,
+    marginTop: 20,
     borderRadius: 15,
-    shadowColor: "#000",
-    shadowOffset: { width: 2, height: 2 },
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: -3 },
     shadowOpacity: 0.4,
-    shadowRadius: 6,
+    shadowRadius: 2,
     width: width * 0.8, // percent or minus
     height: height * 0.65,
   },
@@ -222,22 +220,23 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   chatButtonContainer: {
-    flexDirection: "row",
-    height: 33,
+    // flexDirection: "row",
     width: width * 0.2,
     backgroundColor: '#F0957F',
-    borderColor: 'white',
-    borderWidth: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginTop: 10,
-    marginLeft: 110
+    marginTop: 15,
+    marginLeft: 110,
+    //paddingHorizontal: 5,
+    paddingVertical: 5,
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2
   },
   chatButtonText: {
-    color: 'white',
-    textAlign: 'center',
-    letterSpacing: 3,
-    fontSize: 12,
-    fontWeight: '600'
+    color: "white",
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "bold",
+    letterSpacing: 1.5
   }
 });

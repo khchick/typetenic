@@ -247,7 +247,7 @@ class App {
       tabsStyle: {
         initialTabIndex: 2, // optional, the default selected bottom tab. Default: 0. On Android, add this to appStyle
         // tabBarButtonColor: '#ffff00', // optional, change the color of the tab icons and text (also unselected). On Android, add this to appStyle
-        tabBarSelectedButtonColor: "#F0957F", // optional, change the color of the selected tab icon and text (only selected). On Android, add this to appStyle
+        tabBarSelectedButtonColor: "#30519B", // optional, change the color of the selected tab icon and text (only selected). On Android, add this to appStyle
         tabBarBackgroundColor: "white", // optional, change the background color of the tab bar
       },
       appStyle: {
