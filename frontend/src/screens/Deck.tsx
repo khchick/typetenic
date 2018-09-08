@@ -16,6 +16,7 @@ import { transparentNav } from './styles/common';
 import { connect } from 'react-redux';
 import LeftTopButton from "./components/LeftTopButton";
 import RightTopButton from "./components/RightTopButton";
+import AvatarImage, {getAvatar} from './components/AvatarImage';
 
 const { height, width } = Dimensions.get("window");
 
@@ -114,10 +115,8 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
               }) => (
                   <View>
                     <View style={styles.card}>
-                      <Image
-                        style={styles.avatar}
-                        source={require('../assets/16Types/adventurer.png')}
-                      />
+                      <AvatarImage style={styles.avatar} source={ getAvatar(mbti) } />   
+
                       <View>
                         <Text style={styles.nameText}>{display_name}</Text>
                       </View>
@@ -198,6 +197,7 @@ const styles = StyleSheet.create({
     height: height * 0.65,
   },
   avatar: {
+    resizeMode: 'contain',
     width: width * 0.4,
     height: height * 0.3
   },

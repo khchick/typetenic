@@ -1,7 +1,7 @@
 import * as React from "react";
 import LinearGradient from "react-native-linear-gradient";
 import { transparentNav, globalStyle } from "./styles/common";
-// import getAvatarImg from './styles/avatar';
+import AvatarImage, {getAvatar} from './components/AvatarImage';
 import {
   StyleSheet,
   Text,
@@ -117,8 +117,7 @@ class PureMbtiResult extends React.Component<MbtiResultProps, MbtiState> {
   }
 
   render() {
-    let avatarImg =
-      "https://i.pinimg.com/236x/83/0f/71/830f71015b4a7383998416fe7f07c7eb--the-joker-jokers.jpg";
+    let avatarImg = getAvatar(this.state.mbti);
 
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
@@ -128,7 +127,7 @@ class PureMbtiResult extends React.Component<MbtiResultProps, MbtiState> {
               WELCOME{`\n`}ON BOARD{`\n`}You are - {this.state.mbti}
             </Text>
 
-            <Image style={styles.img} source={{ uri: avatarImg }} />
+            <AvatarImage style={styles.img} source={  avatarImg } />   
 
             <TouchableOpacity
               style={styles.btnContainer}
@@ -202,6 +201,7 @@ const styles = StyleSheet.create({
     color: "#30519B"
   },
   img: {
+    resizeMode: 'contain',
     height: 300,
     width: 270,
     paddingHorizontal: 15,

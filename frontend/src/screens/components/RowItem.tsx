@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   thumb: {
+    resizeMode: 'contain',
     width: 35,
     height: 50,
     marginRight: 10

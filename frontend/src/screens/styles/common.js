@@ -36,7 +36,7 @@ export const globalStyle = StyleSheet.create({
         shadowOpacity: 0.4,
         shadowRadius: 6,
         width: width * 0.85,
-        height: height * 0.85,
+        // height: height * 0.85,
         marginTop: 40,
     },
     title: {

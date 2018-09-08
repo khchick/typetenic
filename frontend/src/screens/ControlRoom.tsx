@@ -92,7 +92,15 @@ class PureUser extends React.Component<UserProps, UserState> {
             onPress={() =>
               this.props.navigator.push({
                 screen: "ResetProfile",
-                title: "Edit Profile"
+                title: "Edit Profile",
+                navigatorButtons: {
+                  leftButtons: [
+                    {
+                      title: "Done",
+                      id: "edit profile"
+                    }
+                  ]
+                }
               })
             }
           >
@@ -101,10 +109,21 @@ class PureUser extends React.Component<UserProps, UserState> {
 
           <TouchableOpacity
             style={styles.btnContainer}
+            onPress={() => {
+              // NEW PAGE TO BE ADDED
+            }} 
+          >
+            <Text style={styles.btnText}>ABOUT MBTI</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.btnContainer}
             onPress={() => this.props.onLogoutPress()}
           >
             <Text style={styles.btnText}>LOGOUT</Text>
           </TouchableOpacity>
+
+
         </View>
       </LinearGradient>
     );
