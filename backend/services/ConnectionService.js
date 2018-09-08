@@ -24,283 +24,1292 @@ class ConnectionService {
 
     createSentRequest(userID, targetID) {
         let query = this.knex
-            .select('mbti')
+            .select('mbti', 'display_name')
             .from('users')
             .where('id', userID)
 
         return query.then(rows => {
+            let myName = rows[0].display_name;
             let newQuery;
             switch (rows[0].mbti) {
                 case 'ISTJ':
                     newQuery = this.knex
-                        .select('mbti')
+                        .select('mbti', 'display_name')
                         .from('users')
                         .where('id', targetID)
 
                     return newQuery.then(rows => {
+                        let targetName = rows[0].display_name;
                         if (rows[0].mbti === 'ESTJ' ||
                             rows[0].mbti === 'ISTJ' ||
                             rows[0].mbti === 'INTJ' ||
                             rows[0].mbti === 'ISTP' ||
                             rows[0].mbti === 'ESTP') {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Connected',
+                                        'system_matched': true
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `You have been connected with ${targetName}!`,
+                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Approved',
+                                                'type_id': id[0],
+                                                'note_receiver_id': userID
+                                            })
+                                            .into('notification')
+                                            .then(res => {
+                                                return trx
+                                                    .insert({
+                                                        'title': `You have been connected with ${myName}!`,
+                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'read_status': 'Unread',
+                                                        'type': 'Request Approved',
+                                                        'type_id': id[0],
+                                                        'note_receiver_id': targetID
+                                                    })
+                                                    .into('notification')
+                                            })
+                                            .then(trx.commit)
+                                            .catch(trx.rollback)
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         } else {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Requested',
+                                        'system_matched': false
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `Connection request received from ${myName}!`,
+                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Received',
+                                                'type_id': id[0],
+                                                'note_receiver_id': targetID
+                                            })
+                                            .into('notification')
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         }
                     });
 
                 case 'ISTP':
                     newQuery = this.knex
-                        .select('mbti')
+                        .select('mbti', 'display_name')
                         .from('users')
                         .where('id', targetID)
 
                     return newQuery.then(rows => {
+                        let targetName = rows[0].display_name;
                         if (rows[0].mbti === 'ESTJ' ||
                             rows[0].mbti === 'ISTJ' ||
                             rows[0].mbti === 'ENTJ' ||
                             rows[0].mbti === 'ESTP') {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Connected',
+                                        'system_matched': true
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `You have been connected with ${targetName}!`,
+                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Approved',
+                                                'type_id': id[0],
+                                                'note_receiver_id': userID
+                                            })
+                                            .into('notification')
+                                            .then(res => {
+                                                return trx
+                                                    .insert({
+                                                        'title': `You have been connected with ${myName}!`,
+                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'read_status': 'Unread',
+                                                        'type': 'Request Approved',
+                                                        'type_id': id[0],
+                                                        'note_receiver_id': targetID
+                                                    })
+                                                    .into('notification')
+                                            })
+                                            .then(trx.commit)
+                                            .catch(trx.rollback)
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         } else {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Requested',
+                                        'system_matched': false
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `Connection request received from ${myName}!`,
+                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Received',
+                                                'type_id': id[0],
+                                                'note_receiver_id': targetID
+                                            })
+                                            .into('notification')
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         }
                     });
 
                 case 'ESTP':
                     newQuery = this.knex
-                        .select('mbti')
+                        .select('mbti', 'display_name')
                         .from('users')
                         .where('id', targetID)
 
                     return newQuery.then(rows => {
+                        let targetName = rows[0].display_name;
                         if (rows[0].mbti === 'ISTJ' ||
                             rows[0].mbti === 'ESTP' ||
                             rows[0].mbti === 'ISTP' ||
                             rows[0].mbti === 'ESFP') {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Connected',
+                                        'system_matched': true
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `You have been connected with ${targetName}!`,
+                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Approved',
+                                                'type_id': id[0],
+                                                'note_receiver_id': userID
+                                            })
+                                            .into('notification')
+                                            .then(res => {
+                                                return trx
+                                                    .insert({
+                                                        'title': `You have been connected with ${myName}!`,
+                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'read_status': 'Unread',
+                                                        'type': 'Request Approved',
+                                                        'type_id': id[0],
+                                                        'note_receiver_id': targetID
+                                                    })
+                                                    .into('notification')
+                                            })
+                                            .then(trx.commit)
+                                            .catch(trx.rollback)
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         } else {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Requested',
+                                        'system_matched': false
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `Connection request received from ${myName}!`,
+                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Received',
+                                                'type_id': id[0],
+                                                'note_receiver_id': targetID
+                                            })
+                                            .into('notification')
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         }
-                    })
+                    });
 
                 case 'ESTJ':
                     newQuery = this.knex
-                        .select('mbti')
+                        .select('mbti', 'display_name')
                         .from('users')
                         .where('id', targetID)
 
                     return newQuery.then(rows => {
+                        let targetName = rows[0].display_name;
                         if (rows[0].mbti === 'ISTJ' ||
                             rows[0].mbti === 'ESFJ' ||
                             rows[0].mbti === 'ISFJ' ||
                             rows[0].mbti === 'ENTJ' ||
                             rows[0].mbti === 'INTJ' ||
                             rows[0].mbti === 'ISTP') {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Connected',
+                                        'system_matched': true
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `You have been connected with ${targetName}!`,
+                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Approved',
+                                                'type_id': id[0],
+                                                'note_receiver_id': userID
+                                            })
+                                            .into('notification')
+                                            .then(res => {
+                                                return trx
+                                                    .insert({
+                                                        'title': `You have been connected with ${myName}!`,
+                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'read_status': 'Unread',
+                                                        'type': 'Request Approved',
+                                                        'type_id': id[0],
+                                                        'note_receiver_id': targetID
+                                                    })
+                                                    .into('notification')
+                                            })
+                                            .then(trx.commit)
+                                            .catch(trx.rollback)
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         } else {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Requested',
+                                        'system_matched': false
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `Connection request received from ${myName}!`,
+                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Received',
+                                                'type_id': id[0],
+                                                'note_receiver_id': targetID
+                                            })
+                                            .into('notification')
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         }
-                    })
-
+                    });
                 case 'ISFJ':
                     newQuery = this.knex
-                        .select('mbti')
+                        .select('mbti', 'display_name')
                         .from('users')
                         .where('id', targetID)
 
                     return newQuery.then(rows => {
+                        let targetName = rows[0].display_name;
                         if (rows[0].mbti === 'ISFJ' ||
                             rows[0].mbti === 'ENFJ' ||
                             rows[0].mbti === 'ESTJ') {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Connected',
+                                        'system_matched': true
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `You have been connected with ${targetName}!`,
+                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Approved',
+                                                'type_id': id[0],
+                                                'note_receiver_id': userID
+                                            })
+                                            .into('notification')
+                                            .then(res => {
+                                                return trx
+                                                    .insert({
+                                                        'title': `You have been connected with ${myName}!`,
+                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'read_status': 'Unread',
+                                                        'type': 'Request Approved',
+                                                        'type_id': id[0],
+                                                        'note_receiver_id': targetID
+                                                    })
+                                                    .into('notification')
+                                            })
+                                            .then(trx.commit)
+                                            .catch(trx.rollback)
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         } else {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Requested',
+                                        'system_matched': false
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `Connection request received from ${myName}!`,
+                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Received',
+                                                'type_id': id[0],
+                                                'note_receiver_id': targetID
+                                            })
+                                            .into('notification')
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         }
-                    })
+                    });
 
                 case 'ISFP':
                     newQuery = this.knex
-                        .select('mbti')
+                        .select('mbti', 'display_name')
                         .from('users')
                         .where('id', targetID)
 
                     return newQuery.then(rows => {
+                        let targetName = rows[0].display_name;
                         if (rows[0].mbti === 'ESFP' ||
                             rows[0].mbti === 'ISFP') {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Connected',
+                                        'system_matched': true
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `You have been connected with ${targetName}!`,
+                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Approved',
+                                                'type_id': id[0],
+                                                'note_receiver_id': userID
+                                            })
+                                            .into('notification')
+                                            .then(res => {
+                                                return trx
+                                                    .insert({
+                                                        'title': `You have been connected with ${myName}!`,
+                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'read_status': 'Unread',
+                                                        'type': 'Request Approved',
+                                                        'type_id': id[0],
+                                                        'note_receiver_id': targetID
+                                                    })
+                                                    .into('notification')
+                                            })
+                                            .then(trx.commit)
+                                            .catch(trx.rollback)
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         } else {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Requested',
+                                        'system_matched': false
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `Connection request received from ${myName}!`,
+                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Received',
+                                                'type_id': id[0],
+                                                'note_receiver_id': targetID
+                                            })
+                                            .into('notification')
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         }
-                    })
+                    });
 
                 case 'ESFP':
                     newQuery = this.knex
-                        .select('mbti')
+                        .select('mbti', 'display_name')
                         .from('users')
                         .where('id', targetID)
 
                     return newQuery.then(rows => {
+                        let targetName = rows[0].display_name;
                         if (rows[0].mbti === 'ESTP' ||
                             rows[0].mbti === 'ISFP') {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Connected',
+                                        'system_matched': true
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `You have been connected with ${targetName}!`,
+                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Approved',
+                                                'type_id': id[0],
+                                                'note_receiver_id': userID
+                                            })
+                                            .into('notification')
+                                            .then(res => {
+                                                return trx
+                                                    .insert({
+                                                        'title': `You have been connected with ${myName}!`,
+                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'read_status': 'Unread',
+                                                        'type': 'Request Approved',
+                                                        'type_id': id[0],
+                                                        'note_receiver_id': targetID
+                                                    })
+                                                    .into('notification')
+                                            })
+                                            .then(trx.commit)
+                                            .catch(trx.rollback)
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         } else {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Requested',
+                                        'system_matched': false
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `Connection request received from ${myName}!`,
+                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Received',
+                                                'type_id': id[0],
+                                                'note_receiver_id': targetID
+                                            })
+                                            .into('notification')
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         }
-                    })
+                    });
 
                 case 'ESFJ':
                     newQuery = this.knex
-                        .select('mbti')
+                        .select('mbti', 'display_name')
                         .from('users')
                         .where('id', targetID)
 
                     return newQuery.then(rows => {
+                        let targetName = rows[0].display_name;
                         if (rows[0].mbti === 'ESTJ' ||
                             rows[0].mbti === 'ENFP') {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Connected',
+                                        'system_matched': true
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `You have been connected with ${targetName}!`,
+                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Approved',
+                                                'type_id': id[0],
+                                                'note_receiver_id': userID
+                                            })
+                                            .into('notification')
+                                            .then(res => {
+                                                return trx
+                                                    .insert({
+                                                        'title': `You have been connected with ${myName}!`,
+                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'read_status': 'Unread',
+                                                        'type': 'Request Approved',
+                                                        'type_id': id[0],
+                                                        'note_receiver_id': targetID
+                                                    })
+                                                    .into('notification')
+                                            })
+                                            .then(trx.commit)
+                                            .catch(trx.rollback)
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         } else {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Requested',
+                                        'system_matched': false
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `Connection request received from ${myName}!`,
+                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Received',
+                                                'type_id': id[0],
+                                                'note_receiver_id': targetID
+                                            })
+                                            .into('notification')
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         }
-                    })
+                    });
 
                 case 'INFJ':
                     newQuery = this.knex
-                        .select('mbti')
+                        .select('mbti', 'display_name')
                         .from('users')
                         .where('id', targetID)
 
                     return newQuery.then(rows => {
+                        let targetName = rows[0].display_name;
                         if (rows[0].mbti === 'ENTP' ||
                             rows[0].mbti === 'ENFP' ||
                             rows[0].mbti === 'INFJ' ||
                             rows[0].mbti === 'INFP' ||
                             rows[0].mbti === 'ENFJ') {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Connected',
+                                        'system_matched': true
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `You have been connected with ${targetName}!`,
+                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Approved',
+                                                'type_id': id[0],
+                                                'note_receiver_id': userID
+                                            })
+                                            .into('notification')
+                                            .then(res => {
+                                                return trx
+                                                    .insert({
+                                                        'title': `You have been connected with ${myName}!`,
+                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'read_status': 'Unread',
+                                                        'type': 'Request Approved',
+                                                        'type_id': id[0],
+                                                        'note_receiver_id': targetID
+                                                    })
+                                                    .into('notification')
+                                            })
+                                            .then(trx.commit)
+                                            .catch(trx.rollback)
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         } else {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Requested',
+                                        'system_matched': false
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `Connection request received from ${myName}!`,
+                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Received',
+                                                'type_id': id[0],
+                                                'note_receiver_id': targetID
+                                            })
+                                            .into('notification')
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         }
-                    })
+                    });
 
                 case 'INFP':
                     newQuery = this.knex
-                        .select('mbti')
+                        .select('mbti', 'display_name')
                         .from('users')
                         .where('id', targetID)
 
                     return newQuery.then(rows => {
+                        let targetName = rows[0].display_name;
                         if (rows[0].mbti === 'ENFP' ||
                             rows[0].mbti === 'INFP' ||
                             rows[0].mbti === 'ENFJ' ||
                             rows[0].mbti === 'INFJ') {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Connected',
+                                        'system_matched': true
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `You have been connected with ${targetName}!`,
+                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Approved',
+                                                'type_id': id[0],
+                                                'note_receiver_id': userID
+                                            })
+                                            .into('notification')
+                                            .then(res => {
+                                                return trx
+                                                    .insert({
+                                                        'title': `You have been connected with ${myName}!`,
+                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'read_status': 'Unread',
+                                                        'type': 'Request Approved',
+                                                        'type_id': id[0],
+                                                        'note_receiver_id': targetID
+                                                    })
+                                                    .into('notification')
+                                            })
+                                            .then(trx.commit)
+                                            .catch(trx.rollback)
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         } else {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Requested',
+                                        'system_matched': false
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `Connection request received from ${myName}!`,
+                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Received',
+                                                'type_id': id[0],
+                                                'note_receiver_id': targetID
+                                            })
+                                            .into('notification')
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         }
-                    })
+                    });
 
                 case 'ENFP':
                     newQuery = this.knex
-                        .select('mbti')
+                        .select('mbti', 'display_name')
                         .from('users')
                         .where('id', targetID)
 
                     return newQuery.then(rows => {
+                        let targetName = rows[0].display_name;
                         if (rows[0].mbti === 'INFJ' ||
                             rows[0].mbti === 'INFP' ||
                             rows[0].mbti === 'ENFJ' ||
                             rows[0].mbti === 'ENFP' ||
                             rows[0].mbti === 'ESFJ') {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Connected',
+                                        'system_matched': true
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `You have been connected with ${targetName}!`,
+                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Approved',
+                                                'type_id': id[0],
+                                                'note_receiver_id': userID
+                                            })
+                                            .into('notification')
+                                            .then(res => {
+                                                return trx
+                                                    .insert({
+                                                        'title': `You have been connected with ${myName}!`,
+                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'read_status': 'Unread',
+                                                        'type': 'Request Approved',
+                                                        'type_id': id[0],
+                                                        'note_receiver_id': targetID
+                                                    })
+                                                    .into('notification')
+                                            })
+                                            .then(trx.commit)
+                                            .catch(trx.rollback)
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         } else {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Requested',
+                                        'system_matched': false
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `Connection request received from ${myName}!`,
+                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Received',
+                                                'type_id': id[0],
+                                                'note_receiver_id': targetID
+                                            })
+                                            .into('notification')
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         }
-                    })
+                    });
 
                 case 'ENFJ':
                     newQuery = this.knex
-                        .select('mbti')
+                        .select('mbti', 'display_name')
                         .from('users')
                         .where('id', targetID)
 
                     return newQuery.then(rows => {
+                        let targetName = rows[0].display_name;
                         if (rows[0].mbti === 'ISFJ' ||
                             rows[0].mbti === 'ENFJ' ||
                             rows[0].mbti === 'ENTJ' ||
                             rows[0].mbti === 'INFJ' ||
                             rows[0].mbti === 'ENFP' ||
                             rows[0].mbti === 'INFP') {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Connected',
+                                        'system_matched': true
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `You have been connected with ${targetName}!`,
+                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Approved',
+                                                'type_id': id[0],
+                                                'note_receiver_id': userID
+                                            })
+                                            .into('notification')
+                                            .then(res => {
+                                                return trx
+                                                    .insert({
+                                                        'title': `You have been connected with ${myName}!`,
+                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'read_status': 'Unread',
+                                                        'type': 'Request Approved',
+                                                        'type_id': id[0],
+                                                        'note_receiver_id': targetID
+                                                    })
+                                                    .into('notification')
+                                            })
+                                            .then(trx.commit)
+                                            .catch(trx.rollback)
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         } else {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Requested',
+                                        'system_matched': false
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `Connection request received from ${myName}!`,
+                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Received',
+                                                'type_id': id[0],
+                                                'note_receiver_id': targetID
+                                            })
+                                            .into('notification')
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         }
-                    })
+                    });
 
                 case 'INTJ':
                     newQuery = this.knex
-                        .select('mbti')
+                        .select('mbti', 'display_name')
                         .from('users')
                         .where('id', targetID)
 
                     return newQuery.then(rows => {
+                        let targetName = rows[0].display_name;
                         if (rows[0].mbti === 'ESTJ' ||
                             rows[0].mbti === 'INTJ' ||
                             rows[0].mbti === 'ISTP' ||
                             rows[0].mbti === 'ENTJ') {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Connected',
+                                        'system_matched': true
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `You have been connected with ${targetName}!`,
+                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Approved',
+                                                'type_id': id[0],
+                                                'note_receiver_id': userID
+                                            })
+                                            .into('notification')
+                                            .then(res => {
+                                                return trx
+                                                    .insert({
+                                                        'title': `You have been connected with ${myName}!`,
+                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'read_status': 'Unread',
+                                                        'type': 'Request Approved',
+                                                        'type_id': id[0],
+                                                        'note_receiver_id': targetID
+                                                    })
+                                                    .into('notification')
+                                            })
+                                            .then(trx.commit)
+                                            .catch(trx.rollback)
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         } else {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Requested',
+                                        'system_matched': false
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `Connection request received from ${myName}!`,
+                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Received',
+                                                'type_id': id[0],
+                                                'note_receiver_id': targetID
+                                            })
+                                            .into('notification')
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         }
-                    })
+                    });
 
                 case 'INTP':
                     newQuery = this.knex
-                        .select('mbti')
+                        .select('mbti', 'display_name')
                         .from('users')
                         .where('id', targetID)
 
                     return newQuery.then(rows => {
+                        let targetName = rows[0].display_name;
                         if (rows[0].mbti === 'ENTP' ||
                             rows[0].mbti === 'INTP' ||
                             rows[0].mbti === 'INTJ') {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Connected',
+                                        'system_matched': true
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `You have been connected with ${targetName}!`,
+                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Approved',
+                                                'type_id': id[0],
+                                                'note_receiver_id': userID
+                                            })
+                                            .into('notification')
+                                            .then(res => {
+                                                return trx
+                                                    .insert({
+                                                        'title': `You have been connected with ${myName}!`,
+                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'read_status': 'Unread',
+                                                        'type': 'Request Approved',
+                                                        'type_id': id[0],
+                                                        'note_receiver_id': targetID
+                                                    })
+                                                    .into('notification')
+                                            })
+                                            .then(trx.commit)
+                                            .catch(trx.rollback)
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         } else {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Requested',
+                                        'system_matched': false
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `Connection request received from ${myName}!`,
+                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Received',
+                                                'type_id': id[0],
+                                                'note_receiver_id': targetID
+                                            })
+                                            .into('notification')
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         }
-                    })
+                    });
 
                 case 'ENTP':
                     newQuery = this.knex
-                        .select('mbti')
+                        .select('mbti', 'display_name')
                         .from('users')
                         .where('id', targetID)
 
                     return newQuery.then(rows => {
+                        let targetName = rows[0].display_name;
                         if (rows[0].mbti === 'ENTP' ||
                             rows[0].mbti === 'INTP' ||
                             rows[0].mbti === 'INFJ') {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Connected',
+                                        'system_matched': true
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `You have been connected with ${targetName}!`,
+                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Approved',
+                                                'type_id': id[0],
+                                                'note_receiver_id': userID
+                                            })
+                                            .into('notification')
+                                            .then(res => {
+                                                return trx
+                                                    .insert({
+                                                        'title': `You have been connected with ${myName}!`,
+                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'read_status': 'Unread',
+                                                        'type': 'Request Approved',
+                                                        'type_id': id[0],
+                                                        'note_receiver_id': targetID
+                                                    })
+                                                    .into('notification')
+                                            })
+                                            .then(trx.commit)
+                                            .catch(trx.rollback)
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         } else {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Requested',
+                                        'system_matched': false
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `Connection request received from ${myName}!`,
+                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Received',
+                                                'type_id': id[0],
+                                                'note_receiver_id': targetID
+                                            })
+                                            .into('notification')
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         }
-                    })
+                    });
 
                 case 'ENTJ':
                     newQuery = this.knex
-                        .select('mbti')
+                        .select('mbti', 'display_name')
                         .from('users')
                         .where('id', targetID)
 
                     return newQuery.then(rows => {
+                        let targetName = rows[0].display_name;
                         if (rows[0].mbti === 'ESTJ' ||
                             rows[0].mbti === 'ISTP' ||
                             rows[0].mbti === 'ENTJ' ||
                             rows[0].mbti === 'ENFJ' ||
                             rows[0].mbti === 'INTJ') {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Connected', 'system_matched': true })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Connected',
+                                        'system_matched': true
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `You have been connected with ${targetName}!`,
+                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Approved',
+                                                'type_id': id[0],
+                                                'note_receiver_id': userID
+                                            })
+                                            .into('notification')
+                                            .then(res => {
+                                                return trx
+                                                    .insert({
+                                                        'title': `You have been connected with ${myName}!`,
+                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'read_status': 'Unread',
+                                                        'type': 'Request Approved',
+                                                        'type_id': id[0],
+                                                        'note_receiver_id': targetID
+                                                    })
+                                                    .into('notification')
+                                            })
+                                            .then(trx.commit)
+                                            .catch(trx.rollback)
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         } else {
-                            return this.knex('connection').insert({ 'req_sender_id': userID, 'req_receiver_id': targetID, 'status': 'Requested', 'system_matched': false })
+                            return this.knex.transaction(trx => {
+                                return trx
+                                    .insert({
+                                        'req_sender_id': userID,
+                                        'req_receiver_id': targetID,
+                                        'status': 'Requested',
+                                        'system_matched': false
+                                    })
+                                    .into('connection')
+                                    .returning('id')
+                                    .then(id => {
+                                        return trx
+                                            .insert({
+                                                'title': `Connection request received from ${myName}!`,
+                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'read_status': 'Unread',
+                                                'type': 'Request Received',
+                                                'type_id': id[0],
+                                                'note_receiver_id': targetID
+                                            })
+                                            .into('notification')
+                                    })
+                                    .then(trx.commit)
+                                    .catch(trx.rollback)
+                            })
                         }
-                    })
+                    });
+
             }
         })
     }
@@ -423,19 +1432,87 @@ class ConnectionService {
     }
 
     deleteConnectedSuggestion(userID, targetID) {
-        return this.knex.delete()
-            .from('connection')
-            .where('req_sender_id', userID)
-            .andWhere('req_receiver_id', targetID)
-            .andWhere('system_matched', true)
+        let myName;
+        let query = this.knex
+            .select('id', 'display_name') // Get names for notification content
+            .from('users')
+            .where('id', userID)
+
+        return query.then(rows => {
+            myName = rows[0].display_name;
+            return this.knex.transaction(trx => {
+                return trx
+                    .delete()
+                    .from('connection')
+                    .where(function () {
+                        this.where('req_sender_id', userID)
+                            .andWhere('req_receiver_id', targetID)
+                    })
+                    .orWhere(function () {
+                        this.where('req_sender_id', targetID)
+                            .andWhere('req_receiver_id', userID)
+                    })
+                    .andWhere('status', 'Connected')
+                    .andWhere('system_matched', true)
+                    .returning('id')
+                    .then(id => {
+                        return trx
+                            .insert({
+                                'title': `Your card has been removed`,
+                                'content': `User ${myName} has removed your card from his/her deck. More suggested matches are in the Cards of the day page!`,
+                                'read_status': 'Unread',
+                                'type': 'Connection Lost',
+                                'type_id': id[0],
+                                'note_receiver_id': targetID
+                            })
+                            .into('notification')
+                    })
+                    .then(trx.commit)
+                    .catch(trx.rollback)
+            })
+        })
     }
 
     deleteConnectedUser(userID, targetID) {
-        return this.knex.delete()
-            .from('connection')
-            .where('req_sender_id', userID)
-            .andWhere('req_receiver_id', targetID)
-            .andWhere('system_matched', false)
+        let myName;
+        let query = this.knex
+            .select('id', 'display_name') // Get names for notification content
+            .from('users')
+            .where('id', userID)
+
+        return query.then(rows => {
+            myName = rows[0].display_name;
+            return this.knex.transaction(trx => {
+                return trx
+                    .delete()
+                    .from('connection')
+                    .where(function () {
+                        this.where('req_sender_id', userID)
+                            .andWhere('req_receiver_id', targetID)
+                    })
+                    .orWhere(function () {
+                        this.where('req_sender_id', targetID)
+                            .andWhere('req_receiver_id', userID)
+                    })
+                    .andWhere('status', 'Connected')
+                    .andWhere('system_matched', false)
+                    .returning('id')
+                    .then(id => {
+                        return trx
+                            .insert({
+                                'title': `Your card has been removed`,
+                                'content': `User ${myName} has removed your card from his/her deck. Check out Discover page to connect with other users!`,
+                                'read_status': 'Unread',
+                                'type': 'Connection Lost',
+                                'type_id': id[0],
+                                'note_receiver_id': targetID
+                            })
+                            .into('notification')
+                    })
+                    .then(trx.commit)
+                    .catch(trx.rollback)
+            })
+        })
     }
 
     listReceivedRequests(userID) {
@@ -463,7 +1540,7 @@ class ConnectionService {
     }
 
     approveRequest(userID, targetID) {
-        let query = this.knex
+        let query = this.knex // Check user's and target's deck capacity
             .select('id')
             .from('connection')
             .where(function () {
@@ -491,22 +1568,75 @@ class ConnectionService {
             if (rows.length >= 10) {
                 console.log(new Error('Either your deck or your target\'s deck is full. Connection cannot be made at the moment.'));
             } else {
-                return this.knex.update('status', 'Connected')
-                    .from('connection')
-                    .where('req_sender_id', targetID)
-                    .andWhere('req_receiver_id', userID)
-                    .andWhere('system_matched', false)
+                let myName;
+                let query = this.knex
+                    .select('id', 'display_name') // Get names for notification content
+                    .from('users')
+                    .where('id', userID)
+
+                return query.then(rows => {
+                    myName = rows[0].display_name;
+                    return this.knex.transaction(trx => {
+                        return trx
+                            .update('status', 'Connected') // Update connection status
+                            .from('connection')
+                            .where('req_sender_id', targetID)
+                            .andWhere('req_receiver_id', userID)
+                            .andWhere('system_matched', false)
+                            .returning('id')
+                            .then(id => {
+                                return trx
+                                    .insert({ // Create notification
+                                        'title': `Connection request approved.`,
+                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                        'read_status': 'Unread',
+                                        'type': 'Request Approved',
+                                        'type_id': id[0],
+                                        'note_receiver_id': targetID
+                                    })
+                                    .into('notification')
+                            })
+                            .then(trx.commit)
+                            .catch(trx.rollback)
+                    })
+                })
             }
         })
     }
 
-
     rejectRequest(userID, targetID) {
-        return this.knex.update('status', 'Rejected')
-            .from('connection')
-            .where('req_sender_id', targetID)
-            .andWhere('req_receiver_id', userID)
-            .andWhere('system_matched', false)
+        let myName;
+        let query = this.knex
+            .select('id', 'display_name') // Get names for notification content
+            .from('users')
+            .where('id', userID)
+
+        return query.then(rows => {
+            myName = rows[0].display_name;
+            return this.knex.transaction(trx => {
+                return trx
+                    .update('status', 'Rejected') // Update connection status
+                    .from('connection')
+                    .where('req_sender_id', targetID)
+                    .andWhere('req_receiver_id', userID)
+                    .andWhere('system_matched', false)
+                    .returning('id')
+                    .then(id => {
+                        return trx
+                            .insert({ // Create notification
+                                'title': `Connection request rejected`,
+                                'content': `We are sorry that user ${myName} turned down your connection request. Please check out the Discover for more suggestions`,
+                                'read_status': 'Unread',
+                                'type': 'Request Rejected',
+                                'type_id': id[0],
+                                'note_receiver_id': targetID
+                            })
+                            .into('notification')
+                    })
+                    .then(trx.commit)
+                    .catch(trx.rollback)
+            })
+        })
     }
 
     getFlipStatus(userID, targetID) {
@@ -533,51 +1663,132 @@ class ConnectionService {
     }
 
     sendFlipRequest(userID, targetID) {
-        return this.knex.update({
-            'flip_status': 'Requested',
-            'flip_req_sender': userID
+        let myName;
+        let query = this.knex
+            .select('id', 'display_name') // Get names for notification content
+            .from('users')
+            .where('id', userID)
+
+        return query.then(rows => {
+            myName = rows[0].display_name;
+            return this.knex.transaction(trx => {
+                return trx
+                    .update({
+                        'flip_status': 'Requested',
+                        'flip_req_sender': userID
+                    })
+                    .from('connection')
+                    .where(function () {
+                        this.where('req_sender_id', userID)
+                            .andWhere('req_receiver_id', targetID)
+                            .andWhere('status', 'Connected')
+                    })
+                    .orWhere(function () {
+                        this.where('req_sender_id', targetID)
+                            .andWhere('req_receiver_id', userID)
+                            .andWhere('status', 'Connected')
+                    })
+                    .returning('id')
+                    .then(id => {
+                        return trx
+                            .insert({
+                                'title': `Flip request received!`,
+                                'content': `User ${myName} has invited you to flip your cards. Check out his/her profile page for further action!`,
+                                'read_status': 'Unread',
+                                'type': 'Flip Request Received',
+                                'type_id': id[0],
+                                'note_receiver_id': targetID
+                            })
+                            .into('notification')
+                    })
+                    .then(trx.commit)
+                    .catch(trx.rollback)
+            })
         })
-            .from('connection')
-            .where(function () {
-                this.where('req_sender_id', userID)
-                    .andWhere('req_receiver_id', targetID)
-                    .andWhere('status', 'Connected')
-            })
-            .orWhere(function () {
-                this.where('req_sender_id', targetID)
-                    .andWhere('req_receiver_id', userID)
-                    .andWhere('status', 'Connected')
-            })
     }
 
     approveFlipRequest(userID, targetID) {
-        return this.knex.update('flip_status', 'Flipped')
-            .from('connection')
-            .where(function () {
-                this.where('req_sender_id', userID)
-                    .andWhere('req_receiver_id', targetID)
+        let myName;
+        let query = this.knex
+            .select('id', 'display_name') // Get names for notification content
+            .from('users')
+            .where('id', userID)
+
+        return query.then(rows => {
+            myName = rows[0].display_name;
+            return this.knex.transaction(trx => {
+                return trx
+                    .update('flip_status', 'Flipped')
+                    .from('connection')
+                    .where(function () {
+                        this.where('req_sender_id', userID)
+                            .andWhere('req_receiver_id', targetID)
+                    })
+                    .orWhere(function () {
+                        this.where('req_sender_id', targetID)
+                            .andWhere('req_receiver_id', userID)
+                    })
+                    .andWhere('flip_req_sender', targetID)
+                    .andWhere('status', 'Connected')
+                    .returning('id')
+                    .then(id => {
+                        return trx
+                            .insert({
+                                'title': `Flip request approved!`,
+                                'content': `User ${myName} has approved your flip request. You can now access his/her private profile!`,
+                                'read_status': 'Unread',
+                                'type': 'Flip Request Approved',
+                                'type_id': id[0],
+                                'note_receiver_id': targetID
+                            })
+                            .into('notification')
+                    })
+                    .then(trx.commit)
+                    .catch(trx.rollback)
             })
-            .orWhere(function () {
-                this.where('req_sender_id', targetID)
-                    .andWhere('req_receiver_id', userID)
-            })
-            .andWhere('flip_req_sender', targetID)
-            .andWhere('status', 'Connected')
+        })
     }
 
     rejectFlipRequest(userID, targetID) {
-        return this.knex.update('flip_status', 'Rejected')
-            .from('connection')
-            .where(function () {
-                this.where('req_sender_id', userID)
-                    .andWhere('req_receiver_id', targetID)
+        let myName;
+        let query = this.knex
+            .select('id', 'display_name') // Get names for notification content
+            .from('users')
+            .where('id', userID)
+
+        return query.then(rows => {
+            myName = rows[0].display_name;
+            return this.knex.transaction(trx => {
+                return trx
+                    .update('flip_status', 'Rejected')
+                    .from('connection')
+                    .where(function () {
+                        this.where('req_sender_id', userID)
+                            .andWhere('req_receiver_id', targetID)
+                    })
+                    .orWhere(function () {
+                        this.where('req_sender_id', targetID)
+                            .andWhere('req_receiver_id', userID)
+                    })
+                    .andWhere('flip_req_sender', targetID)
+                    .andWhere('status', 'Connected')
+                    .returning('id')
+                    .then(id => {
+                        return trx
+                            .insert({
+                                'title': `Flip request rejected!`,
+                                'content': `User ${myName} has rejected your flip request. Maybe you should chat with him/her to find out more?`,
+                                'read_status': 'Unread',
+                                'type': 'Flip Request Rejected',
+                                'type_id': id[0],
+                                'note_receiver_id': targetID
+                            })
+                            .into('notification')
+                    })
+                    .then(trx.commit)
+                    .catch(trx.rollback)
             })
-            .orWhere(function () {
-                this.where('req_sender_id', targetID)
-                    .andWhere('req_receiver_id', userID)
-            })
-            .andWhere('flip_req_sender', targetID)
-            .andWhere('status', 'Connected')
+        })
     }
 }
 
