@@ -184,7 +184,7 @@ class App {
     Navigation.startTabBasedApp({
       tabs: [
         {
-          //label: "DISCOVER",
+          label: "Discover",
           screen: "SuggestedScreen",
           icon: require("./assets/discover.png"),
           title: "DISCOVER",
@@ -195,7 +195,7 @@ class App {
           }
         },
         {
-          //label: "REQUESTS",
+          label: "Requests",
           screen: "RequestTabScreen",
           icon: require("./assets/requests.png"),
           title: "REQUESTS",
@@ -206,7 +206,7 @@ class App {
           }
         },
         {
-          //label: "THE DECKS",
+          label: "Decks",
           screen: "HomeTabScreen",
           icon: require("./assets/decks.png"),
           title: "THE DECKS",
@@ -229,7 +229,7 @@ class App {
         },
         */
         {
-          //label: "CONTROL ROOM",
+          label: "Control",
           screen: "UserTabScreen",
           icon: require("./assets/controlroom.png"),
           title: "CONTROL ROOM",
