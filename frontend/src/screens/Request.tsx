@@ -16,7 +16,8 @@ import Config from "react-native-config";
 import { connect } from "react-redux";
 import LeftTopButton from "./components/LeftTopButton";
 import RightTopButton from "./components/RightTopButton";
-import RowItem from './components/RowItem';
+import ReceivedRowItem from './components/ReceivedRowItem';
+import SentRowItem from './components/SentRowItem';
 
 const { height, width } = Dimensions.get("window");
 
@@ -28,13 +29,15 @@ interface RequestProps {
 
 interface RequestStates {
   sourceData: any;
+  isReceived: boolean
 }
 
 class Request extends React.Component<RequestProps, RequestStates> {
   constructor(props: any) {
     super(props);
     this.state = {
-      sourceData: null
+      sourceData: null,
+      isReceived: true,
     };
   }
 
@@ -58,7 +61,11 @@ class Request extends React.Component<RequestProps, RequestStates> {
   };
 
   renderRows = ({ item, index }) => (
-    <RowItem item={item} index={index} onPressItem={this.onPressItem} />
+    <ReceivedRowItem item={item} index={index} onPressItem={this.onPressItem} />
+  );
+
+  renderSentRows = ({ item, index }) => (
+    <SentRowItem item={item} index={index} onPressItem={this.onPressItem} />
   );
 
   onPressItem = (item: any) => {
@@ -71,6 +78,30 @@ class Request extends React.Component<RequestProps, RequestStates> {
   };
 
   render() {
+    let component = // default to show received request
+      <FlatList
+        data={this.state.sourceData}
+        keyExtractor={this.keyExtractor}
+        renderItem={this.renderRows}
+      />
+
+    if (this.state.isReceived) {
+      component = 
+        <FlatList
+        data={this.state.sourceData}
+        keyExtractor={this.keyExtractor}
+        renderItem={this.renderRows}
+       />
+    } else {
+      component = 
+        <FlatList
+        data={this.state.sourceData}
+        keyExtractor={this.keyExtractor}
+        renderItem={this.renderSentRows}
+       />
+    }
+
+
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={{ flex: 1 }}>
         <View style={styles.container}>
@@ -78,7 +109,7 @@ class Request extends React.Component<RequestProps, RequestStates> {
             <LeftTopButton
               leftButtonName={"RECEIVED"}
               onPress={() => {
-                console.log("received");
+                console.log("press received");
                 axios
                   .get(`${Config.API_SERVER}/api/connection/request/received`, {
                     headers: {
@@ -87,7 +118,8 @@ class Request extends React.Component<RequestProps, RequestStates> {
                   })
                   .then(res => {
                     this.setState({
-                      sourceData: res.data
+                      sourceData: res.data,
+                      isReceived: true
                     });
                     this.props.navigator.setTitle({
                       title: 'RECEIVED REQUESTS' // new title 
@@ -108,7 +140,8 @@ class Request extends React.Component<RequestProps, RequestStates> {
                   })
                   .then(res => {
                     this.setState({
-                      sourceData: res.data
+                      sourceData: res.data,
+                      isReceived: false
                     });
                     this.props.navigator.setTitle({
                       title: 'SENT REQUESTS' // new title 
@@ -120,11 +153,12 @@ class Request extends React.Component<RequestProps, RequestStates> {
           </View>
 
           <ScrollView style={styles.listContainer}>
-            <FlatList
+              {component}
+            {/* <FlatList
               data={this.state.sourceData}
               keyExtractor={this.keyExtractor}
               renderItem={this.renderRows}
-            />
+            /> */}
           </ScrollView>
         </View>
       </LinearGradient>
