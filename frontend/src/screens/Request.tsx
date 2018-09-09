@@ -71,9 +71,8 @@ class Request extends React.Component<RequestProps, RequestStates> {
   onPressItem = (item: any) => {
     console.log("Pressed row: " + item);
     this.props.navigator.push({
-      title: "New Page",
-      screen: "LoginScreen", // to target user profile
-      passProps: { userId: item.id }
+      screen: 'PublicProfileTabScreen',
+      passProps: { targetID: item, token: this.props.token  }
     });
   };
 
@@ -154,11 +153,6 @@ class Request extends React.Component<RequestProps, RequestStates> {
 
           <ScrollView style={styles.listContainer}>
               {component}
-            {/* <FlatList
-              data={this.state.sourceData}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderRows}
-            /> */}
           </ScrollView>
         </View>
       </LinearGradient>
