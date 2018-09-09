@@ -16,7 +16,7 @@ import Config from "react-native-config";
 import { connect } from "react-redux";
 import LeftTopButton from "./components/LeftTopButton";
 import RightTopButton from "./components/RightTopButton";
-import RowItem from './components/RowItem';
+import CreateReqRowItem from './components/CreateReqRowItem';
 
 const { height, width } = Dimensions.get("window");
 
@@ -34,7 +34,7 @@ class Suggestions extends React.Component<SuggestionsProps, SuggestionsStates> {
   constructor(props: any) {
     super(props);
     this.state = {
-      sourceData: null
+      sourceData: null,
     };
   }
 
@@ -57,8 +57,8 @@ class Suggestions extends React.Component<SuggestionsProps, SuggestionsStates> {
     item.id.toString(); // The value of key must be a string
   };
 
-  renderRows = ({ item, index }) => (
-    <RowItem item={item} index={index} onPressItem={this.onPressItem} />
+  renderCreateReqRows = ({ item, index }) => (
+    <CreateReqRowItem item={item} index={index} onPressItem={this.onPressItem} />
   );
 
   onPressItem = (item: any) => {
@@ -121,7 +121,7 @@ class Suggestions extends React.Component<SuggestionsProps, SuggestionsStates> {
             <FlatList
               data={this.state.sourceData}
               keyExtractor={this.keyExtractor}
-              renderItem={this.renderRows}
+              renderItem={this.renderCreateReqRows}
             />
           </ScrollView>
         </View>
