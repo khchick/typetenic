@@ -29,18 +29,22 @@ app.use(auth.initialize());
 // Dependency Injection for Routers and Services
 const { ChatRouter,
     ConnectionRouter,
+    NotificationRouter,
     UserRouter } = require("./routers");
 
 const { ChatService,
     ConnectionService,
+    NotificationService,
     UserService } = require("./services");
 
 let chatService = new ChatService(knex);
 let connectionService = new ConnectionService(knex);
+let notificationService = new NotificationService(knex);
 let userService = new UserService(knex);
 
 app.use("/api/chat", auth.authenticate(), (new ChatRouter(chatService)).router());
 app.use("/api/connection", auth.authenticate(), (new ConnectionRouter(connectionService)).router());
+app.use("/api/notification", auth.authenticate(), (new NotificationRouter(notificationService)).router());
 app.use("/api/user", auth.authenticate(), (new UserRouter(userService)).router());
 
 // Sign up / Login routers
