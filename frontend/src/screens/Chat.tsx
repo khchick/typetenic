@@ -36,12 +36,14 @@ export default class Chat extends React.Component<IChatProps, IChatStates> {
       flippedStatus: ''
     };
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-    this.props.navigator.setButtons({rightButtons: [
-      {
-        title: `View ${this.props.targetName}'s Profile`, 
-        id: 'profile'
-      },
-    ]});
+    this.props.navigator.setButtons({
+      rightButtons: [
+        {
+          title: `View ${this.props.targetName}'s Profile`,
+          id: 'profile'
+        },
+      ]
+    });
   }
 
   componentWillMount() {
@@ -60,7 +62,7 @@ export default class Chat extends React.Component<IChatProps, IChatStates> {
       .catch(function (error) {
         console.log(error);
       });
-    
+
   }
 
   componentDidMount() {
@@ -113,18 +115,21 @@ export default class Chat extends React.Component<IChatProps, IChatStates> {
 
   onNavigatorEvent(event: any) {
     if (event.id == 'profile') {
-      if ( this.state.flippedStatus === 'Requested' || this.state.flippedStatus === null ) {
+      console.log(this.state.flippedStatus);
+      if (this.state.flippedStatus === 'Requested' ||
+        this.state.flippedStatus === 'Rejected' ||
+        this.state.flippedStatus === null) {
         this.props.navigator.push({
           screen: 'PublicProfileTabScreen',
           passProps: { targetID: this.props.targetID, token: this.props.token }
         })
       }
-      if ( this.state.flippedStatus === 'Flipped') {
+      if (this.state.flippedStatus === 'Flipped') {
         this.props.navigator.push({
           screen: 'PrivateProfileTabScreen',
           passProps: { targetID: this.props.targetID, token: this.props.token }
         })
-      }      
+      }
     }
   }
 
