@@ -10,48 +10,70 @@ import {
   FlatList,
   Alert
 } from "react-native";
-import AvatarImage, {getAvatar} from '../components/AvatarImage';
+import AvatarImage, {getAvatar} from './AvatarImage';
+import axios from 'axios';
+import Config from "react-native-config";
+import { connect } from "react-redux";
 
 const { height, width } = Dimensions.get("window");
 
 // Each request item
-interface RowItemProps {
+interface CreateReqRowItemProps {
+  token: string;
   item: any;
   index: any;
   onPressItem: (item: any) => any;
 }
-export default class RowItem extends React.PureComponent<RowItemProps> {
+
+class CreateReqRowItem extends React.PureComponent<CreateReqRowItemProps> {
   onPress = () => {
     this.props.onPressItem(this.props.item.id);
   };
 
   render() {
-    const item = this.props.item;
+    const item = this.props.item; 
     let mbtiImg = getAvatar(this.props.item.mbti)
 
     return (
       <View style={styles.rowContainer}>
-        {/* <TouchableOpacity onPress={this.onPress}> */}
+        <TouchableOpacity onPress={this.onPress}>
           <AvatarImage style={styles.thumb} source={  mbtiImg } />        
-        {/* </TouchableOpacity>         */}
+        </TouchableOpacity>        
 
         <Text style={styles.name}>{item.display_name}</Text>
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.likeBtn} onPress={() => {
-            
-          }}>
-            <Text style={styles.btnText}>LIKE</Text>
+            console.log("create request to suggested user");
+            axios
+              .post(`${Config.API_SERVER}/api/connection/request/sent`, 
+              {
+                'targetID': item.id
+              },
+              {
+                headers: {
+                  Authorization: "Bearer " + this.props.token
+                }
+              })
+              .catch(err => console.log(err));
+          }} >
+            <Text style={styles.btnText}>SEND</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.passBtn} onPress={() => {}}>
-            <Text style={styles.btnText}>PASS</Text>
-          </TouchableOpacity>
         </View>
       </View>
     );
   }
 }
+
+const MapStateToProps = (state: any) => {
+  return {
+    token: state.auth.token
+  };
+};
+
+export default connect(MapStateToProps)(CreateReqRowItem);
+
 
 const styles = StyleSheet.create({
   rowContainer: {
