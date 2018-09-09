@@ -15,12 +15,12 @@ import AvatarImage, {getAvatar} from '../components/AvatarImage';
 const { height, width } = Dimensions.get("window");
 
 // Each request item
-interface rowItemProps {
+interface RowItemProps {
   item: any;
   index: any;
   onPressItem: (item: any) => any;
 }
-export default class rowItem extends React.PureComponent<rowItemProps> {
+export default class RowItem extends React.PureComponent<RowItemProps> {
   onPress = () => {
     this.props.onPressItem(this.props.item.id);
   };
