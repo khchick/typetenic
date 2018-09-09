@@ -24,6 +24,7 @@ import PublicProfile from "./screens/PublicProfile";
 import PrivateProfile from "./screens/PrivateProfile";
 import ResetProfile from "./screens/ResetProfile";
 import Suggested from "./screens/Suggestions";
+import Notification from "./screens/Notification";
 
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
@@ -33,7 +34,7 @@ import { getUserProfile } from "./redux/actions/profileAction";
 Navigation.registerComponent("LandingScreen", () => Landing, store, Provider);
 Navigation.registerComponent("LoginScreen", () => Login, store, Provider);
 Navigation.registerComponent("SignupScreen", () => Signup, store, Provider);
-Navigation.registerComponent("SignupContScreen", () => SignupCont,store, Provider);
+Navigation.registerComponent("SignupContScreen", () => SignupCont, store, Provider);
 Navigation.registerComponent("MbtiTest1Screen", () => MbtiTest1, store, Provider);
 Navigation.registerComponent("MbtiTest2Screen", () => MbtiTest2, store, Provider);
 Navigation.registerComponent("MbtiTest3Screen", () => MbtiTest3, store, Provider);
@@ -44,6 +45,7 @@ Navigation.registerComponent("MbtiProfileScreen", () => MbtiProfile, store, Prov
 Navigation.registerComponent("HomeTabScreen", () => Deck, store, Provider);
 Navigation.registerComponent("ChatTabScreen", () => Chat, store, Provider);
 Navigation.registerComponent("RequestTabScreen", () => Request, store, Provider);
+Navigation.registerComponent("NotificationTabScreen", () => Notification, store, Provider);
 Navigation.registerComponent("ControlRoom", () => ControlRoom, store, Provider);
 Navigation.registerComponent("Settings", () => Settings, store, Provider);
 Navigation.registerComponent("SuggestedScreen", () => Suggested, store, Provider);
@@ -138,15 +140,20 @@ class App {
             token: token
           }
         },
-        /*
         {
-           label: "Notifications",
-           screen: "ChatTabScreen",
-           icon: require("./assets/chat.png"),
-           title: "Chat",
-           navigatorStyle: { navigatorStyle }
+          label: "Notifications",
+          screen: "NotificationTabScreen",
+          icon: require("./assets/chat.png"),
+          title: "Notifications",
+          navigatorStyle: {
+            navBarTextColor: 'black',
+            navBarBackgroundColor: '#9EF8E4',
+            navBarTextFontSize: 20
+          },
+          passProps: {
+            token: token
+          }
         },
-        */
         {
           label: "Control",
           screen: "ControlRoom",
