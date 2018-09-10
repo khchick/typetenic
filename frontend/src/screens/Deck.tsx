@@ -16,7 +16,7 @@ import { transparentNav } from './styles/common';
 import { connect } from 'react-redux';
 import LeftTopButton from "./components/LeftTopButton";
 import RightTopButton from "./components/RightTopButton";
-import AvatarImage, {getAvatar} from './components/AvatarImage';
+import AvatarImage, { getAvatar } from './components/AvatarImage';
 
 const { height, width } = Dimensions.get("window");
 
@@ -53,6 +53,13 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
         });
       })
       .catch(err => console.log(err));
+  }
+
+  calculateAge(dob: any) {
+    let dobDate = new Date(dob);
+    var ageDifMs = Date.now() - dobDate.getTime();
+    var ageDate = new Date(ageDifMs);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 
   render() {
@@ -115,45 +122,58 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
               }) => (
                   <View>
                     <View style={styles.card}>
-                      <AvatarImage style={styles.avatar} source={ getAvatar(mbti) } />   
-
-                      <View>
-                        <Text style={styles.nameText}>{display_name}</Text>
+                      <View style={styles.mbtiCol}>
+                        <View style={styles.mbtiRow}>
+                          <Text>I</Text>
+                          <Text>N</Text>
+                        </View>
+                        <View style={styles.mbtiRow}>
+                          <Text>T</Text>
+                          <Text>J</Text>
+                        </View>
                       </View>
-                      <Text style={styles.inputText}>{dob}</Text>
+                      <View style={styles.contentContainer}>
+                        <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
 
-                      <Text style={styles.inputText}>{location}</Text>
-                      <Text style={styles.inputText}>{key_atr_desc}</Text>
+                        <View>
+                          <Text style={styles.nameText}>{display_name}</Text>
+                        </View>
+                        <Text style={styles.inputText}>{this.calculateAge(dob)} y/o</Text>
+
+                        <Text style={styles.inputText}>{location}</Text>
+                        <Text style={styles.inputText}>{key_atr_desc}</Text>
+                      </View>
+                      <TouchableOpacity style={styles.chatButtonContainer}
+                        onPress={() => {
+
+                          console.log(this.props.token),
+                            axios.post(`${Config.API_SERVER}/api/chat/conversation/${id}`,
+                              {},
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${this.props.token}`
+                                }
+                              })
+                              .then(res => {
+                                conID = res.data;
+                                this.props.navigator.push({
+                                  screen: 'ChatTabScreen',
+                                  passProps: {
+                                    token: this.props.token,
+                                    userID: this.props.userID,
+                                    targetID: id,
+                                    targetName: display_name,
+                                    conID: conID,
+                                  },
+                                });
+                              })
+                              .catch(err => console.log(err))
+
+                        }}>
+                        <Text style={styles.chatButtonText}>CHAT</Text>
+                      </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.chatButtonContainer}
-                      onPress={() => {
 
-                        console.log(this.props.token),
-                          axios.post(`${Config.API_SERVER}/api/chat/conversation/${id}`,
-                            {},
-                            {
-                              headers: {
-                                Authorization: `Bearer ${this.props.token}`
-                              }
-                            })
-                            .then(res => {
-                              conID = res.data;
-                              this.props.navigator.push({
-                                screen: 'ChatTabScreen',
-                                passProps: { 
-                                  token: this.props.token,
-                                  userID: this.props.userID, 
-                                  targetID: id,
-                                  targetName: display_name,
-                                  conID: conID, 
-                                   },
-                              });
-                            })
-                            .catch(err => console.log(err))
-
-                      }}>
-                      <Text style={styles.chatButtonText}>CHAT</Text>
-                    </TouchableOpacity>
                   </View>
                 )
             )}
@@ -174,6 +194,22 @@ const MapStateToProps = (state: any) => {
 export default connect(MapStateToProps)(Deck);
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    position: 'absolute',
+    left: 50,
+    top: 30,
+  },
+  mbtiCol: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    zIndex: 1
+  },
+  mbtiRow: {
+    // flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -183,8 +219,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   card: {
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
     backgroundColor: "white",
     padding: 5,
     marginTop: 20,
@@ -195,6 +231,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     width: width * 0.8, // percent or minus
     height: height * 0.65,
+    zIndex: 0
   },
   avatar: {
     resizeMode: 'contain',
