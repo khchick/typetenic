@@ -10,7 +10,7 @@ import {
     FlatList,
 } from 'react-native';
 
-export default class myCarousel extends React.Component {
+export default class MyCarousel extends React.Component {
 
     _renderItem ({item, index}) {
         return (

@@ -41,7 +41,7 @@ class Request extends React.Component<RequestProps, RequestStates> {
     };
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     axios
       .get(`${Config.API_SERVER}/api/connection/request/received`, {
         headers: {
