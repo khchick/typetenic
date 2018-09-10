@@ -17,7 +17,10 @@ import { connect } from 'react-redux';
 import LeftTopButton from "./components/LeftTopButton";
 import RightTopButton from "./components/RightTopButton";
 import AvatarImage, { getAvatar } from './components/AvatarImage';
+<<<<<<< HEAD
+=======
 //import MyCarousel from './components/CarouselSlide';
+>>>>>>> 8df648e5108a4b1a8e83a863b76d0da8db5a7f79
 
 const { height, width } = Dimensions.get("window");
 
@@ -54,6 +57,13 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
         });
       })
       .catch(err => console.log(err));
+  }
+
+  calculateAge(dob: any) {
+    let dobDate = new Date(dob);
+    var ageDifMs = Date.now() - dobDate.getTime();
+    var ageDate = new Date(ageDifMs);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 
   render() {
@@ -118,8 +128,18 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                     <View style={styles.card}>
                       <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
 
+<<<<<<< HEAD
                       <View>
                         <Text style={styles.nameText}>{display_name}</Text>
+=======
+                        <View>
+                          <Text style={styles.nameText}>{display_name}</Text>
+                        </View>
+                        <Text style={styles.inputText}>{this.calculateAge(dob)} y/o</Text>
+
+                        <Text style={styles.inputText}>{location}</Text>
+                        <Text style={styles.inputText}>{key_atr_desc}</Text>
+>>>>>>> b4f0a9bc0259545aaee77789c86881dd72879887
                       </View>
                       <Text style={styles.inputText}>{dob}</Text>
 
@@ -175,6 +195,22 @@ const MapStateToProps = (state: any) => {
 export default connect(MapStateToProps)(Deck);
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    position: 'absolute',
+    left: 50,
+    top: 30,
+  },
+  mbtiCol: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    zIndex: 1
+  },
+  mbtiRow: {
+    // flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -184,8 +220,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   card: {
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
     backgroundColor: "white",
     padding: 5,
     marginTop: 20,
@@ -196,6 +232,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     width: width * 0.8, // percent or minus
     height: height * 0.65,
+    zIndex: 0
   },
   avatar: {
     resizeMode: 'contain',
