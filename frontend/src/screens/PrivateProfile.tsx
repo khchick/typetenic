@@ -202,7 +202,7 @@ export default class PrivateProfileCont extends React.Component<
                 style={{ ...pickerSelectStyles }}
               />
 
-              <Text style={styles.inputHeader}>I'm interested in</Text>
+              <Text style={styles.inputHeader}>Interested In</Text>
               <RNPickerSelect
                 placeholder={{
                   label: "Select interest"

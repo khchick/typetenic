@@ -105,7 +105,7 @@ class Request extends React.Component<RequestProps, RequestStates> {
 
     if (this.state.sourceData != null && this.state.sourceData.length < 1) {
       component = 
-        <Text>You have no request at the moment</Text>      
+        <Text>You have no requests at the moment</Text>      
     }
 
 

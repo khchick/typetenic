@@ -143,8 +143,8 @@ class App {
         {
           label: "Notifications",
           screen: "NotificationTabScreen",
-          icon: require("./assets/chat.png"),
-          title: "Notifications",
+          icon: require("./assets/notifications.png"),
+          title: "NOTIFICATIONS",
           navigatorStyle: {
             navBarTextColor: 'black',
             navBarBackgroundColor: '#9EF8E4',

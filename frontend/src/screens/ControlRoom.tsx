@@ -152,11 +152,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  welcome: {
-    fontSize: 20,
-    // textAlign: "center",
-    margin: 10
-  },
   btnContainer: {
     backgroundColor: "#F0957F",
     marginVertical: 10,
@@ -187,7 +182,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     width: width * 0.5,
     height: height* 0.4,
-    marginBottom: 30
+    marginBottom: 20
   },
   avatar: {
     width: width * 0.5,
