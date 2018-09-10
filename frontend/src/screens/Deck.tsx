@@ -12,7 +12,6 @@ import {
 import axios from "axios";
 import Config from "react-native-config";
 import { AsyncStorage } from "react-native";
-import { transparentNav } from './styles/common';
 import { connect } from 'react-redux';
 import LeftTopButton from "./components/LeftTopButton";
 import RightTopButton from "./components/RightTopButton";
