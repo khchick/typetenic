@@ -123,20 +123,12 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                   <View>
                     <View style={styles.card}>
                       <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
-
-                        <View>
-                          <Text style={styles.nameText}>{display_name}</Text>
-                        </View>
-                        <Text style={styles.inputText}>{this.calculateAge(dob)} y/o</Text>
-
-                        <Text style={styles.inputText}>{location}</Text>
-                        <Text style={styles.inputText}>{key_atr_desc}</Text>
-                      </View>
-                      <Text style={styles.inputText}>{dob}</Text>
-
+                      <Text style={styles.nameText}>{display_name}</Text>
+                      <Text style={styles.inputText}>{this.calculateAge(dob)}</Text>
                       <Text style={styles.inputText}>{location}</Text>
                       <Text style={styles.inputText}>{key_atr_desc}</Text>
                     </View>
+
                     <TouchableOpacity style={styles.chatButtonContainer}
                       onPress={() => {
 
