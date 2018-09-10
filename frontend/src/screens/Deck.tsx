@@ -17,10 +17,6 @@ import { connect } from 'react-redux';
 import LeftTopButton from "./components/LeftTopButton";
 import RightTopButton from "./components/RightTopButton";
 import AvatarImage, { getAvatar } from './components/AvatarImage';
-<<<<<<< HEAD
-=======
-//import MyCarousel from './components/CarouselSlide';
->>>>>>> 8df648e5108a4b1a8e83a863b76d0da8db5a7f79
 
 const { height, width } = Dimensions.get("window");
 
