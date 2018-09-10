@@ -41,7 +41,7 @@ class Request extends React.Component<RequestProps, RequestStates> {
     };
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     axios
       .get(`${Config.API_SERVER}/api/connection/request/received`, {
         headers: {
@@ -51,7 +51,10 @@ class Request extends React.Component<RequestProps, RequestStates> {
       .then(res => {
         this.setState({
           sourceData: res.data
-        });
+        }, () =>{
+          console.log(this.state.sourceData)
+        }
+        );
       })
       .catch(err => console.log(err));
   }
@@ -98,6 +101,11 @@ class Request extends React.Component<RequestProps, RequestStates> {
         keyExtractor={this.keyExtractor}
         renderItem={this.renderSentRows}
        />
+    }
+
+    if (this.state.sourceData != null && this.state.sourceData.length < 1) {
+      component = 
+        <Text>You have no request at the moment</Text>      
     }
 
 
