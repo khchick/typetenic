@@ -38,7 +38,7 @@ class Suggestions extends React.Component<SuggestionsProps, SuggestionsStates> {
     };
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     axios
       .get(`${Config.API_SERVER}/api/user/nonsuggested`, {
         headers: {

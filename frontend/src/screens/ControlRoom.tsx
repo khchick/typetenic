@@ -36,7 +36,7 @@ class PureUser extends React.Component<UserProps, UserState> {
     };
   }
 
-  async componentWillMount() {
+  async componenDidMount() {
     axios
       .get(`${Config.API_SERVER}/api/user/myprofile`, {
         headers: {
