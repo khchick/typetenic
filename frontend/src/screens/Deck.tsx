@@ -115,46 +115,46 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                 conID
               }) => (
                   <View>
-                      <View style={styles.card}>
-                        <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
+                    <View style={styles.card}>
+                      <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
 
-                        <View>
-                          <Text style={styles.nameText}>{display_name}</Text>
-                        </View>
-                        <Text style={styles.inputText}>{dob}</Text>
-
-                        <Text style={styles.inputText}>{location}</Text>
-                        <Text style={styles.inputText}>{key_atr_desc}</Text>
+                      <View>
+                        <Text style={styles.nameText}>{display_name}</Text>
                       </View>
-                      <TouchableOpacity style={styles.chatButtonContainer}
-                        onPress={() => {
+                      <Text style={styles.inputText}>{dob}</Text>
 
-                          console.log(this.props.token),
-                            axios.post(`${Config.API_SERVER}/api/chat/conversation/${id}`,
-                              {},
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${this.props.token}`
-                                }
-                              })
-                              .then(res => {
-                                conID = res.data;
-                                this.props.navigator.push({
-                                  screen: 'ChatTabScreen',
-                                  passProps: {
-                                    token: this.props.token,
-                                    userID: this.props.userID,
-                                    targetID: id,
-                                    targetName: display_name,
-                                    conID: conID,
-                                  },
-                                });
-                              })
-                              .catch(err => console.log(err))
+                      <Text style={styles.inputText}>{location}</Text>
+                      <Text style={styles.inputText}>{key_atr_desc}</Text>
+                    </View>
+                    <TouchableOpacity style={styles.chatButtonContainer}
+                      onPress={() => {
 
-                        }}>
-                        <Text style={styles.chatButtonText}>CHAT</Text>
-                      </TouchableOpacity>
+                        console.log(this.props.token),
+                          axios.post(`${Config.API_SERVER}/api/chat/conversation/${id}`,
+                            {},
+                            {
+                              headers: {
+                                Authorization: `Bearer ${this.props.token}`
+                              }
+                            })
+                            .then(res => {
+                              conID = res.data;
+                              this.props.navigator.push({
+                                screen: 'ChatTabScreen',
+                                passProps: {
+                                  token: this.props.token,
+                                  userID: this.props.userID,
+                                  targetID: id,
+                                  targetName: display_name,
+                                  conID: conID,
+                                },
+                              });
+                            })
+                            .catch(err => console.log(err))
+
+                      }}>
+                      <Text style={styles.chatButtonText}>CHAT</Text>
+                    </TouchableOpacity>
                   </View>
                 )
             )}
