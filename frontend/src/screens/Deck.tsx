@@ -128,10 +128,6 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                     <View style={styles.card}>
                       <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
 
-<<<<<<< HEAD
-                      <View>
-                        <Text style={styles.nameText}>{display_name}</Text>
-=======
                         <View>
                           <Text style={styles.nameText}>{display_name}</Text>
                         </View>
@@ -139,7 +135,6 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
 
                         <Text style={styles.inputText}>{location}</Text>
                         <Text style={styles.inputText}>{key_atr_desc}</Text>
->>>>>>> b4f0a9bc0259545aaee77789c86881dd72879887
                       </View>
                       <Text style={styles.inputText}>{dob}</Text>
 

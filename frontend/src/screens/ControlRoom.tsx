@@ -190,13 +190,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 2,
     width: width * 0.5,
-<<<<<<< HEAD
     height: height* 0.4,
     marginBottom: 20
-=======
-    height: height * 0.4,
-    marginBottom: 30
->>>>>>> b4f0a9bc0259545aaee77789c86881dd72879887
   },
   avatar: {
     width: width * 0.5,
