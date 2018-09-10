@@ -77,7 +77,7 @@ class PureUser extends React.Component<UserProps, UserState> {
                   leftButtons: [
                     {
                       title: "Done",
-                      id: "done"
+                      id: "settings"
                     }
                   ]
                 }
@@ -109,9 +109,20 @@ class PureUser extends React.Component<UserProps, UserState> {
 
           <TouchableOpacity
             style={styles.btnContainer}
-            onPress={() => {
-              // NEW PAGE TO BE ADDED
-            }} 
+            onPress={() =>
+              this.props.navigator.push({
+                screen: "MbtiInfoLightBox",
+                title: "About MBTI",
+                navigatorButtons: {
+                  leftButtons: [
+                    {
+                      title: "Done",
+                      id: "about m"
+                    }
+                  ]
+                }
+              })
+            }
           >
             <Text style={styles.btnText}>ABOUT MBTI</Text>
           </TouchableOpacity>
@@ -122,8 +133,6 @@ class PureUser extends React.Component<UserProps, UserState> {
           >
             <Text style={styles.btnText}>LOGOUT</Text>
           </TouchableOpacity>
-
-
         </View>
       </LinearGradient>
     );
@@ -164,10 +173,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingVertical: 10,
     paddingHorizontal: 10,
-    shadowColor: 'black',
+    shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.6,
-    shadowRadius: 2,
+    shadowRadius: 2
   },
   btnText: {
     color: "#fff",
@@ -186,7 +195,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 2,
     width: width * 0.5,
-    height: height* 0.4,
+    height: height * 0.4,
     marginBottom: 30
   },
   avatar: {
