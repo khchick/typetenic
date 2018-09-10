@@ -6,6 +6,9 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
+import axios from 'axios';
+import Config from "react-native-config";
+import { connect } from "react-redux";
 
 const { height, width } = Dimensions.get("window");
 
@@ -15,7 +18,8 @@ interface NoteItemProps {
   index: any;
   onPressItem: (item: any) => any;
 }
-export default class NoteItem extends React.PureComponent<NoteItemProps> {
+
+class NoteItem extends React.PureComponent<NoteItemProps> {
   onPress = () => {
     this.props.onPressItem(this.props.item.id);
   };
@@ -24,14 +28,20 @@ export default class NoteItem extends React.PureComponent<NoteItemProps> {
     const item = this.props.item;
 
     return (
-      <View style={styles.rowContainer}>
-
-        <Text style={styles.name}>{item.title}</Text>
-
+      <View style={styles.rowContainer}>    
+        <Text style={styles.name} onPress={this.onPress}>{item.title}</Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.likeBtn} onPress={() => {
-            
-          }}>
+            console.log(item.id)
+            axios
+              .delete(`${Config.API_SERVER}/api/notification/${item.id}`, 
+              {
+                headers: {
+                  Authorization: "Bearer " + this.props.token
+                }
+              })
+              .catch(err => console.log(err));
+          }}> 
             <Text style={styles.btnText}>DELETE</Text>
           </TouchableOpacity>
         </View>
@@ -39,6 +49,14 @@ export default class NoteItem extends React.PureComponent<NoteItemProps> {
     );
   }
 }
+
+const MapStateToProps = (state: any) => {
+  return {
+    token: state.auth.token
+  };
+};
+
+export default connect(MapStateToProps)(NoteItem);
 
 const styles = StyleSheet.create({
   rowContainer: {
