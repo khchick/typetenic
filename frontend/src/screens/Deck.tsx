@@ -17,6 +17,10 @@ import { connect } from 'react-redux';
 import LeftTopButton from "./components/LeftTopButton";
 import RightTopButton from "./components/RightTopButton";
 import AvatarImage, { getAvatar } from './components/AvatarImage';
+<<<<<<< HEAD
+=======
+//import MyCarousel from './components/CarouselSlide';
+>>>>>>> 8df648e5108a4b1a8e83a863b76d0da8db5a7f79
 
 const { height, width } = Dimensions.get("window");
 
@@ -40,7 +44,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
     };
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     axios
       .get(`${Config.API_SERVER}/api/connection/deck/suggested`, {
         headers: {
@@ -121,18 +125,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                 conID
               }) => (
                   <View>
-                    <View style={styles.card}>
-                      <View style={styles.mbtiCol}>
-                        <View style={styles.mbtiRow}>
-                          <Text>I</Text>
-                          <Text>N</Text>
-                        </View>
-                        <View style={styles.mbtiRow}>
-                          <Text>T</Text>
-                          <Text>J</Text>
-                        </View>
-                      </View>
-                      <View style={styles.contentContainer}>
+                      <View style={styles.card}>
                         <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
 
                         <View>
@@ -172,8 +165,6 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                         }}>
                         <Text style={styles.chatButtonText}>CHAT</Text>
                       </TouchableOpacity>
-                    </View>
-
                   </View>
                 )
             )}
