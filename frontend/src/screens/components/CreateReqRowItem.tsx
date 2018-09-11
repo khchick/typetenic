@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "#48BBEC",
-    letterSpacing: 1
+    letterSpacing: 1,
   },
   likeBtn: {
     backgroundColor: "#F0957F",
@@ -128,6 +128,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 14,
     fontWeight: "bold",
-    letterSpacing: 1.5
+    letterSpacing: 1.5,
   }
 });

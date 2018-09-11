@@ -219,15 +219,16 @@ const styles = StyleSheet.create({
   avatar: {
     resizeMode: 'contain',
     width: width * 0.4,
-    height: height * 0.25
+    height: height * 0.23
   },
   nameText: {
-    fontSize: 20,
+    fontSize: 25,
     color: "#3B5998",
     fontWeight: "700",
     textAlign: "center",
     letterSpacing: 2.5,
-    marginTop: 10
+    marginTop: 10,
+    fontFamily: 'YatraOne-Regular'
   },
   inputText: {
     backgroundColor: "#E5F5FA",

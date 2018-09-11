@@ -112,8 +112,10 @@ class App {
           navigatorStyle: {
             navBarTextColor: '#30519B',
             navBarBackgroundColor: '#9EF8E4',
-            navBarTextFontSize: 18,
-            navBarTextFontFamily: 'BungeeShade-Regular'
+            navBarTextFontSize: 23,
+            navBarTextFontFamily: 'NovaRound',
+            //navBarTextFontFamily: 'Lemonada-Regular',
+            //navBarTextFontFamily: 'Comfortaa-Regular'
           }
         },
         {
@@ -122,9 +124,10 @@ class App {
           icon: require("./assets/requests.png"),
           title: "REQUESTS",
           navigatorStyle: {
-            navBarTextColor: 'black',
+            navBarTextColor: '#30519B',
             navBarBackgroundColor: '#9EF8E4',
-            navBarTextFontSize: 18
+            navBarTextFontSize: 23,
+            navBarTextFontFamily: 'NovaRound'
           }
         },
         {
@@ -133,9 +136,10 @@ class App {
           icon: require("./assets/decks.png"),
           title: "THE DECKS",
           navigatorStyle: {
-            navBarTextColor: 'black',
+            navBarTextColor: '#30519B',
             navBarBackgroundColor: '#9EF8E4',
-            navBarTextFontSize: 18
+            navBarTextFontSize: 23,
+            navBarTextFontFamily: 'NovaRound'
           },
           passProps: {
             token: token
@@ -147,9 +151,10 @@ class App {
           icon: require("./assets/notifications.png"),
           title: "NOTIFICATIONS",
           navigatorStyle: {
-            navBarTextColor: 'black',
+            navBarTextColor: '#30519B',
             navBarBackgroundColor: '#9EF8E4',
-            navBarTextFontSize: 18
+            navBarTextFontSize: 23,
+            navBarTextFontFamily: 'NovaRound'
           },
           passProps: {
             token: token
@@ -161,9 +166,10 @@ class App {
           icon: require("./assets/controlroom.png"),
           title: "CONTROL ROOM",
           navigatorStyle: {
-            navBarTextColor: 'black',
+            navBarTextColor: '#30519B',
             navBarBackgroundColor: '#9EF8E4',
-            navBarTextFontSize: 18
+            navBarTextFontSize: 23,
+            navBarTextFontFamily: 'NovaRound'
           }
         }
       ],

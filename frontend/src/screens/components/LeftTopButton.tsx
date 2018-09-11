@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     letterSpacing: 6,
-    fontSize: 15,
-    fontWeight: "600",
+    fontSize: 17,
+    fontFamily: 'GermaniaOne-Regular'
   }
 });
