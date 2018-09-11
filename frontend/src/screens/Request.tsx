@@ -18,6 +18,7 @@ import LeftTopButton from "./components/LeftTopButton";
 import RightTopButton from "./components/RightTopButton";
 import ReceivedRowItem from './components/ReceivedRowItem';
 import SentRowItem from './components/SentRowItem';
+import { handleReceivedReq, handleSentReq } from './../redux/actions/refreshAction';
 
 const { height, width } = Dimensions.get("window");
 
@@ -25,10 +26,13 @@ const { height, width } = Dimensions.get("window");
 interface RequestProps {
   navigator: Navigator;
   token: string;
+  handleReceivedReq: () => any;
+  handleSentReq: () => any;
+  receivedList: Array<any>;
+  sentList: Array<any>;
 }
 
 interface RequestStates {
-  sourceData: any;
   isReceived: boolean
 }
 
@@ -36,27 +40,13 @@ class Request extends React.Component<RequestProps, RequestStates> {
   constructor(props: any) {
     super(props);
     this.state = {
-      sourceData: null,
       isReceived: true,
     };
   }
 
-  async componentDidMount() {
-    axios
-      .get(`${Config.API_SERVER}/api/connection/request/received`, {
-        headers: {
-          Authorization: "Bearer " + this.props.token
-        }
-      })
-      .then(res => {
-        this.setState({
-          sourceData: res.data
-        }, () =>{
-          console.log(this.state.sourceData)
-        }
-        );
-      })
-      .catch(err => console.log(err));
+  componentDidMount() {
+    this.props.handleReceivedReq() // received request to redux
+    this.props.handleSentReq() // sent request to redux
   }
 
   keyExtractor = (item: any, index: any) => {
@@ -80,34 +70,37 @@ class Request extends React.Component<RequestProps, RequestStates> {
   };
 
   render() {
+    let isEmpty = <Text>You have no requests at the moment</Text>         
     let component = // default to show received request
       <FlatList
-        data={this.state.sourceData}
+        data={this.props.receivedList}
         keyExtractor={this.keyExtractor}
         renderItem={this.renderRows}
       />
 
     if (this.state.isReceived) {
-      component = 
-        <FlatList
-        data={this.state.sourceData}
-        keyExtractor={this.keyExtractor}
-        renderItem={this.renderRows}
-       />
+        if (this.props.receivedList.length < 1) {
+          component =  isEmpty
+        } else {    
+          component = 
+            <FlatList
+            data={this.props.receivedList}
+            keyExtractor={this.keyExtractor}
+            renderItem={this.renderRows}
+          />           
+        }
     } else {
-      component = 
-        <FlatList
-        data={this.state.sourceData}
-        keyExtractor={this.keyExtractor}
-        renderItem={this.renderSentRows}
-       />
+        if (this.props.sentList.length < 1) {
+          component =  isEmpty
+        } else {    
+          component = 
+            <FlatList
+            data={this.props.sentList}
+            keyExtractor={this.keyExtractor}
+            renderItem={this.renderSentRows}
+          />
+        }
     }
-
-    if (this.state.sourceData != null && this.state.sourceData.length < 1) {
-      component = 
-        <Text>You have no requests at the moment</Text>      
-    }
-
 
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={{ flex: 1 }}>
@@ -116,45 +109,30 @@ class Request extends React.Component<RequestProps, RequestStates> {
             <LeftTopButton
               leftButtonName={"RECEIVED"}
               onPress={() => {
-                console.log("press received");
-                axios
-                  .get(`${Config.API_SERVER}/api/connection/request/received`, {
-                    headers: {
-                      Authorization: "Bearer " + this.props.token
-                    }
-                  })
-                  .then(res => {
+                console.log("press received");  
                     this.setState({
-                      sourceData: res.data,
                       isReceived: true
-                    });
+                    })
+                    this.props.handleReceivedReq() 
+
                     this.props.navigator.setTitle({
                       title: 'RECEIVED REQUESTS' // new title 
                     });
-                  })
-                  .catch(err => console.log(err));
+                
               }}
             />
             <RightTopButton
               rightButtonName={"SENT"}
               onPress={() => {
                 console.log("sent");
-                axios
-                  .get(`${Config.API_SERVER}/api/connection/request/sent`, {
-                    headers: {
-                      Authorization: "Bearer " + this.props.token
-                    }
-                  })
-                  .then(res => {
-                    this.setState({
-                      sourceData: res.data,
-                      isReceived: false
-                    });
-                    this.props.navigator.setTitle({
-                      title: 'SENT REQUESTS' // new title 
-                    });
-                  })
-                  .catch(err => console.log(err));
+                this.setState({
+                  isReceived: false
+                })             
+                this.props.handleSentReq() 
+                
+                this.props.navigator.setTitle({
+                  title: 'SENT REQUESTS' // new title 
+                })                  
               }}
             />
           </View>
@@ -170,11 +148,21 @@ class Request extends React.Component<RequestProps, RequestStates> {
 
 const MapStateToProps = (state: any) => {
   return {
-    token: state.auth.token
+    token: state.auth.token,
+    receivedList: state.refresh.receivedList,
+    sentList: state.refresh.sentList
   };
 };
 
-export default connect(MapStateToProps)(Request);
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    handleSentReq: () => dispatch(handleSentReq()),
+    handleReceivedReq: () => dispatch(handleReceivedReq())
+  };
+};
+
+export default connect(MapStateToProps, mapDispatchToProps)(Request);
+
 
 const styles = StyleSheet.create({
   container: {
