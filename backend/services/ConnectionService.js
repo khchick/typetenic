@@ -58,8 +58,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `You have been connected with ${targetName}!`,
-                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'title': `You are connected with ${targetName}!`,
+                                                'content': `You and ${targetName} are  matched. Go to TYPE DECK to start chatting!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Approved',
                                                 'type_id': id[0],
@@ -69,8 +69,8 @@ class ConnectionService {
                                             .then(res => {
                                                 return trx
                                                     .insert({
-                                                        'title': `You have been connected with ${myName}!`,
-                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'title': `You are connected with ${myName}!`,
+                                                        'content': `You and ${myName} are matched. Go to TYPE DECK to start chatting!`,
                                                         'read_status': 'Unread',
                                                         'type': 'Request Approved',
                                                         'type_id': id[0],
@@ -98,8 +98,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `Connection request received from ${myName}!`,
-                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'title': `Connection request from ${myName}`,
+                                                'content': `${myName} has invited you to connect. Go to RECEIVED REQUESTS for further action!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Received',
                                                 'type_id': id[0],
@@ -138,8 +138,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `You have been connected with ${targetName}!`,
-                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'title': `You are connected with ${targetName}!`,
+                                                'content': `You and ${targetName} are matched. Go to TYPE DECK to start chatting!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Approved',
                                                 'type_id': id[0],
@@ -149,8 +149,8 @@ class ConnectionService {
                                             .then(res => {
                                                 return trx
                                                     .insert({
-                                                        'title': `You have been connected with ${myName}!`,
-                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'title': `You are connected with ${myName}!`,
+                                                        'content': `You and ${myName} are matched. Go to TYPE DECK to start chatting!`,
                                                         'read_status': 'Unread',
                                                         'type': 'Request Approved',
                                                         'type_id': id[0],
@@ -178,8 +178,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `Connection request received from ${myName}!`,
-                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'title': `Connection request from ${myName}`,
+                                                'content': `${myName} has invited you to connect. Go to RECEIVED REQUESTS for further action!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Received',
                                                 'type_id': id[0],
@@ -218,8 +218,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `You have been connected with ${targetName}!`,
-                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'title': `You are connected with ${targetName}!`,
+                                                'content': `You and ${targetName} are matched. Go to TYPE DECK to start chatting!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Approved',
                                                 'type_id': id[0],
@@ -229,8 +229,8 @@ class ConnectionService {
                                             .then(res => {
                                                 return trx
                                                     .insert({
-                                                        'title': `You have been connected with ${myName}!`,
-                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'title': `You are connected with ${myName}!`,
+                                                        'content': `You and ${myName} are matched. Go to TYPE DECK to start chatting!`,
                                                         'read_status': 'Unread',
                                                         'type': 'Request Approved',
                                                         'type_id': id[0],
@@ -258,8 +258,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `Connection request received from ${myName}!`,
-                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'title': `Connection request from ${myName}`,
+                                                'content': `${myName} has invited you to connect. Go to RECEIVED REQUESTS for further action!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Received',
                                                 'type_id': id[0],
@@ -300,8 +300,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `You have been connected with ${targetName}!`,
-                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'title': `You are connected with ${targetName}!`,
+                                                'content': `You and ${targetName} are matched. Go to TYPE DECK to start chatting!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Approved',
                                                 'type_id': id[0],
@@ -311,8 +311,8 @@ class ConnectionService {
                                             .then(res => {
                                                 return trx
                                                     .insert({
-                                                        'title': `You have been connected with ${myName}!`,
-                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'title': `You are connected with ${myName}!`,
+                                                        'content': `You and ${myName} are matched. Go to TYPE DECK to start chatting!`,
                                                         'read_status': 'Unread',
                                                         'type': 'Request Approved',
                                                         'type_id': id[0],
@@ -340,8 +340,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `Connection request received from ${myName}!`,
-                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'title': `Connection request from ${myName}`,
+                                                'content': `${myName} has invited you to connect. Go to RECEIVED REQUESTS for further action!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Received',
                                                 'type_id': id[0],
@@ -378,8 +378,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `You have been connected with ${targetName}!`,
-                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'title': `You are connected with ${targetName}!`,
+                                                'content': `You and ${targetName} are matched. Go to TYPE to start chatting!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Approved',
                                                 'type_id': id[0],
@@ -389,8 +389,8 @@ class ConnectionService {
                                             .then(res => {
                                                 return trx
                                                     .insert({
-                                                        'title': `You have been connected with ${myName}!`,
-                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'title': `You are connected with ${myName}!`,
+                                                        'content': `You and ${myName} are matched. Go to TYPE DECK to start chatting!`,
                                                         'read_status': 'Unread',
                                                         'type': 'Request Approved',
                                                         'type_id': id[0],
@@ -418,8 +418,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `Connection request received from ${myName}!`,
-                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'title': `Connection request from ${myName}`,
+                                                'content': `${myName} has invited you to connect. Go to RECEIVED REQUESTS for further action!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Received',
                                                 'type_id': id[0],
@@ -456,8 +456,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `You have been connected with ${targetName}!`,
-                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'title': `You are connected with ${targetName}!`,
+                                                'content': `You and ${targetName} are matched. Go to TYPE DECK to start chatting!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Approved',
                                                 'type_id': id[0],
@@ -467,8 +467,8 @@ class ConnectionService {
                                             .then(res => {
                                                 return trx
                                                     .insert({
-                                                        'title': `You have been connected with ${myName}!`,
-                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'title': `You are connected with ${myName}!`,
+                                                        'content': `You and ${myName} are matched. Go to TYPE DECK to start chatting!`,
                                                         'read_status': 'Unread',
                                                         'type': 'Request Approved',
                                                         'type_id': id[0],
@@ -496,8 +496,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `Connection request received from ${myName}!`,
-                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'title': `Connection request from ${myName}`,
+                                                'content': `${myName} has invited you to connect. Go to RECEIVED REQUESTS for further action!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Received',
                                                 'type_id': id[0],
@@ -534,8 +534,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `You have been connected with ${targetName}!`,
-                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'title': `You are connected with ${targetName}!`,
+                                                'content': `You and ${targetName} has been matched. Go to TYPE DECK to start chatting!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Approved',
                                                 'type_id': id[0],
@@ -545,8 +545,8 @@ class ConnectionService {
                                             .then(res => {
                                                 return trx
                                                     .insert({
-                                                        'title': `You have been connected with ${myName}!`,
-                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'title': `You are connected with ${myName}!`,
+                                                        'content': `You and ${myName} are matched. Go to TYPE DECK to start chatting!`,
                                                         'read_status': 'Unread',
                                                         'type': 'Request Approved',
                                                         'type_id': id[0],
@@ -574,8 +574,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `Connection request received from ${myName}!`,
-                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'title': `Connection request from ${myName}`,
+                                                'content': `${myName} has invited you to connect. Go to RECEIVED REQUESTSs for further action!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Received',
                                                 'type_id': id[0],
@@ -612,8 +612,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `You have been connected with ${targetName}!`,
-                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'title': `You are connected with ${targetName}!`,
+                                                'content': `You and ${targetName} are matched. Go to TYPE DECK to start chatting!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Approved',
                                                 'type_id': id[0],
@@ -623,8 +623,8 @@ class ConnectionService {
                                             .then(res => {
                                                 return trx
                                                     .insert({
-                                                        'title': `You have been connected with ${myName}!`,
-                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'title': `You are connected with ${myName}!`,
+                                                        'content': `You and ${myName} are matched. Go to TYPDE DECK to start chatting!`,
                                                         'read_status': 'Unread',
                                                         'type': 'Request Approved',
                                                         'type_id': id[0],
@@ -652,8 +652,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `Connection request received from ${myName}!`,
-                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'title': `Connection request from ${myName}`,
+                                                'content': `${myName} has invited you to connect. Go to RECEIVED REQUESTS for further action!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Received',
                                                 'type_id': id[0],
@@ -693,8 +693,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `You have been connected with ${targetName}!`,
-                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'title': `You are connected with ${targetName}!`,
+                                                'content': `You and ${targetName} are matched. Go to TYPE DECK to start chatting!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Approved',
                                                 'type_id': id[0],
@@ -704,8 +704,8 @@ class ConnectionService {
                                             .then(res => {
                                                 return trx
                                                     .insert({
-                                                        'title': `You have been connected with ${myName}!`,
-                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'title': `You are connected with ${myName}!`,
+                                                        'content': `You and ${myName} are matched. Go to TYPE DECK to start chatting!`,
                                                         'read_status': 'Unread',
                                                         'type': 'Request Approved',
                                                         'type_id': id[0],
@@ -733,8 +733,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `Connection request received from ${myName}!`,
-                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'title': `Connection request from ${myName}!`,
+                                                'content': `${myName} has invited you to connect. Go to the RECEIVED REQUESTS for further action!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Received',
                                                 'type_id': id[0],
@@ -773,8 +773,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `You have been connected with ${targetName}!`,
-                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'title': `You are connected with ${targetName}!`,
+                                                'content': `You and ${targetName} are matched. Go to TYPE DECK to start chatting!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Approved',
                                                 'type_id': id[0],
@@ -784,8 +784,8 @@ class ConnectionService {
                                             .then(res => {
                                                 return trx
                                                     .insert({
-                                                        'title': `You have been connected with ${myName}!`,
-                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'title': `You are connected with ${myName}!`,
+                                                        'content': `You and ${myName} are matched. Go to TYPE DECK to start chatting!`,
                                                         'read_status': 'Unread',
                                                         'type': 'Request Approved',
                                                         'type_id': id[0],
@@ -813,8 +813,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `Connection request received from ${myName}!`,
-                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'title': `Connection request from ${myName}`,
+                                                'content': `${myName} has invited you to connect. Go to RECEIVED REQUESTS for further action!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Received',
                                                 'type_id': id[0],
@@ -854,8 +854,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `You have been connected with ${targetName}!`,
-                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'title': `You are connected with ${targetName}!`,
+                                                'content': `You and ${targetName} are matched. Go to TYPE DECK to start chatting!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Approved',
                                                 'type_id': id[0],
@@ -865,8 +865,8 @@ class ConnectionService {
                                             .then(res => {
                                                 return trx
                                                     .insert({
-                                                        'title': `You have been connected with ${myName}!`,
-                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'title': `You are connected with ${myName}!`,
+                                                        'content': `You and ${myName} are matched. Go to TYPE DECK to start chatting!`,
                                                         'read_status': 'Unread',
                                                         'type': 'Request Approved',
                                                         'type_id': id[0],
@@ -894,8 +894,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `Connection request received from ${myName}!`,
-                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'title': `Connection request from ${myName}`,
+                                                'content': `${myName} has invited you to connect. Go to RECEIVED REQUESTS for further action!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Received',
                                                 'type_id': id[0],
@@ -936,8 +936,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `You have been connected with ${targetName}!`,
-                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'title': `You are connected with ${targetName}!`,
+                                                'content': `You and ${targetName} are matched. Go to TYPE DECK  to start chatting!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Approved',
                                                 'type_id': id[0],
@@ -947,8 +947,8 @@ class ConnectionService {
                                             .then(res => {
                                                 return trx
                                                     .insert({
-                                                        'title': `You have been connected with ${myName}!`,
-                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'title': `You are connected with ${myName}!`,
+                                                        'content': `You and ${myName} are matched. Go to TYPE DECK to start chatting!`,
                                                         'read_status': 'Unread',
                                                         'type': 'Request Approved',
                                                         'type_id': id[0],
@@ -976,8 +976,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `Connection request received from ${myName}!`,
-                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'title': `Connection request from ${myName}`,
+                                                'content': `${myName} has invited you to connect. Go to RECEIVED REQUESTS for further action!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Received',
                                                 'type_id': id[0],
@@ -1016,8 +1016,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `You have been connected with ${targetName}!`,
-                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'title': `You are connected with ${targetName}!`,
+                                                'content': `You and ${targetName} has been matched. Go to TYPE DECK to start chattingr!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Approved',
                                                 'type_id': id[0],
@@ -1027,8 +1027,8 @@ class ConnectionService {
                                             .then(res => {
                                                 return trx
                                                     .insert({
-                                                        'title': `You have been connected with ${myName}!`,
-                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'title': `You are connected with ${myName}!`,
+                                                        'content': `You and ${myName} are matched. Go to TYPE DECK to start chatting!`,
                                                         'read_status': 'Unread',
                                                         'type': 'Request Approved',
                                                         'type_id': id[0],
@@ -1056,8 +1056,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `Connection request received from ${myName}!`,
-                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'title': `Connection request from ${myName}`,
+                                                'content': `${myName} has invited you to connect. Go to RECEIVED REQUESTS for further action!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Received',
                                                 'type_id': id[0],
@@ -1095,8 +1095,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `You have been connected with ${targetName}!`,
-                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'title': `You are connected with ${targetName}!`,
+                                                'content': `You and ${targetName} are matched. Go to TYPE DECK to start chatting!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Approved',
                                                 'type_id': id[0],
@@ -1106,8 +1106,8 @@ class ConnectionService {
                                             .then(res => {
                                                 return trx
                                                     .insert({
-                                                        'title': `You have been connected with ${myName}!`,
-                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'title': `You are connected with ${myName}!`,
+                                                        'content': `You and ${myName} are matched. Go to TYPE DECK to start chatting!`,
                                                         'read_status': 'Unread',
                                                         'type': 'Request Approved',
                                                         'type_id': id[0],
@@ -1135,8 +1135,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `Connection request received from ${myName}!`,
-                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'title': `Connection request from ${myName}`,
+                                                'content': `${myName} has invited you to connect. Go to RECEIVED REQUESTS for further action!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Received',
                                                 'type_id': id[0],
@@ -1174,8 +1174,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `You have been connected with ${targetName}!`,
-                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'title': `You are connected with ${targetName}!`,
+                                                'content': `You and ${targetName} are matched. Go to TYPE DECK to start chatting!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Approved',
                                                 'type_id': id[0],
@@ -1185,8 +1185,8 @@ class ConnectionService {
                                             .then(res => {
                                                 return trx
                                                     .insert({
-                                                        'title': `You have been connected with ${myName}!`,
-                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'title': `You are connected with ${myName}!`,
+                                                        'content': `You and ${myName} are matched. Go to TYPE DECK to start chatting!`,
                                                         'read_status': 'Unread',
                                                         'type': 'Request Approved',
                                                         'type_id': id[0],
@@ -1214,8 +1214,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `Connection request received from ${myName}!`,
-                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'title': `Connection request from ${myName}`,
+                                                'content': `${myName} has invited you to connect. Go to RECEIVED REQUESTS for further action!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Received',
                                                 'type_id': id[0],
@@ -1255,8 +1255,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `You have been connected with ${targetName}!`,
-                                                'content': `User ${targetName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                'title': `You are connected with ${targetName}!`,
+                                                'content': `You and ${targetName} are matched. Go to TYPE DECK to start chatting!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Approved',
                                                 'type_id': id[0],
@@ -1266,8 +1266,8 @@ class ConnectionService {
                                             .then(res => {
                                                 return trx
                                                     .insert({
-                                                        'title': `You have been connected with ${myName}!`,
-                                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                                        'title': `You are connected with ${myName}!`,
+                                                        'content': `You and ${myName} are matched. Go to TYPE DECK to start chatting!`,
                                                         'read_status': 'Unread',
                                                         'type': 'Request Approved',
                                                         'type_id': id[0],
@@ -1295,8 +1295,8 @@ class ConnectionService {
                                     .then(id => {
                                         return trx
                                             .insert({
-                                                'title': `Connection request received from ${myName}!`,
-                                                'content': `User ${myName} has invited you to connect. Go to the Received Requests page for further action!`,
+                                                'title': `Connection request from ${myName}!`,
+                                                'content': `${myName} has invited you to connect. Go to RECEIVED REQUESTS for further action!`,
                                                 'read_status': 'Unread',
                                                 'type': 'Request Received',
                                                 'type_id': id[0],
@@ -1459,7 +1459,7 @@ class ConnectionService {
                         return trx
                             .insert({
                                 'title': `Your card has been removed`,
-                                'content': `User ${myName} has removed your card from his/her deck. More suggested matches are in the Cards of the day page!`,
+                                'content': `${myName} has removed your card from his/her deck. More suggested matches in CARDS of the DAY`,
                                 'read_status': 'Unread',
                                 'type': 'Connection Lost',
                                 'type_id': id[0],
@@ -1501,7 +1501,7 @@ class ConnectionService {
                         return trx
                             .insert({
                                 'title': `Your card has been removed`,
-                                'content': `User ${myName} has removed your card from his/her deck. Check out Discover page to connect with other users!`,
+                                'content': `${myName} has removed your card from his/her DECK. Check out DISCOVER to connect with other users`,
                                 'read_status': 'Unread',
                                 'type': 'Connection Lost',
                                 'type_id': id[0],
@@ -1566,7 +1566,7 @@ class ConnectionService {
 
         return query.then(rows => {
             if (rows.length >= 10) {
-                console.log(new Error('Either your deck or your target\'s deck is full. Connection cannot be made at the moment.'));
+                console.log(new Error('Either your DECK or your target\'s DECK is full. Connection cannot be done at the moment.'));
             } else {
                 let myName;
                 let query = this.knex
@@ -1587,8 +1587,8 @@ class ConnectionService {
                             .then(id => {
                                 return trx
                                     .insert({ // Create notification
-                                        'title': `Connection request approved.`,
-                                        'content': `User ${myName} has been matched. Go to your Type deck to start chatting with him/her!`,
+                                        'title': `Connection request approved!`,
+                                        'content': `You and ${myName} are matched. Go to TYPE DECK to start chatting!`,
                                         'read_status': 'Unread',
                                         'type': 'Request Approved',
                                         'type_id': id[0],
@@ -1625,7 +1625,7 @@ class ConnectionService {
                         return trx
                             .insert({ // Create notification
                                 'title': `Connection request rejected`,
-                                'content': `We are sorry that user ${myName} turned down your connection request. Please check out the Discover for more suggestions`,
+                                'content': `We are sorry that ${myName} turned down your connection request. Please check out DISCOVER for more suggestions`,
                                 'read_status': 'Unread',
                                 'type': 'Request Rejected',
                                 'type_id': id[0],
@@ -1692,8 +1692,8 @@ class ConnectionService {
                     .then(id => {
                         return trx
                             .insert({
-                                'title': `Flip request received!`,
-                                'content': `User ${myName} has invited you to flip your cards. Check out his/her profile page for further action!`,
+                                'title': `Flip request received`,
+                                'content': `${myName} has invited you to flip your cards. Check out his/her profile page for further action`,
                                 'read_status': 'Unread',
                                 'type': 'Flip Request Received',
                                 'type_id': id[0],
@@ -1735,7 +1735,7 @@ class ConnectionService {
                         return trx
                             .insert({
                                 'title': `Flip request approved!`,
-                                'content': `User ${myName} has approved your flip request. You can now access his/her private profile!`,
+                                'content': `${myName} has approved your flip request. You can now access his/her private profile!`,
                                 'read_status': 'Unread',
                                 'type': 'Flip Request Approved',
                                 'type_id': id[0],
@@ -1776,8 +1776,8 @@ class ConnectionService {
                     .then(id => {
                         return trx
                             .insert({
-                                'title': `Flip request rejected!`,
-                                'content': `User ${myName} has rejected your flip request. Maybe you should chat with him/her to find out more?`,
+                                'title': `Flip request rejected`,
+                                'content': `${myName} has rejected your flip request. Maybe you should chat with him/her to find out more?`,
                                 'read_status': 'Unread',
                                 'type': 'Flip Request Rejected',
                                 'type_id': id[0],

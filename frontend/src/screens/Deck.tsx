@@ -202,8 +202,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   card: {
-    // justifyContent: "center",
-    // alignItems: "center",
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "white",
     padding: 5,
     marginTop: 20,
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
   avatar: {
     resizeMode: 'contain',
     width: width * 0.4,
-    height: height * 0.3
+    height: height * 0.25
   },
   nameText: {
     fontSize: 20,
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     textAlign: "center",
     letterSpacing: 2.5,
-    marginTop: 5
+    marginTop: 10
   },
   inputText: {
     backgroundColor: "#E5F5FA",
