@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   name: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
     color: "#48BBEC",
     letterSpacing: 1
