@@ -14,21 +14,20 @@ import AvatarImage, {getAvatar} from './AvatarImage';
 import axios from 'axios';
 import Config from "react-native-config";
 import { connect } from "react-redux";
-import { createSentReq, handleSentReq } from '../../redux/actions/refreshAction';
+import { createConnection } from '../../redux/actions/refreshAction';
 
 const { height, width } = Dimensions.get("window");
 
 // Each request item
-interface CreateReqRowItemProps {
+interface ConnectionRowItemProps {
   token: string;
   item: any;
   index: any;
   onPressItem: (item: any) => any;
-  createSentReq: () => any;
-  handleSentReq: () => any;
+  createConnection: () => any;
 }
 
-class CreateReqRowItem extends React.PureComponent<CreateReqRowItemProps> {
+class ConnectionRowItem extends React.PureComponent<ConnectionRowItemProps> {
   onPress = () => {
     this.props.onPressItem(this.props.item.id);
   };
@@ -58,12 +57,11 @@ class CreateReqRowItem extends React.PureComponent<CreateReqRowItemProps> {
                 }
               })
               .then(() => {
-                this.props.createSentReq()
-                this.props.handleSentReq()
+                this.props.createConnection()
               })
               .catch(err => console.log(err));
           }} >
-            <Text style={styles.btnText}>SEND</Text>
+            <Text style={styles.btnText}>CONNECT</Text>
           </TouchableOpacity>
 
         </View>
@@ -80,12 +78,11 @@ const MapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    createSentReq: () => dispatch(createSentReq()),
-    handleSentReq: () => dispatch(handleSentReq())
+    createConnection: () => dispatch(createConnection())
   };
 };
 
-export default connect(MapStateToProps, mapDispatchToProps)(CreateReqRowItem);
+export default connect(MapStateToProps, mapDispatchToProps)(ConnectionRowItem);
 
 
 

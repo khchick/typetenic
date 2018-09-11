@@ -76,7 +76,47 @@ export type RefreshActions = CreateRequestAction | CreateConnectAction | Receive
 
 // dispatch the action creators
 
-// on aprove or reject received request
+export function createSentReq() {   
+    return (dispatch: Dispatch) => {
+        AsyncStorage.getItem('token')
+        .then((token) => {
+            return axios
+            .get(`${Config.API_SERVER}/api/user/nonsuggested`, {
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            })
+            .then(res => {
+                dispatch(CreateRequest(res.data))
+            })
+        })        
+        .catch(err => {
+            console.log(err);
+        })   
+    }
+}
+
+export function createConnection() {   
+    return (dispatch: Dispatch) => {
+        AsyncStorage.getItem('token')
+        .then((token) => {
+            return axios
+            .get(`${Config.API_SERVER}/api/user/suggested`, {
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            })
+            .then(res => {
+                dispatch(CreateConnection(res.data))
+            })
+        })        
+        .catch(err => {
+            console.log(err);
+        })   
+    }
+}
+
+
 export function handleReceivedReq() {   
     return (dispatch: Dispatch) => {
         AsyncStorage.getItem('token')
@@ -96,7 +136,6 @@ export function handleReceivedReq() {
         })   
     }
 }
-
 
 export function handleSentReq() {   
     return (dispatch: Dispatch) => {
