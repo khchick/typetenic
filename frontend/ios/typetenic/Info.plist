@@ -83,6 +83,36 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>BungeeShade-Regular.ttf</string>
+		<string>Comfortaa-Bold.ttf</string>
+		<string>Comfortaa-Light.ttf</string>
+		<string>Comfortaa-Regular.ttf</string>
+		<string>Flamenco-Light.ttf</string>
+		<string>Flamenco-Regular.ttf</string>
+		<string>GermaniaOne-Regular.ttf</string>
+		<string>Katibeh-Regular.ttf</string>
+		<string>KellySlab-Regular.ttf</string>
+		<string>Lemonada-Bold.ttf</string>
+		<string>Lemonada-Light.ttf</string>
+		<string>Lemonada-Regular.ttf</string>
+		<string>Lemonada-SemiBold.ttf</string>
+		<string>Mirza-Bold.ttf</string>
+		<string>Mirza-Medium.ttf</string>
+		<string>Mirza-Regular.ttf</string>
+		<string>Mirza-SemiBold.ttf</string>
+		<string>NovaRound.ttf</string>
+		<string>NovaSlim.ttf</string>
+		<string>NovaSquare.ttf</string>
+		<string>OleoScript-Bold.ttf</string>
+		<string>OleoScript-Regular.ttf</string>
+		<string>PatuaOne-Regular.ttf</string>
+		<string>PoiretOne-Regular.ttf</string>
+		<string>Salsa-Regular.ttf</string>
+		<string>StardosStencil-Bold.ttf</string>
+		<string>StardosStencil-Regular.ttf</string>
+		<string>UnicaOne-Regular.ttf</string>
+		<string>YatraOne-Regular.ttf</string>
+		<string>YesevaOne-Regular.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
