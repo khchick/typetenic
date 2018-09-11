@@ -110,9 +110,10 @@ class App {
           icon: require("./assets/discover.png"),
           title: "DISCOVER",
           navigatorStyle: {
-            navBarTextColor: 'black',
+            navBarTextColor: '#30519B',
             navBarBackgroundColor: '#9EF8E4',
-            navBarTextFontSize: 20
+            navBarTextFontSize: 18,
+            navBarTextFontFamily: 'BungeeShade-Regular'
           }
         },
         {
@@ -123,7 +124,7 @@ class App {
           navigatorStyle: {
             navBarTextColor: 'black',
             navBarBackgroundColor: '#9EF8E4',
-            navBarTextFontSize: 20
+            navBarTextFontSize: 18
           }
         },
         {
@@ -134,7 +135,7 @@ class App {
           navigatorStyle: {
             navBarTextColor: 'black',
             navBarBackgroundColor: '#9EF8E4',
-            navBarTextFontSize: 20
+            navBarTextFontSize: 18
           },
           passProps: {
             token: token
@@ -148,7 +149,7 @@ class App {
           navigatorStyle: {
             navBarTextColor: 'black',
             navBarBackgroundColor: '#9EF8E4',
-            navBarTextFontSize: 20
+            navBarTextFontSize: 18
           },
           passProps: {
             token: token
@@ -162,7 +163,7 @@ class App {
           navigatorStyle: {
             navBarTextColor: 'black',
             navBarBackgroundColor: '#9EF8E4',
-            navBarTextFontSize: 20
+            navBarTextFontSize: 18
           }
         }
       ],
