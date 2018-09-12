@@ -138,6 +138,9 @@ class PureMbtiResult extends React.Component<MbtiResultProps, MbtiState> {
                     backgoroundBlur: "light",
                     backgroundColor: "white",
                     tapBackgroundToDismiss: true
+                  },
+                  passProps: {
+                    mbti: this.state.mbti
                   }
                 })
               }
