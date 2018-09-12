@@ -30,7 +30,7 @@ export default class Landing extends React.Component<LandingProps> {
           <View style={styles.card}>
             <Image
               style={styles.logo}
-              source={require("../assets/logos/logo3.jpg")}
+              source={require("../assets/logos/logocircle.png")}
             />
 
             <Text style={styles.appText}>TYPETENIC</Text>
@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffa18e",
     paddingHorizontal: 15,
     paddingVertical: 15,
-    marginVertical: 5,
+    //marginVertical: 30,
+    marginTop: 20,
     width: "60%",
     height: 45,
     shadowColor: "#000",
@@ -74,20 +75,22 @@ const styles = StyleSheet.create({
     shadowRadius: 6
   },
   logo: {
-    width: 150,
-    height: 150
+    width: 100,
+    height: 100,
+    resizeMode: 'contain'
   },
   appText: {
     color: "#30519B",
     textAlign: "center",
     fontSize: 33,
-    textShadowColor: "black",
-    textShadowOffset: { width: 1, height: -1 },
-    textShadowRadius: 2,
-    fontWeight: "700",
+    // textShadowColor: "black",
+    // textShadowOffset: { width: 1, height: -1 },
+    // textShadowRadius: 2,
+    //fontWeight: "900",
     letterSpacing: 3,
     width: 300,
-    marginTop: 20
+    marginTop: 15,
+    fontFamily: 'NovaRound'
   },
   btnText: {
     color: "#fff",
@@ -101,20 +104,20 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     textAlign: "center",
     fontSize: 8,
-    marginTop: 10
+    marginTop: 80
   },
   card: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
-    padding: 30,
-    borderRadius: 15,
-    shadowColor: "#C0C0C0",
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.4,
-    shadowRadius: 6,
+    //backgroundColor: "white",
+    padding: 20,
+    //borderRadius: 15,
+    // shadowColor: "#C0C0C0",
+    // shadowOffset: { width: 2, height: 2 },
+    // shadowOpacity: 0.4,
+    // shadowRadius: 6,
     width: width * 0.8, // percent or minus
-    height: height * 0.6,
-    marginBottom: 10
+    height: height * 0.3,
+    marginBottom: 70
   }
 });
