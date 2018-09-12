@@ -75,14 +75,14 @@ const styles = StyleSheet.create({
     shadowRadius: 6
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 130,
+    height: 130,
     resizeMode: 'contain'
   },
   appText: {
     color: "#30519B",
     textAlign: "center",
-    fontSize: 33,
+    fontSize: 40,
     // textShadowColor: "black",
     // textShadowOffset: { width: 1, height: -1 },
     // textShadowRadius: 2,
