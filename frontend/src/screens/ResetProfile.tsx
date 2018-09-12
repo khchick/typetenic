@@ -343,7 +343,7 @@ class PureResetProfile extends React.Component<ResetProfileProps,ResetProfileSta
                 value={this.state.email}
               />
 
-              <Text style={styles.inputHeader}>Password</Text>
+              {/* <Text style={styles.inputHeader}>Password</Text>
               <View style={styles.passwordRow}>
                 <TextInput placeholder='Password' 
                   secureTextEntry={ this.state.hidePassword } 
@@ -356,7 +356,7 @@ class PureResetProfile extends React.Component<ResetProfileProps,ResetProfileSta
                   <Image source = { ( this.state.hidePassword ) ? require('../assets/hide.png') : require('../assets/show.png') } 
                     style = { styles.passwordImage } />
                 </TouchableOpacity>
-              </View>
+              </View> */}
 
               <Text style={styles.inputHeader}>Date of Birth</Text>
               <DatePicker
@@ -526,7 +526,8 @@ const styles = StyleSheet.create({
   },
   propic: {
     height: 150,
-    width: 150
+    width: 150,
+    borderRadius: 150/2,
   },
   passwordRow:{
     flexDirection: 'row',

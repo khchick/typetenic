@@ -120,7 +120,6 @@ function editKeyAtrSuccess(key_atr: string, key_atr_desc: string) {
 
 export interface SubmitProfileAction {
     type: SUBMIT_PROFILE,
-    imageData: any,
     name: string,
     date: string,
     gender: string,
@@ -128,11 +127,11 @@ export interface SubmitProfileAction {
     location: string,
     mbti: string,
     keyAtr: string, 
-    keyDesc: string
+    keyDesc: string,
+    imageData: any
 }
 
 function submitProfileSuccess(
-    imageData: any,
     name: string,
     date: string,
     gender: string,
@@ -140,11 +139,11 @@ function submitProfileSuccess(
     location: string,
     mbti: string,
     keyAtr: string, 
-    keyDesc: string
+    keyDesc: string,
+    imageData: any,
     ) {
     return {
-        type: EDIT_PROFILE,
-        imageData,
+        type: SUBMIT_PROFILE,
         name,
         date,
         gender,
@@ -152,7 +151,8 @@ function submitProfileSuccess(
         location,
         mbti,
         keyAtr, 
-        keyDesc
+        keyDesc,
+        imageData
     }
 }
 
@@ -247,9 +247,9 @@ export function submitProfile(
     key_atr_desc: string,
     imageData: any,
     ) {
-    return (dispatch: Dispatch) => {    
-    AsyncStorage.getItem('token')
-    .then((token) => {      
+    return async (dispatch: Dispatch) => {    
+        const token = await AsyncStorage.getItem('token');
+        
         let profileData = new FormData();
         profileData.append('display_name', name); // key/value pairs 
         profileData.append('dob', date); 
@@ -272,15 +272,14 @@ export function submitProfile(
             }
             }
         )
-    }) 
     .then(res => {
         console.log(res)
         if (res.data == null) {
             dispatch(loginFailure('Unexpected error'));
         } else {
-            dispatch(submitProfileSuccess(name, date, gender, orientation, location, mbti, key_atr, key_atr_desc, imageData))       
-            dispatch(loginSuccess(res.data.token));
-            App.loginApp(res.data.token);
+            dispatch(submitProfileSuccess(name, date, gender, orientation, location, mbti, key_atr, key_atr_desc, imageData)) 
+            dispatch(getUserProfile(token)); // save profile to redux
+            App.loginApp(token);
         }
     })
     .catch(err => {
