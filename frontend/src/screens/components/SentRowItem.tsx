@@ -14,6 +14,7 @@ import AvatarImage, {getAvatar} from '../components/AvatarImage';
 import axios from 'axios';
 import Config from "react-native-config";
 import { connect } from "react-redux";
+import { handleSentReq } from '../../redux/actions/refreshAction';
 
 const { height, width } = Dimensions.get("window");
 
@@ -23,6 +24,7 @@ interface SentRowItemProps {
   item: any;
   index: any;
   onPressItem: (item: any) => any;
+  handleSentReq: () => any;
 }
 
 class SentRowItem extends React.PureComponent<SentRowItemProps> {
@@ -56,6 +58,9 @@ class SentRowItem extends React.PureComponent<SentRowItemProps> {
                   'targetID': item.id
                 }
               })
+              .then(() => {
+                this.props.handleSentReq()
+              })
               .catch(err => console.log(err));
           }} >
             <Text style={styles.btnText}>CANCEL</Text>
@@ -73,7 +78,13 @@ const MapStateToProps = (state: any) => {
   };
 };
 
-export default connect(MapStateToProps)(SentRowItem);
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    handleSentReq: () => dispatch(handleSentReq())
+  };
+};
+
+export default connect(MapStateToProps, mapDispatchToProps)(SentRowItem);
 
 
 const styles = StyleSheet.create({

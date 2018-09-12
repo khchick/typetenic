@@ -14,6 +14,7 @@ import AvatarImage, {getAvatar} from './AvatarImage';
 import axios from 'axios';
 import Config from "react-native-config";
 import { connect } from "react-redux";
+import { handleReceivedReq } from '../../redux/actions/refreshAction';
 
 const { height, width } = Dimensions.get("window");
 
@@ -23,6 +24,7 @@ interface ReceivedRowItemProps {
   item: any;
   index: any;
   onPressItem: (item: any) => any;
+  handleReceivedReq: () => any;
 }
 
 class ReceivedRowItem extends React.PureComponent<ReceivedRowItemProps> {
@@ -56,6 +58,9 @@ class ReceivedRowItem extends React.PureComponent<ReceivedRowItemProps> {
                   Authorization: "Bearer " + this.props.token
                 }
               })
+              .then(() => {
+                this.props.handleReceivedReq()
+              })
               .catch(err => console.log(err));
           }} >
             <Text style={styles.btnText}>LIKE</Text>
@@ -73,6 +78,9 @@ class ReceivedRowItem extends React.PureComponent<ReceivedRowItemProps> {
                   Authorization: "Bearer " + this.props.token
                 }
               })
+              .then(() => {
+                this.props.handleReceivedReq()
+              })
               .catch(err => console.log(err));
           }}>
             <Text style={styles.btnText}>PASS</Text>
@@ -89,7 +97,13 @@ const MapStateToProps = (state: any) => {
   };
 };
 
-export default connect(MapStateToProps)(ReceivedRowItem);
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    handleReceivedReq: () => dispatch(handleReceivedReq())
+  };
+};
+
+export default connect(MapStateToProps, mapDispatchToProps)(ReceivedRowItem);
 
 
 const styles = StyleSheet.create({

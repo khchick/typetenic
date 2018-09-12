@@ -100,8 +100,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', 'ESTJ')
@@ -119,8 +127,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', 'ESTJ')
@@ -137,8 +153,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', 'ISTJ')
@@ -155,8 +179,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', 'ISTJ')
@@ -175,8 +207,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', 'ISFJ')
@@ -192,8 +232,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', 'ESFP')
@@ -203,14 +251,21 @@ class UserService {
                         .orderBy('users.created_at');
                     break;
 
-
                 case 'ESFP':
                     query = this.knex.select('connection.status', 'users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', 'ESTP')
@@ -225,8 +280,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', 'ESTP')
@@ -236,14 +299,21 @@ class UserService {
                         .orderBy('users.created_at');
                     break;
 
-
                 case 'INFJ':
                     query = this.knex.select('connection.status', 'users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', 'ENTP')
@@ -261,8 +331,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', 'ENFP')
@@ -279,8 +357,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', 'INFJ')
@@ -298,8 +384,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', 'ISFJ')
@@ -318,8 +412,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', 'ESTJ')
@@ -336,8 +438,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', 'ENTP')
@@ -353,13 +463,22 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', 'ENTP')
                                 .orWhere('users.mbti', 'INTP')
                                 .orWhere('users.mbti', 'INFJ')
+
                         })
                         .andWhere('users.id', '!=', userID)
                         .orderBy('users.created_at');
@@ -370,8 +489,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', 'ESTJ')
@@ -383,6 +510,7 @@ class UserService {
                         .andWhere('users.id', '!=', userID)
                         .orderBy('users.created_at');
                     break;
+
             }
 
             let minAge = rows[0].min_age;
@@ -394,7 +522,6 @@ class UserService {
                     return query.then(rows => {
                         let suggestedUsers = [];
                         for (let i = 0; i < rows.length; i++) {
-                            let age = Math.floor((new Date().getTime() - rows[i].dob.getTime()) / 31556926000);
                             if (rows[i].status === null && rows[i].gender === 'M') {
                                 suggestedUsers.push(rows[i]);
                             }
@@ -405,7 +532,6 @@ class UserService {
                     return query.then(rows => {
                         let suggestedUsers = [];
                         for (let i = 0; i < rows.length; i++) {
-                            let age = Math.floor((new Date().getTime() - rows[i].dob.getTime()) / 31556926000);
                             if (rows[i].status === null && rows[i].gender === 'F') {
                                 suggestedUsers.push(rows[i]);
                             }
@@ -416,10 +542,9 @@ class UserService {
                     return query.then(rows => {
                         let suggestedUsers = [];
                         for (let i = 0; i < rows.length; i++) {
-                            let age = Math.floor((new Date().getTime() - rows[i].dob.getTime()) / 31556926000);
                             if (rows[i].status === null) {
                                 suggestedUsers.push(rows[i]);
-                            }
+                            } 
                         }
                         return suggestedUsers;
                     })
@@ -478,8 +603,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', '!=', 'ESTJ')
@@ -497,8 +630,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', '!=', 'ESTJ')
@@ -515,8 +656,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', '!=', 'ISTJ')
@@ -533,8 +682,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', '!=', 'ISTJ')
@@ -553,8 +710,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', '!=', 'ISFJ')
@@ -570,8 +735,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', '!=', 'ESFP')
@@ -587,8 +760,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', '!=', 'ESTP')
@@ -603,8 +784,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', '!=', 'ESTP')
@@ -620,8 +809,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', '!=', 'ENTP')
@@ -639,8 +836,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', '!=', 'ENFP')
@@ -657,8 +862,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', '!=', 'INFJ')
@@ -676,8 +889,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', '!=', 'ISFJ')
@@ -696,8 +917,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', '!=', 'ESTJ')
@@ -714,8 +943,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', '!=', 'ENTP')
@@ -731,8 +968,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', '!=', 'ENTP')
@@ -748,8 +993,16 @@ class UserService {
                         .from('users')
                         .leftOuterJoin('connection', function () {
                             this
-                                .on('connection.req_receiver_id', 'users.id')
-                                .orOn('connection.req_sender_id', 'users.id')
+                                .on(function () {
+                                    this
+                                        .on('connection.req_receiver_id', 'users.id')
+                                        .andOn('connection.req_sender_id', userID)
+                                })
+                                .orOn(function () {
+                                    this
+                                        .on('connection.req_receiver_id', userID)
+                                        .andOn('connection.req_sender_id', 'users.id')
+                                })
                         })
                         .where(function () {
                             this.where('users.mbti', '!=', 'ESTJ')
@@ -772,7 +1025,6 @@ class UserService {
                     return query.then(rows => {
                         let nonSuggestedUsers = [];
                         for (let i = 0; i < rows.length; i++) {
-                            let age = Math.floor((new Date().getTime() - rows[i].dob.getTime()) / 31556926000);
                             if (rows[i].status === null && rows[i].gender === 'M') {
                                 nonSuggestedUsers.push(rows[i]);
                             }
@@ -783,7 +1035,6 @@ class UserService {
                     return query.then(rows => {
                         let nonSuggestedUsers = [];
                         for (let i = 0; i < rows.length; i++) {
-                            let age = Math.floor((new Date().getTime() - rows[i].dob.getTime()) / 31556926000);
                             if (rows[i].status === null && rows[i].gender === 'F') {
                                 nonSuggestedUsers.push(rows[i]);
                             }
@@ -794,7 +1045,6 @@ class UserService {
                     return query.then(rows => {
                         let nonSuggestedUsers = [];
                         for (let i = 0; i < rows.length; i++) {
-                            let age = Math.floor((new Date().getTime() - rows[i].dob.getTime()) / 31556926000);
                             if (rows[i].status === null) {
                                 nonSuggestedUsers.push(rows[i]);
                             }
