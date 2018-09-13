@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import LeftTopButton from "./components/LeftTopButton";
 import RightTopButton from "./components/RightTopButton";
 import AvatarImage, { getAvatar } from './components/AvatarImage';
+import { handleChangeTypeDeck, handleChangeTenDeck } from './../redux/actions/refreshAction';
 
 const { height, width } = Dimensions.get("window");
 
@@ -23,36 +24,54 @@ interface IDeckProps {
   navigator: Navigator;
   token: string;
   userID: number;
+  handleChangeTypeDeck: () => any;
+  handleChangeTenDeck: () => any;
+  typeDeckList: Array<any>;
+  tenDeckList: Array<any>;
 }
 
 interface IDeckStates {
-  connectedSuggestions: any;
-  connectedUsers: any;
+  deckContent: Array<any>;
 }
 
 class Deck extends React.Component<IDeckProps, IDeckStates> {
   constructor(props: IDeckProps) {
     super(props);
+
     this.state = {
-      connectedSuggestions: [],
-      connectedUsers: [],
+      deckContent: []
     };
   }
 
-  async componentDidMount() {
-    axios
-      .get(`${Config.API_SERVER}/api/connection/deck/suggested`, {
-        headers: {
-          Authorization: "Bearer " + this.props.token
-        }
-      })
-      .then(res => {
-        this.setState({
-          connectedSuggestions: res.data
-        });
-      })
-      .catch(err => console.log(err));
+  // componentWillMount() {
+  //   this.props.handleChangeTypeDeck();
+  //   this.setState({
+  //     deckContent: this.props.typeDeckList
+  //   });
+  // }
+
+  componentDidMount() {
+    this.props.handleChangeTypeDeck();
+    this.setState({
+      deckContent: this.props.typeDeckList
+    })
+    this.props.handleChangeTenDeck();
   }
+
+  // async componentDidMount() {
+  //   axios
+  //     .get(`${Config.API_SERVER}/api/connection/deck/suggested`, {
+  //       headers: {
+  //         Authorization: "Bearer " + this.props.token
+  //       }
+  //     })
+  //     .then(res => {
+  //       this.setState({
+  //         deckContent: res.data
+  //       });
+  //     })
+  //     .catch(err => console.log(err));
+  // }
 
   calculateAge(dob: any) {
     let dobDate = new Date(dob);
@@ -69,45 +88,29 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
             <LeftTopButton
               leftButtonName={"TYPE"}
               onPress={() => {
-                axios
-                  .get(`${Config.API_SERVER}/api/connection/deck/suggested`, {
-                    headers: {
-                      Authorization: "Bearer " + this.props.token
-                    }
-                  })
-                  .then(res => {
-                    this.setState({
-                      connectedSuggestions: res.data
-                    });
-                  })
-                  .catch(err => console.log(err));
+                this.props.handleChangeTypeDeck();
+                this.setState({
+                  deckContent: this.props.typeDeckList
+                });
               }}
             />
             <RightTopButton
               rightButtonName={"TEN"}
               onPress={() => {
-                axios
-                  .get(`${Config.API_SERVER}/api/connection/deck/mypicks`, {
-                    headers: {
-                      Authorization: "Bearer " + this.props.token
-                    }
-                  })
-                  .then(res => {
-                    this.setState({
-                      connectedSuggestions: res.data
-                    });
-                  })
-                  .catch(err => console.log(err));
+                this.props.handleChangeTenDeck();
+                this.setState({
+                  deckContent: this.props.tenDeckList
+                });
               }}
             />
           </View>
           <ScrollView
             horizontal={true}
-            snapToInterval={width - 40} // card width offset margin
+            snapToInterval={width - 53} // card width offset margin
             snapToAlignment={"center"}
             decelerationRate={0} // stop scrolling momentum
           >
-            {this.state.connectedSuggestions.map(
+            {this.state.deckContent.map(
               ({
                 id,
                 display_name,
@@ -130,8 +133,6 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
 
                     <TouchableOpacity style={styles.chatButtonContainer}
                       onPress={() => {
-
-                        console.log(this.props.token),
                           axios.post(`${Config.API_SERVER}/api/chat/conversation/${id}`,
                             {},
                             {
@@ -170,11 +171,20 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
 const MapStateToProps = (state: any) => {
   return {
     token: state.auth.token,
-    userID: state.profile.id
-  }
-}
+    userID: state.profile.id,
+    typeDeckList: state.refresh.typeDeckList,
+    tenDeckList: state.refresh.tenDeckList
+  };
+};
 
-export default connect(MapStateToProps)(Deck);
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    handleChangeTypeDeck: () => dispatch(handleChangeTypeDeck()),
+    handleChangeTenDeck: () => dispatch(handleChangeTenDeck())
+  };
+};
+
+export default connect(MapStateToProps, mapDispatchToProps)(Deck);
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -207,6 +217,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 5,
     marginTop: 20,
+    marginLeft: 15,
+    marginRight: 15,
     borderRadius: 15,
     shadowColor: "black",
     shadowOffset: { width: 2, height: -3 },
