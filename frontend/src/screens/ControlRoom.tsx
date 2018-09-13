@@ -19,53 +19,25 @@ const { height, width } = Dimensions.get("window");
 interface UserProps {
   navigator: Navigator;
   token: string;
+  imageUrl: string;
   onLogoutPress: () => void;
 }
 
-interface UserState {
-  ownProfile: any;
-  imageUrl: any;
-}
 
-class PureUser extends React.Component<UserProps, UserState> {
-  constructor(props: UserProps) {
-    super(props);
-    this.state = {
-      ownProfile: null,
-      imageUrl: "https://data.whicdn.com/images/287294903/large.jpg" // Dua lipa
-    };
-  }
-
-  async componenDidMount() {
-    axios
-      .get(`${Config.API_SERVER}/api/user/myprofile`, {
-        headers: {
-          Authorization: "Bearer " + this.props.token
-        }
-      })
-      .then(res => {
-        this.setState({
-          ownProfile: res.data,
-          imageUrl: `${Config.API_SERVER}` + res.data[0].profile_pic
-        });
-        console.log(res.data[0].profile_pic);
-        console.log(this.state.imageUrl);
-      })
-      .catch(err => console.log(err));
-  }
+class PureUser extends React.Component<UserProps> {
 
   render() {
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={{ flex: 1 }}>
         <View style={styles.container}>
-          <View style={styles.card}>
+          {/* <View style={styles.card}> */}
             <Image
               style={styles.avatar}
               source={{
-                uri: this.state.imageUrl
+                uri: `${Config.API_SERVER}` + this.props.imageUrl
               }}
             />
-          </View>
+          {/* </View> */}
 
           <TouchableOpacity
             style={styles.btnContainer}
@@ -141,7 +113,8 @@ class PureUser extends React.Component<UserProps, UserState> {
 
 const MapStateToProps = (state: any) => {
   return {
-    token: state.auth.token
+    token: state.auth.token,
+    imageUrl: state.profile.profilePic
   };
 };
 
@@ -184,17 +157,26 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
-    borderRadius: 15,
+    borderRadius: width * 0.5,
     shadowColor: "#000",
     shadowOffset: { width: 2, height: -3 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
-    width: width * 0.5,
-    height: height* 0.4,
+    width: width * 0.6,
+    height: width * 0.6,
     marginBottom: 20
   },
   avatar: {
-    width: width * 0.5,
-    height: height * 0.4
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    borderRadius: width * 0.6 * 0.5,
+    shadowColor: "#000",
+    shadowOffset: { width: 2, height: -3 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    width: width * 0.6,
+    height: width * 0.6,
+    marginBottom: 20
   }
 });
