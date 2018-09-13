@@ -24,6 +24,12 @@ class Notification extends React.Component<NotificationProps, {}> {
 
   componentDidMount() {
     this.props.handleChangeNotification() 
+     // show no of notifications in tabbar
+     this.props.navigator.setTabBadge({
+      // tabIndex: 0, // (optional) if missing, the badge will be added to this screen's tab
+      badge: 17, // badge value, null to remove badge
+      badgeColor: '#006400', // (optional) if missing, the badge will use the default color
+    });
   }
 
   keyExtractor = (item: any, index: any) => {
