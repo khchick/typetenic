@@ -9,6 +9,7 @@ import {
 import axios from 'axios';
 import Config from "react-native-config";
 import { connect } from "react-redux";
+import { handleChangeNotification } from '../../redux/actions/refreshAction';
 
 const { height, width } = Dimensions.get("window");
 
@@ -17,6 +18,7 @@ interface NoteItemProps {
   item: any;
   index: any;
   onPressItem: (item: any) => any;
+  handleChangeNotification: () => any;
 }
 
 class NoteItem extends React.PureComponent<NoteItemProps> {
@@ -40,9 +42,12 @@ class NoteItem extends React.PureComponent<NoteItemProps> {
                   Authorization: "Bearer " + this.props.token
                 }
               })
+              .then(()=> {
+                this.props.handleChangeNotification()
+              })
               .catch(err => console.log(err));
           }}> 
-            <Text style={styles.btnText}>DELETE</Text>
+            <Text style={styles.btnText}>DEL</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -56,7 +61,13 @@ const MapStateToProps = (state: any) => {
   };
 };
 
-export default connect(MapStateToProps)(NoteItem);
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    handleChangeNotification: () => dispatch(handleChangeNotification())
+  };
+};
+
+export default connect(MapStateToProps, mapDispatchToProps)(NoteItem);
 
 const styles = StyleSheet.create({
   rowContainer: {

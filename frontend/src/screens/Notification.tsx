@@ -6,41 +6,24 @@ import {
   ScrollView,
   FlatList
 } from "react-native";
-import axios from "axios";
-import Config from "react-native-config";
 import { connect } from "react-redux";
 import NoteItem from './components/NoteItem';
+import { handleChangeNotification } from './../redux/actions/refreshAction';
 
 interface NotificationProps {
   navigator: Navigator;
   token: string;
+  handleChangeNotification: () => any;
+  notificationList: Array<any>;  
 }
 
-interface NotificationStates {
-  sourceData: any;
-}
-
-class Notification extends React.Component<NotificationProps, NotificationStates> {
+class Notification extends React.Component<NotificationProps, {}> {
   constructor(props: any) {
     super(props);
-    this.state = {
-      sourceData: null
-    };
   }
 
-  async componentWillMount() {
-    axios
-      .get(`${Config.API_SERVER}/api/notification/all`, {
-        headers: {
-          Authorization: "Bearer " + this.props.token
-        }
-      })
-      .then(res => {
-        this.setState({
-          sourceData: res.data
-        });
-      })
-      .catch(err => console.log(err));
+  componentDidMount() {
+    this.props.handleChangeNotification() 
   }
 
   keyExtractor = (item: any, index: any) => {
@@ -52,11 +35,10 @@ class Notification extends React.Component<NotificationProps, NotificationStates
   );
 
   onPressItem = (item: any) => {
-    console.log("Pressed row: " + item);
     this.props.navigator.push({
-      title: "New Page",
-      screen: "LoginScreen", // to target user profile
-      passProps: { userId: item.id }
+      title: "Notification Content",
+      screen: "NoteContent",
+      passProps: { noteID: item }
     });
   };
 
@@ -66,7 +48,7 @@ class Notification extends React.Component<NotificationProps, NotificationStates
         <View style={styles.container}>
           <ScrollView style={styles.listContainer}>
             <FlatList
-              data={this.state.sourceData}
+              data={this.props.notificationList}
               keyExtractor={this.keyExtractor}
               renderItem={this.renderRows}
             />
@@ -79,11 +61,18 @@ class Notification extends React.Component<NotificationProps, NotificationStates
 
 const MapStateToProps = (state: any) => {
   return {
-    token: state.auth.token
+    token: state.auth.token,
+    notificationList: state.refresh.notificationList,
   };
 };
 
-export default connect(MapStateToProps)(Notification);
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    handleChangeNotification: () => dispatch(handleChangeNotification())
+  };
+};
+
+export default connect(MapStateToProps, mapDispatchToProps)(Notification);
 
 const styles = StyleSheet.create({
   container: {
