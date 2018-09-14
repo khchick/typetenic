@@ -61,16 +61,16 @@ class ConnectionRouter {
 
         // DECK ACTIONS
 
-        router.delete('/deck/suggested', (req, res) => { // remove card from SUGGESTED MATCHES deck
-            this.connectionService.deleteConnectedSuggestion(req.user.id, req.body.targetID)
-                .then(() => this.connectionService.listConnectedSuggestions(req.user.id))
-                .then(users => res.json(users))
-                .catch((err) => res.status(500).json(err));
-        })
+        // router.delete('/deck/suggested', (req, res) => { // remove card from SUGGESTED MATCHES deck
+        //     this.connectionService.deleteConnectedSuggestion(req.user.id, req.body.targetID)
+        //         .then(() => this.connectionService.listConnectedSuggestions(req.user.id))
+        //         .then(users => res.json(users))
+        //         .catch((err) => res.status(500).json(err));
+        // })
 
-        router.delete('/deck/mypicks', (req, res) => { // remove card from MANUALLY ADDED deck
-            this.connectionService.deleteConnectedUser(req.user.id, req.body.targetID)
-                .then(() => this.connectionService.listConnectedUsers(req.user.id))
+        router.delete('/deck/:targetID', (req, res) => { // remove card from MANUALLY ADDED deck
+            this.connectionService.deleteConnectedUser(req.user.id, req.params.targetID)
+                // .then(() => this.connectionService.listConnectedUsers(req.user.id))
                 .then(users => res.json(users))
                 .catch((err) => res.status(500).json(err));
         })
