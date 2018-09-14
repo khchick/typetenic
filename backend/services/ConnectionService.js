@@ -1316,7 +1316,7 @@ class ConnectionService {
 
     listConnectedSuggestions(userID) {
         let query = this.knex
-            .select('users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+            .select('users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti', 'connection.flip_status', 'flip_req_sender')
             .from('users')
             .innerJoin('connection', function () {
                 this
@@ -1331,7 +1331,7 @@ class ConnectionService {
             })
             .andWhere('status', 'Connected')
             .andWhere('system_matched', true)
-            .orderBy('connection.created_at')
+            .orderBy('connection.created_at', 'desc')
 
         return query.then(rows => {
             return rows.map(row => ({
@@ -1342,7 +1342,9 @@ class ConnectionService {
                 location: row.location,
                 key_atr: row.key_atr,
                 key_atr_desc: row.key_atr_desc,
-                mbti: row.mbti
+                mbti: row.mbti,
+                flip_status: row.flip_status,
+                flip_req_sender: row.flip_req_sender
             })
             )
         })
@@ -1375,7 +1377,7 @@ class ConnectionService {
 
     listConnectedUsers(userID) {
         let query = this.knex
-            .select('users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti')
+            .select('users.id', 'users.display_name', 'users.dob', 'users.gender', 'users.location', 'users.key_atr', 'users.key_atr_desc', 'users.mbti', 'connection.flip_status', 'flip_req_sender')
             .from('users')
             .innerJoin('connection', function () {
                 this
@@ -1390,7 +1392,7 @@ class ConnectionService {
             })
             .andWhere('status', 'Connected')
             .andWhere('system_matched', false)
-            .orderBy('connection.created_at')
+            .orderBy('connection.created_at', 'desc')
 
         return query.then(rows => {
             return rows.map(row => ({
@@ -1401,7 +1403,9 @@ class ConnectionService {
                 location: row.location,
                 key_atr: row.key_atr,
                 key_atr_desc: row.key_atr_desc,
-                mbti: row.mbti
+                mbti: row.mbti,
+                flip_status: row.flip_status,
+                flip_req_sender: row.flip_req_sender
             }))
         })
             .then(rows => {
@@ -1495,13 +1499,13 @@ class ConnectionService {
                             .andWhere('req_receiver_id', userID)
                     })
                     .andWhere('status', 'Connected')
-                    .andWhere('system_matched', false)
+                    // .andWhere('system_matched', false)
                     .returning('id')
                     .then(id => {
                         return trx
                             .insert({
                                 'title': `Your card has been removed`,
-                                'content': `${myName} has removed your card from his/her DECK. Check out DISCOVER to connect with other users`,
+                                'content': `${myName} has removed your card from his/her DECK. Check out DISCOVER to connect with other users!`,
                                 'read_status': 'Unread',
                                 'type': 'Connection Lost',
                                 'type_id': id[0],
