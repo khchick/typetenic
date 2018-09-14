@@ -7,6 +7,7 @@ import {
   ScrollView,
   Image,
   Dimensions,
+  TouchableHighlight,
   TouchableOpacity
 } from "react-native";
 import axios from "axios";
@@ -20,6 +21,7 @@ import {
   handleChangeTypeDeck,
   handleChangeTenDeck
 } from "./../redux/actions/refreshAction";
+import Modal from "react-native-modal";
 
 const { height, width } = Dimensions.get("window");
 
@@ -35,6 +37,7 @@ interface IDeckProps {
 
 interface IDeckStates {
   deckContent: Array<any>;
+  isModalVisible: boolean;
 }
 
 class Deck extends React.Component<IDeckProps, IDeckStates> {
@@ -42,7 +45,8 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
     super(props);
 
     this.state = {
-      deckContent: []
+      deckContent: [],
+      isModalVisible: false
     };
   }
 
@@ -70,6 +74,122 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
     }
   }
 
+  getFlipButtonStyle(flipStatus: string) {
+    switch (flipStatus) {
+      case null:
+        return {
+          width: width * 0.15,
+          backgroundColor: "red",
+          marginTop: 15,
+          marginLeft: width * 0.05,
+          marginRight: width * 0.05,
+          paddingVertical: 5,
+          shadowColor: "black",
+          shadowOffset: { width: 2, height: 2 },
+          shadowOpacity: 0.4,
+          shadowRadius: 2
+        };
+      case 'Requested':
+        return {
+          width: width * 0.15,
+          backgroundColor: "blue",
+          marginTop: 15,
+          marginLeft: width * 0.05,
+          marginRight: width * 0.05,
+          paddingVertical: 5,
+          shadowColor: "black",
+          shadowOffset: { width: 2, height: 2 },
+          shadowOpacity: 0.4,
+          shadowRadius: 2
+        };
+      case 'Flipped':
+        return {
+          width: width * 0.15,
+          backgroundColor: "grey",
+          marginTop: 15,
+          marginLeft: width * 0.05,
+          marginRight: width * 0.05,
+          paddingVertical: 5,
+          shadowColor: "black",
+          shadowOffset: { width: 2, height: 2 },
+          shadowOpacity: 0.4,
+          shadowRadius: 2
+        }
+    }
+  }
+
+  getFlipButtonText(flipStatus: string) {
+    switch (flipStatus) {
+      case null:
+        return 'FLIP';
+      case 'Requested':
+        return '...';
+      case 'Flipped':
+        return 'FLIPPED'
+    }
+  }
+
+  getModalContent(targetID: number, targetName: string, flipStatus: string, reqSender: number) {
+    console.log(flipStatus);
+    if (flipStatus == 'Requested') {
+      return (
+        <View style={styles.modalContent}>
+          <Text>You have already flipped the card of {targetName}. Check out his/her private profile to find out more!</Text>
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.modalContent}>
+          <Text>testing</Text>
+        </View>
+      )
+    }
+    // if (flipStatus === 'Requested' && reqSender === targetID) {
+
+    // };
+    // if (flipStatus === 'Requested' && reqSender === this.props.userID) {
+
+    // };
+    // if (flipStatus === 'Rejected' && reqSender === targetID) {
+
+    // };
+    // if (flipStatus === 'Rejected' && reqSender === this.props.userID) {
+
+    // };
+    // if (flipStatus === null) {
+    //   return (
+    //     <View style={styles.modalContent}>
+    //       <Text>Confirm to request {targetName} to flip his/her card and yours?{"\n"}
+    //         (You will be able to view each other's private profile after flipping.)</Text>
+    //       <TouchableOpacity
+    //         style={styles.btnContainer}
+    //         onPress={() => {
+    //           axios
+    //             .post(
+    //               `${Config.API_SERVER}/api/connection/flip/request/${targetID}`,
+    //               {},
+    //               {
+    //                 headers: {
+    //                   Authorization: `Bearer ${this.props.token}`
+    //                 }
+    //               }
+    //             )
+    //             .then(() => {
+    //               this._toggleModal();
+    //             })
+    //             .catch(err => console.log(err));
+    //         }}
+    //       >
+    //         <Text style={styles.btnText}>SEND</Text>
+    //       </TouchableOpacity>
+    //     </View>
+    //   )
+    // }
+  }
+
+  _toggleModal = () =>
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+
   render() {
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={{ flex: 1 }}>
@@ -79,7 +199,6 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
               leftButtonName={"RECOMMEND"}
               onPress={() => {
                 this.props.handleChangeTypeDeck();
-                console.log(this.props.typeDeckList);
                 this.setState({
                   deckContent: this.props.typeDeckList
                 });
@@ -97,7 +216,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
           </View>
           <ScrollView
             horizontal={true}
-            snapToInterval={width - 53} // card width offset margin
+            snapToInterval={width - 37} // card width offset margin
             snapToAlignment={"center"}
             decelerationRate={0} // stop scrolling momentum
           >
@@ -111,9 +230,11 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                 key_atr,
                 key_atr_desc,
                 mbti,
+                flip_status,
+                flip_req_sender,
                 conID
               }) => (
-                  <View>
+                  <View style={styles.cardContainer}>
                     <View style={styles.card}>
                       <View style={styles.mbtiCol}>
                         <View style={styles.mbtiRow}>
@@ -130,7 +251,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                           <Text style={styles.inputText}>{this.calculateAge(dob)} y/o {gender} {location}</Text>
                         </View>
                         <View style={styles.rowContainer}>
-                        <Text style={styles.inputText}>{key_atr_desc}</Text>
+                          <Text style={styles.inputText}>{key_atr_desc}</Text>
                         </View>
                         <View style={styles.mbtiRow}>
                           <Text style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
@@ -138,40 +259,85 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                         </View>
                       </View>
                     </View>
-
-                  <TouchableOpacity
-                    style={styles.chatButtonContainer}
-                    onPress={() => {
-                      axios
-                        .post(
-                          `${Config.API_SERVER}/api/chat/conversation/${id}`,
-                          {},
-                          {
-                            headers: {
-                              Authorization: `Bearer ${this.props.token}`
-                            }
-                          }
-                        )
-                        .then(res => {
-                          conID = res.data;
-                          this.props.navigator.push({
-                            screen: "ChatTabScreen",
-                            passProps: {
-                              token: this.props.token,
-                              userID: this.props.userID,
-                              targetID: id,
-                              targetName: display_name,
-                              conID: conID
-                            }
-                          });
-                        })
-                        .catch(err => console.log(err));
-                    }}
-                  >
-                    <Text style={styles.chatButtonText}>CHAT</Text>
-                  </TouchableOpacity>
-                </View>
-              )
+                    <View style={styles.buttonsContainer}>
+                      <TouchableHighlight
+                        style={styles.btnContainer}
+                        onPress={() => {
+                          axios
+                            .delete(
+                              `${Config.API_SERVER}/api/connection/deck/${id}`,
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${this.props.token}`
+                                }
+                              }
+                            )
+                            .then(() => {
+                              this.props.handleChangeTypeDeck();
+                            })
+                            .catch(err => console.log(err));
+                        }}
+                      >
+                        <Text style={styles.btnText}>DEL</Text>
+                      </TouchableHighlight>
+                      <TouchableHighlight
+                        style={styles.btnContainer}
+                        onPress={() => {
+                          axios
+                            .post(
+                              `${Config.API_SERVER}/api/chat/conversation/${id}`,
+                              {},
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${this.props.token}`
+                                }
+                              }
+                            )
+                            .then(res => {
+                              conID = res.data;
+                              this.props.navigator.push({
+                                screen: "ChatTabScreen",
+                                passProps: {
+                                  token: this.props.token,
+                                  userID: this.props.userID,
+                                  targetID: id,
+                                  targetName: display_name,
+                                  conID: conID
+                                }
+                              });
+                            })
+                            .catch(err => console.log(err));
+                        }}
+                      >
+                        <Text style={styles.btnText}>CHAT</Text>
+                      </TouchableHighlight>
+                      <TouchableHighlight
+                        style={this.getFlipButtonStyle(flip_status)}
+                        onPress={this._toggleModal}
+                      >
+                        <Text style={styles.btnText}>{this.getFlipButtonText(flip_status)}</Text>
+                      </TouchableHighlight>
+                    </View>
+                    <View>
+                      <Modal
+                      
+                        isVisible={this.state.isModalVisible}
+                        style={styles.modal}
+                      >
+                        <View style={{ flex: 1 }}>
+                          <View style={styles.closeBtnRow}>
+                            <TouchableOpacity onPress={this._toggleModal}>
+                              <Text style={{ fontSize: 20 }}>X</Text>
+                            </TouchableOpacity>
+                          </View>
+                          <View>
+                            {this.getModalContent(id, display_name, flip_status, flip_req_sender)}
+                          </View>
+                        </View>
+                      </Modal>
+                    </View>
+                  </View>
+                )
             )}
           </ScrollView>
         </View>
@@ -202,10 +368,13 @@ export default connect(
 )(Deck);
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    position: "absolute",
-    left: 50,
-    top: 30
+  // cardContainer: {
+  //   position: "absolute",
+  //   left: 50,
+  //   top: 30
+  // },
+  cardContainer: {
+    width: width * 0.9
   },
   mbtiCol: {
     flex: 1,
@@ -229,10 +398,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
-    padding: 5,
+    padding: 10,
     marginTop: 20,
-    marginLeft: 15,
-    marginRight: 15,
+    marginLeft: 20,
+    marginRight: 10,
     borderRadius: 15,
     shadowColor: "black",
     shadowOffset: { width: 2, height: -3 },
@@ -270,12 +439,20 @@ const styles = StyleSheet.create({
     width: 250,
     textAlign: "center"
   },
-  chatButtonContainer: {
+  buttonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: width * 0.6,
+    marginLeft: width * 0.08,
+    marginRight: width * 0.05
+  },
+  btnContainer: {
     // flexDirection: "row",
-    width: width * 0.2,
+    width: width * 0.15,
     backgroundColor: "#F0957F",
     marginTop: 15,
-    marginLeft: 110,
+    marginLeft: width * 0.05,
+    marginRight: width * 0.05,
     //paddingHorizontal: 5,
     paddingVertical: 5,
     shadowColor: "black",
@@ -283,11 +460,67 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 2
   },
-  chatButtonText: {
+  btnText: {
     color: "white",
     textAlign: "center",
     fontSize: 14,
     fontWeight: "bold",
     letterSpacing: 1.5
+  },
+  flipBtnContainer: {
+    // flexDirection: "row",
+    width: width * 0.15,
+    backgroundColor: "#F0957F",
+    marginTop: 15,
+    marginLeft: width * 0.05,
+    marginRight: width * 0.05,
+    //paddingHorizontal: 5,
+    paddingVertical: 5,
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2
+  },
+  flipBtnContainerActive: {
+    // flexDirection: "row",
+    width: width * 0.15,
+    backgroundColor: "green",
+    marginTop: 15,
+    marginLeft: width * 0.05,
+    marginRight: width * 0.05,
+    //paddingHorizontal: 5,
+    paddingVertical: 5,
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2
+  },
+  flipBtnContainerUnflip: {
+    // flexDirection: "row",
+    width: width * 0.15,
+    backgroundColor: "blue",
+    marginTop: 15,
+    marginLeft: width * 0.05,
+    marginRight: width * 0.05,
+    //paddingHorizontal: 5,
+    paddingVertical: 5,
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2
+  },
+  modal: {
+    backgroundColor: "white",
+  },
+  modalContent: {
+    padding: 20,
+    textAlign: 'justify',
+    fontSize: 16
+  },
+  closeBtnRow: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    padding: 10
   }
 });
