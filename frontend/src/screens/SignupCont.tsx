@@ -10,8 +10,10 @@ import {
   View,
   KeyboardAvoidingView,
   Alert,
-  Image
+  Image,
+  TouchableHighlight
 } from "react-native";
+import Modal from "react-native-modal";
 import RNPickerSelect from "react-native-picker-select";
 import DatePicker from "react-native-datepicker";
 import ImagePicker from "react-native-image-picker";
@@ -51,6 +53,7 @@ interface SignupProps {
 }
 
 interface SignupStates {
+  errorMsg: boolean,
   imageData: any,
   profilePic: any;
   name: string;
@@ -61,6 +64,7 @@ interface SignupStates {
   items: { label: string; value: string }[]; // picker options
   items2: { label: string; value: string }[];
   items3: { label: string; value: string }[];
+  isModalVisible: boolean
 }
 
 class PureSignupCont extends React.Component<SignupProps, SignupStates> {
@@ -68,6 +72,7 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
     super(props);
 
     this.state = {
+      errorMsg: false,
       imageData: null, // for upload
       profilePic: require("../assets/profile-pic.png"), // default
       name: "",
@@ -113,17 +118,26 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
           label: "Taiwan",
           value: "Taiwan"
         }
-      ]
+      ],
+      isModalVisible: false
     };
   }
 
 // wrap multiple functions 
   onSignupPress() {
-    this.props.onEditProfile(this.props.id, this.props.max_age, this.props.min_age, this.props.token, this.state.profilePic.uri, this.state.imageData, this.state.name, this.state.date, this.state.gender, this.state.orientation, this.state.location)    
-    this.props.navigator.push({
-      screen: 'MbtiTest1Screen',
-      navigatorStyle: transparentNav,
-    })
+    // check input
+    if(this.state.name == '' || this.state.date == '' || this.state.gender == '' || this.state.imageData == null || this.state.orientation == '' || this.state.location == '') {
+      this.setState({
+        errorMsg: true,
+        isModalVisible: true
+      })
+      } else {
+        this.props.onEditProfile(this.props.id, this.props.max_age, this.props.min_age, this.props.token, this.state.profilePic.uri, this.state.imageData, this.state.name, this.state.date, this.state.gender, this.state.orientation, this.state.location)    
+        this.props.navigator.push({
+          screen: 'MbtiTest1Screen',
+          navigatorStyle: transparentNav,
+        })
+    }
   }
 
   // ImagePicker returns an object which includes response.uri: "file://User/../something.jpg"
@@ -242,12 +256,28 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
               />
             </View>
 
+            {this.state.errorMsg ? (
+              <Modal
+                isVisible={this.state.isModalVisible}
+                onBackdropPress={() => this.setState({ isModalVisible: false })}
+                backdropOpacity={0}
+                style={styles.bottomModal}
+              >
+                <View style={styles.modalContent}>
+                  <Text style={styles.modalText}>Please input all fields</Text>
+                </View>
+
+              </Modal>
+            ) :  <Text></Text>} 
+
+
             <TouchableOpacity
               style={styles.btnContainer}
               onPress={() => this.onSignupPress()}
             >
               <Text style={styles.btnText}>Start MBTI Test</Text>
             </TouchableOpacity>
+
           </View>
         </View>
       </LinearGradient>
@@ -341,6 +371,21 @@ const styles = StyleSheet.create({
     height: 130,
     width: 130,
     borderRadius: 60,
+  },
+  bottomModal: {
+    justifyContent: "flex-end", // 
+    margin: 0
+  }, 
+  modalContent: {
+    backgroundColor: "white",
+    padding: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    // borderRadius: 4,
+    // borderColor: "rgba(0, 0, 0, 0.1)"
+  },
+  modalText: {
+    color: "#E0674B"
   },
 });
 
