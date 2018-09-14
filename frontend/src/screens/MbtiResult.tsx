@@ -1,7 +1,7 @@
 import * as React from "react";
 import LinearGradient from "react-native-linear-gradient";
 import { transparentNav, globalStyle } from "./styles/common";
-import AvatarImage, {getAvatar} from './components/AvatarImage';
+import AvatarImage, { getAvatar } from "./components/AvatarImage";
 import {
   StyleSheet,
   Text,
@@ -124,10 +124,14 @@ class PureMbtiResult extends React.Component<MbtiResultProps, MbtiState> {
         <View style={globalStyle.container}>
           <View style={globalStyle.cardContainer}>
             <Text style={styles.title}>
-              WELCOME{`\n`}ON BOARD{`\n`}You are - {this.state.mbti}
+              WELCOME
+              {`\n`}
+              ON BOARD
+              {`\n`}
+              You are - {this.state.mbti}
             </Text>
 
-            <AvatarImage style={styles.img} source={  avatarImg } />   
+            <AvatarImage style={styles.img} source={avatarImg} />
 
             <TouchableOpacity
               style={styles.btnContainer}
@@ -190,10 +194,10 @@ export default MbtiResult;
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 30,
+    fontSize: 27,
     color: "#30519B",
     marginBottom: 10,
-    fontWeight: "800"
+    fontWeight: "700"
   },
   question: {
     fontSize: 16,
@@ -204,9 +208,9 @@ const styles = StyleSheet.create({
     color: "#30519B"
   },
   img: {
-    resizeMode: 'contain',
-    height: 300,
-    width: 270,
+    resizeMode: "contain",
+    height: 270,
+    width: 240,
     paddingHorizontal: 15,
     paddingVertical: 15,
     marginVertical: 15
@@ -217,7 +221,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 12,
     marginVertical: 12,
-    width: "60%"
+    width: "55%"
   },
   btnText: {
     color: "#fff",

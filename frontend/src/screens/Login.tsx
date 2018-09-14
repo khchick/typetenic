@@ -22,6 +22,7 @@ interface LoginProps {
 }
 
 interface LoginStates {
+  errorMsg: boolean,
   email: string,
   password: string,
   // isLoading: boolean
@@ -31,10 +32,26 @@ class PureLogin extends React.Component<LoginProps, LoginStates> {
   constructor(props: LoginProps) {
     super(props);
     this.state = {
+      errorMsg: false,
       email: '',
       password: '',
       // isLoading: false,
     };
+  }
+
+  validateEmail(email: string) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return !re.test(String(email))
+  }
+  
+  onLoginPress() {
+    if(this.state.email.trim() == '' || this.state.password.trim() == '' || this.validateEmail(this.state.email)) {
+      this.setState({
+        errorMsg: true
+      })
+      } else {
+        this.props.onLoginPress(this.state.email, this.state.password)        
+      }
   }
 
   render() {
@@ -66,9 +83,15 @@ class PureLogin extends React.Component<LoginProps, LoginStates> {
               // ref={}
               style={styles.input} 
             />
+
+             {this.state.errorMsg ? (
+              <Text style={styles.error}>Please provide valid email and password</Text>
+            ) : <Text></Text>}
+          
             <TouchableOpacity style={styles.btnContainer}
               onPress={() => 
-                this.props.onLoginPress(this.state.email, this.state.password)}
+                this.onLoginPress()
+              }
                 >
               <Text style={styles.btnText}>LOGIN</Text>
             </TouchableOpacity>
@@ -77,7 +100,6 @@ class PureLogin extends React.Component<LoginProps, LoginStates> {
               onPress={() => this.props.navigator.push({
                 screen: 'SignupScreen',
                 navigatorStyle: transparentNav,
-                // backButtonTitle: 'Cancel',
                 navigatorButtons: {
                   leftButtons: [{
                     title: 'Cancel',
@@ -141,4 +163,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 1.5
   },
+  error: {
+    color: 'red'
+  }
 });

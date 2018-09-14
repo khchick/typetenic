@@ -12,11 +12,14 @@ import {
 import axios from "axios";
 import Config from "react-native-config";
 import { AsyncStorage } from "react-native";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import LeftTopButton from "./components/LeftTopButton";
 import RightTopButton from "./components/RightTopButton";
-import AvatarImage, { getAvatar } from './components/AvatarImage';
-import { handleChangeTypeDeck, handleChangeTenDeck } from './../redux/actions/refreshAction';
+import AvatarImage, { getAvatar } from "./components/AvatarImage";
+import {
+  handleChangeTypeDeck,
+  handleChangeTenDeck
+} from "./../redux/actions/refreshAction";
 
 const { height, width } = Dimensions.get("window");
 
@@ -47,7 +50,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
     this.props.handleChangeTypeDeck();
     this.setState({
       deckContent: this.props.typeDeckList
-    })
+    });
     this.props.handleChangeTenDeck();
   }
 
@@ -73,7 +76,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
         <View style={styles.container}>
           <View style={styles.topButtonContainer}>
             <LeftTopButton
-              leftButtonName={"TYPE"}
+              leftButtonName={"RECOMMEND"}
               onPress={() => {
                 this.props.handleChangeTypeDeck();
                 console.log(this.props.typeDeckList);
@@ -83,7 +86,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
               }}
             />
             <RightTopButton
-              rightButtonName={"TEN"}
+              rightButtonName={"MY PICKS"}
               onPress={() => {
                 this.props.handleChangeTenDeck();
                 this.setState({
@@ -110,6 +113,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                 mbti,
                 conID
               }) => (
+<<<<<<< HEAD
                   <View>
                     <View style={styles.card}>
                       <View style={styles.mbtiCol}>
@@ -171,12 +175,59 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                       }}>
                       <Text style={styles.chatButtonText}>CHAT</Text>
                     </TouchableOpacity>
+=======
+                <View>
+                  <View style={styles.card}>
+                    <AvatarImage
+                      style={styles.avatar}
+                      source={getAvatar(mbti)}
+                    />
+                    <Text style={styles.nameText}>{display_name}</Text>
+                    <Text style={styles.inputText}>
+                      {this.calculateAge(dob)}
+                    </Text>
+                    <Text style={styles.inputText}>{location}</Text>
+                    <Text style={styles.inputText}>{key_atr_desc}</Text>
+>>>>>>> 071d1dfbeaffeddf4b5692e14bfe65ac354bece1
                   </View>
-                )
+
+                  <TouchableOpacity
+                    style={styles.chatButtonContainer}
+                    onPress={() => {
+                      axios
+                        .post(
+                          `${Config.API_SERVER}/api/chat/conversation/${id}`,
+                          {},
+                          {
+                            headers: {
+                              Authorization: `Bearer ${this.props.token}`
+                            }
+                          }
+                        )
+                        .then(res => {
+                          conID = res.data;
+                          this.props.navigator.push({
+                            screen: "ChatTabScreen",
+                            passProps: {
+                              token: this.props.token,
+                              userID: this.props.userID,
+                              targetID: id,
+                              targetName: display_name,
+                              conID: conID
+                            }
+                          });
+                        })
+                        .catch(err => console.log(err));
+                    }}
+                  >
+                    <Text style={styles.chatButtonText}>CHAT</Text>
+                  </TouchableOpacity>
+                </View>
+              )
             )}
           </ScrollView>
         </View>
-      </LinearGradient >
+      </LinearGradient>
     );
   }
 }
@@ -197,13 +248,16 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-export default connect(MapStateToProps, mapDispatchToProps)(Deck);
+export default connect(
+  MapStateToProps,
+  mapDispatchToProps
+)(Deck);
 
 const styles = StyleSheet.create({
   contentContainer: {
-    position: 'absolute',
+    position: "absolute",
     left: 50,
-    top: 30,
+    top: 30
   },
   mbtiCol: {
     flex: 1,
@@ -221,7 +275,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   topButtonContainer: {
-    flexDirection: "row",
+    flexDirection: "row"
   },
   card: {
     justifyContent: "center",
@@ -245,7 +299,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   avatar: {
-    resizeMode: 'contain',
+    resizeMode: "contain",
     width: width * 0.4,
     height: height * 0.23
   },
@@ -256,7 +310,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     letterSpacing: 2.5,
     marginTop: 10,
-    fontFamily: 'YatraOne-Regular'
+    fontFamily: "YatraOne-Regular"
   },
   inputText: {
     backgroundColor: "#E5F5FA",
@@ -271,7 +325,7 @@ const styles = StyleSheet.create({
   chatButtonContainer: {
     // flexDirection: "row",
     width: width * 0.2,
-    backgroundColor: '#F0957F',
+    backgroundColor: "#F0957F",
     marginTop: 15,
     marginLeft: 110,
     //paddingHorizontal: 5,
