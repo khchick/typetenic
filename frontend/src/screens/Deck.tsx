@@ -113,13 +113,12 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                 mbti,
                 conID
               }) => (
-<<<<<<< HEAD
                   <View>
                     <View style={styles.card}>
                       <View style={styles.mbtiCol}>
                         <View style={styles.mbtiRow}>
-                          <Text key={id} style={this.getMbtiStyle(mbti[0], key_atr)}>{mbti[0]}</Text>
-                          <Text key={id} style={this.getMbtiStyle(mbti[1], key_atr)}>{mbti[1]}</Text>
+                          <Text style={this.getMbtiStyle(mbti[0], key_atr)}>{mbti[0]}</Text>
+                          <Text style={this.getMbtiStyle(mbti[1], key_atr)}>{mbti[1]}</Text>
                         </View>
                         <View style={styles.rowContainer}>
                           <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
@@ -134,62 +133,11 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                         <Text style={styles.inputText}>{key_atr_desc}</Text>
                         </View>
                         <View style={styles.mbtiRow}>
-                          <Text key={id} style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
-                          <Text key={id} style={this.getMbtiStyle(mbti[3], key_atr)}>{mbti[3]}</Text>
+                          <Text style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
+                          <Text style={this.getMbtiStyle(mbti[3], key_atr)}>{mbti[3]}</Text>
                         </View>
                       </View>
                     </View>
-
-                    {/* <View style={styles.card}>
-                      <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
-                      <Text style={styles.nameText}>{display_name}</Text>
-                      <Text style={styles.inputText}>{this.calculateAge(dob)}</Text>
-                      <Text style={styles.inputText}>{location}</Text>
-                      <Text style={styles.inputText}>{key_atr_desc}</Text>
-                    </View> */}
-
-                    <TouchableOpacity style={styles.chatButtonContainer}
-                      onPress={() => {
-                        axios.post(`${Config.API_SERVER}/api/chat/conversation/${id}`,
-                          {},
-                          {
-                            headers: {
-                              Authorization: `Bearer ${this.props.token}`
-                            }
-                          })
-                          .then(res => {
-                            conID = res.data;
-                            this.props.navigator.push({
-                              screen: 'ChatTabScreen',
-                              passProps: {
-                                token: this.props.token,
-                                userID: this.props.userID,
-                                targetID: id,
-                                targetName: display_name,
-                                conID: conID,
-                              },
-                            });
-                          })
-                          .catch(err => console.log(err))
-
-                      }}>
-                      <Text style={styles.chatButtonText}>CHAT</Text>
-                    </TouchableOpacity>
-=======
-                <View>
-                  <View style={styles.card}>
-                    <AvatarImage
-                      style={styles.avatar}
-                      source={getAvatar(mbti)}
-                    />
-                    <Text style={styles.nameText}>{display_name}</Text>
-                    <Text style={styles.inputText}>
-                      {this.calculateAge(dob)}
-                    </Text>
-                    <Text style={styles.inputText}>{location}</Text>
-                    <Text style={styles.inputText}>{key_atr_desc}</Text>
->>>>>>> 071d1dfbeaffeddf4b5692e14bfe65ac354bece1
-                  </View>
 
                   <TouchableOpacity
                     style={styles.chatButtonContainer}
