@@ -42,7 +42,7 @@ class Suggestions extends React.Component<SuggestionsProps, RequestStates> {
   constructor(props: any) {
     super(props);
     this.state = {
-      isDiscover: true
+      isDiscover: false
     };
   }
 
@@ -111,7 +111,7 @@ class Suggestions extends React.Component<SuggestionsProps, RequestStates> {
               leftButtonName={"RECOMMEND"}
               onPress={() => {
                 this.setState({
-                  isDiscover: true
+                  isDiscover: false
                 });
                 this.props.createSentReq();
 
@@ -124,7 +124,7 @@ class Suggestions extends React.Component<SuggestionsProps, RequestStates> {
               rightButtonName={"MY PICKS"}
               onPress={() => {
                 this.setState({
-                  isDiscover: false
+                  isDiscover: true
                 });
                 this.props.createConnection();
 
