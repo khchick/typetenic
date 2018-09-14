@@ -174,6 +174,8 @@ class PureMbtiProfile extends React.Component<
 
             <Text style={styles.title}>About Me</Text>
             <TextInput
+              placeholder="I am an outgoing person who enjoy meeting new people and learn new stuffs in my leisure time.Reading, diving and hiking are my hobbits. "
+              placeholderTextColor="#C7C7CD"
               style={styles.input}
               onChangeText={val => this.setState({ keyDesc: val })}
               multiline={true}
