@@ -22,6 +22,7 @@ interface SignupProps {
 }
 
 interface SignupStates {
+  errorMsg: boolean,
   email: string,
   password: string,
 }
@@ -31,6 +32,7 @@ class PureSignup extends React.Component<SignupProps, SignupStates> {
     super(props);
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     this.state = {
+      errorMsg: false,
       email: '',
       password: '',
     };
@@ -60,16 +62,26 @@ class PureSignup extends React.Component<SignupProps, SignupStates> {
     }
   }
 
+  validateEmail(email: string) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return !re.test(String(email))
+  }
+
   onSignupPress() {
-    console.log(this.state)
-    this.props.onSignUp(this.state.email, this.state.password);  
-    
-    this.props.navigator.push({
-      screen: 'SignupContScreen',
-      title: 'Profile',
-      navigatorStyle: transparentNav,
-      backButtonHidden: true,
-    })
+    if(this.state.email.trim() == '' || this.state.password.trim() == '' || this.validateEmail(this.state.email)) {
+      this.setState({
+        errorMsg: true
+      })
+      } else {
+        this.props.onSignUp(this.state.email, this.state.password);  
+        
+        this.props.navigator.push({
+          screen: 'SignupContScreen',
+          title: 'Profile',
+          navigatorStyle: transparentNav,
+          backButtonHidden: true,
+        })
+      }
   }
 
   render() {
@@ -95,8 +107,12 @@ class PureSignup extends React.Component<SignupProps, SignupStates> {
             placeholderTextColor='#fff'
             returnKeyType='next'
             style={styles.input}
-          />
-            
+          />            
+
+          {this.state.errorMsg ? (
+            <Text style={styles.error}>Please provide valid email and password</Text>
+          ) : <Text></Text>}
+
             <TouchableOpacity style={styles.btnContainer} 
               onPress={() => this.onSignupPress()
                }>
@@ -176,4 +192,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 1.5
   },
+  error: {
+    color: 'red'
+  }
 });
