@@ -32,7 +32,7 @@ class NoteContent extends React.Component<NoteContentProps, NoteContentStates> {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     axios
       .get(`${Config.API_SERVER}/api/notification/${this.props.noteID}`,
         {
