@@ -43,13 +43,6 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
     };
   }
 
-  // componentWillMount() {
-  //   this.props.handleChangeTypeDeck();
-  //   this.setState({
-  //     deckContent: this.props.typeDeckList
-  //   });
-  // }
-
   componentDidMount() {
     this.props.handleChangeTypeDeck();
     this.setState({
@@ -58,26 +51,20 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
     this.props.handleChangeTenDeck();
   }
 
-  // async componentDidMount() {
-  //   axios
-  //     .get(`${Config.API_SERVER}/api/connection/deck/suggested`, {
-  //       headers: {
-  //         Authorization: "Bearer " + this.props.token
-  //       }
-  //     })
-  //     .then(res => {
-  //       this.setState({
-  //         deckContent: res.data
-  //       });
-  //     })
-  //     .catch(err => console.log(err));
-  // }
-
   calculateAge(dob: any) {
     let dobDate = new Date(dob);
     var ageDifMs = Date.now() - dobDate.getTime();
     var ageDate = new Date(ageDifMs);
     return Math.abs(ageDate.getUTCFullYear() - 1970);
+  }
+
+  getMbtiStyle(atr: string, key_atr: string) {
+    if (atr === key_atr) {
+      return {
+        color: "red",
+        fontWeight: "900"
+      }
+    }
   }
 
   render() {
@@ -89,6 +76,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
               leftButtonName={"TYPE"}
               onPress={() => {
                 this.props.handleChangeTypeDeck();
+                console.log(this.props.typeDeckList);
                 this.setState({
                   deckContent: this.props.typeDeckList
                 });
@@ -124,36 +112,61 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
               }) => (
                   <View>
                     <View style={styles.card}>
+                      <View style={styles.mbtiCol}>
+                        <View style={styles.mbtiRow}>
+                          <Text key={id} style={this.getMbtiStyle(mbti[0], key_atr)}>{mbti[0]}</Text>
+                          <Text key={id} style={this.getMbtiStyle(mbti[1], key_atr)}>{mbti[1]}</Text>
+                        </View>
+                        <View style={styles.rowContainer}>
+                          <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
+                        </View>
+                        <View style={styles.rowContainer}>
+                          <Text style={styles.nameText}>{display_name}</Text>
+                        </View>
+                        <View style={styles.rowContainer}>
+                          <Text style={styles.inputText}>{this.calculateAge(dob)} y/o {gender} {location}</Text>
+                        </View>
+                        <View style={styles.rowContainer}>
+                        <Text style={styles.inputText}>{key_atr_desc}</Text>
+                        </View>
+                        <View style={styles.mbtiRow}>
+                          <Text key={id} style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
+                          <Text key={id} style={this.getMbtiStyle(mbti[3], key_atr)}>{mbti[3]}</Text>
+                        </View>
+                      </View>
+                    </View>
+
+                    {/* <View style={styles.card}>
                       <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
                       <Text style={styles.nameText}>{display_name}</Text>
                       <Text style={styles.inputText}>{this.calculateAge(dob)}</Text>
                       <Text style={styles.inputText}>{location}</Text>
                       <Text style={styles.inputText}>{key_atr_desc}</Text>
-                    </View>
+                    </View> */}
 
                     <TouchableOpacity style={styles.chatButtonContainer}
                       onPress={() => {
-                          axios.post(`${Config.API_SERVER}/api/chat/conversation/${id}`,
-                            {},
-                            {
-                              headers: {
-                                Authorization: `Bearer ${this.props.token}`
-                              }
-                            })
-                            .then(res => {
-                              conID = res.data;
-                              this.props.navigator.push({
-                                screen: 'ChatTabScreen',
-                                passProps: {
-                                  token: this.props.token,
-                                  userID: this.props.userID,
-                                  targetID: id,
-                                  targetName: display_name,
-                                  conID: conID,
-                                },
-                              });
-                            })
-                            .catch(err => console.log(err))
+                        axios.post(`${Config.API_SERVER}/api/chat/conversation/${id}`,
+                          {},
+                          {
+                            headers: {
+                              Authorization: `Bearer ${this.props.token}`
+                            }
+                          })
+                          .then(res => {
+                            conID = res.data;
+                            this.props.navigator.push({
+                              screen: 'ChatTabScreen',
+                              passProps: {
+                                token: this.props.token,
+                                userID: this.props.userID,
+                                targetID: id,
+                                targetName: display_name,
+                                conID: conID,
+                              },
+                            });
+                          })
+                          .catch(err => console.log(err))
 
                       }}>
                       <Text style={styles.chatButtonText}>CHAT</Text>
@@ -195,11 +208,10 @@ const styles = StyleSheet.create({
   mbtiCol: {
     flex: 1,
     flexDirection: "column",
-    justifyContent: "space-between",
-    zIndex: 1
+    justifyContent: "space-between"
   },
   mbtiRow: {
-    // flex: 1,
+    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between"
   },
@@ -227,6 +239,10 @@ const styles = StyleSheet.create({
     width: width * 0.8, // percent or minus
     height: height * 0.65,
     zIndex: 0
+  },
+  rowContainer: {
+    flexDirection: "row",
+    justifyContent: "center"
   },
   avatar: {
     resizeMode: 'contain',
