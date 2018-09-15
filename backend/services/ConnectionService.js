@@ -1794,6 +1794,22 @@ class ConnectionService {
             })
         })
     }
+
+    cancelFlipRequest(userID, targetID) {
+        return this.knex
+            .update('flip_status', null)
+            .from('connection')
+            .where(function () {
+                this.where('req_sender_id', userID)
+                    .andWhere('req_receiver_id', targetID)
+            })
+            .orWhere(function () {
+                this.where('req_sender_id', targetID)
+                    .andWhere('req_receiver_id', userID)
+            })
+            .andWhere('flip_req_sender', userID)
+            .andWhere('status', 'Connected')
+    }
 }
 
 module.exports = ConnectionService;
