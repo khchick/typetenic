@@ -376,7 +376,6 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
               }}
             />
           </View>
-<<<<<<< HEAD
           <ScrollView
             horizontal={true}
             decelerationRate={"fast"} // stop scrolling momentum
@@ -501,9 +500,6 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                 )
             )}
           </ScrollView>
-=======
-          {component}
->>>>>>> 1bdfd08c9ebef1302fd9a988cc382e0260644b35
         </View>
       </LinearGradient>
     );
