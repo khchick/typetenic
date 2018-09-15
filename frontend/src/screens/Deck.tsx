@@ -5,14 +5,12 @@ import {
   Text,
   View,
   ScrollView,
-  Image,
   Dimensions,
   TouchableHighlight,
   TouchableOpacity
 } from "react-native";
 import axios from "axios";
 import Config from "react-native-config";
-import { AsyncStorage } from "react-native";
 import { connect } from "react-redux";
 import LeftTopButton from "./components/LeftTopButton";
 import RightTopButton from "./components/RightTopButton";
@@ -37,7 +35,7 @@ interface IDeckProps {
 
 interface IDeckStates {
   deckContent: Array<any>;
-  isModalVisible: boolean;
+  // isModalVisible: boolean;
 }
 
 class Deck extends React.Component<IDeckProps, IDeckStates> {
@@ -46,7 +44,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
 
     this.state = {
       deckContent: [],
-      isModalVisible: false
+      // isModalVisible: false
     };
   }
 
@@ -79,7 +77,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
       case null:
         return {
           width: width * 0.15,
-          backgroundColor: "red",
+          backgroundColor: "#04B4AE",
           marginTop: 15,
           marginLeft: width * 0.05,
           marginRight: width * 0.05,
@@ -92,7 +90,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
       case 'Requested':
         return {
           width: width * 0.15,
-          backgroundColor: "blue",
+          backgroundColor: "#0489B1",
           marginTop: 15,
           marginLeft: width * 0.05,
           marginRight: width * 0.05,
@@ -105,7 +103,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
       case 'Flipped':
         return {
           width: width * 0.15,
-          backgroundColor: "grey",
+          backgroundColor: "#0B615E",
           marginTop: 15,
           marginLeft: width * 0.05,
           marginRight: width * 0.05,
@@ -128,67 +126,6 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
         return 'FLIPPED'
     }
   }
-
-  getModalContent(targetID: number, targetName: string, flipStatus: string, reqSender: number) {
-    console.log(flipStatus);
-    if (flipStatus == 'Requested') {
-      return (
-        <View style={styles.modalContent}>
-          <Text>You have already flipped the card of {targetName}. Check out his/her private profile to find out more!</Text>
-        </View>
-      )
-    } else {
-      return (
-        <View style={styles.modalContent}>
-          <Text>testing</Text>
-        </View>
-      )
-    }
-    // if (flipStatus === 'Requested' && reqSender === targetID) {
-
-    // };
-    // if (flipStatus === 'Requested' && reqSender === this.props.userID) {
-
-    // };
-    // if (flipStatus === 'Rejected' && reqSender === targetID) {
-
-    // };
-    // if (flipStatus === 'Rejected' && reqSender === this.props.userID) {
-
-    // };
-    // if (flipStatus === null) {
-    //   return (
-    //     <View style={styles.modalContent}>
-    //       <Text>Confirm to request {targetName} to flip his/her card and yours?{"\n"}
-    //         (You will be able to view each other's private profile after flipping.)</Text>
-    //       <TouchableOpacity
-    //         style={styles.btnContainer}
-    //         onPress={() => {
-    //           axios
-    //             .post(
-    //               `${Config.API_SERVER}/api/connection/flip/request/${targetID}`,
-    //               {},
-    //               {
-    //                 headers: {
-    //                   Authorization: `Bearer ${this.props.token}`
-    //                 }
-    //               }
-    //             )
-    //             .then(() => {
-    //               this._toggleModal();
-    //             })
-    //             .catch(err => console.log(err));
-    //         }}
-    //       >
-    //         <Text style={styles.btnText}>SEND</Text>
-    //       </TouchableOpacity>
-    //     </View>
-    //   )
-    // }
-  }
-
-  _toggleModal = () =>
-    this.setState({ isModalVisible: !this.state.isModalVisible });
 
   render() {
     let isEmpty =
@@ -262,7 +199,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                   </View>
                   <View style={styles.buttonsContainer}>
                     <TouchableHighlight
-                      style={styles.btnContainer}
+                      style={styles.delBtnContainer}
                       onPress={() => {
                         axios
                           .delete(
@@ -314,29 +251,22 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                     </TouchableHighlight>
                     <TouchableHighlight
                       style={this.getFlipButtonStyle(flip_status)}
-                      onPress={
-                        this._toggleModal}
+                      onPress={() => {
+                        this.props.navigator.showModal({
+                          screen: "FlipAlertTabScreen",
+                          passProps: {
+                            token: this.props.token,
+                            userID: this.props.userID,
+                            targetID: id,
+                            targetName: display_name,
+                            flipStatus: flip_status,
+                            reqSender: flip_req_sender
+                          }
+                        });
+                      }}
                     >
                       <Text style={styles.btnText}>{this.getFlipButtonText(flip_status)}</Text>
                     </TouchableHighlight>
-                  </View>
-                  <View>
-                    <Modal
-
-                      isVisible={this.state.isModalVisible}
-                      style={styles.modal}
-                    >
-                      <View style={{ flex: 1 }}>
-                        <View style={styles.closeBtnRow}>
-                          <TouchableOpacity onPress={this._toggleModal}>
-                            <Text style={{ fontSize: 20 }}>X</Text>
-                          </TouchableOpacity>
-                        </View>
-                        <View>
-                          {this.getModalContent(id, display_name, flip_status, flip_req_sender)}
-                        </View>
-                      </View>
-                    </Modal>
                   </View>
                 </View>
               )
@@ -474,6 +404,20 @@ const styles = StyleSheet.create({
     marginLeft: width * 0.08,
     marginRight: width * 0.05
   },
+  delBtnContainer: {
+    // flexDirection: "row",
+    width: width * 0.15,
+    backgroundColor: "#BDBDBD",
+    marginTop: 15,
+    marginLeft: width * 0.05,
+    marginRight: width * 0.05,
+    //paddingHorizontal: 5,
+    paddingVertical: 5,
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2
+  },
   btnContainer: {
     // flexDirection: "row",
     width: width * 0.15,
@@ -536,20 +480,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 2
-  },
-  modal: {
-    backgroundColor: "white",
-  },
-  modalContent: {
-    padding: 20,
-    textAlign: 'justify',
-    fontSize: 16
-  },
-  closeBtnRow: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    padding: 10
   },
   defaultMsgContainer: {
     flex: 1,

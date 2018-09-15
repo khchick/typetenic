@@ -104,6 +104,13 @@ class ConnectionRouter {
                 .catch((err) => res.status(500).json(err));
         })
 
+        router.delete('/flip/request/:targetID', (req, res) => { // reject flip request
+            this.connectionService.cancelFlipRequest(req.user.id, req.params.targetID)
+                .then(() => this.connectionService.getFlipStatus(req.user.id, req.params.targetID))
+                .then(status => res.json(status))
+                .catch((err) => res.status(500).json(err));
+        })
+
         return router;
     }
 }
