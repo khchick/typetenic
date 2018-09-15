@@ -19,6 +19,9 @@ interface NoteItemProps {
   index: any;
   onPressItem: (item: any) => any;
   handleChangeNotification: () => any;
+  // getReadStatus: (item: any) => any;
+  // notificationList: Array<any>;
+  
 }
 
 class NoteItem extends React.PureComponent<NoteItemProps> {
@@ -30,7 +33,13 @@ class NoteItem extends React.PureComponent<NoteItemProps> {
     const item = this.props.item;
 
     return (
-      <View style={styles.rowContainer}>    
+      <View style={
+        // {
+        //   backgroundColor: "red"
+        // }
+        // this.props.getReadStatus(item.id)
+        styles.rowContainer
+        }>    
         <Text style={styles.name} onPress={this.onPress}>{item.title}</Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.likeBtn} onPress={() => {

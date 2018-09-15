@@ -40,19 +40,19 @@ class NoteContent extends React.Component<NoteContentProps, NoteContentStates> {
             Authorization: "Bearer " + this.props.token
           }
         })
-        .then(res => {
-          this.setState({
-            noteContent: res.data[0].content
-          })
+      .then(res => {
+        this.setState({
+          noteContent: res.data[0].content
         })
+      })
       .catch(err => console.log(err));
   }
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.infoBox}>
-        <Text style={styles.question}>{this.state.noteContent}</Text>
-      </ScrollView>
+      <View style={styles.textContainer}>
+        <Text style={styles.textContent}>{this.state.noteContent}</Text>
+      </View>
     );
   }
 }
@@ -67,17 +67,12 @@ const MapStateToProps = (state: any) => {
 export default connect(MapStateToProps)(NoteContent);
 
 const styles = StyleSheet.create({
-  infoBox: {
-    alignItems: "center",
-    width: width * 0.7,
-    height: height * 0.6,
-    marginTop: 40
+  textContainer: {
+    paddingLeft: 30,
+    paddingRight: 30,
+    marginTop: 40,
   },
-  attribute: {
-    flexDirection: "column",
-    marginBottom: 15
-  },
-  question: {
+  textContent: {
     fontSize: 16,
     color: "#30519B",
     marginBottom: 10,

@@ -4,9 +4,12 @@ import {
   StyleSheet,
   View,
   ScrollView,
+  Text,
   FlatList
 } from "react-native";
 import { connect } from "react-redux";
+import Config from "react-native-config";
+import axios from 'axios';
 import NoteItem from './components/NoteItem';
 import { handleChangeNotification } from './../redux/actions/refreshAction';
 
@@ -14,7 +17,7 @@ interface NotificationProps {
   navigator: Navigator;
   token: string;
   handleChangeNotification: () => any;
-  notificationList: Array<any>;  
+  notificationList: Array<any>;
 }
 
 class Notification extends React.Component<NotificationProps, {}> {
@@ -23,13 +26,8 @@ class Notification extends React.Component<NotificationProps, {}> {
   }
 
   componentDidMount() {
-    this.props.handleChangeNotification() 
-     // show no of notifications in tabbar
-     this.props.navigator.setTabBadge({
-      // tabIndex: 0, // (optional) if missing, the badge will be added to this screen's tab
-      badge: 17, // badge value, null to remove badge
-      badgeColor: '#006400', // (optional) if missing, the badge will use the default color
-    });
+    this.props.handleChangeNotification()
+    // show no of notifications in tabbar
   }
 
   keyExtractor = (item: any, index: any) => {
@@ -37,27 +35,86 @@ class Notification extends React.Component<NotificationProps, {}> {
   };
 
   renderRows = ({ item, index }) => (
-    <NoteItem item={item} index={index} onPressItem={this.onPressItem} />
+    <NoteItem item={item} index={index} onPressItem={this.onPressItem} getReadStatus={this.getReadStatus}/>
   );
-
+  
   onPressItem = (item: any) => {
-    this.props.navigator.push({
-      title: "Notification Content",
-      screen: "NoteContent",
-      passProps: { noteID: item }
-    });
+    axios
+      .put(
+        `${Config.API_SERVER}/api/notification/${item}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${this.props.token}`
+          }
+        }
+      )
+      .then((res) => {
+        this.props.navigator.push({
+          title: "Notification Content",
+          screen: "NoteContent",
+          passProps: { 
+            noteID: item,
+            // notificationList: this.props.notificationList
+          }
+        });
+      })
+      .catch(err => console.log(err));
   };
 
+  countUnreadNotes(data: Array<any>) {
+    let count = 0;
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].read_status == "Unread") {
+        count++;
+      } else {
+        count = count;
+      }
+      // return count;
+      if (count > 0) return '';
+    }
+  }
+  
+  getReadStatus(itemID: number) {
+    let readStatus;
+    for (let i = 0;i < this.props.notificationList.length; i++) {
+      if (this.props.notificationList[i].id === itemID) {
+        readStatus = this.props.notificationList[i].read_status;
+        if (readStatus = "Read") {
+          return {
+            backgroundColor: "red"
+          }
+        }
+      }
+    }
+  }
+
   render() {
+    this.props.navigator.setTabBadge({
+      // tabIndex: 0, // (optional) if missing, the badge will be added to this screen's tab
+      badge: this.countUnreadNotes(this.props.notificationList), // badge value, null to remove badge
+      badgeColor: '#006400', // (optional) if missing, the badge will use the default color
+    });
+
+    let component;
+    let isEmpty = <Text>There isn't any notification at the moment.</Text>
+
+    if (this.props.notificationList.length < 1) {
+      component = isEmpty
+    } else {
+      component =
+        <FlatList
+          data={this.props.notificationList}
+          keyExtractor={this.keyExtractor}
+          renderItem={this.renderRows}
+        />
+    }
+
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={{ flex: 1 }}>
         <View style={styles.container}>
           <ScrollView style={styles.listContainer}>
-            <FlatList
-              data={this.props.notificationList}
-              keyExtractor={this.keyExtractor}
-              renderItem={this.renderRows}
-            />
+            {component}
           </ScrollView>
         </View>
       </LinearGradient>
