@@ -191,6 +191,159 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
     this.setState({ isModalVisible: !this.state.isModalVisible });
 
   render() {
+    let isEmpty =
+      <ScrollView
+        horizontal={true}
+        snapToInterval={width - 37} // card width offset margin
+        snapToAlignment={"center"}
+        decelerationRate={0} // stop scrolling momentum
+      >
+        <View style={styles.defaultMsgContainer}>
+          <Text style={styles.defaultMsg}>
+          {"\n"}
+          {"\n"}
+          {"\n"}
+          {"\n"}
+          Your deck is empty.
+          {"\n"}
+          {"\n"}
+          Go to the Discover page to connect with other users!</Text>
+        </View>
+      </ScrollView>
+    let component;
+    if (this.state.deckContent.length < 1) {
+      component = isEmpty
+    } else {
+      component =
+        <ScrollView
+          horizontal={true}
+          snapToInterval={width - 37} // card width offset margin
+          snapToAlignment={"center"}
+          decelerationRate={0} // stop scrolling momentum
+        >
+          {this.state.deckContent.map(
+            ({
+              id,
+              display_name,
+              dob,
+              gender,
+              location,
+              key_atr,
+              key_atr_desc,
+              mbti,
+              flip_status,
+              flip_req_sender,
+              conID
+            }) => (
+                <View style={styles.cardContainer}>
+                  <View style={styles.card}>
+                    <View style={styles.mbtiCol}>
+                      <View style={styles.mbtiRow}>
+                        <Text style={this.getMbtiStyle(mbti[0], key_atr)}>{mbti[0]}</Text>
+                        <Text style={this.getMbtiStyle(mbti[1], key_atr)}>{mbti[1]}</Text>
+                      </View>
+                      <View style={styles.rowContainer}>
+                        <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
+                      </View>
+                      <View style={styles.rowContainer}>
+                        <Text style={styles.nameText}>{display_name}</Text>
+                      </View>
+                      <View style={styles.rowContainer}>
+                        <Text style={styles.inputText}>{this.calculateAge(dob)} y/o {gender} {location}</Text>
+                      </View>
+                      <View style={styles.rowContainer}>
+                        <Text style={styles.inputText}>{key_atr_desc}</Text>
+                      </View>
+                      <View style={styles.mbtiRow}>
+                        <Text style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
+                        <Text style={this.getMbtiStyle(mbti[3], key_atr)}>{mbti[3]}</Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.buttonsContainer}>
+                    <TouchableHighlight
+                      style={styles.btnContainer}
+                      onPress={() => {
+                        axios
+                          .delete(
+                            `${Config.API_SERVER}/api/connection/deck/${id}`,
+                            {
+                              headers: {
+                                Authorization: `Bearer ${this.props.token}`
+                              }
+                            }
+                          )
+                          .then(() => {
+                            this.props.handleChangeTypeDeck();
+                          })
+                          .catch(err => console.log(err));
+                      }}
+                    >
+                      <Text style={styles.btnText}>DEL</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                      style={styles.btnContainer}
+                      onPress={() => {
+                        axios
+                          .post(
+                            `${Config.API_SERVER}/api/chat/conversation/${id}`,
+                            {},
+                            {
+                              headers: {
+                                Authorization: `Bearer ${this.props.token}`
+                              }
+                            }
+                          )
+                          .then(res => {
+                            conID = res.data;
+                            this.props.navigator.push({
+                              screen: "ChatTabScreen",
+                              passProps: {
+                                token: this.props.token,
+                                userID: this.props.userID,
+                                targetID: id,
+                                targetName: display_name,
+                                conID: conID
+                              }
+                            });
+                          })
+                          .catch(err => console.log(err));
+                      }}
+                    >
+                      <Text style={styles.btnText}>CHAT</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                      style={this.getFlipButtonStyle(flip_status)}
+                      onPress={
+                        this._toggleModal}
+                    >
+                      <Text style={styles.btnText}>{this.getFlipButtonText(flip_status)}</Text>
+                    </TouchableHighlight>
+                  </View>
+                  <View>
+                    <Modal
+
+                      isVisible={this.state.isModalVisible}
+                      style={styles.modal}
+                    >
+                      <View style={{ flex: 1 }}>
+                        <View style={styles.closeBtnRow}>
+                          <TouchableOpacity onPress={this._toggleModal}>
+                            <Text style={{ fontSize: 20 }}>X</Text>
+                          </TouchableOpacity>
+                        </View>
+                        <View>
+                          {this.getModalContent(id, display_name, flip_status, flip_req_sender)}
+                        </View>
+                      </View>
+                    </Modal>
+                  </View>
+                </View>
+              )
+          )}
+        </ScrollView>
+    }
+
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={{ flex: 1 }}>
         <View style={styles.container}>
@@ -214,132 +367,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
               }}
             />
           </View>
-          <ScrollView
-            horizontal={true}
-            snapToInterval={width - 37} // card width offset margin
-            snapToAlignment={"center"}
-            decelerationRate={0} // stop scrolling momentum
-          >
-            {this.state.deckContent.map(
-              ({
-                id,
-                display_name,
-                dob,
-                gender,
-                location,
-                key_atr,
-                key_atr_desc,
-                mbti,
-                flip_status,
-                flip_req_sender,
-                conID
-              }) => (
-                  <View style={styles.cardContainer}>
-                    <View style={styles.card}>
-                      <View style={styles.mbtiCol}>
-                        <View style={styles.mbtiRow}>
-                          <Text style={this.getMbtiStyle(mbti[0], key_atr)}>{mbti[0]}</Text>
-                          <Text style={this.getMbtiStyle(mbti[1], key_atr)}>{mbti[1]}</Text>
-                        </View>
-                        <View style={styles.rowContainer}>
-                          <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
-                        </View>
-                        <View style={styles.rowContainer}>
-                          <Text style={styles.nameText}>{display_name}</Text>
-                        </View>
-                        <View style={styles.rowContainer}>
-                          <Text style={styles.inputText}>{this.calculateAge(dob)} y/o {gender} {location}</Text>
-                        </View>
-                        <View style={styles.rowContainer}>
-                          <Text style={styles.inputText}>{key_atr_desc}</Text>
-                        </View>
-                        <View style={styles.mbtiRow}>
-                          <Text style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
-                          <Text style={this.getMbtiStyle(mbti[3], key_atr)}>{mbti[3]}</Text>
-                        </View>
-                      </View>
-                    </View>
-                    <View style={styles.buttonsContainer}>
-                      <TouchableHighlight
-                        style={styles.btnContainer}
-                        onPress={() => {
-                          axios
-                            .delete(
-                              `${Config.API_SERVER}/api/connection/deck/${id}`,
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${this.props.token}`
-                                }
-                              }
-                            )
-                            .then(() => {
-                              this.props.handleChangeTypeDeck();
-                            })
-                            .catch(err => console.log(err));
-                        }}
-                      >
-                        <Text style={styles.btnText}>DEL</Text>
-                      </TouchableHighlight>
-                      <TouchableHighlight
-                        style={styles.btnContainer}
-                        onPress={() => {
-                          axios
-                            .post(
-                              `${Config.API_SERVER}/api/chat/conversation/${id}`,
-                              {},
-                              {
-                                headers: {
-                                  Authorization: `Bearer ${this.props.token}`
-                                }
-                              }
-                            )
-                            .then(res => {
-                              conID = res.data;
-                              this.props.navigator.push({
-                                screen: "ChatTabScreen",
-                                passProps: {
-                                  token: this.props.token,
-                                  userID: this.props.userID,
-                                  targetID: id,
-                                  targetName: display_name,
-                                  conID: conID
-                                }
-                              });
-                            })
-                            .catch(err => console.log(err));
-                        }}
-                      >
-                        <Text style={styles.btnText}>CHAT</Text>
-                      </TouchableHighlight>
-                      <TouchableHighlight
-                        style={this.getFlipButtonStyle(flip_status)}
-                        onPress={this._toggleModal}
-                      >
-                        <Text style={styles.btnText}>{this.getFlipButtonText(flip_status)}</Text>
-                      </TouchableHighlight>
-                    </View>
-                    <View>
-                      <Modal
-                      
-                        isVisible={this.state.isModalVisible}
-                        style={styles.modal}
-                      >
-                        <View style={{ flex: 1 }}>
-                          <View style={styles.closeBtnRow}>
-                            <TouchableOpacity onPress={this._toggleModal}>
-                              <Text style={{ fontSize: 20 }}>X</Text>
-                            </TouchableOpacity>
-                          </View>
-                          <View>
-                            {this.getModalContent(id, display_name, flip_status, flip_req_sender)}
-                          </View>
-                        </View>
-                      </Modal>
-                    </View>
-                  </View>
-                )
-            )}
-          </ScrollView>
+          {component}
         </View>
       </LinearGradient>
     );
@@ -522,5 +550,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     padding: 10
+  },
+  defaultMsgContainer: {
+    flex: 1,
+    justifyContent: "flex-start",
+    width: width * 0.8
+  },
+  defaultMsg: {
+    fontSize: 16,
+    textAlign: "center"
   }
 });
