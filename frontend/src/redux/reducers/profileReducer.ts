@@ -1,4 +1,4 @@
-import { LOCAL_SIGNUP, EDIT_PROFILE, CREATE_MBTI, EDIT_KEY_ATR, SUBMIT_PROFILE, ProfileActions} from '../actions/profileAction';
+import { LOCAL_SIGNUP, EDIT_PROFILE, CREATE_MBTI, EDIT_KEY_ATR, SUBMIT_PROFILE, SETTINGS, ProfileActions} from '../actions/profileAction';
 
 
 export interface ProfileState {
@@ -103,13 +103,13 @@ export function profileReducer(state: ProfileState = initialState, action: Profi
                 imageData: action.imageData           
             }
         
-        // case SETTINGS:
-        //     return {
-        //         ...state,
-        //         max_age: action.max_age,
-        //         min_age: action.min_age,
-        //         orientation: action.orientation    
-        //     }
+        case SETTINGS:
+            return {
+                ...state,
+                max_age: action.max_age,
+                min_age: action.min_age,
+                orientation: action.orientation    
+            }
 
         default:
             return state

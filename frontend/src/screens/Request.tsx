@@ -70,7 +70,16 @@ class Request extends React.Component<RequestProps, RequestStates> {
   };
 
   render() {
-    let isEmpty = <Text>You have no requests at the moment</Text>         
+    let isEmpty = 
+      <View style={styles.defaultMsgContainer}>
+      <Text style={styles.defaultMsg}>
+      {"\n"}
+      {"\n"}
+      {"\n"}
+      {"\n"}
+      You have no requests at the moment
+      </Text>
+      </View>         
     let component = // default to show received request
       <FlatList
         data={this.props.receivedList}
@@ -177,5 +186,14 @@ const styles = StyleSheet.create({
   listContainer: {
     marginHorizontal: 10,
     marginVertical: 10
+  },
+  defaultMsgContainer: {
+    flex: 1,
+    justifyContent: "center",
+    width: width * 0.8
+  },
+  defaultMsg: {
+    fontSize: 16,
+    textAlign: "center"
   }
 });

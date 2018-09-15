@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     width: width * 0.6,
     height: width * 0.6,
-    marginBottom: 20
+    marginBottom: 20,
+    resizeMode: 'contain'
   }
 });

@@ -77,6 +77,19 @@ class Suggestions extends React.Component<SuggestionsProps, RequestStates> {
 
   render() {
     // msg if run out of 10 token?
+    let isEmpty =
+      <View style={styles.defaultMsgContainer}>
+        <Text style={styles.defaultMsg}>
+          {"\n"}
+          {"\n"}
+          {"\n"}
+          {"\n"}
+          There isn't any new user at the moment.
+          {"\n"}
+          {"\n"}
+          Please check back later!
+        </Text>
+      </View>
 
     let component = ( // default to show discover
       <FlatList
@@ -86,21 +99,29 @@ class Suggestions extends React.Component<SuggestionsProps, RequestStates> {
       />
     );
     if (this.state.isDiscover) {
-      component = (
-        <FlatList
-          data={this.props.nonSuggestedList}
-          keyExtractor={this.keyExtractor}
-          renderItem={this.renderCreateReqRows}
-        />
-      );
+      if (this.props.nonSuggestedList.length < 1) {
+        component = isEmpty;
+      } else {
+        component = (
+          <FlatList
+            data={this.props.nonSuggestedList}
+            keyExtractor={this.keyExtractor}
+            renderItem={this.renderCreateReqRows}
+          />
+        );
+      }
     } else {
-      component = (
-        <FlatList
-          data={this.props.suggestedList}
-          keyExtractor={this.keyExtractor}
-          renderItem={this.renderConnectRows}
-        />
-      );
+      if (this.props.suggestedList.length < 1) {
+        component = isEmpty;
+      } else {
+        component = (
+          <FlatList
+            data={this.props.suggestedList}
+            keyExtractor={this.keyExtractor}
+            renderItem={this.renderConnectRows}
+          />
+        );
+      }
     }
 
     return (
@@ -108,7 +129,7 @@ class Suggestions extends React.Component<SuggestionsProps, RequestStates> {
         <View style={styles.container}>
           <View style={styles.buttonContainer}>
             <LeftTopButton
-              leftButtonName={"RECOMMEND"}
+              leftButtonName={"DISCOVER"}
               onPress={() => {
                 this.setState({
                   isDiscover: false
@@ -116,7 +137,7 @@ class Suggestions extends React.Component<SuggestionsProps, RequestStates> {
                 this.props.createSentReq();
 
                 this.props.navigator.setTitle({
-                  title: "SYSTEM MATCHED" // new title
+                  title: "DISCOVER" // new title
                 });
               }}
             />
@@ -129,7 +150,7 @@ class Suggestions extends React.Component<SuggestionsProps, RequestStates> {
                 this.props.createConnection();
 
                 this.props.navigator.setTitle({
-                  title: "LUCKY MATCHED" // new title
+                  title: "MY PICKS" // new title
                 });
               }}
             />
@@ -175,5 +196,14 @@ const styles = StyleSheet.create({
   listContainer: {
     marginHorizontal: 10,
     marginVertical: 10
+  },
+  defaultMsgContainer: {
+    flex: 1,
+    justifyContent: "center",
+    width: width * 0.8
+  },
+  defaultMsg: {
+    fontSize: 16,
+    textAlign: "center"
   }
 });
