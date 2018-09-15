@@ -28,10 +28,11 @@ interface MbtiTestProps {
 }
 
 class PureMbtiTest1 extends React.Component<MbtiTestProps> {
+  
   pushNextTest() {
     this.props.navigator.push({
       screen: "MbtiTest2Screen",
-      navigatorStyle: transparentNav
+      navigatorStyle: { navBarNoBorder: true }
     });
   }
 

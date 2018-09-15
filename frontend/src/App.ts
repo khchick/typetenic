@@ -114,6 +114,7 @@ class App {
           icon: require("./assets/discover.png"),
           title: "DISCOVER",
           navigatorStyle: {
+            navBarNoBorder: true,
             navBarTextColor: '#30519B',
             navBarBackgroundColor: '#9EF8E4',
             navBarTextFontSize: 23,
@@ -128,6 +129,7 @@ class App {
           icon: require("./assets/requests.png"),
           title: "REQUESTS",
           navigatorStyle: {
+            navBarNoBorder: true,
             navBarTextColor: '#30519B',
             navBarBackgroundColor: '#9EF8E4',
             navBarTextFontSize: 23,
@@ -140,6 +142,7 @@ class App {
           icon: require("./assets/decks.png"),
           title: "THE DECKS",
           navigatorStyle: {
+            navBarNoBorder: true,
             navBarTextColor: '#30519B',
             navBarBackgroundColor: '#9EF8E4',
             navBarTextFontSize: 23,
@@ -155,6 +158,7 @@ class App {
           icon: require("./assets/notifications.png"),
           title: "NOTIFICATIONS",
           navigatorStyle: {
+            navBarNoBorder: true,
             navBarTextColor: '#30519B',
             navBarBackgroundColor: '#9EF8E4',
             navBarTextFontSize: 23,
@@ -170,6 +174,7 @@ class App {
           icon: require("./assets/controlroom.png"),
           title: "CONTROL ROOM",
           navigatorStyle: {
+            navBarNoBorder: true,
             navBarTextColor: '#30519B',
             navBarBackgroundColor: '#9EF8E4',
             navBarTextFontSize: 23,

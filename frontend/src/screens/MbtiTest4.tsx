@@ -30,7 +30,7 @@ class PureMbtiTest4 extends React.Component<MbtiTestProps> {
   pushNextTest() {
     this.props.navigator.push({
       screen: "MbtiResultScreen",
-      navigatorStyle: transparentNav
+      navigatorStyle: { navBarNoBorder: true }
     });
   }
 

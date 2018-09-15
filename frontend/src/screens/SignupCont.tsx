@@ -70,6 +70,9 @@ interface SignupStates {
 class PureSignupCont extends React.Component<SignupProps, SignupStates> {
   constructor(props: SignupProps) {
     super(props);
+    this.props.navigator.setStyle({
+      navBarNoBorder: true
+    });
 
     this.state = {
       errorMsg: false,
@@ -135,7 +138,7 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
         this.props.onEditProfile(this.props.id, this.props.max_age, this.props.min_age, this.props.token, this.state.profilePic.uri, this.state.imageData, this.state.name, this.state.date, this.state.gender, this.state.orientation, this.state.location)    
         this.props.navigator.push({
           screen: 'MbtiTest1Screen',
-          navigatorStyle: transparentNav,
+          navigatorStyle: { navBarNoBorder: true }
         })
     }
   }
