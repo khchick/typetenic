@@ -203,9 +203,9 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
     let isEmpty =
       <ScrollView
         horizontal={true}
-        snapToInterval={width - 37} // card width offset margin
-        snapToAlignment={"center"}
-        decelerationRate={0} // stop scrolling momentum
+        // snapToInterval={width - 37} // card width offset margin
+        // snapToAlignment={"center"}
+        decelerationRate={"fast"} // stop scrolling momentum
       >
         <View style={styles.defaultMsgContainer}>
           <Text style={styles.defaultMsg}>
@@ -216,7 +216,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
           Your deck is empty.
           {"\n"}
           {"\n"}
-          Go to the Discover page to connect with other users!</Text>
+          Go to DISCOVER to connect with other users</Text>
         </View>
       </ScrollView>
     let component;
@@ -226,9 +226,9 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
       component =
         <ScrollView
           horizontal={true}
-          snapToInterval={width - 37} // card width offset margin
-          snapToAlignment={"center"}
-          decelerationRate={0} // stop scrolling momentum
+          // snapToInterval={width - 37} // card width offset margin
+          // snapToAlignment={"center"}
+          decelerationRate={"fast"} // stop scrolling momentum
         >
           {this.state.deckContent.map(
             ({
@@ -258,10 +258,10 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                         <Text style={styles.nameText}>{display_name}</Text>
                       </View>
                       <View style={styles.rowContainer}>
-                        <Text style={styles.inputText}>{this.calculateAge(dob)} y/o {gender} {location}</Text>
+                        <Text style={styles.inputText}>{this.calculateAge(dob)}  {gender}  {location}</Text>
                       </View>
                       <View style={styles.rowContainer}>
-                        <Text style={styles.inputText}>{key_atr_desc}</Text>
+                        <Text style={styles.longText}>{key_atr_desc}</Text>
                       </View>
                       <View style={styles.mbtiRow}>
                         <Text style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
