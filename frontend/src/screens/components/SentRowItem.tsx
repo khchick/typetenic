@@ -49,13 +49,10 @@ class SentRowItem extends React.PureComponent<SentRowItemProps> {
             console.log("cancelled sent request");
             // axios.delete only accepts 2 param url and config -> wrap data inside config
             axios
-              .delete(`${Config.API_SERVER}/api/connection/deck/mypicks`,              
+              .delete(`${Config.API_SERVER}/api/connection/deck/${item.id}`,              
               {
                 headers: {
                   Authorization: "Bearer " + this.props.token
-                },
-                data: { 
-                  'targetID': item.id
                 }
               })
               .then(() => {
