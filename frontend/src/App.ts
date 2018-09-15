@@ -26,6 +26,7 @@ import ResetProfile from "./screens/ResetProfile";
 import Suggested from "./screens/Suggestions";
 import Notification from "./screens/Notification";
 import NoteContent from "./screens/NoteContent";
+import AboutMBTI from "./screens/AboutMBTI";
 
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
@@ -48,6 +49,7 @@ Navigation.registerComponent("ChatTabScreen", () => Chat, store, Provider);
 Navigation.registerComponent("RequestTabScreen", () => Request, store, Provider);
 Navigation.registerComponent("NotificationTabScreen", () => Notification, store, Provider);
 Navigation.registerComponent("NoteContent", () => NoteContent, store, Provider);
+Navigation.registerComponent("AboutMBTI", () => AboutMBTI, store, Provider);
 Navigation.registerComponent("ControlRoom", () => ControlRoom, store, Provider);
 Navigation.registerComponent("Settings", () => Settings, store, Provider);
 Navigation.registerComponent("SuggestedScreen", () => Suggested, store, Provider);

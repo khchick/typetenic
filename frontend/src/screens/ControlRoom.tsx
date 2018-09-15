@@ -83,16 +83,16 @@ class PureUser extends React.Component<UserProps> {
             style={styles.btnContainer}
             onPress={() =>
               this.props.navigator.push({
-                screen: "MbtiInfoLightBox",
+                screen: "AboutMBTI",
                 title: "About MBTI",
-                navigatorButtons: {
-                  leftButtons: [
-                    {
-                      title: "Done",
-                      id: "about m"
-                    }
-                  ]
-                }
+                // navigatorButtons: {
+                //   leftButtons: [
+                //     {
+                //       title: "Done",
+                //       id: "about m"
+                //     }
+                //   ]
+                // }
               })
             }
           >
