@@ -19,7 +19,6 @@ import {
   handleChangeTypeDeck,
   handleChangeTenDeck
 } from "./../redux/actions/refreshAction";
-import Modal from "react-native-modal";
 
 const { height, width } = Dimensions.get("window");
 
@@ -35,7 +34,6 @@ interface IDeckProps {
 
 interface IDeckStates {
   deckContent: Array<any>;
-  // isModalVisible: boolean;
 }
 
 class Deck extends React.Component<IDeckProps, IDeckStates> {
@@ -44,7 +42,6 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
 
     this.state = {
       deckContent: [],
-      // isModalVisible: false
     };
   }
 
@@ -306,7 +303,8 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
               }}
             />
           </View>
-          <ScrollView
+          {component}
+          {/* <ScrollView
             horizontal={true}
             decelerationRate={"fast"} // stop scrolling momentum
           >
@@ -403,33 +401,14 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                       </TouchableHighlight>
                       <TouchableHighlight
                         style={this.getFlipButtonStyle(flip_status)}
-                        onPress={this._toggleModal}
                       >
                         <Text style={styles.btnText}>{this.getFlipButtonText(flip_status)}</Text>
                       </TouchableHighlight>
                     </View>
-                    <View>
-                      <Modal
-
-                        isVisible={this.state.isModalVisible}
-                        style={styles.modal}
-                      >
-                        <View style={{ flex: 1 }}>
-                          <View style={styles.closeBtnRow}>
-                            <TouchableOpacity onPress={this._toggleModal}>
-                              <Text style={{ fontSize: 20 }}>X</Text>
-                            </TouchableOpacity>
-                          </View>
-                          <View>
-                            {this.getModalContent(id, display_name, flip_status, flip_req_sender)}
-                          </View>
-                        </View>
-                      </Modal>
-                    </View>
                   </View>
                 )
             )}
-          </ScrollView>
+          </ScrollView> */}
         </View>
       </LinearGradient>
     );
