@@ -544,7 +544,7 @@ class UserService {
                         for (let i = 0; i < rows.length; i++) {
                             if (rows[i].status === null) {
                                 suggestedUsers.push(rows[i]);
-                            } 
+                            }
                         }
                         return suggestedUsers;
                     })
@@ -1232,6 +1232,16 @@ class UserService {
                 max_age: max_age,
                 ig_account: ig_account,
                 ideal_first_date: ideal_first_date
+            })
+    }
+
+    updateSettings(userID, orientation, min_age, max_age) {
+        return this.knex('users')
+            .where('id', userID)
+            .update({
+                orientation: orientation,
+                min_age: min_age,
+                max_age: max_age
             })
     }
 

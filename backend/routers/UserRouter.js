@@ -149,6 +149,16 @@ class UserRouter {
                 .catch((err) => res.status(500).json(err));
         })
 
+        router.put('/settings', (req, res) => { // update user settings
+            this.userService.updateSettings(req.user.id, 
+                req.body.orientation,
+                req.body.min_age,
+                req.body.max_age)
+                .then(() => this.userService.getOwnProfile(req.user.id))
+                .then((data) => res.json(data))
+                .catch((err) => res.status(500).json(err));
+        })
+
         return router;
     }
 }
