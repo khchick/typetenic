@@ -7,44 +7,29 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from "react-nati
 import { connect } from "react-redux";
 import axios from 'axios';
 import Config from 'react-native-config';
-import {editProfile} from '../redux/actions/profileAction';
+import {editSettings} from '../redux/actions/profileAction';
 
 
 interface SettingsProps {
   navigator: Navigator;
   token: string;
-  id: number,
   max_age: number,
   min_age: number,
-  tentoken: number,
-  profilePic: string,
-  imageData: any,
-  name: string,
-  date: string,
-  gender: string,
   orientation: string,
-  location: string
-  onEditProfile: (
-    id: number,
+  editSettings: (
     max_age: number,
     min_age: number,
-    token: number,
-    profilePic: string,
-    imageData: any,
-    name: string,
-    date: string,
-    gender: string,
-    orientation: string,
-    location: string,) => any;
+    orientation: string) => any;
 }
 
 interface SettingsState {
   isEdited: boolean,  
-  min: number, 
-  max: number, 
-  minAge: number, // confirmed val
-  maxAge: number, // confirmed val
+  min: number, // confirmed val
+  max: number, // confirmed val
+  minAge: number, 
+  maxAge: number, 
   orientation: string,
+  showMe: Array<string>;
   isOnMenSwitch: boolean;
   isOnWomenSwitch: boolean;
   isOnMatchesSwitch: boolean;
@@ -63,6 +48,7 @@ class PureSettings extends React.Component<SettingsProps, SettingsState> {
       minAge: 0,
       maxAge: 0,
       orientation: '',
+      showMe: [],
       isOnMenSwitch: false,
       isOnWomenSwitch: false,
       isOnMatchesSwitch: false,
@@ -85,21 +71,25 @@ class PureSettings extends React.Component<SettingsProps, SettingsState> {
         });
       })
       .then(()=> {
-        if(this.state.orientation !== 'M') {
+        if (this.state.orientation == 'F') {
           this.setState({
             isOnMenSwitch: false,
             isOnWomenSwitch: true
           });
-        } else {
+        } else if (this.state.orientation == 'M') {
           this.setState({
             isOnMenSwitch: true,
             isOnWomenSwitch: false
+          });
+        } else {
+          this.setState({
+            isOnMenSwitch: true,
+            isOnWomenSwitch: true
           });
         }
         
       })
       .then(()=> {
-        console.log(this.state)
         this.setState({isEdited: false}) // reset after initial get api
       })
       .catch(err => console.log(err))      
@@ -108,21 +98,24 @@ class PureSettings extends React.Component<SettingsProps, SettingsState> {
   onNavigatorEvent(event: any) { 
     if (event.type == 'NavBarButtonPress') { 
       if (event.id == 'settings') { 
-        if(this.state.isEdited) {
-          let profileData = new FormData();
-          profileData.append('min_age', this.state.minAge);
-          profileData.append('max_age', this.state.maxAge);
-          profileData.append('orientation', this.state.orientation);
-          profileData.append('profile_pic', this.props.profilePic); //  how ?
 
+        if(this.state.isOnMenSwitch && this.state.isOnWomenSwitch == false) {
+          this.setState({orientation: 'M'})
+        } else if (this.state.isOnMenSwitch == false && this.state.isOnWomenSwitch) {
+          this.setState({orientation: 'F'})
+        } else {
+          this.setState({orientation: 'Both'})
+        }
+
+        console.log(this.state)
+        if(this.state.isEdited) {         
           return axios.put<{ token: string }>(
-            `${Config.API_SERVER}/api/user/myprofile`, 
-              // {
-              //   // min_age: this.state.minAge,
-              //   // max_age: this.state.maxAge,
-              //   // orientation: this.state.orientation,
-              // }
-              profileData
+            `${Config.API_SERVER}/api/user/settings`, 
+              {
+                min_age: this.state.min,
+                max_age: this.state.max,
+                orientation: this.state.orientation
+              }
               ,{
                 headers: {
                   Authorization: 'Bearer ' + this.props.token,
@@ -130,7 +123,7 @@ class PureSettings extends React.Component<SettingsProps, SettingsState> {
               }
             )
             .then(() => {
-              this.props.onEditProfile(this.props.id, this.state.maxAge, this.state.minAge, this.props.tentoken, this.props.profilePic, this.props.imageData, this.props.name, this.props.date, this.props.gender, this.state.orientation, this.props.location)    
+              this.props.editSettings(this.state.max, this.state.min, this.state.orientation)    
               this.props.navigator.popToRoot({
                 animated: true, // does the popToRoot have transition animation or does it happen immediately (optional)
                 animationType: 'slide-horizontal', // 'fade' (for both) / 'slide-horizontal' (for android) does the popToRoot have different transition animation (optional)
@@ -195,7 +188,8 @@ class PureSettings extends React.Component<SettingsProps, SettingsState> {
                   onToggle={isOnMenSwitch => {
                     this.setState({ isOnMenSwitch });
                     this.onToggle(isOnMenSwitch);
-                    this.setState({orientation: 'M', isEdited: true})
+                    this.setState({
+                      isEdited: true})
                   }}
                 />
               </View>
@@ -209,7 +203,8 @@ class PureSettings extends React.Component<SettingsProps, SettingsState> {
                   onToggle={isOnWomenSwitch => {
                     this.setState({ isOnWomenSwitch });
                     this.onToggle(isOnWomenSwitch);
-                    this.setState({orientation: 'F', isEdited: true})
+                    this.setState({
+                      isEdited: true})
                   }}
                 />
               </View>
@@ -280,33 +275,17 @@ class PureSettings extends React.Component<SettingsProps, SettingsState> {
 const MapStateToProps = (state: any) => {
   return {
     token: state.auth.token,
-    id: state.profile.id,
     max_age: state.profile.max_age,
     min_age: state.profile.min_age,
-    tentoken: state.profile.token,
-    profilePic: state.profile.profilePic,
-    imageData: state.profile.imageData,
-    name: state.profile.name,
-    date: state.profile.date,
-    gender: state.profile.gender,
     orientation: state.profile.orientation,
-    location: state.profile.location,
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
-  onEditProfile: (
-    id: number,
+  editSettings: (
     max_age: number,
     min_age: number,
-    token: number,
-    profilePic: string,
-    imageData: any,
-    name: string,
-    date: string,
-    gender: string,
-    orientation: string,
-    location: string,) => dispatch(editProfile(id, max_age, min_age, token, profilePic, imageData, name, date, gender, orientation, location))
+    orientation: string) => dispatch(editSettings(max_age, min_age, orientation))
 })
 
 const Settings = connect(MapStateToProps, mapDispatchToProps)(PureSettings);

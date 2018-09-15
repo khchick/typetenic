@@ -5,13 +5,16 @@ import {
   View,
   ScrollView,
   Text,
-  FlatList
+  FlatList,
+  Dimensions
 } from "react-native";
 import { connect } from "react-redux";
 import Config from "react-native-config";
 import axios from 'axios';
 import NoteItem from './components/NoteItem';
 import { handleChangeNotification } from './../redux/actions/refreshAction';
+
+const { height, width } = Dimensions.get("window");
 
 interface NotificationProps {
   navigator: Navigator;
@@ -97,7 +100,16 @@ class Notification extends React.Component<NotificationProps, {}> {
     });
 
     let component;
-    let isEmpty = <Text>There isn't any notification at the moment.</Text>
+    let isEmpty = 
+    <View style={styles.defaultMsgContainer}>
+      <Text style={styles.defaultMsg}>
+      {"\n"}
+      {"\n"}
+      {"\n"}
+      {"\n"}
+      {"\n"}
+      There isn't any notification at the moment.</Text>
+    </View>
 
     if (this.props.notificationList.length < 1) {
       component = isEmpty
@@ -146,5 +158,14 @@ const styles = StyleSheet.create({
   listContainer: {
     marginHorizontal: 10,
     marginVertical: 10
+  },
+  defaultMsgContainer: {
+    flex: 1,
+    justifyContent: "center",
+    width: width * 0.8
+  },
+  defaultMsg: {
+    fontSize: 16,
+    textAlign: "center"
   }
 });

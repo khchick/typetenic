@@ -23,6 +23,9 @@ export type EDIT_KEY_ATR = typeof EDIT_KEY_ATR;
 export const SUBMIT_PROFILE = 'SUBMIT_PROFILE';
 export type SUBMIT_PROFILE = typeof SUBMIT_PROFILE;
 
+export const SETTINGS = 'SETTINGS';
+export type SETTINGS = typeof SETTINGS;
+
 // action creators
 
 export interface SignupAction {
@@ -156,8 +159,27 @@ function submitProfileSuccess(
     }
 }
 
+export interface SettingsAction {
+    type: SETTINGS,
+    max_age: number,
+    min_age: number,
+    orientation: string,
+}
 
-export type ProfileActions = SignupAction | EditProfileAction | CreateMbtiAction | EditKeyAtrAction | SubmitProfileAction; 
+function SettingsSuccess(
+    max_age: number,
+    min_age: number,
+    orientation: string,
+    ) {
+    return {
+        type: SETTINGS,  
+        max_age,
+        min_age,     
+        orientation
+    }
+}
+
+export type ProfileActions = SignupAction | EditProfileAction | CreateMbtiAction | EditKeyAtrAction | SubmitProfileAction | SettingsAction; 
 
 
 // dispatch the action creators
@@ -310,3 +332,17 @@ export function getUserProfile(token: string| null) {
     }
   }
 
+
+  export function editSettings(
+    max_age: number,
+    min_age: number,
+    orientation: string
+    ) {   
+    return (dispatch: Dispatch) => {
+        dispatch(SettingsSuccess(
+            max_age,
+            min_age,
+            orientation
+        ));              
+    }
+}
