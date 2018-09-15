@@ -196,7 +196,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
         <View style={styles.container}>
           <View style={styles.topButtonContainer}>
             <LeftTopButton
-              leftButtonName={"RECOMMEND"}
+              leftButtonName={"MY TYPES"}
               onPress={() => {
                 this.props.handleChangeTypeDeck();
                 this.setState({

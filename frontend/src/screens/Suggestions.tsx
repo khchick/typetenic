@@ -108,7 +108,7 @@ class Suggestions extends React.Component<SuggestionsProps, RequestStates> {
         <View style={styles.container}>
           <View style={styles.buttonContainer}>
             <LeftTopButton
-              leftButtonName={"RECOMMEND"}
+              leftButtonName={"DISCOVER"}
               onPress={() => {
                 this.setState({
                   isDiscover: false
@@ -116,7 +116,7 @@ class Suggestions extends React.Component<SuggestionsProps, RequestStates> {
                 this.props.createSentReq();
 
                 this.props.navigator.setTitle({
-                  title: "SYSTEM MATCHED" // new title
+                  title: "DISCOVER" // new title
                 });
               }}
             />
@@ -129,7 +129,7 @@ class Suggestions extends React.Component<SuggestionsProps, RequestStates> {
                 this.props.createConnection();
 
                 this.props.navigator.setTitle({
-                  title: "LUCKY MATCHED" // new title
+                  title: "MY PICKS" // new title
                 });
               }}
             />
