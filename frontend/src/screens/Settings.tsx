@@ -176,14 +176,14 @@ class PureSettings extends React.Component<SettingsProps, SettingsState> {
           </View>
 
           <View style={styles.subContainer}>
-              <Text style={styles.subHeader}>Show Me</Text>
+              <Text style={styles.subHeader}>Interested In</Text>
 
               <View style={styles.showMeRow}>
                 <Text style={styles.showMeText}>Men</Text>
                 <ToggleSwitch
                   onColor="#fda190"
                   offColor="#53a5c4"
-                  size="large"
+                  size="medium"
                   isOn={this.state.isOnMenSwitch}
                   onToggle={isOnMenSwitch => {
                     this.setState({ isOnMenSwitch });
@@ -198,7 +198,7 @@ class PureSettings extends React.Component<SettingsProps, SettingsState> {
                 <ToggleSwitch
                   onColor="#fda190"
                   offColor="#53a5c4"
-                  size="large"
+                  size="medium"
                   isOn={this.state.isOnWomenSwitch}
                   onToggle={isOnWomenSwitch => {
                     this.setState({ isOnWomenSwitch });
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
   subHeader: {
     color: "#30519B",
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 16,
     padding: 15,
     textAlign: "left"
   },
@@ -334,7 +334,7 @@ const styles = StyleSheet.create({
   },
   showMeText: {
     color: '#30519B',
-    fontSize: 20,
+    fontSize: 15,
     paddingLeft: 15,
   }
   // messagerow: {

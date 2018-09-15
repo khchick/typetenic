@@ -67,10 +67,19 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
     if (atr === key_atr) {
       return {
         color: "red",
-        fontWeight: "900"
+        fontWeight: "900",
+        fontFamily: 'PatuaOne-Regular',
+        fontSize: 20
+      }
+    } else {
+      return {
+        color: "black",
+        fontFamily: 'PatuaOne-Regular',
+        fontSize: 20
       }
     }
   }
+
 
   getFlipButtonStyle(flipStatus: string) {
     switch (flipStatus) {
@@ -131,9 +140,9 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
     let isEmpty =
       <ScrollView
         horizontal={true}
-        snapToInterval={width - 37} // card width offset margin
-        snapToAlignment={"center"}
-        decelerationRate={0} // stop scrolling momentum
+        // snapToInterval={width - 37} // card width offset margin
+        // snapToAlignment={"center"}
+        decelerationRate={"fast"} // stop scrolling momentum
       >
         <View style={styles.defaultMsgContainer}>
           <Text style={styles.defaultMsg}>
@@ -144,7 +153,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
           Your deck is empty.
           {"\n"}
           {"\n"}
-          Go to the Discover page to connect with other users!</Text>
+          Go to DISCOVER to connect with other users</Text>
         </View>
       </ScrollView>
     let component;
@@ -154,9 +163,9 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
       component =
         <ScrollView
           horizontal={true}
-          snapToInterval={width - 37} // card width offset margin
-          snapToAlignment={"center"}
-          decelerationRate={0} // stop scrolling momentum
+          // snapToInterval={width - 37} // card width offset margin
+          // snapToAlignment={"center"}
+          decelerationRate={"fast"} // stop scrolling momentum
         >
           {this.state.deckContent.map(
             ({
@@ -186,10 +195,10 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                         <Text style={styles.nameText}>{display_name}</Text>
                       </View>
                       <View style={styles.rowContainer}>
-                        <Text style={styles.inputText}>{this.calculateAge(dob)} y/o {gender} {location}</Text>
+                        <Text style={styles.inputText}>{this.calculateAge(dob)}  {gender}  {location}</Text>
                       </View>
                       <View style={styles.rowContainer}>
-                        <Text style={styles.inputText}>{key_atr_desc}</Text>
+                        <Text style={styles.longText}>{key_atr_desc}</Text>
                       </View>
                       <View style={styles.mbtiRow}>
                         <Text style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
@@ -297,7 +306,130 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
               }}
             />
           </View>
-          {component}
+          <ScrollView
+            horizontal={true}
+            decelerationRate={"fast"} // stop scrolling momentum
+          >
+            {this.state.deckContent.map(
+              ({
+                id,
+                display_name,
+                dob,
+                gender,
+                location,
+                key_atr,
+                key_atr_desc,
+                mbti,
+                flip_status,
+                flip_req_sender,
+                conID
+              }) => (
+                  <View>
+                    <View style={styles.card}>
+                      <View style={styles.mbtiCol}>
+                        <View style={styles.mbtiRow}>
+                          <Text style={this.getMbtiStyle(mbti[0], key_atr)}>{mbti[0]}</Text>
+                          <Text style={this.getMbtiStyle(mbti[1], key_atr)}>{mbti[1]}</Text>
+                        </View>
+                        <View style={styles.rowContainer}>
+                          <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
+                        </View>
+                        <View style={styles.rowContainer}>
+                          <Text style={styles.nameText}>{display_name}</Text>
+                        </View>
+                        <View style={styles.rowContainer}>
+                          <Text style={styles.inputText}>{this.calculateAge(dob)}  {gender}  {location}</Text>
+                        </View>
+                        <View style={styles.rowContainer}>
+                          <Text style={styles.longText}>{key_atr_desc}</Text>
+                        </View>
+                        <View style={styles.mbtiRow}>
+                          <Text style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
+                          <Text style={this.getMbtiStyle(mbti[3], key_atr)}>{mbti[3]}</Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View style={styles.buttonsContainer}>
+                      <TouchableHighlight
+                        style={styles.btnContainer}
+                        onPress={() => {
+                          axios
+                            .delete(
+                              `${Config.API_SERVER}/api/connection/deck/${id}`,
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${this.props.token}`
+                                }
+                              }
+                            )
+                            .then(() => {
+                              this.props.handleChangeTypeDeck();
+                            })
+                            .catch(err => console.log(err));
+                        }}
+                      >
+                        <Text style={styles.btnText}>REMOVE</Text>
+                      </TouchableHighlight>
+                      <TouchableHighlight
+                        style={styles.btnContainer}
+                        onPress={() => {
+                          axios
+                            .post(
+                              `${Config.API_SERVER}/api/chat/conversation/${id}`,
+                              {},
+                              {
+                                headers: {
+                                  Authorization: `Bearer ${this.props.token}`
+                                }
+                              }
+                            )
+                            .then(res => {
+                              conID = res.data;
+                              this.props.navigator.push({
+                                screen: "ChatTabScreen",
+                                passProps: {
+                                  token: this.props.token,
+                                  userID: this.props.userID,
+                                  targetID: id,
+                                  targetName: display_name,
+                                  conID: conID
+                                }
+                              });
+                            })
+                            .catch(err => console.log(err));
+                        }}
+                      >
+                        <Text style={styles.btnText}>CHAT</Text>
+                      </TouchableHighlight>
+                      <TouchableHighlight
+                        style={this.getFlipButtonStyle(flip_status)}
+                        onPress={this._toggleModal}
+                      >
+                        <Text style={styles.btnText}>{this.getFlipButtonText(flip_status)}</Text>
+                      </TouchableHighlight>
+                    </View>
+                    <View>
+                      <Modal
+
+                        isVisible={this.state.isModalVisible}
+                        style={styles.modal}
+                      >
+                        <View style={{ flex: 1 }}>
+                          <View style={styles.closeBtnRow}>
+                            <TouchableOpacity onPress={this._toggleModal}>
+                              <Text style={{ fontSize: 20 }}>X</Text>
+                            </TouchableOpacity>
+                          </View>
+                          <View>
+                            {this.getModalContent(id, display_name, flip_status, flip_req_sender)}
+                          </View>
+                        </View>
+                      </Modal>
+                    </View>
+                  </View>
+                )
+            )}
+          </ScrollView>
         </View>
       </LinearGradient>
     );
@@ -326,23 +458,17 @@ export default connect(
 )(Deck);
 
 const styles = StyleSheet.create({
-  // cardContainer: {
-  //   position: "absolute",
-  //   left: 50,
-  //   top: 30
-  // },
-  cardContainer: {
-    width: width * 0.9
-  },
   mbtiCol: {
-    flex: 1,
+    //flex: 1,
     flexDirection: "column",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    height: height * 0.62,
+    width: width * 0.73
   },
   mbtiRow: {
-    flex: 1,
+    //flex: 1,
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   container: {
     flex: 1,
@@ -356,10 +482,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
-    padding: 10,
-    marginTop: 20,
-    marginLeft: 20,
-    marginRight: 10,
+    // paddingVertical: 3,
+    // paddingHorizontal: 3,
+    marginVertical: width * 0.05,
+    marginHorizontal: width * 0.1,
     borderRadius: 15,
     shadowColor: "black",
     shadowOffset: { width: 2, height: -3 },
@@ -367,16 +493,16 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     width: width * 0.8, // percent or minus
     height: height * 0.65,
-    zIndex: 0
   },
   rowContainer: {
     flexDirection: "row",
-    justifyContent: "center"
-  },
+    justifyContent: "center",
+    alignItems: 'center'
+  }, 
   avatar: {
     resizeMode: "contain",
     width: width * 0.4,
-    height: height * 0.23
+    height: height * 0.25
   },
   nameText: {
     fontSize: 25,
@@ -384,25 +510,36 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     textAlign: "center",
     letterSpacing: 2.5,
-    marginTop: 10,
-    fontFamily: "YatraOne-Regular"
+    fontFamily: "YatraOne-Regular",
+    height: height * 0.05
   },
   inputText: {
     backgroundColor: "#E5F5FA",
     color: "#3B5998",
-    marginVertical: 7,
+    marginTop: height * 0.02,
     paddingVertical: 10,
     paddingHorizontal: 10,
     borderRadius: 25,
-    width: 250,
-    textAlign: "center"
+    width: width * 0.6,
+    textAlign: "center",
+    height: height * 0.05
+  },
+  longText: {
+    backgroundColor: "#E5F5FA",
+    color: "#3B5998",
+    marginTop: height * 0.02,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderRadius: 25,
+    width: width * 0.6,
+    textAlign: "center",
+    height: height * 0.15
   },
   buttonsContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: width * 0.6,
-    marginLeft: width * 0.08,
-    marginRight: width * 0.05
+    width: width * 0.8,
+    marginHorizontal: width * 0.1,
   },
   delBtnContainer: {
     // flexDirection: "row",
@@ -419,13 +556,8 @@ const styles = StyleSheet.create({
     shadowRadius: 2
   },
   btnContainer: {
-    // flexDirection: "row",
-    width: width * 0.15,
+    width: width * 0.25,
     backgroundColor: "#F0957F",
-    marginTop: 15,
-    marginLeft: width * 0.05,
-    marginRight: width * 0.05,
-    //paddingHorizontal: 5,
     paddingVertical: 5,
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },

@@ -44,7 +44,7 @@ class PureUser extends React.Component<UserProps> {
             onPress={() =>
               this.props.navigator.push({
                 screen: "Settings",
-                title: "Settings",
+                title: "SETTINGS",
                 navigatorButtons: {
                   leftButtons: [
                     {
@@ -64,7 +64,7 @@ class PureUser extends React.Component<UserProps> {
             onPress={() =>
               this.props.navigator.push({
                 screen: "ResetProfile",
-                title: "Edit Profile",
+                title: "EDIT PROFILE",
                 navigatorButtons: {
                   leftButtons: [
                     {
@@ -84,7 +84,7 @@ class PureUser extends React.Component<UserProps> {
             onPress={() =>
               this.props.navigator.push({
                 screen: "AboutMBTI",
-                title: "About MBTI",
+                title: "ABOUT MBTI",
                 // navigatorButtons: {
                 //   leftButtons: [
                 //     {
@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     width: width * 0.6,
     height: width * 0.6,
-    marginBottom: 20
+    marginBottom: 20,
+    resizeMode: 'contain'
   }
 });

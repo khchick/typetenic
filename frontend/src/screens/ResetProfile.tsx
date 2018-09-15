@@ -513,7 +513,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingVertical: 8,
     paddingHorizontal: 10,
-    borderRadius: 25,
     width: 250,
     textAlign: "center"
   },
@@ -521,13 +520,13 @@ const styles = StyleSheet.create({
     width: 250,
     height: 37,
     backgroundColor: "#E5F5FA",
-    borderRadius: 25,
     borderColor: "transparent"
   },
   propic: {
     height: 150,
     width: 150,
     borderRadius: 150/2,
+    resizeMode: 'contain'
   },
   passwordRow:{
     flexDirection: 'row',
@@ -538,7 +537,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingVertical: 8,
     paddingHorizontal: 10,
-    borderRadius: 25,
     width: 250,
     textAlign: "center"
   },
@@ -582,7 +580,7 @@ const styles = StyleSheet.create({
   descInput: {
     borderColor: '#30519B',
     borderWidth: 1,
-    height: height * 0.2,
+    height: height * 0.3,
     width: width * 0.65,
     fontSize: 16,
     color: '#30519B',
@@ -594,9 +592,7 @@ const pickerSelectStyles = StyleSheet.create({
     fontSize: 16,
     paddingVertical: 8,
     paddingHorizontal: 10,
-    borderRadius: 25,
     color: "#30519B",
-    // placeholderColor: '#30519B', //not a valid style property > change module index.js line 165
     backgroundColor: "#E5F5FA",
     width: 250,
     textAlign: "center"
