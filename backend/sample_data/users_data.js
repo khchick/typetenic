@@ -1879,7 +1879,7 @@ module.exports = [
         key_atr: 'T',
         key_atr_desc: 'You are a function of what the whole universe is doing in the same way that a wave is a function of what the whole ocean is doing.',
         mbti: 'ENTP',
-        profile_pic: `/public/images/users/wlam.jpg`,
+        profile_pic: `/public/images/users/d3.jpg`,
         min_age: null,
         max_age: null,
         ideal_first_date: '',

@@ -125,7 +125,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
-    margin: 10
+    marginHorizontal: 15,
+    marginVertical: 10,
+    borderRadius: 4
   },
   passBtn: {
     backgroundColor: "#30519B",
@@ -135,7 +137,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
-    margin: 10
+    marginHorizontal: 15,
+    marginVertical: 10,
+    borderRadius: 4
   },
   btnText: {
     color: "white",

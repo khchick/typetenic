@@ -4523,6 +4523,10 @@ react-native-invertible-scroll-view@^1.1.0:
     react-clone-referenced-element "^1.0.1"
     react-native-scrollable-mixin "^1.0.1"
 
+react-native-iphone-x-helper@^1.0.2:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.1.0.tgz#3a881720900bd8d1c67de2c465ea9aa9296180a7"
+
 react-native-lightbox@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/react-native-lightbox/-/react-native-lightbox-0.7.0.tgz#e52b4d7fcc141f59d7b23f0180de535e35b20ec9"
@@ -4564,6 +4568,16 @@ react-native-range-slider@^0.1.0:
   resolved "https://registry.yarnpkg.com/react-native-range-slider/-/react-native-range-slider-0.1.0.tgz#c464560756807365684a10f773db2f2710870855"
   dependencies:
     prop-types "^15.5.10"
+
+react-native-responsive-fontsize@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-responsive-fontsize/-/react-native-responsive-fontsize-0.1.2.tgz#eda8ed31d62410ed0f11a89fed977650870dc174"
+  dependencies:
+    react-native-iphone-x-helper "^1.0.2"
+
+react-native-responsive-screen@^1.1.9:
+  version "1.1.9"
+  resolved "https://registry.yarnpkg.com/react-native-responsive-screen/-/react-native-responsive-screen-1.1.9.tgz#1a9858731e9e7cc1f1312877eb9b94ac32f4500f"
 
 react-native-scrollable-mixin@^1.0.1:
   version "1.0.1"
