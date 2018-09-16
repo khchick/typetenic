@@ -88,6 +88,7 @@ export default class FlipAlert extends React.Component<IFlipAlertProps, {}> {
                 axios
                   .put(
                     `${Config.API_SERVER}/api/connection/flip/approve/${targetID}`,
+                    {},
                     {
                       headers: {
                         Authorization: `Bearer ${this.props.token}`
@@ -142,6 +143,22 @@ export default class FlipAlert extends React.Component<IFlipAlertProps, {}> {
         </View>
       )
     };
+    if (flipStatus === 'Flipped') {
+      return (
+        <View style={styles.flipAlertContainer}>
+          <Text style={styles.defaultMsg}>Congratulation! You two are truly connected!
+            </Text>
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity
+              style={styles.centerBtnContainer}
+              onPress={() => { this.props.navigator.dismissModal() }}
+            >
+              <Text style={styles.btnText}>CLOSE</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )
+    };
     // if (flipStatus === 'Rejected' && reqSender === targetID) {
 
     // };
@@ -177,6 +194,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#F0957F",
     marginTop: height * 0.5,
     marginLeft: width * 0.04,
+    marginRight: width * 0.04,
+    paddingVertical: 5,
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2
+  },
+  centerBtnContainer: {
+    textAlign: 'center',
+    width: width * 0.23,
+    backgroundColor: "#F0957F",
+    marginTop: height * 0.5,
+    marginLeft: width * 0.23,
     marginRight: width * 0.04,
     paddingVertical: 5,
     shadowColor: "black",
