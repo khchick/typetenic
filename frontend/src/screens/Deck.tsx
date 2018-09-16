@@ -6,7 +6,6 @@ import {
   View,
   ScrollView,
   Dimensions,
-  TouchableHighlight,
   TouchableOpacity
 } from "react-native";
 import axios from "axios";
@@ -41,17 +40,30 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
     super(props);
 
     this.state = {
-      deckContent: [],
+      deckContent: this.props.typeDeckList
     };
+
+    // this.updateState = this.updateState.bind(this);
   }
 
+  // componentWillReceiveProps() {
+  //   this.updateState();
+  // }
+
   componentDidMount() {
-    this.props.handleChangeTypeDeck();
+    this.props.handleChangeTypeDeck()
     this.setState({
       deckContent: this.props.typeDeckList
     });
-    this.props.handleChangeTenDeck();
+    this.props.handleChangeTenDeck()
   }
+
+  // updateState() {
+  //   this.props.handleChangeTypeDeck();
+  //   this.setState({
+  //     deckContent: this.props.typeDeckList
+  //   });
+  // }
 
   calculateAge(dob: any) {
     let dobDate = new Date(dob);
@@ -143,14 +155,14 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
       >
         <View style={styles.defaultMsgContainer}>
           <Text style={styles.defaultMsg}>
+            {"\n"}
+            {"\n"}
+            {"\n"}
+            {"\n"}
+            Your deck is empty.
           {"\n"}
-          {"\n"}
-          {"\n"}
-          {"\n"}
-          Your deck is empty.
-          {"\n"}
-          {"\n"}
-          Go to DISCOVER to connect with other users</Text>
+            {"\n"}
+            Go to DISCOVER to connect with other users</Text>
         </View>
       </ScrollView>
     let component;
@@ -204,7 +216,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                     </View>
                   </View>
                   <View style={styles.buttonsContainer}>
-                    <TouchableHighlight
+                    <TouchableOpacity
                       style={styles.delBtnContainer}
                       onPress={() => {
                         axios
@@ -218,13 +230,16 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                           )
                           .then(() => {
                             this.props.handleChangeTypeDeck();
+                            this.setState({
+                              deckContent: this.props.typeDeckList
+                            });
                           })
                           .catch(err => console.log(err));
                       }}
                     >
                       <Text style={styles.btnText}>DEL</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
+                    </TouchableOpacity>
+                    <TouchableOpacity
                       style={styles.btnContainer}
                       onPress={() => {
                         axios
@@ -254,8 +269,8 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                       }}
                     >
                       <Text style={styles.btnText}>CHAT</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
+                    </TouchableOpacity>
+                    <TouchableOpacity
                       style={this.getFlipButtonStyle(flip_status)}
                       onPress={() => {
                         this.props.navigator.showModal({
@@ -272,7 +287,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                       }}
                     >
                       <Text style={styles.btnText}>{this.getFlipButtonText(flip_status)}</Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                   </View>
                 </View>
               )
@@ -348,7 +363,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                       </View>
                     </View>
                     <View style={styles.buttonsContainer}>
-                      <TouchableHighlight
+                      <TouchableOpacity
                         style={styles.btnContainer}
                         onPress={() => {
                           axios
@@ -367,8 +382,8 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                         }}
                       >
                         <Text style={styles.btnText}>REMOVE</Text>
-                      </TouchableHighlight>
-                      <TouchableHighlight
+                      </TouchableOpacity>
+                      <TouchableOpacity
                         style={styles.btnContainer}
                         onPress={() => {
                           axios
@@ -398,12 +413,12 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                         }}
                       >
                         <Text style={styles.btnText}>CHAT</Text>
-                      </TouchableHighlight>
-                      <TouchableHighlight
+                      </TouchableOpacity>
+                      <TouchableOpacity
                         style={this.getFlipButtonStyle(flip_status)}
                       >
                         <Text style={styles.btnText}>{this.getFlipButtonText(flip_status)}</Text>
-                      </TouchableHighlight>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 )
@@ -477,7 +492,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: 'center'
-  }, 
+  },
   avatar: {
     resizeMode: "contain",
     width: width * 0.4,
