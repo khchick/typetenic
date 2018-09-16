@@ -142,14 +142,14 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
       >
         <View style={styles.defaultMsgContainer}>
           <Text style={styles.defaultMsg}>
+            {"\n"}
+            {"\n"}
+            {"\n"}
+            {"\n"}
+            Your deck is empty
           {"\n"}
-          {"\n"}
-          {"\n"}
-          {"\n"}
-          Your deck is empty
-          {"\n"}
-          {"\n"}
-          Go to Discover to connect with other users</Text>
+            {"\n"}
+            Go to Discover to connect with other users</Text>
         </View>
       </ScrollView>
     let component;
@@ -206,19 +206,15 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                     <TouchableOpacity
                       style={styles.delBtnContainer}
                       onPress={() => {
-                        axios
-                          .delete(
-                            `${Config.API_SERVER}/api/connection/deck/${id}`,
-                            {
-                              headers: {
-                                Authorization: `Bearer ${this.props.token}`
-                              }
-                            }
-                          )
-                          .then(() => {
-                            this.props.handleChangeTypeDeck();
-                          })
-                          .catch(err => console.log(err));
+                        this.props.navigator.showModal({
+                          screen: "RemovalAlertTabScreen",
+                          passProps: {
+                            token: this.props.token,
+                            userID: this.props.userID,
+                            targetID: id,
+                            targetName: display_name
+                          }
+                        })
                       }}
                     >
                       <Text style={styles.btnText}>REMOVE</Text>
