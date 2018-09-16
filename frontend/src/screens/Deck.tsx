@@ -210,7 +210,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
           {"\n"}
           {"\n"}
           {"\n"}
-          Your deck is empty.
+          Your deck is empty
           {"\n"}
           {"\n"}
           Go to DISCOVER to connect with other users</Text>

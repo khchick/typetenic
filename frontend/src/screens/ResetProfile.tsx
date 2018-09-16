@@ -196,7 +196,7 @@ class PureResetProfile extends React.Component<ResetProfileProps,ResetProfileSta
     }
   }
 
-  async componentWillMount() {  
+  async componentDidMount() {  
     axios.get(`${Config.API_SERVER}/api/user/myprofile`, {
       headers: {
         Authorization: 'Bearer ' + this.props.token

@@ -108,7 +108,7 @@ class Notification extends React.Component<NotificationProps, {}> {
       {"\n"}
       {"\n"}
       {"\n"}
-      There isn't any notification at the moment.</Text>
+      There isn't any notification at the moment</Text>
     </View>
 
     if (this.props.notificationList.length < 1) {
