@@ -22,9 +22,7 @@ interface IFlipAlertProps {
 
 export default class FlipAlert extends React.Component<IFlipAlertProps, {}> {
   
-
   getModalContent(targetID: number, targetName: string, flipStatus: string, reqSender: number) {
-
     if (flipStatus == null) {
       return (
         <View style={styles.flipAlertContainer}>
