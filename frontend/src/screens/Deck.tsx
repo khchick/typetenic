@@ -211,19 +211,15 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                     <TouchableOpacity
                       style={styles.delBtnContainer}
                       onPress={() => {
-                        axios
-                          .delete(
-                            `${Config.API_SERVER}/api/connection/deck/${id}`,
-                            {
-                              headers: {
-                                Authorization: `Bearer ${this.props.token}`
-                              }
-                            }
-                          )
-                          .then(() => {
-                            this.props.handleChangeTypeDeck();
-                          })
-                          .catch(err => console.log(err));
+                        this.props.navigator.showModal({
+                          screen: "RemovalAlertTabScreen",
+                          passProps: {
+                            token: this.props.token,
+                            userID: this.props.userID,
+                            targetID: id,
+                            targetName: display_name
+                          }
+                        })
                       }}
                     >
                       <Text style={styles.btnText}>REMOVE</Text>

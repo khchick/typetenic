@@ -17,6 +17,7 @@ import MbtiProfile from "./screens/MbtiProfile";
 import Deck from "./screens/Deck"; // home root
 import Chat from "./screens/Chat";
 import FlipAlert from "./screens/FlipAlert";
+import RemovalAlert from "./screens/RemovalAlert";
 import Request from "./screens/Request";
 import ControlRoom from "./screens/ControlRoom";
 import Settings from "./screens/Settings";
@@ -48,6 +49,7 @@ Navigation.registerComponent("MbtiProfileScreen", () => MbtiProfile, store, Prov
 Navigation.registerComponent("HomeTabScreen", () => Deck, store, Provider);
 Navigation.registerComponent("ChatTabScreen", () => Chat, store, Provider);
 Navigation.registerComponent("FlipAlertTabScreen", () => FlipAlert, store, Provider);
+Navigation.registerComponent("RemovalAlertTabScreen", () => RemovalAlert, store, Provider);
 Navigation.registerComponent("RequestTabScreen", () => Request, store, Provider);
 Navigation.registerComponent("NotificationTabScreen", () => Notification, store, Provider);
 Navigation.registerComponent("NoteContent", () => NoteContent, store, Provider);
