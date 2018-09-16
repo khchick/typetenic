@@ -331,9 +331,6 @@ export default connect(
 )(Deck);
 
 const styles = StyleSheet.create({
-  // cardContainer: {
-  //   width: width * 0.9
-  // },
   mbtiCol: {
     flex: 1,
     flexDirection: "column",
