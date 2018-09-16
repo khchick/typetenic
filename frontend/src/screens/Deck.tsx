@@ -36,10 +36,6 @@ interface IDeckProps {
 
 interface IDeckStates {
   deckContent: Array<any>;
-<<<<<<< HEAD
-  isModalVisible: boolean;
-=======
->>>>>>> a9f7a97bb5da576a31dfdd75f0fabbe6e1ab7630
 }
 
 class Deck extends React.Component<IDeckProps, IDeckStates> {
@@ -48,10 +44,6 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
 
     this.state = {
       deckContent: [],
-<<<<<<< HEAD
-      isModalVisible: false
-=======
->>>>>>> a9f7a97bb5da576a31dfdd75f0fabbe6e1ab7630
     };
   }
 
