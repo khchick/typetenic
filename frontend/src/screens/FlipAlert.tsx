@@ -31,7 +31,7 @@ export default class FlipAlert extends React.Component<IFlipAlertProps, {}> {
           <Text style={styles.defaultMsg}>Confirm to request {targetName} to flip his/her card and yours?
           {"\n"}
             {"\n"}
-            (Both of you will be able to view each other's private profile after flipping.)
+            Both of you will be able to view each other's private profile after flipping
             </Text>
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
@@ -146,8 +146,7 @@ export default class FlipAlert extends React.Component<IFlipAlertProps, {}> {
     if (flipStatus === 'Flipped') {
       return (
         <View style={styles.flipAlertContainer}>
-          <Text style={styles.defaultMsg}>Congratulation! You two are truly connected!
-            </Text>
+          <Text style={styles.defaultMsg}>Congratulations! The cards are flipped</Text>
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
               style={styles.centerBtnContainer}
@@ -179,53 +178,57 @@ export default class FlipAlert extends React.Component<IFlipAlertProps, {}> {
 
 const styles = StyleSheet.create({
   flipAlertContainer: {
-    padding: width * 0.1
+    width: width * 0.8,
+    marginHorizontal: width * 0.1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: width * 0.2
   },
   buttonsContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    width: width * 0.6,
-    marginLeft: width * 0.065,
-    marginRight: width * 0.05
+    justifyContent: "space-around",
+    alignItems: 'center',
+    width: width * 0.8,
+    marginHorizontal: width * 0.1,
+    marginTop: height * 0.05
   },
   btnContainer: {
-    textAlign: 'center',
-    width: width * 0.25,
     backgroundColor: "#F0957F",
-    marginTop: height * 0.5,
-    marginLeft: width * 0.04,
-    marginRight: width * 0.04,
-    paddingVertical: 5,
+    width: width * 0.25,
+    height: height * 0.04,
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
-    shadowRadius: 2
+    shadowRadius: 2,
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   centerBtnContainer: {
     textAlign: 'center',
-    width: width * 0.23,
+    width: width * 0.25,
     backgroundColor: "#F0957F",
     marginTop: height * 0.5,
     marginLeft: width * 0.23,
     marginRight: width * 0.04,
-    paddingVertical: 5,
+    paddingVertical: 10,
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
-    shadowRadius: 2
+    shadowRadius: 2,
+    borderRadius: 4
   },
   cancelBtnContainer: {
-    textAlign: 'center',
-    width: width * 0.25,
     backgroundColor: "grey",
-    marginTop: height * 0.5,
-    marginLeft: width * 0.04,
-    marginRight: width * 0.04,
-    paddingVertical: 5,
+    width: width * 0.23,
+    height: height * 0.04,
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
-    shadowRadius: 2
+    shadowRadius: 2,
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   btnText: {
     color: "white",
@@ -236,6 +239,6 @@ const styles = StyleSheet.create({
   },
   defaultMsg: {
     fontSize: 16,
-    textAlign: "justify"
+    textAlign: "center"
   }
 })
