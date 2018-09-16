@@ -19,6 +19,7 @@ import {
   handleChangeTenDeck
 } from "./../redux/actions/refreshAction";
 import Modal from "react-native-modal";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const { height, width } = Dimensions.get("window");
 
@@ -81,42 +82,42 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
     switch (flipStatus) {
       case null:
         return {
-          width: width * 0.21,
           backgroundColor: "#04B4AE",
-          marginTop: 15,
-          marginLeft: width * 0.02,
-          marginRight: width * 0.02,
-          paddingVertical: 5,
+          width: wp('23%'),
+          height: hp('4%'),
           shadowColor: "black",
           shadowOffset: { width: 2, height: 2 },
           shadowOpacity: 0.4,
-          shadowRadius: 2
+          shadowRadius: 2,
+          borderRadius: 4,
+          justifyContent: 'center',
+          alignItems: 'center'
         };
       case 'Requested':
         return {
-          width: width * 0.21,
           backgroundColor: "#0489B1",
-          marginTop: 15,
-          marginLeft: width * 0.02,
-          marginRight: width * 0.02,
-          paddingVertical: 5,
+          width: wp('23%'),
+          height: hp('4%'),
           shadowColor: "black",
           shadowOffset: { width: 2, height: 2 },
           shadowOpacity: 0.4,
-          shadowRadius: 2
+          shadowRadius: 2,
+          borderRadius: 4,
+          justifyContent: 'center',
+          alignItems: 'center'
         };
       case 'Flipped':
         return {
-          width: width * 0.21,
           backgroundColor: "#0B615E",
-          marginTop: 15,
-          marginLeft: width * 0.02,
-          marginRight: width * 0.02,
-          paddingVertical: 5,
+          width: wp('23%'),
+          height: hp('4%'),
           shadowColor: "black",
           shadowOffset: { width: 2, height: 2 },
           shadowOpacity: 0.4,
-          shadowRadius: 2
+          shadowRadius: 2,
+          borderRadius: 4,
+          justifyContent: 'center',
+          alignItems: 'center'
         }
     }
   }
@@ -142,14 +143,14 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
       >
         <View style={styles.defaultMsgContainer}>
           <Text style={styles.defaultMsg}>
+            {"\n"}
+            {"\n"}
+            {"\n"}
+            {"\n"}
+            Your deck is empty
           {"\n"}
-          {"\n"}
-          {"\n"}
-          {"\n"}
-          Your deck is empty
-          {"\n"}
-          {"\n"}
-          Go to Discover to connect with other users</Text>
+            {"\n"}
+            Go to DISCOVER to connect with other users</Text>
         </View>
       </ScrollView>
     let component;
@@ -159,8 +160,8 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
       component =
         <ScrollView
           horizontal={true}
-          // snapToInterval={width - 37} // card width offset margin
-          // snapToAlignment={"center"}
+          snapToInterval={width} // card width offset margin
+          snapToAlignment={"center"}
           decelerationRate={"fast"} // stop scrolling momentum
         >
           {this.state.deckContent.map(
@@ -194,7 +195,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                         <Text style={styles.inputText}>{this.calculateAge(dob)}  {gender}  {location}</Text>
                       </View>
                       <View style={styles.rowContainer}>
-                        <Text style={styles.inputText}>{key_atr_desc}</Text>
+                        <Text style={styles.longText}>{key_atr_desc}</Text>
                       </View>
                       <View style={styles.mbtiRow}>
                         <Text style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
@@ -334,12 +335,14 @@ const styles = StyleSheet.create({
   mbtiCol: {
     flex: 1,
     flexDirection: "column",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    width: wp('74%'),
+    height: hp('63%')
   },
   mbtiRow: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   container: {
     flex: 1,
@@ -353,81 +356,92 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
-    padding: 10,
-    marginTop: 20,
-    marginLeft: 20,
-    marginRight: 10,
+    marginTop: hp('3%'),
+    marginBottom: hp('2.5%'),
+    marginHorizontal: wp('10%'),
+    paddingVertical: hp('1%'),
+    paddingHorizontal: wp('3%'),
     borderRadius: 15,
     shadowColor: "black",
     shadowOffset: { width: 2, height: -3 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
-    width: width * 0.8, // percent or minus
-    height: height * 0.65,
-    zIndex: 0
+    // width: width * 0.8, // percent or minus
+    // height: height * 0.65,
+    width: wp('80%'),
+    height: hp('65%')
   },
   rowContainer: {
     flexDirection: "row",
-    justifyContent: "center"
+    justifyContent: "center",
+    alignItems: "center"
   },
   avatar: {
     resizeMode: "contain",
-    width: width * 0.4,
-    height: height * 0.23
+    width: wp("40%"),
+    height: hp('25%')
   },
   nameText: {
-    fontSize: 25,
+    fontSize: hp('4%'),
     color: "#3B5998",
     fontWeight: "700",
     textAlign: "center",
     letterSpacing: 2.5,
-    marginTop: 10,
-    fontFamily: "YatraOne-Regular"
+    marginTop: hp('1%'),
+    fontFamily: "YatraOne-Regular",
+    width: wp('60%'),
+    height: hp('5%')
   },
   inputText: {
     backgroundColor: "#E5F5FA",
     color: "#3B5998",
-    marginVertical: 7,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    borderRadius: 25,
-    width: 250,
-    textAlign: "center"
+    marginTop: hp('2%'),
+    textAlign: "center",
+    width: wp('60%'),
+    fontSize: 14,
+    height: hp('5%'),
+    padding: hp('1%'),
+  },
+  longText: {
+    backgroundColor: "#E5F5FA",
+    color: "#3B5998",
+    marginTop: hp('2%'),
+    textAlign: "center",
+    width: wp('60%'),
+    height: hp('15%'),
+    padding: hp('1%'),
+    fontSize: 14,
   },
   buttonsContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: width * 0.6,
-    marginLeft: width * 0.08,
-    marginRight: width * 0.05
+    alignItems: 'center',
+    width: wp('80%'),
+    marginHorizontal: wp('10%')
   },
   delBtnContainer: {
-    // flexDirection: "row",
-    width: width * 0.21,
     backgroundColor: "#BDBDBD",
-    marginTop: 15,
-    marginLeft: width * 0.02,
-    marginRight: width * 0.02,
-    //paddingHorizontal: 5,
-    paddingVertical: 5,
+    width: wp('23%'),
+    height: hp('4%'),
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
-    shadowRadius: 2
+    shadowRadius: 2,
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   btnContainer: {
-    // flexDirection: "row",
-    width: width * 0.21,
     backgroundColor: "#F0957F",
-    marginTop: 15,
-    marginLeft: width * 0.02,
-    marginRight: width * 0.02,
-    //paddingHorizontal: 5,
-    paddingVertical: 5,
+    width: wp('23%'),
+    height: hp('4%'),
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
-    shadowRadius: 2
+    shadowRadius: 2,
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   btnText: {
     color: "white",
