@@ -43,7 +43,7 @@ class PureSignup extends React.Component<SignupProps, SignupStates> {
       if (event.id == 'cancel') { // this is the same id field from the static navigatorButtons definition
         Alert.alert(
           'Confirm to cancel signup?',
-          'All input data will be lost.',
+          'All inputted data will be lost.',
           [
             {
               text: 'Cancel',
@@ -77,8 +77,14 @@ class PureSignup extends React.Component<SignupProps, SignupStates> {
         
         this.props.navigator.push({
           screen: 'SignupContScreen',
-          title: 'Profile',
-          navigatorStyle: transparentNav,
+          title: 'BUILD YOUR PROFILE',
+          navigatorStyle: {
+            navBarNoBorder: true,
+            navBarTextColor: '#30519B',
+            navBarBackgroundColor: '#9EF8E4',
+            navBarTextFontSize: 23,
+            navBarTextFontFamily: 'NovaRound'
+          },
           backButtonHidden: true,
         })
       }

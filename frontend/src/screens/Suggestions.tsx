@@ -84,10 +84,10 @@ class Suggestions extends React.Component<SuggestionsProps, RequestStates> {
           {"\n"}
           {"\n"}
           {"\n"}
-          There isn't any new user at the moment.
+          No new user at the moment
           {"\n"}
           {"\n"}
-          Please check back later!
+          Please wait
         </Text>
       </View>
 
