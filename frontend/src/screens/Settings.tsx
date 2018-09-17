@@ -8,18 +8,24 @@ import { connect } from "react-redux";
 import axios from 'axios';
 import Config from 'react-native-config';
 import {editSettings} from '../redux/actions/profileAction';
+import {
+  createSentReq,
+  createConnection
+} from "./../redux/actions/refreshAction";
 
 
 interface SettingsProps {
   navigator: Navigator;
   token: string;
-  max_age: number,
-  min_age: number,
-  orientation: string,
+  max_age: number;
+  min_age: number;
+  orientation: string;
   editSettings: (
     max_age: number,
     min_age: number,
     orientation: string) => any;
+  createSentReq: () => any;
+  createConnection: () => any;
 }
 
 interface SettingsState {
@@ -123,7 +129,10 @@ class PureSettings extends React.Component<SettingsProps, SettingsState> {
               }
             )
             .then(() => {
-              this.props.editSettings(this.state.max, this.state.min, this.state.orientation)    
+              this.props.editSettings(this.state.max, this.state.min, this.state.orientation)  
+              this.props.createSentReq();
+              this.props.createConnection();
+
               this.props.navigator.popToRoot({
                 animated: true, // does the popToRoot have transition animation or does it happen immediately (optional)
                 animationType: 'slide-horizontal', // 'fade' (for both) / 'slide-horizontal' (for android) does the popToRoot have different transition animation (optional)
@@ -285,7 +294,9 @@ const mapDispatchToProps = (dispatch: any) => ({
   editSettings: (
     max_age: number,
     min_age: number,
-    orientation: string) => dispatch(editSettings(max_age, min_age, orientation))
+    orientation: string) => dispatch(editSettings(max_age, min_age, orientation)),
+    createSentReq: () => dispatch(createSentReq()),
+    createConnection: () => dispatch(createConnection())
 })
 
 const Settings = connect(MapStateToProps, mapDispatchToProps)(PureSettings);
