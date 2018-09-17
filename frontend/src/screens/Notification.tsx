@@ -73,7 +73,12 @@ class Notification extends React.Component<NotificationProps, {}> {
         count++;
       }
     });
-    return count;
+    if (count > 0) {
+      return count;
+    } else {
+      return null;
+    }
+    
   }
 
   render() {
