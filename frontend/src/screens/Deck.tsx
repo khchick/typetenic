@@ -192,10 +192,14 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
                         <Text style={styles.nameText}>{display_name}</Text>
                       </View>
                       <View style={styles.rowContainer}>
-                        <Text style={styles.inputText}>{this.calculateAge(dob)}  {gender}  {location}</Text>
+                        <View style={styles.inputContainer}>
+                          <Text style={styles.inputText}>{this.calculateAge(dob)}  {gender}  {location}</Text>
+                        </View>
                       </View>
                       <View style={styles.rowContainer}>
-                        <Text style={styles.longText}>{key_atr_desc}</Text>
+                        <View style={styles.longTextContainer}>
+                          <Text style={styles.longText}>{key_atr_desc}</Text>
+                        </View>
                       </View>
                       <View style={styles.mbtiRow}>
                         <Text style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
@@ -333,7 +337,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     width: wp('74%'),
-    height: hp('63%')
+    height: hp('61%')
   },
   mbtiRow: {
     flex: 1,
@@ -365,12 +369,29 @@ const styles = StyleSheet.create({
     // width: width * 0.8, // percent or minus
     // height: height * 0.65,
     width: wp('80%'),
-    height: hp('65%')
+    height: hp('63%')
   },
   rowContainer: {
-    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center"
+  },
+  inputContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: wp('60%'),
+    height: hp('5%'),
+    marginTop: hp('2%'),
+    backgroundColor: "#E5F5FA",
+    padding: hp('1%'),
+  },
+  longTextContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: wp('60%'),
+    height: hp('15%'),
+    marginTop: hp('2%'),
+    backgroundColor: "#E5F5FA",
+    padding: hp('2%'),
   },
   avatar: {
     resizeMode: "contain",
@@ -378,7 +399,7 @@ const styles = StyleSheet.create({
     height: hp('25%')
   },
   nameText: {
-    fontSize: hp('4%'),
+    fontSize: 25,
     color: "#3B5998",
     fontWeight: "700",
     textAlign: "center",
@@ -389,23 +410,13 @@ const styles = StyleSheet.create({
     height: hp('5%')
   },
   inputText: {
-    backgroundColor: "#E5F5FA",
     color: "#3B5998",
-    marginTop: hp('2%'),
     textAlign: "center",
-    width: wp('60%'),
     fontSize: 14,
-    height: hp('5%'),
-    padding: hp('1%'),
   },
   longText: {
-    backgroundColor: "#E5F5FA",
     color: "#3B5998",
-    marginTop: hp('2%'),
     textAlign: "center",
-    width: wp('60%'),
-    height: hp('15%'),
-    padding: hp('1%'),
     fontSize: 14,
   },
   buttonsContainer: {
