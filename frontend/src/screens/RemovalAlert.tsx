@@ -37,7 +37,7 @@ export default class RemovalAlert extends React.Component<IRemovalAlertProps, {}
               style={styles.cancelBtnContainer}
               onPress={() => { this.props.navigator.dismissModal() }}
             >
-              <Text style={styles.btnText}>NOT NOW</Text>
+              <Text style={styles.btnText}>CANCEL</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.btnContainer}
