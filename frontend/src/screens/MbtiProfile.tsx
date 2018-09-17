@@ -6,10 +6,12 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
-  StatusBar,
   View,
   Image,
-  TextInput
+  TextInput,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard
 } from "react-native";
 import App from "../App";
 import { connect } from "react-redux";
@@ -136,10 +138,12 @@ class PureMbtiProfile extends React.Component<
       : styles.keySquare;
     let lifeStyle = this.state.PJ ? styles.selectedKeySquare : styles.keySquare;
 
-    return (
+    return (    
+      <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss()}}>
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
-        <View style={globalStyle.container}>
-          <View style={globalStyle.cardContainer}>
+        <KeyboardAvoidingView style={globalStyle.container} behavior='padding'>
+
+          <View style={globalStyle.cardContainer} >
             <Text style={styles.title}>My Favourite Attibute:</Text>
 
             <View style={styles.attribute}>
@@ -190,8 +194,10 @@ class PureMbtiProfile extends React.Component<
               <Text style={styles.btnText}>DONE</Text>
             </TouchableOpacity>
           </View>
-        </View>
+
+        </KeyboardAvoidingView>
       </LinearGradient>
+      </TouchableWithoutFeedback>
     );
   }
 }
