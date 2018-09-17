@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
         width: wp('60%'),
         height: hp('5%'),
         marginTop: hp('1%'),
-        backgroundColor: "#E5F5FA",
+        backgroundColor: "#E5FDF9",
         padding: hp('1%'),
     },
     longTextContainer: {
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
         width: wp('60%'),
         height: hp('15%'),
         marginTop: hp('1%'),
-        backgroundColor: "#E5F5FA",
+        backgroundColor: "#E5FDF9",
         padding: hp('1%'),
     },
     avatar: {

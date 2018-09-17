@@ -489,26 +489,13 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     marginBottom: 50
   },
-  btnContainer: {
-    backgroundColor: "#ffa18e",
-    borderColor: "#fff",
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    marginVertical: 15,
-    width: "60%"
-  },
-  btnText: {
-    color: "#fff",
-    fontWeight: "700",
-    textAlign: "center"
-  },
   inputHeader: {
     marginTop: 9,
     color: "#2a70b2",
     fontSize: 14
   },
   input: {
-    backgroundColor: "#E5F5FA",
+    backgroundColor: "#E5FDF9",
     color: "#30519B",
     marginBottom: 10,
     paddingVertical: 8,
@@ -519,7 +506,7 @@ const styles = StyleSheet.create({
   date: {
     width: 250,
     height: 37,
-    backgroundColor: "#E5F5FA",
+    backgroundColor: "#E5FDF9",
     borderColor: "transparent"
   },
   propic: {
@@ -532,7 +519,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   passwordInput: {
-    backgroundColor: "#E5F5FA",
+    backgroundColor: "#E5FDF9",
     color: "#30519B",
     marginBottom: 10,
     paddingVertical: 8,
@@ -593,7 +580,7 @@ const pickerSelectStyles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 10,
     color: "#30519B",
-    backgroundColor: "#E5F5FA",
+    backgroundColor: "#E5FDF9",
     width: 250,
     textAlign: "center"
   },

@@ -36,7 +36,7 @@ export default class Landing extends React.Component<LandingProps> {
             <Text style={styles.appText}>TYPETENIC</Text>
           </View>
 
-          <FBLoginButton />
+          <FBLoginButton/>
 
           <TouchableOpacity
             style={styles.btnContainer}
@@ -67,12 +67,13 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     //marginVertical: 30,
     marginTop: 20,
-    width: "60%",
+    width: "65%",
     height: 45,
     shadowColor: "#000",
     shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    borderRadius: 4
   },
   logo: {
     width: 130,
@@ -93,11 +94,11 @@ const styles = StyleSheet.create({
     fontFamily: 'NovaRound'
   },
   btnText: {
-    color: "#fff",
+    color: "white",
     textAlign: "center",
-    fontSize: 12,
-    letterSpacing: 1.3,
-    fontWeight: "700"
+    fontSize: 14,
+    letterSpacing: 1.4,
+    fontWeight: "bold"
   },
   extraText: {
     color: "#fff",

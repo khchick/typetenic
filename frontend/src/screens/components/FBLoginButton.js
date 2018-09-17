@@ -85,23 +85,25 @@ export default FBLoginButton;
 
 const styles = StyleSheet.create({
   btnContainer: {
-    backgroundColor: "#3B5998", // FB blue
+    backgroundColor: "#3B5998",
     paddingHorizontal: 15,
     paddingVertical: 15,
-    marginVertical: 20,
-    width: "60%",
+    //marginVertical: 30,
+    marginTop: 20,
+    width: "65%",
     height: 45,
     shadowColor: "#000",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
-    shadowRadius: 6
+    shadowRadius: 2,
+    borderRadius: 4
   },
   btnText: {
-    color: "#fff",
+    color: "white",
     textAlign: "center",
-    fontSize: 12,
-    letterSpacing: 1.3,
-    fontWeight: "700"
+    fontSize: 14,
+    letterSpacing: 1.4,
+    fontWeight: "bold"
   }
 });
 

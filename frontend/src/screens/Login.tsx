@@ -134,8 +134,9 @@ const styles = StyleSheet.create({
   welcome: {
     color: '#fff',
     fontSize: 32,
-    fontWeight: '800',
+    // fontWeight: '800',
     marginBottom: 60,
+    fontFamily: 'NovaRound'
   },
   input: {
     backgroundColor: 'rgba(255,255,255,0.3)',
@@ -147,14 +148,15 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     backgroundColor: '#F0957F',
-    paddingHorizontal: 15,
-    paddingVertical: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
     marginVertical: 15,
-    width: '40%',
+    width: '35%',
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
-    shadowRadius: 2
+    shadowRadius: 2,
+    borderRadius: 4
   },
   btnText: {
     color: "white",
