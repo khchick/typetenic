@@ -66,13 +66,13 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
       return {
         color: "red",
         fontWeight: "900",
-        fontFamily: 'PatuaOne-Regular',
+        fontFamily: 'YesevaOne-Regular',
         fontSize: 20
       }
     } else {
       return {
         color: "black",
-        fontFamily: 'PatuaOne-Regular',
+        fontFamily: 'YesevaOne-Regular',
         fontSize: 20
       }
     }
@@ -136,10 +136,10 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
   render() {
     let isEmpty =
       <ScrollView
-      horizontal={true}
-      snapToInterval={width} // card width offset margin
-      snapToAlignment={"center"}
-      decelerationRate={"fast"} // stop scrolling momentum
+        horizontal={true}
+        snapToInterval={width} // card width offset margin
+        snapToAlignment={"center"}
+        decelerationRate={"fast"} // stop scrolling momentum
       >
         <View style={styles.defaultMsgContainer}>
           <Text style={styles.defaultMsg}>
