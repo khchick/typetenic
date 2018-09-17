@@ -50,9 +50,35 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
     this.props.handleChangeTenDeck();
   }
 
+<<<<<<< HEAD
   keyExtractor = (item: any, index: any) => {
     item.id.toString();
   };
+=======
+  calculateAge(dob: any) {
+    let dobDate = new Date(dob);
+    var ageDifMs = Date.now() - dobDate.getTime();
+    var ageDate = new Date(ageDifMs);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+  }
+
+  getMbtiStyle(atr: string, key_atr: string) {
+    if (atr === key_atr) {
+      return {
+        color: "red",
+        fontWeight: "900",
+        fontFamily: 'YesevaOne-Regular',
+        fontSize: 20
+      }
+    } else {
+      return {
+        color: "black",
+        fontFamily: 'YesevaOne-Regular',
+        fontSize: 20
+      }
+    }
+  }
+>>>>>>> b0c99a185c91579122036fc689498ae0d63be945
 
   renderCards = ({ item, index }) => (
     <Card
@@ -74,11 +100,25 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
         keyExtractor={this.keyExtractor}
         renderItem={this.renderCards}
         horizontal={true}
+<<<<<<< HEAD
       />
     )
     let isEmpty =
       <View style={styles.defaultMsgContainer}>
         <Text style={styles.defaultMsg}>
+=======
+        snapToInterval={width} // card width offset margin
+        snapToAlignment={"center"}
+        decelerationRate={"fast"} // stop scrolling momentum
+      >
+        <View style={styles.defaultMsgContainer}>
+          <Text style={styles.defaultMsg}>
+            {"\n"}
+            {"\n"}
+            {"\n"}
+            {"\n"}
+            Your deck is empty
+>>>>>>> b0c99a185c91579122036fc689498ae0d63be945
           {"\n"}
           {"\n"}
           {"\n"}
@@ -172,8 +212,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
-    width: wp('74%'),
-    height: hp('61%')
+    width: wp('74%')
   },
   mbtiRow: {
     flex: 1,
@@ -193,7 +232,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     marginTop: hp('3%'),
-    marginBottom: hp('2.5%'),
+    marginBottom: hp('2.7%'),
     marginHorizontal: wp('10%'),
     paddingVertical: hp('1%'),
     paddingHorizontal: wp('3%'),
@@ -216,7 +255,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: wp('60%'),
     height: hp('5%'),
-    marginTop: hp('2%'),
+    marginTop: hp('1%'),
     backgroundColor: "#E5F5FA",
     padding: hp('1%'),
   },
@@ -225,7 +264,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: wp('60%'),
     height: hp('15%'),
-    marginTop: hp('2%'),
+    marginTop: hp('1%'),
     backgroundColor: "#E5F5FA",
     padding: hp('2%'),
   },
@@ -240,7 +279,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     textAlign: "center",
     letterSpacing: 2.5,
-    marginTop: hp('1%'),
+    marginTop: hp('0.5%'),
     fontFamily: "YatraOne-Regular",
     width: wp('60%'),
     height: hp('5%')
