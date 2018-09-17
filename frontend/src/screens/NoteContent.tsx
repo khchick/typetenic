@@ -17,6 +17,7 @@ const { height, width } = Dimensions.get("window");
 interface NoteContentProps {
   token: string;
   noteID: string;
+  handleChangeNotification: () => any;
 }
 
 interface NoteContentStates {
@@ -41,6 +42,7 @@ class NoteContent extends React.Component<NoteContentProps, NoteContentStates> {
           }
         })
       .then(res => {
+        this.props.handleChangeNotification();
         this.setState({
           noteContent: res.data[0].content
         })
