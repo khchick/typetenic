@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   FlatList,
   Dimensions
 } from "react-native";
@@ -148,7 +149,10 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
               }}
             />
           </View>
-          {component}
+          <ScrollView
+            horizontal={true}
+          >{component}
+          </ScrollView>
 
         </View>
       </LinearGradient>

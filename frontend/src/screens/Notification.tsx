@@ -38,9 +38,9 @@ class Notification extends React.Component<NotificationProps, {}> {
   };
 
   renderRows = ({ item, index }) => (
-    <NoteItem item={item} index={index} onPressItem={this.onPressItem} getReadStatus={this.getReadStatus}/>
+    <NoteItem item={item} index={index} onPressItem={this.onPressItem} />
   );
-  
+
   onPressItem = (item: any) => {
     axios
       .put(
@@ -56,9 +56,9 @@ class Notification extends React.Component<NotificationProps, {}> {
         this.props.navigator.push({
           title: "Notification Content",
           screen: "NoteContent",
-          passProps: { 
+          passProps: {
             noteID: item,
-            // notificationList: this.props.notificationList
+            handleChangeNotification: this.props.handleChangeNotification
           }
         });
       })
@@ -66,30 +66,19 @@ class Notification extends React.Component<NotificationProps, {}> {
   };
 
   countUnreadNotes(data: Array<any>) {
+    console.log(data);
     let count = 0;
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].read_status == "Unread") {
+    data.forEach(note => {
+      if (note.read_status == "Unread") {
         count++;
-      } else {
-        count = count;
       }
-      // return count;
-      if (count > 0) return '';
+    });
+    if (count > 0) {
+      return count;
+    } else {
+      return null;
     }
-  }
-  
-  getReadStatus(itemID: number) {
-    let readStatus;
-    for (let i = 0;i < this.props.notificationList.length; i++) {
-      if (this.props.notificationList[i].id === itemID) {
-        readStatus = this.props.notificationList[i].read_status;
-        if (readStatus = "Read") {
-          return {
-            backgroundColor: "red"
-          }
-        }
-      }
-    }
+    
   }
 
   render() {
@@ -100,16 +89,16 @@ class Notification extends React.Component<NotificationProps, {}> {
     });
 
     let component;
-    let isEmpty = 
-    <View style={styles.defaultMsgContainer}>
-      <Text style={styles.defaultMsg}>
-      {"\n"}
-      {"\n"}
-      {"\n"}
-      {"\n"}
-      {"\n"}
-      You have no notifications at the moment</Text>
-    </View>
+    let isEmpty =
+      <View style={styles.defaultMsgContainer}>
+        <Text style={styles.defaultMsg}>
+          {"\n"}
+          {"\n"}
+          {"\n"}
+          {"\n"}
+          {"\n"}
+          You have no notifications at the moment</Text>
+      </View>
 
     if (this.props.notificationList.length < 1) {
       component = isEmpty

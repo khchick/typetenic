@@ -13,15 +13,12 @@ import { handleChangeNotification } from '../../redux/actions/refreshAction';
 
 const { height, width } = Dimensions.get("window");
 
-// Each request item
+// Each note item
 interface NoteItemProps {
   item: any;
   index: any;
   onPressItem: (item: any) => any;
   handleChangeNotification: () => any;
-  // getReadStatus: (item: any) => any;
-  // notificationList: Array<any>;
-  
 }
 
 class NoteItem extends React.PureComponent<NoteItemProps> {
@@ -29,33 +26,48 @@ class NoteItem extends React.PureComponent<NoteItemProps> {
     this.props.onPressItem(this.props.item.id);
   };
 
+  getReadStatus(readStatus: string) {
+    if (readStatus === 'Unread') {
+      return {
+        fontSize: 14,
+        fontWeight: "bold",
+        color: "#48BBEC",
+        letterSpacing: 1
+      };
+    };
+
+    if (readStatus === 'Read') {
+      return {
+        fontSize: 14,
+        fontWeight: "bold",
+        color: "grey",
+        letterSpacing: 1
+      }
+    };
+  }
+
   render() {
     const item = this.props.item;
 
     return (
       <View style={
-        // {
-        //   backgroundColor: "red"
-        // }
-        // this.props.getReadStatus(item.id)
         styles.rowContainer
-        }>    
-        <Text style={styles.name} onPress={this.onPress}>{item.title}</Text>
+      }>
+        <Text style={this.getReadStatus(item.read_status)} onPress={this.onPress}>{item.title}</Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.likeBtn} onPress={() => {
-            console.log(item.id)
             axios
-              .delete(`${Config.API_SERVER}/api/notification/${item.id}`, 
-              {
-                headers: {
-                  Authorization: "Bearer " + this.props.token
-                }
-              })
-              .then(()=> {
+              .delete(`${Config.API_SERVER}/api/notification/${item.id}`,
+                {
+                  headers: {
+                    Authorization: "Bearer " + this.props.token
+                  }
+                })
+              .then(() => {
                 this.props.handleChangeNotification()
               })
               .catch(err => console.log(err));
-          }}> 
+          }}>
             <Text style={styles.btnText}>DEL</Text>
           </TouchableOpacity>
         </View>
