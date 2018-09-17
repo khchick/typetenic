@@ -44,13 +44,13 @@ class Card extends React.PureComponent<CardProps> {
             return {
                 color: "red",
                 fontWeight: "900",
-                fontFamily: 'PatuaOne-Regular',
+                fontFamily: 'YesevaOne-Regular',
                 fontSize: 20
             }
         } else {
             return {
                 color: "black",
-                fontFamily: 'PatuaOne-Regular',
+                fontFamily: 'YesevaOne-Regular',
                 fontSize: 20
             }
         }
