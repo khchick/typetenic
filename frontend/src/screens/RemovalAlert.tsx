@@ -16,6 +16,9 @@ interface IRemovalAlertProps {
   userID: number;
   targetID: number;
   targetName: string;
+  handleChangeTypeDeck: () => any;
+  handleChangeTenDeck: () => any;
+  refreshTypeDeck: () => any;
 }
 
 export default class RemovalAlert extends React.Component<IRemovalAlertProps, {}> {
@@ -49,6 +52,9 @@ export default class RemovalAlert extends React.Component<IRemovalAlertProps, {}
                     }
                   )
                   .then(() => {
+                    this.props.handleChangeTypeDeck();
+                    this.props.handleChangeTenDeck();
+                    this.props.refreshTypeDeck();
                     this.props.navigator.dismissModal();
                   })
                   .catch(err => console.log(err));

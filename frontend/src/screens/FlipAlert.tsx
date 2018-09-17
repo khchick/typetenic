@@ -18,6 +18,9 @@ interface IFlipAlertProps {
   targetName: string;
   flipStatus: string;
   reqSender: number;
+  handleChangeTypeDeck: () => any;
+  handleChangeTenDeck: () => any;
+  refreshTypeDeck: () => any;
 }
 
 export default class FlipAlert extends React.Component<IFlipAlertProps, {}> {
@@ -54,7 +57,10 @@ export default class FlipAlert extends React.Component<IFlipAlertProps, {}> {
                     }
                   )
                   .then(() => {
-                    this.props.navigator.dismissModal()
+                    this.props.handleChangeTypeDeck();
+                    this.props.handleChangeTenDeck();
+                    this.props.refreshTypeDeck();
+                    this.props.navigator.dismissModal();
                   })
                   .catch(err => console.log(err));
               }}
@@ -94,7 +100,10 @@ export default class FlipAlert extends React.Component<IFlipAlertProps, {}> {
                     }
                   )
                   .then(() => {
-                    this.props.navigator.dismissModal()
+                    this.props.handleChangeTypeDeck();
+                    this.props.handleChangeTenDeck();
+                    this.props.refreshTypeDeck();
+                    this.props.navigator.dismissModal();
                   })
                   .catch(err => console.log(err));
               }}
@@ -130,7 +139,10 @@ export default class FlipAlert extends React.Component<IFlipAlertProps, {}> {
                     }
                   )
                   .then(() => {
-                    this.props.navigator.dismissModal()
+                    this.props.handleChangeTypeDeck();
+                    this.props.handleChangeTenDeck();
+                    this.props.refreshTypeDeck();
+                    this.props.navigator.dismissModal();
                   })
                   .catch(err => console.log(err));
               }}
@@ -156,12 +168,6 @@ export default class FlipAlert extends React.Component<IFlipAlertProps, {}> {
         </View>
       )
     };
-    // if (flipStatus === 'Rejected' && reqSender === targetID) {
-
-    // };
-    // if (flipStatus === 'Rejected' && reqSender === this.props.userID) {
-
-    // };
   }
 
   render() {
