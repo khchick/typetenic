@@ -14,7 +14,7 @@ import AvatarImage, {getAvatar} from './AvatarImage';
 import axios from 'axios';
 import Config from "react-native-config";
 import { connect } from "react-redux";
-import { createConnection, handleChangeTypeDeck } from '../../redux/actions/refreshAction';
+import { createConnection, handleChangeTypeDeck, handleChangeNotification } from '../../redux/actions/refreshAction';
 
 const { height, width } = Dimensions.get("window");
 
@@ -26,6 +26,7 @@ interface ConnectionRowItemProps {
   onPressItem: (item: any) => any;
   createConnection: () => any;
   handleChangeTypeDeck: () => any;
+  handleChangeNotification: () => any;
 }
 
 class ConnectionRowItem extends React.PureComponent<ConnectionRowItemProps> {
@@ -60,6 +61,7 @@ class ConnectionRowItem extends React.PureComponent<ConnectionRowItemProps> {
               .then(() => {
                 this.props.createConnection();
                 this.props.handleChangeTypeDeck();
+                this.props.handleChangeNotification();
               })
               .catch(err => console.log(err));
           }} >
@@ -81,7 +83,8 @@ const MapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     createConnection: () => dispatch(createConnection()),
-    handleChangeTypeDeck: () => dispatch(handleChangeTypeDeck())
+    handleChangeTypeDeck: () => dispatch(handleChangeTypeDeck()),
+    handleChangeNotification: () => dispatch( handleChangeNotification())
   };
 };
 
