@@ -75,11 +75,11 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
         keyExtractor={this.keyExtractor}
         renderItem={this.renderCards}
         horizontal={true}
-        snapToInterval={width} // card width offset margin
+        snapToInterval={width}
         snapToAlignment={"center"}
         decelerationRate={"fast"} // stop scrolling momentum
       />
-      )
+    )
 
     let isEmpty =
       <View style={styles.defaultMsgContainer}>
@@ -104,6 +104,9 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
             keyExtractor={this.keyExtractor}
             renderItem={this.renderCards}
             horizontal={true}
+            snapToInterval={width}
+            snapToAlignment={"center"}
+            decelerationRate={"fast"} // stop scrolling momentum
           />
       }
     } else {
@@ -116,6 +119,9 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
             keyExtractor={this.keyExtractor}
             renderItem={this.renderCards}
             horizontal={true}
+            snapToInterval={width}
+            snapToAlignment={"center"}
+            decelerationRate={"fast"} // stop scrolling momentum
           />
       }
     }
