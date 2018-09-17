@@ -50,35 +50,9 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
     this.props.handleChangeTenDeck();
   }
 
-<<<<<<< HEAD
   keyExtractor = (item: any, index: any) => {
     item.id.toString();
   };
-=======
-  calculateAge(dob: any) {
-    let dobDate = new Date(dob);
-    var ageDifMs = Date.now() - dobDate.getTime();
-    var ageDate = new Date(ageDifMs);
-    return Math.abs(ageDate.getUTCFullYear() - 1970);
-  }
-
-  getMbtiStyle(atr: string, key_atr: string) {
-    if (atr === key_atr) {
-      return {
-        color: "red",
-        fontWeight: "900",
-        fontFamily: 'YesevaOne-Regular',
-        fontSize: 20
-      }
-    } else {
-      return {
-        color: "black",
-        fontFamily: 'YesevaOne-Regular',
-        fontSize: 20
-      }
-    }
-  }
->>>>>>> b0c99a185c91579122036fc689498ae0d63be945
 
   renderCards = ({ item, index }) => (
     <Card
@@ -100,25 +74,15 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
         keyExtractor={this.keyExtractor}
         renderItem={this.renderCards}
         horizontal={true}
-<<<<<<< HEAD
-      />
-    )
-    let isEmpty =
-      <View style={styles.defaultMsgContainer}>
-        <Text style={styles.defaultMsg}>
-=======
         snapToInterval={width} // card width offset margin
         snapToAlignment={"center"}
         decelerationRate={"fast"} // stop scrolling momentum
-      >
-        <View style={styles.defaultMsgContainer}>
-          <Text style={styles.defaultMsg}>
-            {"\n"}
-            {"\n"}
-            {"\n"}
-            {"\n"}
-            Your deck is empty
->>>>>>> b0c99a185c91579122036fc689498ae0d63be945
+      />
+      )
+
+    let isEmpty =
+      <View style={styles.defaultMsgContainer}>
+        <Text style={styles.defaultMsg}>
           {"\n"}
           {"\n"}
           {"\n"}
