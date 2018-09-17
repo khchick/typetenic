@@ -4,21 +4,17 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
-  Dimensions,
-  TouchableOpacity
+  FlatList,
+  Dimensions
 } from "react-native";
-import axios from "axios";
-import Config from "react-native-config";
 import { connect } from "react-redux";
 import LeftTopButton from "./components/LeftTopButton";
 import RightTopButton from "./components/RightTopButton";
-import AvatarImage, { getAvatar } from "./components/AvatarImage";
+import Card from "./components/Card";
 import {
   handleChangeTypeDeck,
   handleChangeTenDeck
 } from "./../redux/actions/refreshAction";
-import Modal from "react-native-modal";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const { height, width } = Dimensions.get("window");
@@ -35,6 +31,7 @@ interface IDeckProps {
 
 interface IDeckStates {
   deckContent: Array<any>;
+  isTypeDeck: boolean;
 }
 
 class Deck extends React.Component<IDeckProps, IDeckStates> {
@@ -43,241 +40,83 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
 
     this.state = {
       deckContent: [],
+      isTypeDeck: true
     };
+    this.refreshTypeDeck = this.refreshTypeDeck.bind(this)
   }
 
   componentDidMount() {
     this.props.handleChangeTypeDeck();
-    this.setState({
-      deckContent: this.props.typeDeckList
-    });
     this.props.handleChangeTenDeck();
   }
 
-  calculateAge(dob: any) {
-    let dobDate = new Date(dob);
-    var ageDifMs = Date.now() - dobDate.getTime();
-    var ageDate = new Date(ageDifMs);
-    return Math.abs(ageDate.getUTCFullYear() - 1970);
-  }
+  keyExtractor = (item: any, index: any) => {
+    item.id.toString();
+  };
 
-  getMbtiStyle(atr: string, key_atr: string) {
-    if (atr === key_atr) {
-      return {
-        color: "red",
-        fontWeight: "900",
-        fontFamily: 'YesevaOne-Regular',
-        fontSize: 20
-      }
-    } else {
-      return {
-        color: "black",
-        fontFamily: 'YesevaOne-Regular',
-        fontSize: 20
-      }
-    }
-  }
+  renderCards = ({ item, index }) => (
+    <Card
+      item={item}
+      index={index}
+      navigator={this.props.navigator}
+      refreshTypeDeck={this.refreshTypeDeck.bind(this)}
+    />
+  );
 
-  getFlipButtonStyle(flipStatus: string) {
-    switch (flipStatus) {
-      case null:
-        return {
-          backgroundColor: "#04B4AE",
-          width: wp('23%'),
-          height: hp('4%'),
-          shadowColor: "black",
-          shadowOffset: { width: 2, height: 2 },
-          shadowOpacity: 0.4,
-          shadowRadius: 2,
-          borderRadius: 4,
-          justifyContent: 'center',
-          alignItems: 'center'
-        };
-      case 'Requested':
-        return {
-          backgroundColor: "#0489B1",
-          width: wp('23%'),
-          height: hp('4%'),
-          shadowColor: "black",
-          shadowOffset: { width: 2, height: 2 },
-          shadowOpacity: 0.4,
-          shadowRadius: 2,
-          borderRadius: 4,
-          justifyContent: 'center',
-          alignItems: 'center'
-        };
-      case 'Flipped':
-        return {
-          backgroundColor: "#0B615E",
-          width: wp('23%'),
-          height: hp('4%'),
-          shadowColor: "black",
-          shadowOffset: { width: 2, height: 2 },
-          shadowOpacity: 0.4,
-          shadowRadius: 2,
-          borderRadius: 4,
-          justifyContent: 'center',
-          alignItems: 'center'
-        }
-    }
-  }
-
-  getFlipButtonText(flipStatus: string) {
-    switch (flipStatus) {
-      case null:
-        return 'FLIP';
-      case 'Requested':
-        return '...';
-      case 'Flipped':
-        return 'FLIPPED'
-    }
+  refreshTypeDeck() {
+    this.props.handleChangeTypeDeck();
   }
 
   render() {
-    let isEmpty =
-      <ScrollView
+    let component = (
+      <FlatList
+        data={this.props.typeDeckList}
+        keyExtractor={this.keyExtractor}
+        renderItem={this.renderCards}
         horizontal={true}
         snapToInterval={width} // card width offset margin
         snapToAlignment={"center"}
         decelerationRate={"fast"} // stop scrolling momentum
-      >
-        <View style={styles.defaultMsgContainer}>
-          <Text style={styles.defaultMsg}>
-            {"\n"}
-            {"\n"}
-            {"\n"}
-            {"\n"}
-            Your deck is empty
+      />
+      )
+
+    let isEmpty =
+      <View style={styles.defaultMsgContainer}>
+        <Text style={styles.defaultMsg}>
           {"\n"}
-            {"\n"}
-            Go to DISCOVER to connect with other users</Text>
-        </View>
-      </ScrollView>
-    let component;
-    if (this.state.deckContent.length < 1) {
-      component = isEmpty
+          {"\n"}
+          {"\n"}
+          {"\n"}
+          Your deck is empty
+          {"\n"}
+          {"\n"}
+          Go to DISCOVER to connect with other users</Text>
+      </View>
+
+    if (this.state.isTypeDeck) {
+      if (this.props.typeDeckList.length < 1) {
+        component = isEmpty
+      } else {
+        component =
+          <FlatList
+            data={this.props.typeDeckList}
+            keyExtractor={this.keyExtractor}
+            renderItem={this.renderCards}
+            horizontal={true}
+          />
+      }
     } else {
-      component =
-        <ScrollView
-          horizontal={true}
-          snapToInterval={width} // card width offset margin
-          snapToAlignment={"center"}
-          decelerationRate={"fast"} // stop scrolling momentum
-        >
-          {this.state.deckContent.map(
-            ({
-              id,
-              display_name,
-              dob,
-              gender,
-              location,
-              key_atr,
-              key_atr_desc,
-              mbti,
-              flip_status,
-              flip_req_sender,
-              conID
-            }) => (
-                <View>
-                  <View style={styles.card}>
-                    <View style={styles.mbtiCol}>
-                      <View style={styles.mbtiRow}>
-                        <Text style={this.getMbtiStyle(mbti[0], key_atr)}>{mbti[0]}</Text>
-                        <Text style={this.getMbtiStyle(mbti[1], key_atr)}>{mbti[1]}</Text>
-                      </View>
-                      <View style={styles.rowContainer}>
-                        <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
-                      </View>
-                      <View style={styles.rowContainer}>
-                        <Text style={styles.nameText}>{display_name}</Text>
-                      </View>
-                      <View style={styles.rowContainer}>
-                        <View style={styles.inputContainer}>
-                          <Text style={styles.inputText}>{this.calculateAge(dob)}  {gender}  {location}</Text>
-                        </View>
-                      </View>
-                      <View style={styles.rowContainer}>
-                        <View style={styles.longTextContainer}>
-                          <Text style={styles.longText}>{key_atr_desc}</Text>
-                        </View>
-                      </View>
-                      <View style={styles.mbtiRow}>
-                        <Text style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
-                        <Text style={this.getMbtiStyle(mbti[3], key_atr)}>{mbti[3]}</Text>
-                      </View>
-                    </View>
-                  </View>
-                  <View style={styles.buttonsContainer}>
-                    <TouchableOpacity
-                      style={styles.delBtnContainer}
-                      onPress={() => {
-                        this.props.navigator.showModal({
-                          screen: "RemovalAlertTabScreen",
-                          passProps: {
-                            token: this.props.token,
-                            userID: this.props.userID,
-                            targetID: id,
-                            targetName: display_name
-                          }
-                        })
-                      }}
-                    >
-                      <Text style={styles.btnText}>REMOVE</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.btnContainer}
-                      onPress={() => {
-                        axios
-                          .post(
-                            `${Config.API_SERVER}/api/chat/conversation/${id}`,
-                            {},
-                            {
-                              headers: {
-                                Authorization: `Bearer ${this.props.token}`
-                              }
-                            }
-                          )
-                          .then(res => {
-                            conID = res.data;
-                            this.props.navigator.push({
-                              screen: "ChatTabScreen",
-                              passProps: {
-                                token: this.props.token,
-                                userID: this.props.userID,
-                                targetID: id,
-                                targetName: display_name,
-                                conID: conID
-                              }
-                            });
-                          })
-                          .catch(err => console.log(err));
-                      }}
-                    >
-                      <Text style={styles.btnText}>CHAT</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={this.getFlipButtonStyle(flip_status)}
-                      onPress={() => {
-                        this.props.navigator.showModal({
-                          screen: "FlipAlertTabScreen",
-                          passProps: {
-                            token: this.props.token,
-                            userID: this.props.userID,
-                            targetID: id,
-                            targetName: display_name,
-                            flipStatus: flip_status,
-                            reqSender: flip_req_sender
-                          }
-                        });
-                      }}
-                    >
-                      <Text style={styles.btnText}>{this.getFlipButtonText(flip_status)}</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              )
-          )}
-        </ScrollView>
+      if (this.props.tenDeckList.length < 1) {
+        component = isEmpty
+      } else {
+        component =
+          <FlatList
+            data={this.props.tenDeckList}
+            keyExtractor={this.keyExtractor}
+            renderItem={this.renderCards}
+            horizontal={true}
+          />
+      }
     }
 
     return (
@@ -289,7 +128,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
               onPress={() => {
                 this.props.handleChangeTypeDeck();
                 this.setState({
-                  deckContent: this.props.typeDeckList
+                  isTypeDeck: true
                 });
               }}
             />
@@ -298,12 +137,13 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
               onPress={() => {
                 this.props.handleChangeTenDeck();
                 this.setState({
-                  deckContent: this.props.tenDeckList
+                  isTypeDeck: false
                 });
               }}
             />
           </View>
           {component}
+
         </View>
       </LinearGradient>
     );
