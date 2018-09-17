@@ -15,7 +15,6 @@ import {
   handleChangeTypeDeck,
   handleChangeTenDeck
 } from "./../redux/actions/refreshAction";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const { height, width } = Dimensions.get("window");
 
