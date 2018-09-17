@@ -179,17 +179,6 @@ export default connect(
 )(Deck);
 
 const styles = StyleSheet.create({
-  mbtiCol: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-between",
-    width: wp('74%')
-  },
-  mbtiRow: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -197,119 +186,6 @@ const styles = StyleSheet.create({
   },
   topButtonContainer: {
     flexDirection: "row"
-  },
-  card: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    marginTop: hp('3%'),
-    marginBottom: hp('2.7%'),
-    marginHorizontal: wp('10%'),
-    paddingVertical: hp('1%'),
-    paddingHorizontal: wp('3%'),
-    borderRadius: 15,
-    shadowColor: "black",
-    shadowOffset: { width: 2, height: -3 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
-    // width: width * 0.8, // percent or minus
-    // height: height * 0.65,
-    width: wp('80%'),
-    height: hp('63%')
-  },
-  rowContainer: {
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  inputContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: wp('60%'),
-    height: hp('5%'),
-    marginTop: hp('1%'),
-    backgroundColor: "#E5F5FA",
-    padding: hp('1%'),
-  },
-  longTextContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: wp('60%'),
-    height: hp('15%'),
-    marginTop: hp('1%'),
-    backgroundColor: "#E5F5FA",
-    padding: hp('2%'),
-  },
-  avatar: {
-    resizeMode: "contain",
-    width: wp("40%"),
-    height: hp('25%')
-  },
-  nameText: {
-    fontSize: 25,
-    color: "#3B5998",
-    fontWeight: "700",
-    textAlign: "center",
-    letterSpacing: 2.5,
-    marginTop: hp('0.5%'),
-    fontFamily: "YatraOne-Regular",
-    width: wp('60%'),
-    height: hp('5%')
-  },
-  inputText: {
-    color: "#3B5998",
-    textAlign: "center",
-    fontSize: 14,
-  },
-  longText: {
-    color: "#3B5998",
-    textAlign: "center",
-    fontSize: 14,
-  },
-  buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: 'center',
-    width: wp('80%'),
-    marginHorizontal: wp('10%')
-  },
-  delBtnContainer: {
-    backgroundColor: "#BDBDBD",
-    width: wp('23%'),
-    height: hp('4%'),
-    shadowColor: "black",
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
-    borderRadius: 4,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  btnContainer: {
-    backgroundColor: "#F0957F",
-    width: wp('23%'),
-    height: hp('4%'),
-    shadowColor: "black",
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
-    borderRadius: 4,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  btnText: {
-    color: "white",
-    textAlign: "center",
-    fontSize: 14,
-    fontWeight: "bold",
-    letterSpacing: 1.5
-  },
-  defaultMsgContainer: {
-    flex: 1,
-    justifyContent: "flex-start",
-    width: width * 0.8
-  },
-  defaultMsg: {
-    fontSize: 16,
-    textAlign: "center"
   }
 });
+

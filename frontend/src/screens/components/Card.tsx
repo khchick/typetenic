@@ -275,8 +275,6 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 2, height: -3 },
         shadowOpacity: 0.4,
         shadowRadius: 2,
-        // width: width * 0.8, // percent or minus
-        // height: height * 0.65,
         width: wp('80%'),
         height: hp('62%')
     },
