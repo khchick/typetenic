@@ -65,6 +65,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
 
   refreshTypeDeck() {
     this.props.handleChangeTypeDeck();
+    this.props.handleChangeTenDeck();
   }
 
   render() {
