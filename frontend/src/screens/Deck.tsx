@@ -136,10 +136,10 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
   render() {
     let isEmpty =
       <ScrollView
-        horizontal={true}
-        // snapToInterval={width - 37} // card width offset margin
-        // snapToAlignment={"center"}
-        decelerationRate={"fast"} // stop scrolling momentum
+      horizontal={true}
+      snapToInterval={width} // card width offset margin
+      snapToAlignment={"center"}
+      decelerationRate={"fast"} // stop scrolling momentum
       >
         <View style={styles.defaultMsgContainer}>
           <Text style={styles.defaultMsg}>
