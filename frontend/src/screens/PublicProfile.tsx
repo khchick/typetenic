@@ -93,32 +93,36 @@ export default class PublicProfile extends React.Component<IPublicProfileProps, 
                 key_atr,
                 key_atr_desc
               }) => (
-                <View>
-                  <View style={styles.card}>
-                    <View style={styles.mbtiCol}>
-                      <View style={styles.mbtiRow}>
-                        <Text style={this.getMbtiStyle(mbti[0], key_atr)}>{mbti[0]}</Text>
-                        <Text style={this.getMbtiStyle(mbti[1], key_atr)}>{mbti[1]}</Text>
-                      </View>
-                      <View style={styles.rowContainer}>
-                        <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
-                      </View>
-                      <View style={styles.rowContainer}>
-                        <Text style={styles.nameText}>{display_name}</Text>
-                      </View>
-                      <View style={styles.rowContainer}>
-                        <Text style={styles.inputText}>{this.calculateAge(dob)}  {gender}  {location}</Text>
-                      </View>
-                      <View style={styles.rowContainer}>
-                        <Text style={styles.longText}>{key_atr_desc}</Text>
-                      </View>
-                      <View style={styles.mbtiRow}>
-                        <Text style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
-                        <Text style={this.getMbtiStyle(mbti[3], key_atr)}>{mbti[3]}</Text>
+                  <View>
+                    <View style={styles.card}>
+                      <View style={styles.mbtiCol}>
+                        <View style={styles.mbtiRow}>
+                          <Text style={this.getMbtiStyle(mbti[0], key_atr)}>{mbti[0]}</Text>
+                          <Text style={this.getMbtiStyle(mbti[1], key_atr)}>{mbti[1]}</Text>
+                        </View>
+                        <View style={styles.rowContainer}>
+                          <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
+                        </View>
+                        <View style={styles.rowContainer}>
+                          <Text style={styles.nameText}>{display_name}</Text>
+                        </View>
+                        <View style={styles.rowContainer}>
+                          <View style={styles.inputContainer}>
+                            <Text style={styles.inputText}>{this.calculateAge(dob)}  {gender}  {location}</Text>
+                          </View>
+                        </View>
+                        <View style={styles.rowContainer}>
+                          <View style={styles.longTextContainer}>
+                            <Text style={styles.longText}>{key_atr_desc}</Text>
+                          </View>
+                        </View>
+                        <View style={styles.mbtiRow}>
+                          <Text style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
+                          <Text style={this.getMbtiStyle(mbti[3], key_atr)}>{mbti[3]}</Text>
+                        </View>
                       </View>
                     </View>
                   </View>
-                </View>
                   // <View>
                   //   <View style={styles.card}>
                   //     <Image
@@ -147,93 +151,120 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center"
-  },
-  topButtonContainer: {
-    flexDirection: "row",
-    height: 45
-  },
-  card: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    padding: 5,
-    marginTop: 15,
-    borderRadius: 15,
-    shadowColor: "#000",
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.4,
-    shadowRadius: 6,
-    width: width * 0.8, // percent or minus
-    height: height * 0.65,
-  },
-  avatar: {
-    width: width * 0.4,
-    height: height * 0.3
-  },
-  nameText: {
-    fontSize: 20,
-    color: "#3B5998",
-    fontWeight: "700",
-    textAlign: "center",
-    letterSpacing: 2.5,
-    marginTop: 5
-  },
-  inputText: {
-    backgroundColor: "#E5F5FA",
-    color: "#3B5998",
-    marginVertical: 7,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    borderRadius: 25,
-    width: 250,
-    textAlign: "center"
-  },
-  chatButtonContainer: {
-    flexDirection: "row",
-    height: 33,
-    width: width * 0.2,
-    backgroundColor: '#F0957F',
-    borderColor: 'white',
-    borderWidth: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginTop: 10,
-    marginLeft: 110
-  },
-  chatButtonText: {
-    color: 'white',
-    textAlign: 'center',
-    letterSpacing: 3,
-    fontSize: 12,
-    fontWeight: '600'
-  },
-  rowContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center"
   },
   mbtiCol: {
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
-    width: wp('74%'),
-    height: hp('63%')
+    width: wp('74%')
   },
   mbtiRow: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  longText: {
+  card: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    marginTop: hp('7.5%'),
+    // marginBottom: hp('18.5%'),
+    marginHorizontal: wp('10%'),
+    paddingVertical: hp('1%'),
+    paddingHorizontal: wp('3%'),
+    borderRadius: 15,
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: -3 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    width: wp('80%'),
+    height: hp('63%')
+  },
+  rowContainer: {
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  inputContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: wp('60%'),
+    height: hp('5%'),
+    marginTop: hp('1%'),
     backgroundColor: "#E5F5FA",
-    color: "#3B5998",
-    marginTop: hp('2%'),
-    textAlign: "center",
+    padding: hp('1%'),
+  },
+  longTextContainer: {
+    justifyContent: "center",
+    alignItems: "center",
     width: wp('60%'),
     height: hp('15%'),
-    padding: hp('1%'),
+    marginTop: hp('1%'),
+    backgroundColor: "#E5F5FA",
+    padding: hp('2%'),
+  },
+  avatar: {
+    resizeMode: "contain",
+    width: wp("40%"),
+    height: hp('25%')
+  },
+  nameText: {
+    fontSize: 25,
+    color: "#3B5998",
+    fontWeight: "700",
+    textAlign: "center",
+    letterSpacing: 2.5,
+    marginTop: hp('0.5%'),
+    fontFamily: "YatraOne-Regular",
+    width: wp('60%'),
+    height: hp('5%')
+  },
+  inputText: {
+    color: "#3B5998",
+    textAlign: "center",
     fontSize: 14,
-  }
+  },
+  longText: {
+    color: "#3B5998",
+    textAlign: "center",
+    fontSize: 14,
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: 'center',
+    width: wp('80%'),
+    marginHorizontal: wp('10%')
+  },
+  delBtnContainer: {
+    backgroundColor: "#BDBDBD",
+    width: wp('23%'),
+    height: hp('4%'),
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  btnContainer: {
+    backgroundColor: "#F0957F",
+    width: wp('23%'),
+    height: hp('4%'),
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  btnText: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "bold",
+    letterSpacing: 1.5
+  },
 });
