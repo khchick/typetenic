@@ -336,8 +336,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
-    width: wp('74%'),
-    height: hp('61%')
+    width: wp('74%')
   },
   mbtiRow: {
     flex: 1,
@@ -357,7 +356,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     marginTop: hp('3%'),
-    marginBottom: hp('2.5%'),
+    marginBottom: hp('2.7%'),
     marginHorizontal: wp('10%'),
     paddingVertical: hp('1%'),
     paddingHorizontal: wp('3%'),
@@ -380,7 +379,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: wp('60%'),
     height: hp('5%'),
-    marginTop: hp('2%'),
+    marginTop: hp('1%'),
     backgroundColor: "#E5F5FA",
     padding: hp('1%'),
   },
@@ -389,7 +388,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: wp('60%'),
     height: hp('15%'),
-    marginTop: hp('2%'),
+    marginTop: hp('1%'),
     backgroundColor: "#E5F5FA",
     padding: hp('2%'),
   },
@@ -404,7 +403,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     textAlign: "center",
     letterSpacing: 2.5,
-    marginTop: hp('1%'),
+    marginTop: hp('0.5%'),
     fontFamily: "YatraOne-Regular",
     width: wp('60%'),
     height: hp('5%')
