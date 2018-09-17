@@ -34,6 +34,7 @@ export default class Landing extends React.Component<LandingProps> {
             />
 
             <Text style={styles.appText}>TYPETENIC</Text>
+            <Text style={styles.sloganText}>Where the Right Types Connect</Text>
           </View>
 
           <FBLoginButton/>
@@ -84,13 +85,17 @@ const styles = StyleSheet.create({
     color: "#30519B",
     textAlign: "center",
     fontSize: 40,
-    // textShadowColor: "black",
-    // textShadowOffset: { width: 1, height: -1 },
-    // textShadowRadius: 2,
-    //fontWeight: "900",
     letterSpacing: 3,
-    width: 300,
-    marginTop: 15,
+    // width: 300,
+    marginTop: 20,
+    fontFamily: 'NovaRound'
+  },
+  sloganText: {
+    color: "#30519B",
+    textAlign: "center",
+    fontSize: 18,
+    // letterSpacing: 3,
+    marginTop: 20,
     fontFamily: 'NovaRound'
   },
   btnText: {
@@ -119,6 +124,7 @@ const styles = StyleSheet.create({
     // shadowRadius: 6,
     width: width * 0.8, // percent or minus
     height: height * 0.3,
-    marginBottom: 70
+    marginBottom: 80,
+    marginTop: 50
   }
 });

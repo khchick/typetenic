@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     //marginVertical: 30,
     marginTop: 20,
+    marginBottom: 10,
     width: "65%",
     height: 45,
     shadowColor: "#000",
