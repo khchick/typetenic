@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import axios from "axios";
 import Config from "react-native-config";
+import AvatarImage, { getAvatar } from "./components/AvatarImage";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const { height, width } = Dimensions.get("window");
 
@@ -46,6 +48,30 @@ export default class PublicProfile extends React.Component<IPublicProfileProps, 
       .catch(err => console.log(err));
   }
 
+  calculateAge(dob: any) {
+    let dobDate = new Date(dob);
+    var ageDifMs = Date.now() - dobDate.getTime();
+    var ageDate = new Date(ageDifMs);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+  }
+
+  getMbtiStyle(atr: string, key_atr: string) {
+    if (atr === key_atr) {
+      return {
+        color: "red",
+        fontWeight: "900",
+        fontFamily: 'PatuaOne-Regular',
+        fontSize: 20
+      }
+    } else {
+      return {
+        color: "black",
+        fontFamily: 'PatuaOne-Regular',
+        fontSize: 20
+      }
+    }
+  }
+
   render() {
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
@@ -67,21 +93,47 @@ export default class PublicProfile extends React.Component<IPublicProfileProps, 
                 key_atr,
                 key_atr_desc
               }) => (
-                  <View>
-                    <View style={styles.card}>
-                      <Image
-                        style={styles.avatar}
-                        source={require('../assets/16Types/adventurer.png')}
-                      />
-                      <View>
+                <View>
+                  <View style={styles.card}>
+                    <View style={styles.mbtiCol}>
+                      <View style={styles.mbtiRow}>
+                        <Text style={this.getMbtiStyle(mbti[0], key_atr)}>{mbti[0]}</Text>
+                        <Text style={this.getMbtiStyle(mbti[1], key_atr)}>{mbti[1]}</Text>
+                      </View>
+                      <View style={styles.rowContainer}>
+                        <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
+                      </View>
+                      <View style={styles.rowContainer}>
                         <Text style={styles.nameText}>{display_name}</Text>
                       </View>
-                      <Text style={styles.inputText}>{dob}</Text>
-
-                      <Text style={styles.inputText}>{location}</Text>
-                      <Text style={styles.inputText}>{key_atr_desc}</Text>
+                      <View style={styles.rowContainer}>
+                        <Text style={styles.inputText}>{this.calculateAge(dob)}  {gender}  {location}</Text>
+                      </View>
+                      <View style={styles.rowContainer}>
+                        <Text style={styles.longText}>{key_atr_desc}</Text>
+                      </View>
+                      <View style={styles.mbtiRow}>
+                        <Text style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
+                        <Text style={this.getMbtiStyle(mbti[3], key_atr)}>{mbti[3]}</Text>
+                      </View>
                     </View>
                   </View>
+                </View>
+                  // <View>
+                  //   <View style={styles.card}>
+                  //     <Image
+                  //       style={styles.avatar}
+                  //       source={require('../assets/16Types/adventurer.png')}
+                  //     />
+                  //     <View>
+                  //       <Text style={styles.nameText}>{display_name}</Text>
+                  //     </View>
+                  //     <Text style={styles.inputText}>{dob}</Text>
+
+                  //     <Text style={styles.inputText}>{location}</Text>
+                  //     <Text style={styles.inputText}>{key_atr_desc}</Text> 
+                  //   </View>
+                  // </View>
                 )
             )}
           </ScrollView>
@@ -156,5 +208,32 @@ const styles = StyleSheet.create({
     letterSpacing: 3,
     fontSize: 12,
     fontWeight: '600'
+  },
+  rowContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  mbtiCol: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    width: wp('74%'),
+    height: hp('63%')
+  },
+  mbtiRow: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  longText: {
+    backgroundColor: "#E5F5FA",
+    color: "#3B5998",
+    marginTop: hp('2%'),
+    textAlign: "center",
+    width: wp('60%'),
+    height: hp('15%'),
+    padding: hp('1%'),
+    fontSize: 14,
   }
 });
