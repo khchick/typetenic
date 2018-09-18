@@ -99,7 +99,7 @@ export function loginFacebook(accessToken: string) {
             {
                 access_token: accessToken
             })
-            .then( res => {
+            .then(async res => {
                 if (res.data == null) {
                     dispatch(loginFailure('Unexpected error'))
                 } else if (!res.data.token) {
@@ -108,7 +108,7 @@ export function loginFacebook(accessToken: string) {
                     dispatch(loginSuccess(res.data.token));
                     AsyncStorage.setItem('token', res.data.token)
                     
-                    let profile = dispatch(getUserProfile(res.data.token)) // save profile to redux  
+                    let profile = await dispatch(getUserProfile(res.data.token)) // save profile to redux  
 
                     if(profile.mbti) {
                         App.loginApp(res.data.token);
