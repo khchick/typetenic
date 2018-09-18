@@ -6,7 +6,8 @@ import {
   View,
   ScrollView,
   FlatList,
-  Dimensions
+  Dimensions,
+  TouchableOpacity
 } from "react-native";
 import { connect } from "react-redux";
 import LeftTopButton from "./components/LeftTopButton";
@@ -81,8 +82,20 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
       />
     )
 
+    // let isEmpty =
+    //   <View style={styles.defaultMsgContainer}>
+    //     <Text style={styles.defaultMsg}>
+    //       {"\n"}
+    //       {"\n"}
+    //       {"\n"}
+    //       {"\n"}
+    //       Your deck is empty
+    //       {"\n"}
+    //       {"\n"}
+    //       Go to DISCOVER to connect with other users</Text>
+    //   </View>
     let isEmpty =
-      <View style={styles.defaultMsgContainer}>
+      <View>
         <Text style={styles.defaultMsg}>
           {"\n"}
           {"\n"}
@@ -91,7 +104,17 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
           Your deck is empty
           {"\n"}
           {"\n"}
-          Go to DISCOVER to connect with other users</Text>
+        </Text>
+        <TouchableOpacity
+            style={styles.btnContainer}
+            onPress={() =>
+              this.props.navigator.switchToTab({
+                tabIndex: 0
+              })
+            }
+          >
+            <Text style={styles.btnText}>Start discovering</Text>
+          </TouchableOpacity>
       </View>
 
     if (this.state.isTypeDeck) {
@@ -189,6 +212,24 @@ const styles = StyleSheet.create({
   },
   topButtonContainer: {
     flexDirection: "row"
-  }
+  },
+  defaultMsg: {
+    fontSize: 16,
+    textAlign: "center"
+  },
+  btnContainer: {
+    backgroundColor: "#F0957F",
+    marginVertical: 10,
+    width: width * 0.5,
+    marginTop: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 10
+  },
+  btnText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
+    textAlign: "center"
+  },
 });
 
