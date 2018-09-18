@@ -10,6 +10,7 @@ import {
   FlatList,
   Alert
 } from "react-native";
+import Modal from "react-native-modal";
 import AvatarImage, {getAvatar} from './AvatarImage';
 import axios from 'axios';
 import Config from "react-native-config";
@@ -25,18 +26,25 @@ interface ReceivedRowItemProps {
   index: any;
   onPressItem: (item: any) => any;
   handleReceivedReq: () => any;
-  nonSuggestedList: Array<any>;
+  tenDeckList: Array<any>;
   handleChangeNotification: () => any;
 }
 
-class ReceivedRowItem extends React.PureComponent<ReceivedRowItemProps> {
+interface ReceivedRowItemState {
+  isModalVisible: boolean
+}
+
+class ReceivedRowItem extends React.PureComponent<ReceivedRowItemProps, ReceivedRowItemState> {
+  state = {
+    isModalVisible: false
+  };
+
   onPress = () => {
     this.props.onPressItem(this.props.item.id);
   };
 
   render() {
     const item = this.props.item; 
-    console.log(item) // testing
     let mbtiImg = getAvatar(this.props.item.mbti)
 
     return (
@@ -49,10 +57,13 @@ class ReceivedRowItem extends React.PureComponent<ReceivedRowItemProps> {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.likeBtn} onPress={() => {
-            if (this.props.nonSuggestedList.length == 10) {
+            if (this.props.tenDeckList.length == 10) {
               // pop up msg
               console.log('my picks reach 10')
-              
+              this.setState({
+                isModalVisible: true
+              })
+
             } else {
               console.log("approved request");
               axios
@@ -96,6 +107,20 @@ class ReceivedRowItem extends React.PureComponent<ReceivedRowItemProps> {
             <Text style={styles.btnText}>PASS</Text>
           </TouchableOpacity>
         </View>
+
+          <Modal
+              isVisible={this.state.isModalVisible}
+              onBackdropPress={() => this.setState({ isModalVisible: false })}
+              backdropOpacity={0.2}
+            >
+              <View style={styles.modalContent}>
+                <Text style={styles.modalText}>
+                  Your picks reached 10
+                </Text>
+              </View>
+
+          </Modal>
+
       </View>
     );
   }
@@ -104,7 +129,7 @@ class ReceivedRowItem extends React.PureComponent<ReceivedRowItemProps> {
 const MapStateToProps = (state: any) => {
   return {
     token: state.auth.token,
-    nonSuggestedList: state.refresh.nonSuggestedList
+    tenDeckList: state.refresh.tenDeckList
   };
 };
 
@@ -172,5 +197,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
     letterSpacing: 1.5
-  }
+  },
+  modalContent: {
+    backgroundColor: "white",
+    paddingVertical: 30,
+    // paddingHorizontal: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalText: {
+    color: "#E0674B"
+  },
 });
