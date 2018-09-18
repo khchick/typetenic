@@ -5,6 +5,7 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
+  Image
 } from "react-native";
 import axios from 'axios';
 import Config from "react-native-config";
@@ -15,6 +16,7 @@ const { height, width } = Dimensions.get("window");
 
 // Each note item
 interface NoteItemProps {
+  token: string;
   item: any;
   index: any;
   onPressItem: (item: any) => any;
@@ -68,7 +70,7 @@ class NoteItem extends React.PureComponent<NoteItemProps> {
               })
               .catch(err => console.log(err));
           }}>
-            <Text style={styles.btnText}>DEL</Text>
+            <Image style={styles.icon} source={require('../../assets/close.png')} />
           </TouchableOpacity>
         </View>
       </View>
@@ -120,23 +122,15 @@ const styles = StyleSheet.create({
   },
   likeBtn: {
     backgroundColor: "#F0957F",
-    paddingHorizontal: 15,
-    paddingVertical: 5,
+    paddingHorizontal: 5,
+    paddingVertical: 7,
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
-    margin: 10
-  },
-  passBtn: {
-    backgroundColor: "#30519B",
-    paddingHorizontal: 15,
-    paddingVertical: 5,
-    shadowColor: "black",
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
-    margin: 10
+    marginHorizontal: 15,
+    marginVertical: 10,
+    borderRadius: 10
   },
   btnText: {
     color: "white",
@@ -144,5 +138,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
     letterSpacing: 1.5
+  },
+  icon: {
+    resizeMode: 'contain',
+    height: 15
   }
 });
