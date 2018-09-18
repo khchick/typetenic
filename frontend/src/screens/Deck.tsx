@@ -17,6 +17,7 @@ import {
   handleChangeTypeDeck,
   handleChangeTenDeck
 } from "./../redux/actions/refreshAction";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const { height, width } = Dimensions.get("window");
 
@@ -105,6 +106,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
           {"\n"}
           {"\n"}
         </Text>
+        <View style={styles.buttonsContainer}>
         <TouchableOpacity
             style={styles.btnContainer}
             onPress={() =>
@@ -113,8 +115,9 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
               })
             }
           >
-            <Text style={styles.btnText}>Start discovering</Text>
+            <Text style={styles.btnText}>Start Discovering</Text>
           </TouchableOpacity>
+          </View>
       </View>
 
     if (this.state.isTypeDeck) {
@@ -217,19 +220,31 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center"
   },
+  buttonsContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: 'center',
+    width: wp('80%'),
+    marginHorizontal: wp('10%')
+},
   btnContainer: {
     backgroundColor: "#F0957F",
-    marginVertical: 10,
-    width: width * 0.5,
-    marginTop: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 10
-  },
+    width: wp('45%'),
+    height: hp('6%'),
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center'
+},
   btnText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
-    textAlign: "center"
-  },
+    color: "white",
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "bold",
+    letterSpacing: 1.5
+}
 });
 

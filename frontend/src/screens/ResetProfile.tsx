@@ -18,8 +18,9 @@ import DatePicker from "react-native-datepicker";
 import ImagePicker from "react-native-image-picker";
 import axios from 'axios';
 import Config from 'react-native-config';
-import {connect} from 'react-redux';
-import {submitProfile, editProfile} from '../redux/actions/profileAction';
+import { connect } from 'react-redux';
+import { submitProfile, editProfile } from '../redux/actions/profileAction';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 var imageOptions = {
@@ -31,14 +32,14 @@ var imageOptions = {
 interface ResetProfileProps {
   navigator: Navigator;
   token: string;
-  onSubmitProfile: (       
+  onSubmitProfile: (
     name: string,
     date: string,
     gender: string,
     orientation: string,
     location: string,
     mbti: string,
-    keyAtr: string, 
+    keyAtr: string,
     keyDesc: string,
     imageData: any
   ) => any;
@@ -61,7 +62,7 @@ interface ResetProfileStates {
   orientation: string,
   location: string;
   mbti: string,
-  keyAtr: string, 
+  keyAtr: string,
   keyDesc: string,
   energy: string,
   information: string,
@@ -76,7 +77,7 @@ interface ResetProfileStates {
   items3: { label: string; value: string }[];
 }
 
-class PureResetProfile extends React.Component<ResetProfileProps,ResetProfileStates> {
+class PureResetProfile extends React.Component<ResetProfileProps, ResetProfileStates> {
   constructor(props: ResetProfileProps) {
     super(props);
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
@@ -85,7 +86,7 @@ class PureResetProfile extends React.Component<ResetProfileProps,ResetProfileSta
       imageData: {
         uri: '',
         type: '',
-        name:''
+        name: ''
       },
       profilePic: require('../assets/profile-pic.png'), // default
       name: '',
@@ -136,7 +137,7 @@ class PureResetProfile extends React.Component<ResetProfileProps,ResetProfileSta
       ],
       orientation: '',
       mbti: '',
-      keyAtr: '', 
+      keyAtr: '',
       keyDesc: '',
       energy: '',
       information: '',
@@ -149,38 +150,38 @@ class PureResetProfile extends React.Component<ResetProfileProps,ResetProfileSta
     };
   }
 
-  onNavigatorEvent(event: any) { 
+  onNavigatorEvent(event: any) {
     if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
       if (event.id == 'edit profile') { // this is the same id field from the static navigatorButtons definition
-       console.log('edited profile')       
+        console.log('edited profile')
         let profileData = new FormData();
         profileData.append('display_name', this.state.name); // key/value pairs 
-        profileData.append('email', this.state.email); 
-        profileData.append('password', this.state.password); 
-        profileData.append('dob', this.state.date); 
-        profileData.append('gender', this.state.gender); 
-        profileData.append('location', this.state.location); 
-        profileData.append('key_atr', this.state.keyAtr); 
-        profileData.append('key_atr_desc', this.state.keyDesc); 
+        profileData.append('email', this.state.email);
+        profileData.append('password', this.state.password);
+        profileData.append('dob', this.state.date);
+        profileData.append('gender', this.state.gender);
+        profileData.append('location', this.state.location);
+        profileData.append('key_atr', this.state.keyAtr);
+        profileData.append('key_atr_desc', this.state.keyDesc);
         profileData.append('profile_pic', this.state.imageData);
 
-        if(this.state.isEdited) {
+        if (this.state.isEdited) {
           return axios.put<{ token: string }>(
-            `${Config.API_SERVER}/api/user/myprofile`, 
-                profileData
-                ,{
-                headers: {
-                  Authorization: 'Bearer ' + this.props.token,
-                  'Content-Type': 'multipart/form-data'
-                }
-                }
-            )        
+            `${Config.API_SERVER}/api/user/myprofile`,
+            profileData
+            , {
+              headers: {
+                Authorization: 'Bearer ' + this.props.token,
+                'Content-Type': 'multipart/form-data'
+              }
+            }
+          )
             .then(() => {
-              this.props.onSubmitProfile(this.state.name, this.state.date, this.state.gender, this.state.orientation, this.state.location, this.state.mbti , this.state.keyAtr, this.state.keyDesc, this.state.imageData)
+              this.props.onSubmitProfile(this.state.name, this.state.date, this.state.gender, this.state.orientation, this.state.location, this.state.mbti, this.state.keyAtr, this.state.keyDesc, this.state.imageData)
               this.props.navigator.popToRoot({
                 animated: true, // does the popToRoot have transition animation or does it happen immediately (optional)
                 animationType: 'slide-horizontal', // 'fade' (for both) / 'slide-horizontal' (for android) does the popToRoot have different transition animation (optional)
-              })   
+              })
             })
             .catch(err => {
               console.log(err);
@@ -189,24 +190,24 @@ class PureResetProfile extends React.Component<ResetProfileProps,ResetProfileSta
           this.props.navigator.popToRoot({
             animated: true, // does the popToRoot have transition animation or does it happen immediately (optional)
             animationType: 'slide-horizontal', // 'fade' (for both) / 'slide-horizontal' (for android) does the popToRoot have different transition animation (optional)
-          })   
+          })
         }
-      
+
       }
     }
   }
 
-  async componentDidMount() {  
+  async componentDidMount() {
     axios.get(`${Config.API_SERVER}/api/user/myprofile`, {
       headers: {
         Authorization: 'Bearer ' + this.props.token
       }
     })
-      .then((res)=> {
-         this.setState({
-          profilePic: {uri: `${Config.API_SERVER}` + res.data[0].profile_pic},
+      .then((res) => {
+        this.setState({
+          profilePic: { uri: `${Config.API_SERVER}` + res.data[0].profile_pic },
           imageData: {
-            uri : `${Config.API_SERVER}` + res.data[0].profile_pic,
+            uri: `${Config.API_SERVER}` + res.data[0].profile_pic,
             type: 'image/jpeg', // res.type,
             name: res.data[0].profile_pic
           },
@@ -222,12 +223,12 @@ class PureResetProfile extends React.Component<ResetProfileProps,ResetProfileSta
           information: res.data[0].mbti.split('')[1],
           decision: res.data[0].mbti.split('')[2],
           lifestyle: res.data[0].mbti.split('')[3],
-        })  
+        })
       })
-      .then(()=> {
-        this.setState({isEdited: false}) // reset after initial get api
+      .then(() => {
+        this.setState({ isEdited: false }) // reset after initial get api
       })
-      .catch(err => console.log(err))      
+      .catch(err => console.log(err))
   }
 
   // ImagePicker returns an object which includes response.uri: "file://User/../something.jpg"
@@ -241,14 +242,14 @@ class PureResetProfile extends React.Component<ResetProfileProps,ResetProfileSta
         console.log("ImagePicker Error: ", res.error);
       } else {
         let imageObj = {
-          uri : res.uri,
+          uri: res.uri,
           type: 'image/jpeg', // res.type,
           name: res.fileName
         }
-        
-        this.setState({profilePic: { uri: res.uri }}); // for immediate display
-        this.setState({imageData: imageObj}); // for file upload
-        this.setState({isEdited: true}); 
+
+        this.setState({ profilePic: { uri: res.uri } }); // for immediate display
+        this.setState({ imageData: imageObj }); // for file upload
+        this.setState({ isEdited: true });
       }
     });
   }
@@ -259,7 +260,7 @@ class PureResetProfile extends React.Component<ResetProfileProps,ResetProfileSta
 
   onSelectEnergy() {
     this.setState({
-      keyAtr: this.state.energy, 
+      keyAtr: this.state.energy,
       IE: true,
       SN: false,
       FT: false,
@@ -271,7 +272,7 @@ class PureResetProfile extends React.Component<ResetProfileProps,ResetProfileSta
   onSelectInformation() {
     this.setState({
       keyAtr: this.state.information,
-      IE: false, 
+      IE: false,
       SN: true,
       FT: false,
       PJ: false,
@@ -281,8 +282,8 @@ class PureResetProfile extends React.Component<ResetProfileProps,ResetProfileSta
 
   onSelectDecision() {
     this.setState({
-      keyAtr: this.state.decision, 
-      IE: false, 
+      keyAtr: this.state.decision,
+      IE: false,
       SN: false,
       FT: true,
       PJ: false,
@@ -292,7 +293,7 @@ class PureResetProfile extends React.Component<ResetProfileProps,ResetProfileSta
 
   onSelectLifestyle() {
     this.setState({
-      keyAtr: this.state.lifestyle, 
+      keyAtr: this.state.lifestyle,
       IE: false,
       SN: false,
       FT: false,
@@ -309,41 +310,44 @@ class PureResetProfile extends React.Component<ResetProfileProps,ResetProfileSta
 
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
-      <View style={globalStyle.container}>
+        <View style={styles.container}>
+          <ScrollView>
+            <View style={styles.card}>
 
-        <ScrollView>
-          <View style={globalStyle.cardContainer}>
-           
-            <Image style={styles.propic} source={ this.state.profilePic }/>
-            <Text
-              style={styles.inputHeader}
-              onPress={() => this.handleImagePicker()}
-            >
-              Add Profile Picture
-            </Text>
+            <View style={styles.propicContainer}>
+              <Image style={styles.propic} source={this.state.profilePic} />
+              <Text
+                style={styles.inputHeader}
+                onPress={() => this.handleImagePicker()}
+              >
+                Change Profile Picture
+              </Text>
 
-            <View style={styles.profileInput}>
-              <Text style={styles.inputHeader}>Display Name</Text>
-              <TextInput
-                placeholder="Display Name"
-                onChangeText={val => this.setState({ name: val, isEdited: true })}
-                placeholderTextColor="#C7C7CD"
-                returnKeyType="next"
-                style={styles.input}
-                value={this.state.name}
-              />
+            </View>
 
-              <Text style={styles.inputHeader}>Email</Text>
-              <TextInput placeholder='Email' 
-                onChangeText={ (val) => this.setState({email: val, isEdited: true}) } 
-                placeholderTextColor='#fff'
-                keyboardType='email-address'
-                autoCapitalize='none'
-                style={styles.input}
-                value={this.state.email}
-              />
+              <View style={styles.profileInput}>
+                <Text style={styles.inputHeader}>Display Name</Text>
+                
+                <TextInput
+                  placeholder="Display Name"
+                  onChangeText={val => this.setState({ name: val, isEdited: true })}
+                  placeholderTextColor="#C7C7CD"
+                  returnKeyType="next"
+                  style={styles.input}
+                  value={this.state.name}
+                />
+                
+                <Text style={styles.inputHeader}>Email</Text>
+                <TextInput placeholder='Email'
+                  onChangeText={(val) => this.setState({ email: val, isEdited: true })}
+                  placeholderTextColor='#fff'
+                  keyboardType='email-address'
+                  autoCapitalize='none'
+                  style={styles.input}
+                  value={this.state.email}
+                />
 
-              {/* <Text style={styles.inputHeader}>Password</Text>
+                {/* <Text style={styles.inputHeader}>Password</Text>
               <View style={styles.passwordRow}>
                 <TextInput placeholder='Password' 
                   secureTextEntry={ this.state.hidePassword } 
@@ -358,91 +362,91 @@ class PureResetProfile extends React.Component<ResetProfileProps,ResetProfileSta
                 </TouchableOpacity>
               </View> */}
 
-              <Text style={styles.inputHeader}>Date of Birth</Text>
-              <DatePicker
-                style={styles.date}
-                date={this.state.date}
-                mode="date"
-                placeholder="Select date"
-                format="YYYY-MM-DD"
-                minDate="1918-01-01"
-                maxDate="2020-12-31"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                showIcon={false}
-                customStyles={{
-                  dateInput: {
-                    borderWidth: 0,
+                <Text style={styles.inputHeader}>Date of Birth</Text>
+                <DatePicker
+                  style={styles.date}
+                  date={this.state.date}
+                  mode="date"
+                  placeholder="Select date"
+                  format="YYYY-MM-DD"
+                  minDate="1918-01-01"
+                  maxDate="2020-12-31"
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  showIcon={false}
+                  customStyles={{
                     dateInput: {
-                      paddingVertical: 0
+                      borderWidth: 0,
+                      dateInput: {
+                        paddingVertical: 0
+                      }
                     }
-                  }
-                }}
-                onDateChange={(date: any) => {
-                  this.setState({ date: date, isEdited: true });
-                }}
-              />
+                  }}
+                  onDateChange={(date: any) => {
+                    this.setState({ date: date, isEdited: true });
+                  }}
+                />
 
-              <Text style={styles.inputHeader}>Gender</Text>
-              <RNPickerSelect
-                placeholder={{
-                  label: "Select Gender"
-                }}
-                items={this.state.items}
-                onValueChange={(val: string) => {
-                  this.setState({ gender: val, isEdited: true });
-                }}
-                value={this.state.gender}
-                hideIcon={true}
-                style={{ ...pickerSelectStyles }}
-              />
+                <Text style={styles.inputHeader}>Gender</Text>
+                <RNPickerSelect
+                  placeholder={{
+                    label: "Select Gender"
+                  }}
+                  items={this.state.items}
+                  onValueChange={(val: string) => {
+                    this.setState({ gender: val, isEdited: true });
+                  }}
+                  value={this.state.gender}
+                  hideIcon={true}
+                  style={{ ...pickerSelectStyles }}
+                />
 
-              <Text style={styles.inputHeader}>Location</Text>
-              <RNPickerSelect
-                placeholder={{
-                  label: "Select location"
-                }}
-                items={this.state.items3}
-                onValueChange={(val: string) => {
-                  this.setState({ location: val, isEdited: true });
-                }}
-                value={this.state.location}
-                hideIcon={true}
-                style={{ ...pickerSelectStyles }}
-              />
+                <Text style={styles.inputHeader}>Location</Text>
+                <RNPickerSelect
+                  placeholder={{
+                    label: "Select location"
+                  }}
+                  items={this.state.items3}
+                  onValueChange={(val: string) => {
+                    this.setState({ location: val, isEdited: true });
+                  }}
+                  value={this.state.location}
+                  hideIcon={true}
+                  style={{ ...pickerSelectStyles }}
+                />
 
-              <Text style={styles.inputHeader}>MBTI Key Attribute</Text>
-              <View style={styles.attribute}>
-                <TouchableOpacity style={energyStyle} onPress={() => this.onSelectEnergy()}>
-                  <Text>{this.state.energy}</Text>
-                </TouchableOpacity>
+                <Text style={styles.inputHeader}>MBTI Key Attribute</Text>
+                <View style={styles.attribute}>
+                  <TouchableOpacity style={energyStyle} onPress={() => this.onSelectEnergy()}>
+                    <Text>{this.state.energy}</Text>
+                  </TouchableOpacity>
 
-                <TouchableOpacity style={infoStyle} onPress={() => this.onSelectInformation()} >
-                  <Text>{this.state.information}</Text>
-                </TouchableOpacity>
+                  <TouchableOpacity style={infoStyle} onPress={() => this.onSelectInformation()} >
+                    <Text>{this.state.information}</Text>
+                  </TouchableOpacity>
 
-                <TouchableOpacity style={decisionStyle} onPress={() => this.onSelectDecision()} >
-                  <Text>{this.state.decision}</Text>
-                </TouchableOpacity>
+                  <TouchableOpacity style={decisionStyle} onPress={() => this.onSelectDecision()} >
+                    <Text>{this.state.decision}</Text>
+                  </TouchableOpacity>
 
-                <TouchableOpacity style={lifeStyle} onPress={() => this.onSelectLifestyle()}>
-                  <Text>{this.state.lifestyle}</Text>
-                </TouchableOpacity>
+                  <TouchableOpacity style={lifeStyle} onPress={() => this.onSelectLifestyle()}>
+                    <Text>{this.state.lifestyle}</Text>
+                  </TouchableOpacity>
+                </View>
+
+                <Text style={styles.inputHeader}>About Me</Text>
+                <TextInput style={styles.descInput}
+                  onChangeText={(val) => this.setState({ keyDesc: val, isEdited: true })}
+                  multiline={true}
+                  maxLength={200}
+                  value={this.state.keyDesc}
+                />
+
               </View>
 
-              <Text style={styles.inputHeader}>About Me</Text>
-              <TextInput style={styles.descInput}
-                onChangeText={ (val) => this.setState({keyDesc: val, isEdited: true }) } 
-                multiline = {true}
-                maxLength = {200}
-                value={this.state.keyDesc} 
-              />
-
             </View>
-           
-          </View>
-        </ScrollView>
-      </View>
+          </ScrollView>
+        </View>
       </LinearGradient>
     );
   }
@@ -456,14 +460,14 @@ const MapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    onSubmitProfile: (       
+    onSubmitProfile: (
       name: string,
       date: string,
       gender: string,
       orientation: string,
       location: string,
-      mbti: string, 
-      keyAtr: string, 
+      mbti: string,
+      keyAtr: string,
       keyDesc: string,
       imageData: any) => {
       dispatch(submitProfile(name, date, gender, orientation, location, mbti, keyAtr, keyDesc, imageData))
@@ -475,13 +479,43 @@ const ResetProfile = connect(MapStateToProps, mapDispatchToProps)(PureResetProfi
 export default ResetProfile;
 
 
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: hp('5%')
+  },
+  propicContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: hp('2%')
+  },
+  card: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    marginTop: hp('3%'),
+    marginBottom: hp('3.5%'),
+    marginHorizontal: wp('10%'),
+    paddingVertical: hp('1.5%'),
+    paddingHorizontal: wp('3%'),
+    borderRadius: 15,
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: -3 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    width: wp('80%'),
+  },
   profileInput: {
     flexDirection: "column",
     alignItems: "flex-start",
-    padding: 10
+    // padding: 10,
+    marginTop: hp('2%'),
+    paddingHorizontal: hp('1.5%')
   },
   welcome: {
     color: "#fff",
@@ -492,7 +526,8 @@ const styles = StyleSheet.create({
   inputHeader: {
     marginTop: 9,
     color: "#2a70b2",
-    fontSize: 14
+    fontSize: 14,
+    marginBottom: hp ('1%')
   },
   input: {
     backgroundColor: "#E5FDF9",
@@ -500,11 +535,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingVertical: 8,
     paddingHorizontal: 10,
-    width: 250,
-    textAlign: "center"
+    width: wp('70%'),
+    textAlign: "center",
   },
   date: {
-    width: 250,
+    width: wp('70%'),
     height: 37,
     backgroundColor: "#E5FDF9",
     borderColor: "transparent"
@@ -512,10 +547,11 @@ const styles = StyleSheet.create({
   propic: {
     height: 150,
     width: 150,
-    borderRadius: 150/2,
-    resizeMode: 'contain'
+    borderRadius: 150 / 2,
+    resizeMode: 'contain',
+    marginBottom: hp('2%')
   },
-  passwordRow:{
+  passwordRow: {
     flexDirection: 'row',
   },
   passwordInput: {
@@ -537,11 +573,11 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%'
   },
-  attribute:{
+  attribute: {
     flexDirection: 'row',
-    marginBottom: 15,
+    margin: 3,
   },
-  keySquare:{
+  keySquare: {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
@@ -551,7 +587,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     margin: 5,
-  },  
+  },
   selectedKeySquare: {
     flex: 1,
     flexDirection: 'column',
@@ -568,9 +604,10 @@ const styles = StyleSheet.create({
     borderColor: '#30519B',
     borderWidth: 1,
     height: height * 0.3,
-    width: width * 0.65,
+    width: wp('70%'),
     fontSize: 16,
     color: '#30519B',
+    marginBottom: hp('3%')
   }
 });
 
@@ -581,7 +618,7 @@ const pickerSelectStyles = StyleSheet.create({
     paddingHorizontal: 10,
     color: "#30519B",
     backgroundColor: "#E5FDF9",
-    width: 250,
+    width: wp('70%'),
     textAlign: "center"
   },
 });

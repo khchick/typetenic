@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 15,
     //marginVertical: 30,
-    marginTop: 20,
+    // marginTop: 20,
     marginBottom: 10,
     width: "65%",
     height: 45,

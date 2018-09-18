@@ -31,12 +31,12 @@ class PureUser extends React.Component<UserProps> {
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={{ flex: 1 }}>
         <View style={styles.container}>
           {/* <View style={styles.card}> */}
-            <Image
-              style={styles.avatar}
-              source={{
-                uri: `${Config.API_SERVER}` + this.props.imageUrl
-              }}
-            />
+          <Image
+            style={styles.avatar}
+            source={{
+              uri: `${Config.API_SERVER}` + this.props.imageUrl
+            }}
+          />
           {/* </View> */}
 
           <TouchableOpacity
@@ -142,16 +142,17 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 10,
     shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.6,
-    shadowRadius: 2
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    borderRadius: 4
   },
   btnText: {
-    color: "#fff",
-    fontSize: 14,
-    fontWeight: "600",
+    color: "white",
     textAlign: "center",
-    letterSpacing: 4
+    fontSize: 14,
+    fontWeight: "bold",
+    letterSpacing: 1.5
   },
   card: {
     justifyContent: "center",

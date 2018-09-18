@@ -74,17 +74,17 @@ export default class FlipAlert extends React.Component<IFlipAlertProps, {}> {
     if (flipStatus === 'Requested' && reqSender === targetID) {
       return (
         <View style={styles.flipAlertContainer}>
-          <Text style={styles.defaultMsg}>{targetName} has sent you a flip request! Would like to accept?
+          <Text style={styles.defaultMsg}>{targetName} has sent you a flip request! Would you like to accept?
           {"\n"}
             {"\n"}
-            (Both of you will be able to view each other's private profile after flipping.)
+            Both of you will be able to view each other's private profile after flipping
             </Text>
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
               style={styles.cancelBtnContainer}
               onPress={() => { this.props.navigator.dismissModal() }}
             >
-              <Text style={styles.btnText}>NOT NOW</Text>
+              <Text style={styles.btnText}>NO</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.btnContainer}
@@ -108,7 +108,7 @@ export default class FlipAlert extends React.Component<IFlipAlertProps, {}> {
                   .catch(err => console.log(err));
               }}
             >
-              <Text style={styles.btnText}>SURE</Text>
+              <Text style={styles.btnText}>YES</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -120,12 +120,12 @@ export default class FlipAlert extends React.Component<IFlipAlertProps, {}> {
           <Text style={styles.defaultMsg}>{targetName} is still considering your flip request. Give him/her some time!
             </Text>
           <View style={styles.buttonsContainer}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={styles.cancelBtnContainer}
               onPress={() => { this.props.navigator.dismissModal() }}
             >
               <Text style={styles.btnText}>OK</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity
               style={styles.btnContainer}
               onPress={() => {
@@ -149,6 +149,12 @@ export default class FlipAlert extends React.Component<IFlipAlertProps, {}> {
             >
               <Text style={styles.btnText}>CANCEL</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.cancelBtnContainer}
+              onPress={() => { this.props.navigator.dismissModal() }}
+            >
+              <Text style={styles.btnText}>OK</Text>
+            </TouchableOpacity>
           </View>
         </View>
       )
@@ -157,7 +163,7 @@ export default class FlipAlert extends React.Component<IFlipAlertProps, {}> {
       return (
         <View style={styles.flipAlertContainer}>
           <Text style={styles.defaultMsg}>Congratulations! The cards are flipped</Text>
-          <View style={styles.buttonsContainer}>
+          <View style={styles.centerButtonsContainer}>
             <TouchableOpacity
               style={styles.centerBtnContainer}
               onPress={() => { this.props.navigator.dismissModal() }}
@@ -196,6 +202,14 @@ const styles = StyleSheet.create({
     marginHorizontal: width * 0.1,
     marginTop: height * 0.05
   },
+  centerButtonsContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: 'center',
+    width: width * 0.8,
+    marginHorizontal: width * 0.1,
+    marginTop: height * 0.05
+  },
   btnContainer: {
     backgroundColor: "#F0957F",
     width: width * 0.25,
@@ -209,22 +223,20 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   centerBtnContainer: {
-    textAlign: 'center',
-    width: width * 0.25,
     backgroundColor: "#F0957F",
-    marginTop: height * 0.5,
-    marginLeft: width * 0.23,
-    marginRight: width * 0.04,
-    paddingVertical: 10,
+    width: width * 0.25,
+    height: height * 0.04,
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
-    borderRadius: 4
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   cancelBtnContainer: {
     backgroundColor: "grey",
-    width: width * 0.23,
+    width: width * 0.25,
     height: height * 0.04,
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },

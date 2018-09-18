@@ -18,7 +18,7 @@ export const globalStyle = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,
-        fontFamily: 'Futura',
+        // fontFamily: 'Futura',
         letterSpacing: 2,
     },
     // building MBTI profile

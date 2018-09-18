@@ -11,6 +11,7 @@ import {
   Image
 } from "react-native";
 import FBLoginButton from "./components/FBLoginButton";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const { height, width } = Dimensions.get("window");
 
@@ -88,7 +89,8 @@ const styles = StyleSheet.create({
     letterSpacing: 3,
     // width: 300,
     marginTop: 20,
-    fontFamily: 'NovaRound'
+    fontFamily: 'NovaRound',
+    width: width * 0.8
   },
   sloganText: {
     color: "#30519B",
@@ -96,7 +98,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     // letterSpacing: 3,
     marginTop: 20,
-    fontFamily: 'NovaRound'
+    fontFamily: 'NovaRound',
+    width: width * 0.8
   },
   btnText: {
     color: "white",
@@ -110,21 +113,15 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     textAlign: "center",
     fontSize: 8,
-    marginTop: 80
+    marginTop: hp('8%')
   },
   card: {
     justifyContent: "center",
     alignItems: "center",
-    //backgroundColor: "white",
-    padding: 20,
-    //borderRadius: 15,
-    // shadowColor: "#C0C0C0",
-    // shadowOffset: { width: 2, height: 2 },
-    // shadowOpacity: 0.4,
-    // shadowRadius: 6,
+    // padding: 20,
     width: width * 0.8, // percent or minus
-    height: height * 0.3,
-    marginBottom: 80,
-    marginTop: 50
+    
+    marginBottom: hp('12%'),
+    marginTop: hp('8%')
   }
 });
