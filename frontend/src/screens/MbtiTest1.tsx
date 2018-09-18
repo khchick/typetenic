@@ -13,11 +13,13 @@ import {
   TouchableOpacity,
   StatusBar,
   View,
-  Image
+  Image,
+  ScrollView
 } from "react-native";
 import { connect } from "react-redux";
 import { one } from "../redux/actions/testAction";
 import { RootState } from "../redux/reducers/rootReducer";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const { height, width } = Dimensions.get("window");
 
@@ -28,7 +30,7 @@ interface MbtiTestProps {
 }
 
 class PureMbtiTest1 extends React.Component<MbtiTestProps> {
-  
+
   pushNextTest() {
     this.props.navigator.push({
       screen: "MbtiTest2Screen",
@@ -55,28 +57,36 @@ class PureMbtiTest1 extends React.Component<MbtiTestProps> {
 
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
-        <View style={globalStyle.container}>
-          <View style={globalStyle.cardContainer}>
-            <Text style={styles.header}>Quiz 1</Text>
-            <Text style={styles.question}>
-              How do you spend your weekends when you are single?
-            </Text>
-
-            <TouchableOpacity onPress={() => this.onChoiceA()}>
-              <Text style={styleA}>A Join different parties</Text>
-              <View style={styles.pickCard}>
-                <Image style={styles.img} source={require(imageA)} />
+        <ScrollView>
+          <View style={styles.container}>
+            <View style={styles.card}>
+              <View style={styles.textContainer}>
+                <Text style={styles.header}>Quiz 1</Text>
+                <Text style={styles.question}>
+                  How do you spend your weekends when you are single?
+               </Text>
               </View>
-            </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => this.onChoiceB()}>
-              <Text style={styleB}>B Read a book, play video games</Text>
-              <View style={styles.pickCard}>
-                <Image style={styles.img} source={require(imageB)} />
-              </View>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.onChoiceA()}>
+                <View style={styles.textContainer}>
+                  <Text style={styles.option}>A  Join different parties</Text>
+                </View>
+                <View style={styles.imgContainer}>
+                  <Image style={styles.img} source={require(imageA)} />
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => this.onChoiceB()}>
+                <View style={styles.textContainer}>
+                  <Text style={styles.option}>B  Read a book, play video games</Text>
+                </View>
+                <View style={styles.imgContainer}>
+                  <Image style={styles.img} source={require(imageB)} />
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        </ScrollView>
       </LinearGradient>
     );
   }
@@ -101,34 +111,68 @@ const MbtiTest1 = connect(
 export default MbtiTest1;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  card: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    marginTop: hp('3%'),
+    marginBottom: hp('3%'),
+    marginHorizontal: wp('10%'),
+    paddingVertical: hp('3%'),
+    paddingHorizontal: wp('3%'),
+    borderRadius: 15,
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: -3 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    width: wp('85%'),
+  },
+  textContainer: {
+    justifyContent: 'center',
+    // alignItems: 'center',
+    width: wp('70%')
+  },
   header: {
     color: "#30519B",
     fontSize: 20,
-    fontWeight: "800"
+    fontFamily: 'NovaRound',
+    marginVertical: hp('3%'),
+    letterSpacing: 1.5,
+    textAlign: 'center'
   },
   question: {
     color: "#30519B",
     fontSize: 18,
-    fontWeight: "700",
-    textAlign: "left",
-    padding: 12
+    textAlign: "center",
+    marginBottom: hp('6%'),
+    fontFamily: 'NovaRound',
+  },
+  option: {
+    color: "#30519B",
+    fontSize: 15,
+    fontFamily: 'NovaRound',
+    marginVertical: wp('2%'),
+    textAlign: 'left'
   },
   img: {
-    width: width * 0.55, // percent or minus
-    height: height * 0.2,
-    margin: 2
+    resizeMode: 'contain',
+    width: wp('70%'),
+    height: hp('25%'),
   },
-  pickCard: {
-    alignItems: "center",
-    backgroundColor: "white",
-    padding: 15,
-    borderRadius: 15,
-    shadowColor: "#000",
+  imgContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: hp('3%'),
+    marginBottom: hp('7%'),
+    shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,
-    shadowRadius: 6,
-    width: width * 0.6,
-    height: height * 0.25,
-    margin: 10
+    shadowRadius: 2,
+    borderRadius: 4
   }
 });

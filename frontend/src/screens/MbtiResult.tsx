@@ -62,7 +62,6 @@ class PureMbtiResult extends React.Component<MbtiResultProps, MbtiState> {
     );
     this.props.navigator.push({
       screen: "MbtiProfileScreen",
-      navigatorStyle: transparentNav
     });
   }
 

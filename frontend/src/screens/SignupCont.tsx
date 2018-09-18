@@ -11,7 +11,8 @@ import {
   KeyboardAvoidingView,
   Alert,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  ScrollView
 } from "react-native";
 import Modal from "react-native-modal";
 import RNPickerSelect from "react-native-picker-select";
@@ -139,7 +140,11 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
       this.props.onEditProfile(this.props.id, this.props.max_age, this.props.min_age, this.props.token, this.state.profilePic.uri, this.state.imageData, this.state.name, this.state.date, this.state.gender, this.state.orientation, this.state.location)
       this.props.navigator.push({
         screen: 'MbtiTest1Screen',
-        navigatorStyle: { navBarNoBorder: true }
+        navigatorStyle: { navBarNoBorder: true },
+        appStyle: {
+          //backButtonImage: require('./')
+          hideBackButtonTitle: true,
+        }
       })
     }
   }
@@ -170,120 +175,125 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
   render() {
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
-        <View style={styles.container}>
-          <View style={styles.card}>
-            {/* upload photo */}
-            <Image style={styles.propic} source={this.state.profilePic} />
-            <Text
-              style={styles.inputHeader}
-              onPress={() => this.handleImagePicker()}
-            >
-              Change Profile Picture
-            </Text>
 
-            <View style={styles.profileInput}>
-              <Text style={styles.inputHeader}>Display Name</Text>
-              <TextInput
-                placeholder="Display Name"
-                onChangeText={val => this.setState({ name: val })}
-                placeholderTextColor="#C7C7CD"
-                returnKeyType="next"
-                style={styles.input}
-              />
+        <ScrollView>
+          <View style={styles.container}>
+            <View style={styles.card}>
+              <View style={styles.propicContainer}>
+                <Image style={styles.propic} source={this.state.profilePic} />
+                <Text
+                  style={styles.inputHeader}
+                  onPress={() => this.handleImagePicker()}
+                >
+                  Change Profile Picture
+               </Text>
+              </View>
 
-              <Text style={styles.inputHeader}>Date of Birth</Text>
-              <DatePicker
-                style={styles.date}
-                date={this.state.date}
-                mode="date"
-                placeholder="Select date"
-                format="YYYY-MM-DD"
-                minDate="1918-01-01"
-                maxDate="2020-12-31"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                showIcon={false}
-                customStyles={{
-                  dateInput: {
-                    borderWidth: 0,
+              <View style={styles.profileInput}>
+                <Text style={styles.inputHeader}>Display Name</Text>
+                <TextInput
+                  placeholder="Display Name"
+                  onChangeText={val => this.setState({ name: val })}
+                  placeholderTextColor="#C7C7CD"
+                  returnKeyType="next"
+                  style={styles.input}
+                />
+
+                <Text style={styles.inputHeader}>Date of Birth</Text>
+                <DatePicker
+                  style={styles.date}
+                  date={this.state.date}
+                  mode="date"
+                  placeholder="Select date"
+                  format="YYYY-MM-DD"
+                  minDate="1918-01-01"
+                  maxDate="2020-12-31"
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  showIcon={false}
+                  customStyles={{
                     dateInput: {
-                      paddingVertical: 0
+                      borderWidth: 0,
+                      dateInput: {
+                        paddingVertical: 0
+                      }
                     }
-                  }
-                }}
-                onDateChange={(date: any) => {
-                  this.setState({ date: date });
-                }}
-              />
+                  }}
+                  onDateChange={(date: any) => {
+                    this.setState({ date: date });
+                  }}
+                />
 
-              <Text style={styles.inputHeader}>Gender</Text>
-              <RNPickerSelect
-                placeholder={{
-                  label: "Select Gender"
-                }}
-                items={this.state.items}
-                onValueChange={(val: string) => {
-                  this.setState({ gender: val });
-                }}
-                value={this.state.gender}
-                hideIcon={true}
-                style={{ ...pickerSelectStyles }}
-              />
+                <Text style={styles.inputHeader}>Gender</Text>
+                <RNPickerSelect
+                  placeholder={{
+                    label: "Select Gender"
+                  }}
+                  items={this.state.items}
+                  onValueChange={(val: string) => {
+                    this.setState({ gender: val });
+                  }}
+                  value={this.state.gender}
+                  hideIcon={true}
+                  style={{ ...pickerSelectStyles }}
+                />
 
-              <Text style={styles.inputHeader}>Location</Text>
-              <RNPickerSelect
-                placeholder={{
-                  label: "Select location"
-                }}
-                items={this.state.items3}
-                onValueChange={(val: string) => {
-                  this.setState({ location: val });
-                }}
-                value={this.state.location}
-                hideIcon={true}
-                style={{ ...pickerSelectStyles }}
-              />
+                <Text style={styles.inputHeader}>Location</Text>
+                <RNPickerSelect
+                  placeholder={{
+                    label: "Select location"
+                  }}
+                  items={this.state.items3}
+                  onValueChange={(val: string) => {
+                    this.setState({ location: val });
+                  }}
+                  value={this.state.location}
+                  hideIcon={true}
+                  style={{ ...pickerSelectStyles }}
+                />
 
-              <Text style={styles.inputHeader}>I'm interested in</Text>
-              <RNPickerSelect
-                placeholder={{
-                  label: "Select interest"
-                }}
-                items={this.state.items2}
-                onValueChange={(val: string) => {
-                  this.setState({ orientation: val });
-                }}
-                value={this.state.orientation}
-                hideIcon={true}
-                getPlaceholderStyle
-                style={{ ...pickerSelectStyles }}
-              />
-            </View>
+                <Text style={styles.inputHeader}>I'm interested in</Text>
+                <RNPickerSelect
+                  placeholder={{
+                    label: "Select interest"
+                  }}
+                  items={this.state.items2}
+                  onValueChange={(val: string) => {
+                    this.setState({ orientation: val });
+                  }}
+                  value={this.state.orientation}
+                  hideIcon={true}
+                  getPlaceholderStyle
+                  style={{ ...pickerSelectStyles }}
+                />
+              </View>
 
-            {this.state.errorMsg ? (
-              <Modal
-                isVisible={this.state.isModalVisible}
-                onBackdropPress={() => this.setState({ isModalVisible: false })}
-                backdropOpacity={0}
-                style={styles.bottomModal}
+              {this.state.errorMsg ? (
+                <Modal
+                  isVisible={this.state.isModalVisible}
+                  onBackdropPress={() => this.setState({ isModalVisible: false })}
+                  backdropOpacity={0}
+                  style={styles.bottomModal}
+                >
+                  <View style={styles.modalContent}>
+                    <Text style={styles.modalText}>Please input all fields</Text>
+                  </View>
+
+                </Modal>
+              ) : <Text></Text>}
+
+
+              <TouchableOpacity
+                style={styles.btnContainer}
+                onPress={() => this.onSignupPress()}
               >
-                <View style={styles.modalContent}>
-                  <Text style={styles.modalText}>Please input all fields</Text>
-                </View>
+                <Text style={styles.btnText}>Start MBTI Test</Text>
+              </TouchableOpacity>
 
-              </Modal>
-            ) : <Text></Text>}
-
-
-            <TouchableOpacity
-              style={styles.btnContainer}
-              onPress={() => this.onSignupPress()}
-            >
-              <Text style={styles.btnText}>Start MBTI Test</Text>
-            </TouchableOpacity>
-
+            </View>
           </View>
-        </View>
+        </ScrollView>
+
       </LinearGradient>
     );
   }
@@ -330,61 +340,45 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+  propicContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: hp('4%'),
+    marginBottom: hp('2%')
+  },
+  propic: {
+    height: 150,
+    width: 150,
+    borderRadius: 150 / 2,
+    resizeMode: 'contain',
+    marginBottom: hp('2%')
+  },
   profileInput: {
-    flexDirection: "column",
-    alignItems: "flex-start",
-    padding: 10
-  },
-  welcome: {
-    color: "#fff",
-    fontSize: 32,
-    fontWeight: "800",
-    marginBottom: 50
-  },
-  btnContainer: {
-    backgroundColor: '#F0957F',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    marginVertical: 15,
-    width: '50%',
-    shadowColor: "black",
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
-    borderRadius: 4
-  },
-  btnText: {
-    color: "#fff",
-    fontWeight: "700",
-    textAlign: "center"
+    marginTop: hp('2%'),
+    paddingHorizontal: hp('1.5%')
   },
   inputHeader: {
     marginTop: 9,
     color: "#2a70b2",
-    fontSize: 14
+    fontSize: 16,
+    marginBottom: hp('1%')
   },
   input: {
     backgroundColor: "#E5FDF9",
     color: "#30519B",
-    marginTop: 5,
     marginBottom: 10,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-    borderRadius: 25,
-    width: 250,
-    textAlign: "center"
+    height: hp('6%'),
+    width: wp('74%'),
+    textAlign: "center",
+    fontSize: 14
   },
   date: {
-    width: 250,
-    height: 37,
     backgroundColor: "#E5FDF9",
-    borderRadius: 25,
-    borderColor: "transparent"
-  },
-  propic: {
-    height: 130,
-    width: 130,
-    borderRadius: 60,
+    color: "#30519B",
+    marginBottom: 10,
+    height: hp('6%'),
+    width: wp('74%'),
+    textAlign: "center"
   },
   bottomModal: {
     justifyContent: "flex-end", // 
@@ -413,21 +407,38 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: -3 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
-    width: wp('80%'),
-    height: hp('65%')
-  }
+    width: wp('85%'),
+  },
+  btnContainer: {
+    backgroundColor: '#F0957F',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    marginTop: hp('3%'),
+    marginBottom: hp('5%'),
+    width: '55%',
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    borderRadius: 4
+  },
+  btnText: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "bold",
+    letterSpacing: 1.5
+  },
 });
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    fontSize: 16,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-    borderRadius: 25,
-    color: "#30519B",
-    // placeholderColor: '#30519B', //not a valid style property > change module index.js line 165
     backgroundColor: "#E5FDF9",
-    width: 250,
-    textAlign: "center"
-  }
+    color: "#30519B",
+    marginBottom: 10,
+    height: hp('6%'),
+    width: wp('74%'),
+    textAlign: "center",
+    fontSize: 14
+  },
 });

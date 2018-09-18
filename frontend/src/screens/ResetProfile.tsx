@@ -310,43 +310,46 @@ class PureResetProfile extends React.Component<ResetProfileProps, ResetProfileSt
 
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
-        <View style={styles.container}>
-          <ScrollView>
+
+        <ScrollView>
+          <View style={styles.container}>
             <View style={styles.card}>
 
-            <View style={styles.propicContainer}>
-              <Image style={styles.propic} source={this.state.profilePic} />
-              <Text
-                style={styles.inputHeader}
-                onPress={() => this.handleImagePicker()}
-              >
-                Change Profile Picture
+              <View style={styles.propicContainer}>
+                <Image style={styles.propic} source={this.state.profilePic} />
+                <Text
+                  style={styles.inputHeader}
+                  onPress={() => this.handleImagePicker()}
+                >
+                  Change Profile Picture
               </Text>
 
-            </View>
+              </View>
 
               <View style={styles.profileInput}>
                 <Text style={styles.inputHeader}>Display Name</Text>
-                
-                <TextInput
-                  placeholder="Display Name"
-                  onChangeText={val => this.setState({ name: val, isEdited: true })}
-                  placeholderTextColor="#C7C7CD"
-                  returnKeyType="next"
-                  style={styles.input}
-                  value={this.state.name}
-                />
-                
-                <Text style={styles.inputHeader}>Email</Text>
-                <TextInput placeholder='Email'
-                  onChangeText={(val) => this.setState({ email: val, isEdited: true })}
-                  placeholderTextColor='#fff'
-                  keyboardType='email-address'
-                  autoCapitalize='none'
-                  style={styles.input}
-                  value={this.state.email}
-                />
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    placeholder="Display Name"
+                    onChangeText={val => this.setState({ name: val, isEdited: true })}
+                    placeholderTextColor="#C7C7CD"
+                    returnKeyType="next"
+                    style={styles.input}
+                    value={this.state.name}
+                  />
+                </View>
 
+                <Text style={styles.inputHeader}>Email</Text>
+                <View style={styles.inputContainer}>
+                  <TextInput placeholder='Email'
+                    onChangeText={(val) => this.setState({ email: val, isEdited: true })}
+                    placeholderTextColor='#fff'
+                    keyboardType='email-address'
+                    autoCapitalize='none'
+                    style={styles.input}
+                    value={this.state.email}
+                  />
+                </View>
                 {/* <Text style={styles.inputHeader}>Password</Text>
               <View style={styles.passwordRow}>
                 <TextInput placeholder='Password' 
@@ -363,75 +366,82 @@ class PureResetProfile extends React.Component<ResetProfileProps, ResetProfileSt
               </View> */}
 
                 <Text style={styles.inputHeader}>Date of Birth</Text>
-                <DatePicker
-                  style={styles.date}
-                  date={this.state.date}
-                  mode="date"
-                  placeholder="Select date"
-                  format="YYYY-MM-DD"
-                  minDate="1918-01-01"
-                  maxDate="2020-12-31"
-                  confirmBtnText="Confirm"
-                  cancelBtnText="Cancel"
-                  showIcon={false}
-                  customStyles={{
-                    dateInput: {
-                      borderWidth: 0,
+                <View style={styles.inputContainer}>
+                  <DatePicker
+                    style={styles.date}
+                    date={this.state.date}
+                    mode="date"
+                    placeholder="Select date"
+                    format="YYYY-MM-DD"
+                    minDate="1918-01-01"
+                    maxDate="2020-12-31"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    showIcon={false}
+                    customStyles={{
                       dateInput: {
-                        paddingVertical: 0
+                        borderWidth: 0,
+                        dateInput: {
+                          paddingVertical: 0
+                        }
                       }
-                    }
-                  }}
-                  onDateChange={(date: any) => {
-                    this.setState({ date: date, isEdited: true });
-                  }}
-                />
+                    }}
+                    onDateChange={(date: any) => {
+                      this.setState({ date: date, isEdited: true });
+                    }}
+                  />
+                </View>
 
                 <Text style={styles.inputHeader}>Gender</Text>
-                <RNPickerSelect
-                  placeholder={{
-                    label: "Select Gender"
-                  }}
-                  items={this.state.items}
-                  onValueChange={(val: string) => {
-                    this.setState({ gender: val, isEdited: true });
-                  }}
-                  value={this.state.gender}
-                  hideIcon={true}
-                  style={{ ...pickerSelectStyles }}
-                />
-
+                <View style={styles.inputContainer}>
+                  <RNPickerSelect
+                    placeholder={{
+                      label: "Select Gender"
+                    }}
+                    items={this.state.items}
+                    onValueChange={(val: string) => {
+                      this.setState({ gender: val, isEdited: true });
+                    }}
+                    value={this.state.gender}
+                    hideIcon={true}
+                    style={{...pickerSelectStyles}}
+                  />
+                </View>
                 <Text style={styles.inputHeader}>Location</Text>
-                <RNPickerSelect
-                  placeholder={{
-                    label: "Select location"
-                  }}
-                  items={this.state.items3}
-                  onValueChange={(val: string) => {
-                    this.setState({ location: val, isEdited: true });
-                  }}
-                  value={this.state.location}
-                  hideIcon={true}
-                  style={{ ...pickerSelectStyles }}
-                />
+                <View style={styles.inputContainer}>
+                  <RNPickerSelect
+                    placeholder={{
+                      label: "Select location"
+                    }}
+                    items={this.state.items3}
+                    onValueChange={(val: string) => {
+                      this.setState({ location: val, isEdited: true });
+                    }}
+                    value={this.state.location}
+                    hideIcon={true}
+                    style={{ ...pickerSelectStyles }}
+                  />
+                </View>
 
                 <Text style={styles.inputHeader}>MBTI Key Attribute</Text>
-                <View style={styles.attribute}>
-                  <TouchableOpacity style={energyStyle} onPress={() => this.onSelectEnergy()}>
-                    <Text>{this.state.energy}</Text>
-                  </TouchableOpacity>
+                <View style={styles.inputContainer}>
+                  <View style={styles.attribute}>
+                    <TouchableOpacity style={energyStyle} onPress={() => this.onSelectEnergy()}>
+                      <Text>{this.state.energy}</Text>
+                    </TouchableOpacity>
 
-                  <TouchableOpacity style={infoStyle} onPress={() => this.onSelectInformation()} >
-                    <Text>{this.state.information}</Text>
-                  </TouchableOpacity>
+                    <TouchableOpacity style={infoStyle} onPress={() => this.onSelectInformation()} >
+                      <Text>{this.state.information}</Text>
+                    </TouchableOpacity>
 
-                  <TouchableOpacity style={decisionStyle} onPress={() => this.onSelectDecision()} >
-                    <Text>{this.state.decision}</Text>
-                  </TouchableOpacity>
+                    <TouchableOpacity style={decisionStyle} onPress={() => this.onSelectDecision()} >
+                      <Text>{this.state.decision}</Text>
+                    </TouchableOpacity>
 
-                  <TouchableOpacity style={lifeStyle} onPress={() => this.onSelectLifestyle()}>
-                    <Text>{this.state.lifestyle}</Text>
-                  </TouchableOpacity>
+                    <TouchableOpacity style={lifeStyle} onPress={() => this.onSelectLifestyle()}>
+                      <Text>{this.state.lifestyle}</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
 
                 <Text style={styles.inputHeader}>About Me</Text>
@@ -445,8 +455,9 @@ class PureResetProfile extends React.Component<ResetProfileProps, ResetProfileSt
               </View>
 
             </View>
-          </ScrollView>
-        </View>
+          </View>
+        </ScrollView>
+
       </LinearGradient>
     );
   }
@@ -486,63 +497,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: hp('5%')
   },
   propicContainer: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: hp('2%')
-  },
-  card: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    marginTop: hp('3%'),
-    marginBottom: hp('3.5%'),
-    marginHorizontal: wp('10%'),
-    paddingVertical: hp('1.5%'),
-    paddingHorizontal: wp('3%'),
-    borderRadius: 15,
-    shadowColor: "black",
-    shadowOffset: { width: 2, height: -3 },
-    shadowOpacity: 0.4,
-    shadowRadius: 2,
-    width: wp('80%'),
-  },
-  profileInput: {
-    flexDirection: "column",
-    alignItems: "flex-start",
-    // padding: 10,
-    marginTop: hp('2%'),
-    paddingHorizontal: hp('1.5%')
-  },
-  welcome: {
-    color: "#fff",
-    fontSize: 32,
-    fontWeight: "800",
-    marginBottom: 50
-  },
-  inputHeader: {
-    marginTop: 9,
-    color: "#2a70b2",
-    fontSize: 14,
-    marginBottom: hp ('1%')
-  },
-  input: {
-    backgroundColor: "#E5FDF9",
-    color: "#30519B",
-    marginBottom: 10,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-    width: wp('70%'),
-    textAlign: "center",
-  },
-  date: {
-    width: wp('70%'),
-    height: 37,
-    backgroundColor: "#E5FDF9",
-    borderColor: "transparent"
+    marginTop: hp('4%'),
+    marginBottom: hp('2%')
   },
   propic: {
     height: 150,
@@ -551,28 +511,75 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginBottom: hp('2%')
   },
-  passwordRow: {
-    flexDirection: 'row',
+  card: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    marginTop: hp('3%'),
+    marginBottom: hp('3%'),
+    marginHorizontal: wp('10%'),
+    paddingVertical: hp('1.5%'),
+    paddingHorizontal: wp('3%'),
+    borderRadius: 15,
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: -3 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    width: wp('85%'),
   },
-  passwordInput: {
+  profileInput: {
+    marginTop: hp('2%'),
+    paddingHorizontal: hp('1.5%')
+  },
+  inputHeader: {
+    marginTop: 9,
+    color: "#2a70b2",
+    fontSize: 16,
+    marginBottom: hp('1%')
+  },
+  inputContainer: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  input: {
     backgroundColor: "#E5FDF9",
     color: "#30519B",
     marginBottom: 10,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-    width: 250,
-    textAlign: "center"
+    height: hp('6%'),
+    width: wp('74%'),
+    textAlign: "center",
+    fontSize: 14
   },
-  passwordBtn: {
-    height: 40,
-    width: 35,
-    padding: 5
+  date: {
+    backgroundColor: "#E5FDF9",
+    color: "#30519B",
+    marginBottom: 10,
+    height: hp('6%'),
+    width: wp('74%'),
+    textAlign: "center",
   },
-  passwordImage: {
-    resizeMode: 'contain',
-    height: '100%',
-    width: '100%'
-  },
+  // passwordRow: {
+  //   flexDirection: 'row',
+  // },
+  // passwordInput: {
+  //   backgroundColor: "#E5FDF9",
+  //   color: "#30519B",
+  //   marginBottom: 10,
+  //   paddingVertical: 10,
+  //   paddingHorizontal: 10,
+  //   width: 250,
+  //   textAlign: "center"
+  // },
+  // passwordBtn: {
+  //   height: 40,
+  //   width: 35,
+  //   padding: 5
+  // },
+  // passwordImage: {
+  //   resizeMode: 'contain',
+  //   height: '100%',
+  //   width: '100%'
+  // },
   attribute: {
     flexDirection: 'row',
     margin: 3,
@@ -589,36 +596,32 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   selectedKeySquare: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
     borderColor: '#30519B',
     borderWidth: 1,
     height: 40,
     width: 40,
     margin: 5,
-    backgroundColor: '#e0fbff',
+    backgroundColor: '#E5FDF9',
   },
   descInput: {
     borderColor: '#30519B',
     borderWidth: 1,
     height: height * 0.3,
-    width: wp('70%'),
+    width: wp('74%'),
     fontSize: 16,
     color: '#30519B',
-    marginBottom: hp('3%')
+    marginBottom: hp('5%')
   }
 });
 
 const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
-    fontSize: 16,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-    color: "#30519B",
     backgroundColor: "#E5FDF9",
-    width: wp('70%'),
-    textAlign: "center"
+    color: "#30519B",
+    marginBottom: 10,
+    height: hp('6%'),
+    width: wp('74%'),
+    textAlign: "center",
+    fontSize: 14
   },
 });

@@ -84,7 +84,7 @@ export default class FlipAlert extends React.Component<IFlipAlertProps, {}> {
               style={styles.cancelBtnContainer}
               onPress={() => { this.props.navigator.dismissModal() }}
             >
-              <Text style={styles.btnText}>NO</Text>
+              <Text style={styles.btnText}>NOT NOW</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.btnContainer}
