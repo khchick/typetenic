@@ -17,9 +17,10 @@ import Modal from "react-native-modal";
 import RNPickerSelect from "react-native-picker-select";
 import DatePicker from "react-native-datepicker";
 import ImagePicker from "react-native-image-picker";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-import {connect} from 'react-redux';
-import {editProfile} from '../redux/actions/profileAction';
+import { connect } from 'react-redux';
+import { editProfile } from '../redux/actions/profileAction';
 
 
 var imageOptions = {
@@ -29,27 +30,27 @@ var imageOptions = {
 };
 
 interface SignupProps {
-    navigator: Navigator,
+  navigator: Navigator,
+  id: number,
+  max_age: number,
+  min_age: number,
+  token: number,
+  onEditProfile: (
     id: number,
     max_age: number,
     min_age: number,
-    token: number,  
-    onEditProfile: (
-      id: number,
-      max_age: number,
-      min_age: number,
-      token: number,  
-      profilePic: any,
-      imageData: {
-        uri: string;
-        type: string;
-        name: string | null;
+    token: number,
+    profilePic: any,
+    imageData: {
+      uri: string;
+      type: string;
+      name: string | null;
     },
-      name: string,
-      date: string,
-      gender: string,
-      orientation: string,
-      location: string,) => any
+    name: string,
+    date: string,
+    gender: string,
+    orientation: string,
+    location: string, ) => any
 }
 
 interface SignupStates {
@@ -126,20 +127,20 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
     };
   }
 
-// wrap multiple functions 
+  // wrap multiple functions 
   onSignupPress() {
     // check input
-    if(this.state.name == '' || this.state.date == '' || this.state.gender == '' || this.state.imageData == null || this.state.orientation == '' || this.state.location == '') {
+    if (this.state.name == '' || this.state.date == '' || this.state.gender == '' || this.state.imageData == null || this.state.orientation == '' || this.state.location == '') {
       this.setState({
         errorMsg: true,
         isModalVisible: true
       })
-      } else {
-        this.props.onEditProfile(this.props.id, this.props.max_age, this.props.min_age, this.props.token, this.state.profilePic.uri, this.state.imageData, this.state.name, this.state.date, this.state.gender, this.state.orientation, this.state.location)    
-        this.props.navigator.push({
-          screen: 'MbtiTest1Screen',
-          navigatorStyle: { navBarNoBorder: true }
-        })
+    } else {
+      this.props.onEditProfile(this.props.id, this.props.max_age, this.props.min_age, this.props.token, this.state.profilePic.uri, this.state.imageData, this.state.name, this.state.date, this.state.gender, this.state.orientation, this.state.location)
+      this.props.navigator.push({
+        screen: 'MbtiTest1Screen',
+        navigatorStyle: { navBarNoBorder: true }
+      })
     }
   }
 
@@ -154,14 +155,14 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
         console.log("ImagePicker Error: ", res.error);
       } else {
         let imageObj = {
-          uri : res.uri,
+          uri: res.uri,
           type: 'image/jpeg', // res.type,
           name: res.fileName
         }
-        
-        this.setState({profilePic: { uri: res.uri }}); // for immediate display
-        this.setState({imageData: imageObj}); // for file upload
-        
+
+        this.setState({ profilePic: { uri: res.uri } }); // for immediate display
+        this.setState({ imageData: imageObj }); // for file upload
+
       }
     });
   }
@@ -169,15 +170,15 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
   render() {
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
-        <View style={globalStyle.container}>
-          <View style={globalStyle.cardContainer}>
+        <View style={styles.container}>
+          <View style={styles.card}>
             {/* upload photo */}
             <Image style={styles.propic} source={this.state.profilePic} />
             <Text
               style={styles.inputHeader}
               onPress={() => this.handleImagePicker()}
             >
-              Add Profile Picture
+              Change Profile Picture
             </Text>
 
             <View style={styles.profileInput}>
@@ -271,7 +272,7 @@ class PureSignupCont extends React.Component<SignupProps, SignupStates> {
                 </View>
 
               </Modal>
-            ) :  <Text></Text>} 
+            ) : <Text></Text>}
 
 
             <TouchableOpacity
@@ -316,7 +317,7 @@ const mapDispatchToProps = (dispatch: any) => ({
     date: string,
     gender: string,
     orientation: string,
-    location: string,) => dispatch(editProfile(id, max_age, min_age, token, profilePic, imageData, name, date, gender, orientation, location))
+    location: string, ) => dispatch(editProfile(id, max_age, min_age, token, profilePic, imageData, name, date, gender, orientation, location))
 })
 
 const SignupCont = connect(mapStateToProps, mapDispatchToProps)(PureSignupCont);
@@ -324,6 +325,11 @@ export default SignupCont;
 
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
   profileInput: {
     flexDirection: "column",
     alignItems: "flex-start",
@@ -336,12 +342,16 @@ const styles = StyleSheet.create({
     marginBottom: 50
   },
   btnContainer: {
-    backgroundColor: "#ffa18e",
-    borderColor: "#fff",
-    paddingHorizontal: 15,
-    paddingVertical: 15,
+    backgroundColor: '#F0957F',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
     marginVertical: 15,
-    width: "60%"
+    width: '50%',
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    borderRadius: 4
   },
   btnText: {
     color: "#fff",
@@ -354,8 +364,9 @@ const styles = StyleSheet.create({
     fontSize: 14
   },
   input: {
-    backgroundColor: "#E5F5FA",
+    backgroundColor: "#E5FDF9",
     color: "#30519B",
+    marginTop: 5,
     marginBottom: 10,
     paddingVertical: 8,
     paddingHorizontal: 10,
@@ -366,7 +377,7 @@ const styles = StyleSheet.create({
   date: {
     width: 250,
     height: 37,
-    backgroundColor: "#E5F5FA",
+    backgroundColor: "#E5FDF9",
     borderRadius: 25,
     borderColor: "transparent"
   },
@@ -378,18 +389,33 @@ const styles = StyleSheet.create({
   bottomModal: {
     justifyContent: "flex-end", // 
     margin: 0
-  }, 
+  },
   modalContent: {
     backgroundColor: "white",
     padding: 15,
     justifyContent: "center",
     alignItems: "center",
-    // borderRadius: 4,
-    // borderColor: "rgba(0, 0, 0, 0.1)"
   },
   modalText: {
     color: "#E0674B"
   },
+  card: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    marginTop: hp('3%'),
+    marginBottom: hp('3.5%'),
+    marginHorizontal: wp('10%'),
+    paddingVertical: hp('1.5%'),
+    paddingHorizontal: wp('3%'),
+    borderRadius: 15,
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: -3 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    width: wp('80%'),
+    height: hp('65%')
+  }
 });
 
 const pickerSelectStyles = StyleSheet.create({
@@ -400,7 +426,7 @@ const pickerSelectStyles = StyleSheet.create({
     borderRadius: 25,
     color: "#30519B",
     // placeholderColor: '#30519B', //not a valid style property > change module index.js line 165
-    backgroundColor: "#E5F5FA",
+    backgroundColor: "#E5FDF9",
     width: 250,
     textAlign: "center"
   }
