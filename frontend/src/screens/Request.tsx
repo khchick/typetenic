@@ -132,6 +132,7 @@ class Request extends React.Component<RequestProps, RequestStates> {
             />
             <RightTopButton
               rightButtonName={"SENT"}
+              counter={""}
               onPress={() => {
                 console.log("sent");
                 this.setState({

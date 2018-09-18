@@ -167,6 +167,7 @@ class Deck extends React.Component<IDeckProps, IDeckStates> {
             />
             <RightTopButton
               rightButtonName={"MY PICKS"}
+              counter={" " + this.props.tenDeckList.length + "/10"}
               onPress={() => {
                 this.props.handleChangeTenDeck();
                 this.setState({

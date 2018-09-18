@@ -19,6 +19,7 @@ const { height, width } = Dimensions.get('window');
 
 interface RightTopButtonProps {
   rightButtonName: string;
+  counter: string;
   onPress: () => any
 }
 
@@ -27,7 +28,12 @@ export default class RightTopButton extends React.Component<RightTopButtonProps>
     return (
 
       <TouchableOpacity style={styles.buttonContainer} onPress={this.props.onPress}>
-        <Text style={styles.buttonText}>{this.props.rightButtonName}</Text>
+        <Text style={styles.buttonText}>
+          {this.props.rightButtonName}
+        </Text>
+        <Text style={styles.counterText}>
+          {this.props.counter}
+        </Text>
       </TouchableOpacity>
     )
   }
@@ -36,6 +42,7 @@ export default class RightTopButton extends React.Component<RightTopButtonProps>
 
 const styles = StyleSheet.create({
   buttonContainer: {
+    flexDirection: 'row',
     width: width * 0.46,
     height: 38,
     backgroundColor: '#3B5998',
@@ -44,14 +51,20 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.6,
     shadowRadius: 2,
     justifyContent: 'center',
+    alignItems: 'center',
     marginLeft: 3,
     marginRight: 3
   },
   buttonText: {
     color: 'white',
-    textAlign: 'center',
+    // textAlign: 'center',
     letterSpacing: 6,
     fontSize: 17,
+    fontFamily: 'GermaniaOne-Regular'
+  },
+  counterText: {
+    color: 'white',
+    fontSize: 15,
     fontFamily: 'GermaniaOne-Regular'
   }
 });

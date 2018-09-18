@@ -143,6 +143,7 @@ class Suggestions extends React.Component<SuggestionsProps, RequestStates> {
             />
             <RightTopButton
               rightButtonName={"MY PICKS"}
+              counter={""}
               onPress={() => {
                 this.setState({
                   isDiscover: true
