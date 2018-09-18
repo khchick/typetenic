@@ -99,6 +99,7 @@ class App {
       screen: {
         screen: "LandingScreen",
         navigatorStyle: {
+          navBarNoBorder: true,
           navBarBackgroundColor: '#9EF8E4',
         },
         appStyle: {

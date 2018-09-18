@@ -14,7 +14,7 @@ import AvatarImage, {getAvatar} from './AvatarImage';
 import axios from 'axios';
 import Config from "react-native-config";
 import { connect } from "react-redux";
-import { handleReceivedReq } from '../../redux/actions/refreshAction';
+import { handleReceivedReq, handleChangeNotification } from '../../redux/actions/refreshAction';
 
 const { height, width } = Dimensions.get("window");
 
@@ -25,6 +25,8 @@ interface ReceivedRowItemProps {
   index: any;
   onPressItem: (item: any) => any;
   handleReceivedReq: () => any;
+  nonSuggestedList: Array<any>;
+  handleChangeNotification: () => any;
 }
 
 class ReceivedRowItem extends React.PureComponent<ReceivedRowItemProps> {
@@ -47,21 +49,28 @@ class ReceivedRowItem extends React.PureComponent<ReceivedRowItemProps> {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.likeBtn} onPress={() => {
-            console.log("approved request");
-            axios
-              .put(`${Config.API_SERVER}/api/connection/request/received/approve`, 
-              {
-                'targetID': item.id
-              },
-              {
-                headers: {
-                  Authorization: "Bearer " + this.props.token
-                }
-              })
-              .then(() => {
-                this.props.handleReceivedReq()
-              })
-              .catch(err => console.log(err));
+            if (this.props.nonSuggestedList.length == 10) {
+              // pop up msg
+              console.log('my picks reach 10')
+              
+            } else {
+              console.log("approved request");
+              axios
+                .put(`${Config.API_SERVER}/api/connection/request/received/approve`, 
+                {
+                  'targetID': item.id
+                },
+                {
+                  headers: {
+                    Authorization: "Bearer " + this.props.token
+                  }
+                })
+                .then(() => {
+                  this.props.handleReceivedReq()
+                  this.props.handleChangeNotification();
+                })
+                .catch(err => console.log(err));
+            }          
           }} >
             <Text style={styles.btnText}>LIKE</Text>
           </TouchableOpacity>
@@ -80,6 +89,7 @@ class ReceivedRowItem extends React.PureComponent<ReceivedRowItemProps> {
               })
               .then(() => {
                 this.props.handleReceivedReq()
+                this.props.handleChangeNotification();
               })
               .catch(err => console.log(err));
           }}>
@@ -93,13 +103,15 @@ class ReceivedRowItem extends React.PureComponent<ReceivedRowItemProps> {
 
 const MapStateToProps = (state: any) => {
   return {
-    token: state.auth.token
+    token: state.auth.token,
+    nonSuggestedList: state.refresh.nonSuggestedList
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    handleReceivedReq: () => dispatch(handleReceivedReq())
+    handleReceivedReq: () => dispatch(handleReceivedReq()),
+    handleChangeNotification: () => dispatch( handleChangeNotification())
   };
 };
 
