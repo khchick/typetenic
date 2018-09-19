@@ -74,7 +74,7 @@ export default class PrivateProfile extends React.Component<IPrivateProfileProps
         fontSize: 20
       }
     }
-  }  
+  }
 
 
   render() {
@@ -88,7 +88,7 @@ export default class PrivateProfile extends React.Component<IPrivateProfileProps
             decelerationRate={0} // stop scrolling momentum
           >
 
-          {this.state.profileDetails.map(
+            {this.state.profileDetails.map(
               ({
                 id,
                 display_name,
@@ -100,33 +100,33 @@ export default class PrivateProfile extends React.Component<IPrivateProfileProps
                 key_atr_desc,
                 profile_pic
               }) => (
-           <FlipCard
-              flip={this.state.flip}
-              friction={6}
-              perspective={1000}
-              flipHorizontal={true}
-              flipVertical={false}
-              clickable={true}
-              style={styles.flipCard}
-              alignHeight={true}
-              // alignWidth={true}
-              onFlipEnd={(isFlipEnd)=>{console.log('isFlipEnd', isFlipEnd)}}
-            >
-            {/* Face Side - Private */}
-               <View>
-                <View style={styles.card}>
-                  <View style={styles.mbtiCol}>
-                    <View style={styles.mbtiRow}>
-                      <Text style={this.getMbtiStyle(mbti[0], key_atr)}>{mbti[0]}</Text>
-                      <Text style={this.getMbtiStyle(mbti[1], key_atr)}>{mbti[1]}</Text>
-                    </View>
-                    <View style={styles.rowContainer}>
-                      <AvatarImage style={styles.realPic} source={{ uri: `${Config.API_SERVER}${profile_pic}` }} />
-                    </View>
-                    <View style={styles.rowContainer}>
-                      <Text style={styles.nameText}>{display_name}</Text>
-                    </View>
-                    {/* <View style={styles.rowContainer}>
+                  <FlipCard
+                    flip={this.state.flip}
+                    friction={6}
+                    perspective={1000}
+                    flipHorizontal={true}
+                    flipVertical={false}
+                    clickable={true}
+                    style={styles.flipCard}
+                    alignHeight={true}
+                    // alignWidth={true}
+                    onFlipEnd={(isFlipEnd) => { console.log('isFlipEnd', isFlipEnd) }}
+                  >
+                    {/* Face Side - Private */}
+                    <View>
+                      <View style={styles.card}>
+                        <View style={styles.mbtiCol}>
+                          <View style={styles.mbtiRow}>
+                            <Text style={this.getMbtiStyle(mbti[0], key_atr)}>{mbti[0]}</Text>
+                            <Text style={this.getMbtiStyle(mbti[1], key_atr)}>{mbti[1]}</Text>
+                          </View>
+                          <View style={styles.rowContainer}>
+                            <AvatarImage style={styles.realPic} source={{ uri: `${Config.API_SERVER}${profile_pic}` }} />
+                          </View>
+                          <View style={styles.rowContainer}>
+                            <Text style={styles.flippedNameText}>{display_name}</Text>
+                          </View>
+                          {/* <View style={styles.rowContainer}>
                       <View style={styles.inputContainer}>
                         <Text style={styles.inputText}>{this.calculateAge(dob)}  {gender}  {location}</Text>
                       </View>
@@ -136,50 +136,50 @@ export default class PrivateProfile extends React.Component<IPrivateProfileProps
                         <Text style={styles.longText}>{key_atr_desc}</Text>
                       </View>
                     </View> */}
-                    <View style={styles.mbtiRow}>
-                      <Text style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
-                      <Text style={this.getMbtiStyle(mbti[3], key_atr)}>{mbti[3]}</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              
-              {/* Back Side - Public */}
-              <View>
-                <View style={styles.card}>
-                  <View style={styles.mbtiCol}>
-                    <View style={styles.mbtiRow}>
-                      <Text style={this.getMbtiStyle(mbti[0], key_atr)}>{mbti[0]}</Text>
-                      <Text style={this.getMbtiStyle(mbti[1], key_atr)}>{mbti[1]}</Text>
-                    </View>
-                    <View style={styles.rowContainer}>
-                      <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
-                    </View>
-                    <View style={styles.rowContainer}>
-                      <Text style={styles.nameText}>{display_name}</Text>
-                    </View>
-                    <View style={styles.rowContainer}>
-                      <View style={styles.inputContainer}>
-                        <Text style={styles.inputText}>{this.calculateAge(dob)}  {gender}  {location}</Text>
+                          <View style={styles.mbtiRow}>
+                            <Text style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
+                            <Text style={this.getMbtiStyle(mbti[3], key_atr)}>{mbti[3]}</Text>
+                          </View>
+                        </View>
                       </View>
                     </View>
-                    <View style={styles.rowContainer}>
-                      <View style={styles.longTextContainer}>
-                        <Text style={styles.longText}>{key_atr_desc}</Text>
-                      </View>
-                    </View>
-                    <View style={styles.mbtiRow}>
-                      <Text style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
-                      <Text style={this.getMbtiStyle(mbti[3], key_atr)}>{mbti[3]}</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
 
-            </FlipCard>
-         )
-         )}
-         
+                    {/* Back Side - Public */}
+                    <View>
+                      <View style={styles.card}>
+                        <View style={styles.mbtiCol}>
+                          <View style={styles.mbtiRow}>
+                            <Text style={this.getMbtiStyle(mbti[0], key_atr)}>{mbti[0]}</Text>
+                            <Text style={this.getMbtiStyle(mbti[1], key_atr)}>{mbti[1]}</Text>
+                          </View>
+                          <View style={styles.rowContainer}>
+                            <AvatarImage style={styles.avatar} source={getAvatar(mbti)} />
+                          </View>
+                          <View style={styles.rowContainer}>
+                            <Text style={styles.nameText}>{display_name}</Text>
+                          </View>
+                          <View style={styles.rowContainer}>
+                            <View style={styles.inputContainer}>
+                              <Text style={styles.inputText}>{this.calculateAge(dob)}  {gender}  {location}</Text>
+                            </View>
+                          </View>
+                          <View style={styles.rowContainer}>
+                            <View style={styles.longTextContainer}>
+                              <Text style={styles.longText}>{key_atr_desc}</Text>
+                            </View>
+                          </View>
+                          <View style={styles.mbtiRow}>
+                            <Text style={this.getMbtiStyle(mbti[2], key_atr)}>{mbti[2]}</Text>
+                            <Text style={this.getMbtiStyle(mbti[3], key_atr)}>{mbti[3]}</Text>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+
+                  </FlipCard>
+                )
+            )}
+
           </ScrollView>
         </View>
       </LinearGradient>
@@ -259,6 +259,18 @@ const styles = StyleSheet.create({
     width: wp('60%'),
     height: hp('5%')
   },
+  flippedNameText: {
+    fontSize: 25,
+    color: "#3B5998",
+    // fontWeight: "700",
+    textAlign: "center",
+    letterSpacing: 2.5,
+    marginTop: hp('5%'),
+    marginBottom: hp('5%'),
+    fontFamily: "YatraOne-Regular",
+    width: wp('60%'),
+    height: hp('5%')
+  },
   inputText: {
     color: "#3B5998",
     textAlign: "center",
@@ -308,13 +320,13 @@ const styles = StyleSheet.create({
     letterSpacing: 1.5
   },
   face: {
-    flex:1,
+    flex: 1,
     backgroundColor: '#2ecc71',
     justifyContent: 'center',
     alignItems: 'center',
   },
   back: {
-    flex:1,
+    flex: 1,
     backgroundColor: '#f1c40f',
     justifyContent: 'center',
     alignItems: 'center',
@@ -342,10 +354,10 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     width: wp("70%"),
     height: hp('30%'),
+    marginTop: hp('8%'),
     shadowColor: "black",
-    shadowOffset: { width: 2, height: 2 },
+    shadowOffset: { width: 2, height: -3 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
-    borderRadius: 4
   }
 });
