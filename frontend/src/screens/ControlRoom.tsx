@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import { logoutUser } from "../redux/actions/authAction";
 import axios from "axios";
 import Config from "react-native-config";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const { height, width } = Dimensions.get("window");
 
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
   btnContainer: {
     backgroundColor: "#F0957F",
     marginVertical: 10,
-    width: width * 0.5,
+    width: wp('50%'),
     marginTop: 10,
     paddingVertical: 10,
     paddingHorizontal: 10,

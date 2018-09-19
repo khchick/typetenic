@@ -54,65 +54,38 @@ class PureMbtiTest2 extends React.Component<MbtiTestProps> {
     let styleB = this.props.test2 == "B" ? chosenAnswer : answer;
 
     return (
-      // <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
-      //   <View style={globalStyle.container}>
-      //     <View style={globalStyle.cardContainer}>
-      //       <Text style={styles.header}>Quiz 2</Text>
-      //       <Text style={styles.question}>
-      //         If your lover asks you to join a new activity, you will...
-      //       </Text>
+      <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
+        <ScrollView>
+          <View style={styles.container}>
+            <View style={styles.card}>
+              <View style={styles.textContainer}>
+                <Text style={styles.header}>Quiz 2</Text>
+                <Text style={styles.question}>
+                  If your lover asks you to join a new activity, you will...
+                </Text>
+              </View>
 
-      //       <TouchableOpacity onPress={() => this.onChoiceA()}>
-      //         <Text style={styleA}>
-      //           A  Collect as much information as you can
-      //         </Text>
-      //         <View style={styles.pickCard}>
-      //           <Image style={styles.img} source={require(imageA)} />
-      //         </View>
-      //       </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.onChoiceA()}>
+                <View style={styles.textContainer}>
+                  <Text style={styles.option}>A  Collect as much information as you can</Text>
+                </View>
+                <View style={styles.imgContainer}>
+                  <Image style={styles.img} source={require(imageA)} />
+                </View>
+              </TouchableOpacity>
 
-      //       <TouchableOpacity onPress={() => this.onChoiceB()}>
-      //         <Text style={styleB}>B  Just go and see what will happen</Text>
-      //         <View style={styles.pickCard}>
-      //           <Image style={styles.img} source={require(imageB)} />
-      //         </View>
-      //       </TouchableOpacity>
-      //     </View>
-      //   </View>
-      // </LinearGradient>
-
-<LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
-<ScrollView>
-  <View style={styles.container}>
-    <View style={styles.card}>
-      <View style={styles.textContainer}>
-        <Text style={styles.header}>Quiz 2</Text>
-        <Text style={styles.question}>
-        If your lover asks you to join a new activity, you will...
-       </Text>
-      </View>
-
-      <TouchableOpacity onPress={() => this.onChoiceA()}>
-        <View style={styles.textContainer}>
-          <Text style={styles.option}>A  Collect as much information as you can</Text>
-        </View>
-        <View style={styles.imgContainer}>
-          <Image style={styles.img} source={require(imageA)} />
-        </View>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => this.onChoiceB()}>
-        <View style={styles.textContainer}>
-          <Text style={styles.option}>B Just go and see what will happen</Text>
-        </View>
-        <View style={styles.imgContainer}>
-          <Image style={styles.img} source={require(imageB)} />
-        </View>
-      </TouchableOpacity>
-    </View>
-  </View>
-</ScrollView>
-</LinearGradient>
+              <TouchableOpacity onPress={() => this.onChoiceB()}>
+                <View style={styles.textContainer}>
+                  <Text style={styles.option}>B Just go and see what will happen</Text>
+                </View>
+                <View style={styles.imgContainer}>
+                  <Image style={styles.img} source={require(imageB)} />
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+      </LinearGradient>
     );
   }
 }

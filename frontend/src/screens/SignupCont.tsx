@@ -415,7 +415,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginTop: hp('3%'),
     marginBottom: hp('5%'),
-    width: '55%',
+    width: wp('50%'),
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,

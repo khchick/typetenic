@@ -14,6 +14,7 @@ import {
 
 import {connect} from 'react-redux';
 import {signupUser} from '../redux/actions/profileAction';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 interface SignupProps {
     navigator: Navigator;
@@ -186,7 +187,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 10,
     marginVertical: 15,
-    width: '35%',
+    width: wp('30%'),
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,

@@ -9,10 +9,13 @@ import {
   TouchableOpacity,
   StatusBar,
   View,
-  Image
+  Image,
+  ScrollView
 } from "react-native";
 import { connect } from "react-redux";
 import { createMbti } from "../redux/actions/profileAction";
+import { RootState } from "../redux/reducers/rootReducer";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 interface MbtiResultProps {
   navigator: Navigator;
@@ -120,15 +123,16 @@ class PureMbtiResult extends React.Component<MbtiResultProps, MbtiState> {
 
     return (
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
-        <View style={globalStyle.container}>
-          <View style={globalStyle.cardContainer}>
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.card}>
             <Text style={styles.title}>
-              WELCOME
+              Congratulations!
               {`\n`}
-              ON BOARD
+              You are
               {`\n`}
-              You are - {this.state.mbti}
-            </Text>
+              </Text>
+              <Text style={styles.mbti}>{this.state.mbti}</Text>
 
             <AvatarImage style={styles.img} source={avatarImg} />
 
@@ -155,10 +159,11 @@ class PureMbtiResult extends React.Component<MbtiResultProps, MbtiState> {
               style={styles.btnContainer}
               onPress={() => this.onContinuePress()}
             >
-              <Text style={styles.btnText}>BUILD YOUR PROFILE</Text>
+              <Text style={styles.btnText}>CONTINUE</Text>
             </TouchableOpacity>
           </View>
         </View>
+        </ScrollView>
       </LinearGradient>
     );
   }
@@ -192,39 +197,64 @@ const MbtiResult = connect(
 export default MbtiResult;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  card: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    marginTop: hp('3%'),
+    marginBottom: hp('3%'),
+    marginHorizontal: wp('10%'),
+    paddingVertical: hp('3%'),
+    paddingHorizontal: wp('3%'),
+    borderRadius: 15,
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: -3 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    width: wp('85%'),
+  },
   title: {
-    fontSize: 27,
+    fontSize: 25,
     color: "#30519B",
-    marginBottom: 10,
-    fontWeight: "700"
+    marginBottom: hp('0.5%'),
+    fontFamily: 'NovaRound',
+    textAlign: 'center'
   },
-  question: {
-    fontSize: 16,
-    color: "#30519B"
-  },
-  answer: {
-    fontSize: 16,
-    color: "#30519B"
+  mbti: {
+    fontFamily: 'YesevaOne-Regular',
+    fontSize: 25,
+    letterSpacing: 2.5
   },
   img: {
     resizeMode: "contain",
-    height: 270,
-    width: 240,
+    height: hp('45%'),
+    width: wp('40%'),
     paddingHorizontal: 15,
     paddingVertical: 15,
-    marginVertical: 15
+    marginTop: hp('1%')
   },
   btnContainer: {
-    backgroundColor: "#ffa18e",
-    borderColor: "#fff",
-    paddingHorizontal: 12,
-    paddingVertical: 12,
-    marginVertical: 12,
-    width: "55%"
+    backgroundColor: '#F0957F',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    marginVertical: 10,
+    width: wp('45%'),
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    borderRadius: 4
   },
   btnText: {
-    color: "#fff",
-    fontWeight: "700",
-    textAlign: "center"
+    color: "white",
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "bold",
+    letterSpacing: 1.5
   }
 });

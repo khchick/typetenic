@@ -16,6 +16,7 @@ import {
 import App from "../App";
 import { connect } from "react-redux";
 import { editKeyAtr, submitProfile } from "../redux/actions/profileAction";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 interface MbtiProfileProps {
   navigator: Navigator;
@@ -59,7 +60,7 @@ interface MbtiProfileStates {
 class PureMbtiProfile extends React.Component<
   MbtiProfileProps,
   MbtiProfileStates
-> {
+  > {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -138,66 +139,70 @@ class PureMbtiProfile extends React.Component<
       : styles.keySquare;
     let lifeStyle = this.state.PJ ? styles.selectedKeySquare : styles.keySquare;
 
-    return (    
-      <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss()}}>
-      <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
-        <KeyboardAvoidingView style={globalStyle.container} behavior='padding'>
+    return (
+      <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
+        <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
+          <KeyboardAvoidingView style={styles.container} behavior='padding'>
 
-          <View style={globalStyle.cardContainer} >
-            <Text style={styles.title}>My Favourite Attibute:</Text>
+            <View style={styles.card} >
 
-            <View style={styles.attribute}>
+              <Text style={styles.title}>Choose a MBTI Key Attribute</Text>
+
+
+              <View style={styles.attribute}>
+                <TouchableOpacity
+                  style={energyStyle}
+                  onPress={() => this.onSelectEnergy()}
+                >
+                  <Text>{this.props.energy}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={infoStyle}
+                  onPress={() => this.onSelectInformation()}
+                >
+                  <Text>{this.props.information}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={decisionStyle}
+                  onPress={() => this.onSelectDecision()}
+                >
+                  <Text>{this.props.decision}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={lifeStyle}
+                  onPress={() => this.onSelectLifestyle()}
+                >
+                  <Text>{this.props.lifestyle}</Text>
+                </TouchableOpacity>
+              </View>
+
+
+              <Text style={styles.title}>About Me</Text>
+
+              <TextInput
+                placeholder="I am an outgoing person who enjoy meeting new people and learning new things during free time. Reading, diving and hiking are my hobbies."
+                placeholderTextColor="#C7C7CD"
+                style={styles.input}
+                onChangeText={val => this.setState({ keyDesc: val })}
+                multiline={true}
+                maxLength={200}
+                value={this.props.keyDesc}
+              />
+
               <TouchableOpacity
-                style={energyStyle}
-                onPress={() => this.onSelectEnergy()}
+                style={styles.btnContainer}
+                onPress={() => this.onSubmitPress()}
               >
-                <Text>{this.props.energy}</Text>
+                <Text style={styles.btnText}>START DISCOVERING</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity
-                style={infoStyle}
-                onPress={() => this.onSelectInformation()}
-              >
-                <Text>{this.props.information}</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={decisionStyle}
-                onPress={() => this.onSelectDecision()}
-              >
-                <Text>{this.props.decision}</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={lifeStyle}
-                onPress={() => this.onSelectLifestyle()}
-              >
-                <Text>{this.props.lifestyle}</Text>
-              </TouchableOpacity>
             </View>
-
-            <Text style={styles.title}>About Me</Text>
-            <TextInput
-              placeholder="I am an outgoing person who enjoy meeting new people and learn new stuffs in my leisure time.Reading, diving and hiking are my hobbits. "
-              placeholderTextColor="#C7C7CD"
-              style={styles.input}
-              onChangeText={val => this.setState({ keyDesc: val })}
-              multiline={true}
-              maxLength={200}
-              value={this.props.keyDesc}
-            />
-
-            <TouchableOpacity
-              style={styles.btnContainer}
-              onPress={() => this.onSubmitPress()}
-            >
-              <Text style={styles.btnText}>DONE</Text>
-            </TouchableOpacity>
-          </View>
-
-        </KeyboardAvoidingView>
-      </LinearGradient>
-      </TouchableWithoutFeedback>
+          </KeyboardAvoidingView>
+        </LinearGradient>
+      </TouchableWithoutFeedback >
     );
   }
 }
@@ -263,51 +268,60 @@ export default MbtiProfile;
 const { height, width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  card: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    marginTop: hp('3%'),
+    marginBottom: hp('3%'),
+    marginHorizontal: wp('10%'),
+    paddingVertical: hp('3%'),
+    paddingHorizontal: wp('3%'),
+    borderRadius: 15,
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: -3 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    width: wp('85%'),
+  },
   title: {
-    fontSize: 20,
-    color: "#30519B",
-    marginBottom: 10
-  },
-  question: {
+    marginTop: 9,
+    color: "#2a70b2",
     fontSize: 16,
-    color: "#30519B"
-  },
-  answer: {
-    fontSize: 16,
-    color: "#30519B"
-  },
-  img: {
-    height: 200,
-    width: 200
+    marginBottom: hp('1%'),
   },
   btnContainer: {
-    backgroundColor: "#ffa18e",
-    borderColor: "#fff",
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    marginVertical: 15,
-    width: "60%"
+    backgroundColor: '#F0957F',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    marginVertical: 10,
+    width: wp('50%'),
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    borderRadius: 4
   },
   btnText: {
-    color: "#fff",
-    fontWeight: "700",
-    textAlign: "center"
+    color: "white",
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "bold",
+    letterSpacing: 1.5
   },
   attribute: {
     flexDirection: "row",
+    margin: 3,
     marginBottom: 15
-  },
-  input: {
-    borderColor: "#30519B",
-    borderWidth: 1,
-    height: height * 0.3,
-    width: width * 0.65,
-    fontSize: 16,
-    color: "#30519B"
   },
   keySquare: {
     flex: 1,
-    flexDirection: "column",
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     borderColor: "#30519B",
@@ -318,14 +332,23 @@ const styles = StyleSheet.create({
   },
   selectedKeySquare: {
     flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    borderColor: "#30519B",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: '#30519B',
     borderWidth: 1,
     height: 40,
     width: 40,
     margin: 5,
-    backgroundColor: "#e0fbff"
-  }
+    backgroundColor: '#E5FDF9',
+  },
+  input: {
+    borderColor: '#30519B',
+    borderWidth: 1,
+    height: height * 0.3,
+    width: wp('74%'),
+    fontSize: 16,
+    color: '#30519B',
+    marginBottom: hp('3%')
+  },
 });

@@ -67,9 +67,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffa18e",
     paddingHorizontal: 15,
     paddingVertical: 15,
-    //marginVertical: 30,
     marginTop: 20,
-    width: "65%",
+    width: wp('60%'),
     height: 45,
     shadowColor: "#000",
     shadowOffset: { width: 2, height: 2 },
@@ -87,7 +86,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 40,
     letterSpacing: 3,
-    // width: 300,
     marginTop: 20,
     fontFamily: 'NovaRound',
     width: width * 0.8
@@ -96,7 +94,6 @@ const styles = StyleSheet.create({
     color: "#30519B",
     textAlign: "center",
     fontSize: 18,
-    // letterSpacing: 3,
     marginTop: 20,
     fontFamily: 'NovaRound',
     width: width * 0.8
@@ -118,9 +115,7 @@ const styles = StyleSheet.create({
   card: {
     justifyContent: "center",
     alignItems: "center",
-    // padding: 20,
-    width: width * 0.8, // percent or minus
-    
+    width: width * 0.8, 
     marginBottom: hp('12%'),
     marginTop: hp('8%')
   }

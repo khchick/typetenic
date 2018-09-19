@@ -54,34 +54,6 @@ class PureMbtiTest3 extends React.Component<MbtiTestProps> {
     let styleB = this.props.test3 == "B" ? chosenAnswer : answer;
 
     return (
-      // <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
-      //   <View style={globalStyle.container}>
-      //     <View style={globalStyle.cardContainer}>
-      //       <Text style={styles.header}>Quiz 3</Text>
-      //       <Text style={styles.question}>
-      //         Imagine you are now having a fight with your lover, what will you
-      //         do ?
-      //       </Text>
-
-      //       <TouchableOpacity onPress={() => this.onChoiceA()}>
-      //         <Text style={styleA}>
-      //           A Try to convince with logical arguments
-      //         </Text>
-      //         <View style={styles.pickCard}>
-      //           <Image style={styles.img} source={require(imageA)} />
-      //         </View>
-      //       </TouchableOpacity>
-
-      //       <TouchableOpacity onPress={() => this.onChoiceB()}>
-      //         <Text style={styleB}>B Hug first, no matter who is wrong</Text>
-      //         <View style={styles.pickCard}>
-      //           <Image style={styles.img} source={require(imageB)} />
-      //         </View>
-      //       </TouchableOpacity>
-      //     </View>
-      //   </View>
-      // </LinearGradient>
-
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
         <ScrollView>
           <View style={styles.container}>

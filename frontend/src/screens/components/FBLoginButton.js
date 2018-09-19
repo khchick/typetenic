@@ -3,6 +3,7 @@ import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import { LoginManager, LoginButton, AccessToken } from "react-native-fbsdk";
 import { connect } from "react-redux";
 import { loginFacebook } from "../../redux/actions/authAction";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 class PureFBLoginButton extends React.Component {
   handleFacebookLogin() {
@@ -88,10 +89,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#3B5998",
     paddingHorizontal: 15,
     paddingVertical: 15,
-    //marginVertical: 30,
-    // marginTop: 20,
     marginBottom: 10,
-    width: "65%",
+    width: wp("60%"),
     height: 45,
     shadowColor: "#000",
     shadowOffset: { width: 2, height: 2 },
@@ -107,13 +106,3 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   }
 });
-
-// "public_profile" default permissions:
-// id
-// first_name
-// last_name
-// middle_name
-// name
-// name_format
-// picture
-// short_name

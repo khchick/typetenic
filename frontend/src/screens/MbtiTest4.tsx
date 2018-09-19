@@ -54,31 +54,6 @@ class PureMbtiTest4 extends React.Component<MbtiTestProps> {
     let styleB = this.props.test4 == "B" ? chosenAnswer : answer;
 
     return (
-      // <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
-      //   <View style={globalStyle.container}>
-      //     <View style={globalStyle.cardContainer}>
-      //       <Text style={styles.header}>Quiz 4</Text>
-      //       <Text style={styles.question}>
-      //         Which of the following picture is closer to your perfect date?
-      //       </Text>
-
-      //       <TouchableOpacity onPress={() => this.onChoiceA()}>
-      //         <Text style={styleA}>A A planned date</Text>
-      //         <View style={styles.pickCard}>
-      //           <Image style={styles.img} source={require(imageA)} />
-      //         </View>
-      //       </TouchableOpacity>
-
-      //       <TouchableOpacity onPress={() => this.onChoiceB()}>
-      //         <Text style={styleB}>B Freestyle, casual date</Text>
-      //         <View style={styles.pickCard}>
-      //           <Image style={styles.img} source={require(imageB)} />
-      //         </View>
-      //       </TouchableOpacity>
-      //     </View>
-      //   </View>
-      // </LinearGradient>
-
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
         <ScrollView>
           <View style={styles.container}>

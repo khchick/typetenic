@@ -14,6 +14,8 @@ import {
 import {connect} from 'react-redux';
 import {loginUser} from '../redux/actions/authAction';
 import { RootState } from '../redux/reducers/rootReducer';
+import { RootState } from "../redux/reducers/rootReducer";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
 interface LoginProps {
@@ -134,7 +136,6 @@ const styles = StyleSheet.create({
   welcome: {
     color: '#fff',
     fontSize: 32,
-    // fontWeight: '800',
     marginBottom: 60,
     fontFamily: 'NovaRound'
   },
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 10,
     marginVertical: 15,
-    width: '35%',
+    width: wp('30%'),
     shadowColor: "black",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.4,

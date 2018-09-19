@@ -312,7 +312,7 @@ class PureResetProfile extends React.Component<ResetProfileProps, ResetProfileSt
       <LinearGradient colors={["#9EF8E4", "#30519B"]} style={[{ flex: 1 }]}>
 
         <ScrollView>
-          <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container} behavior='padding'>
             <View style={styles.card}>
 
               <View style={styles.propicContainer}>
@@ -455,7 +455,7 @@ class PureResetProfile extends React.Component<ResetProfileProps, ResetProfileSt
               </View>
 
             </View>
-          </View>
+            </KeyboardAvoidingView>
         </ScrollView>
 
       </LinearGradient>
@@ -586,7 +586,7 @@ const styles = StyleSheet.create({
   },
   keySquare: {
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: '#30519B',
