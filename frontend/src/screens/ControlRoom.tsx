@@ -180,6 +180,6 @@ const styles = StyleSheet.create({
     width: width * 0.6,
     height: width * 0.6,
     marginBottom: 30,
-    resizeMode: 'contain'
+    resizeMode: 'cover'
   }
 });
