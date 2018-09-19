@@ -350,7 +350,7 @@ const styles = StyleSheet.create({
     height: 150,
     width: 150,
     borderRadius: 150 / 2,
-    resizeMode: 'contain',
+    resizeMode: 'cover',
     marginBottom: hp('2%')
   },
   profileInput: {
