@@ -105,7 +105,7 @@ class Card extends React.PureComponent<CardProps> {
             case null:
                 return 'FLIP';
             case 'Requested':
-                return '...';
+                return 'PENDING';
             case 'Flipped':
                 return 'FLIPPED'
         }
