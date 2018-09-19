@@ -20,6 +20,7 @@ import {
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const { height, width } = Dimensions.get("window");
+console.disableYellowBox = true;
 
 interface IDeckProps {
   navigator: Navigator;

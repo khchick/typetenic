@@ -1570,7 +1570,7 @@ class ConnectionService {
 
         return query.then(rows => {
             if (rows.length >= 10) {
-                console.log(new Error('Either your DECK or your target\'s DECK is full. Connection cannot be done at the moment.'));
+                console.log(new Error('Either your DECK or the request sender\'s DECK is full. Connection cannot be done at the moment.'));
             } else {
                 let myName;
                 let query = this.knex
